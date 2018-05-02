@@ -19,16 +19,18 @@ Feature: Assistant - Tact proto 2
   @TactAIBasicTesting
   Scenario Outline: Sent msg to AI, and verify the reply
     Given Common: I switch to "Assistant" page from tab bar
-    When Assistant: I send "<inputText>" to "Tact dev1" Assistant and "<isVerify>" verify sent msg
+    When Assistant: I send "<inputText>" to "Tact" Assistant and "<isVerify>" verify sent msg
     Then Assistant: I check bot "<responseText>"
 
     Examples:
-       | inputText                              | isVerify | responseText                                                           |
-       | What is the latest on xyz deals?       | without  |                                                                        |
-       | What is the latest on GenePoint deals? | without  |                                            |
-       | Bye                                    | with     | Goodbye.; Bye; See you later!                                          |
-       | Hi                                     | with     | Howdy.; Hi there! How can I help?; Hello! Glad to help.; Welcome.; Hi. |
-       | Thanks                                 | with     | Thanks.; Thank you.                                                    |
+       | inputText                              | isVerify | responseText                                                               |
+       | What is the latest on xyz deals?       | without  |                                                                            |
+       | What is the latest on GenePoint deals? | without  |                                                                            |
+       | Bye                                    | with     | Goodbye.; Bye; See you later!                                              |
+       | Hi                                     | with     | Howdy.; Hi there! How can I help?; Hello! Glad to help.; Welcome.; Hi.     |
+       | Thanks                                 | with     | Thanks.; Thank you.                                                        |
+       | Report a bug                           | with     | Please describe the problem you're facing or improvement you'd like to see.|
+       | Cancel                                 | with     | Bug cancelled.                                                             |
 
 
   @P2

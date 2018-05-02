@@ -22,16 +22,16 @@ public class ThreadTimelineSteps implements En {
 
     public ThreadTimelineSteps() {
 
-        ThreadTimelinePage threadTimelinePage = new ThreadTimelinePage();
-
         And("^ThreadTimeline: I click \"(Tact)\" option$", (String option) -> {
             log.info("^ThreadTimeline: I click " + option + " option$");
+            ThreadTimelinePage threadTimelinePage = new ThreadTimelinePage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(threadTimelinePage.getTactProBotImage().getLocator());
             threadTimelinePage.getTactProBotImage().click();
         });
         When("^ThreadTimeline: I send \"([^\"]*)\" to \"(Thread|Thread dev1)\" Assistant and \"([^\"]*)\" verify sent msg$", (String inputText, String stage, String isVerify) -> {
             log.info("^ThreadTimeline: I send " + inputText + " to Assistant and " + isVerify + " verify sent msg$");
+            ThreadTimelinePage threadTimelinePage = new ThreadTimelinePage();
 
             //save sent cmd to report.txt
             dataRecord = String.format("%s | %s | ", stage, inputText);
@@ -50,7 +50,7 @@ public class ThreadTimelineSteps implements En {
             System.out.println(sizeNum + "<== beginTime ==> " + beginTime);
             while (threadTimelinePage.getTactBotMsgsLabel().getElements().size() == sizeNum){
                 checkTime = System.currentTimeMillis();
-                if ( (checkTime - beginTime)/1000 > 120 ){
+                if ((checkTime - beginTime)/1000 > 60){
                     break;
                 }
 //                System.out.println(threadTimelinePage.getTactBotMsgsLabel().getElements().size() + "<== the size is the same");
@@ -63,7 +63,7 @@ public class ThreadTimelineSteps implements En {
             int userSentMsgNum = threadTimelinePage.getMyMsgsLabel().getElements().size();
             String userSentMsg = threadTimelinePage.getMyMsgsLabel().getElements().get(userSentMsgNum-1).getText();
 
-            if ( isVerify.equalsIgnoreCase("with") ) {
+            if (isVerify.equalsIgnoreCase("with")) {
                 log.info("start checking the sent msg");
                 System.out.println("inputText " + inputText);
                 System.out.println("userSentMsg " + userSentMsg);
@@ -72,6 +72,7 @@ public class ThreadTimelineSteps implements En {
         });
         Then("^ThreadTimeline: I check bot \"([^\"]*)\"$", (String responseText) -> {
             log.info("^ThreadTimeline: I check bot " + responseText + "$");
+            ThreadTimelinePage threadTimelinePage = new ThreadTimelinePage();
 
             //get the latest display msg from bot
             int botReplyMstNum = threadTimelinePage.getTactBotMsgsLabel().getElements().size();

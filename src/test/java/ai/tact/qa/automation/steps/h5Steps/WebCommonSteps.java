@@ -23,11 +23,6 @@ public class WebCommonSteps implements En {
 
     public WebCommonSteps() {
 
-        ThreadNavigatePage threadNavigatePage = new ThreadNavigatePage();
-        ThreadLoginHomePage threadLoginHomePage = new ThreadLoginHomePage();
-        SparkLoginHomePage sparkLoginHomePage = new SparkLoginHomePage();
-        AlexaLoginHomePage alexaLoginHomePage = new AlexaLoginHomePage();
-
         Given("^WebCommon: I launch browser and open \"([^\"]*)\"$", (String container) -> {
             log.info("^WebCommon: I launch browser and open " + container + "$");
 
@@ -53,13 +48,18 @@ public class WebCommonSteps implements En {
 
         When("^WebCommon: I login with \"([^\"]*)\" user account and password$", (String channelName) -> {
             log.info("^WebCommon: I login with " + channelName + " user account and password$");
+            ThreadNavigatePage threadNavigatePage = new ThreadNavigatePage();
+            ThreadLoginHomePage threadLoginHomePage = new ThreadLoginHomePage();
+            SparkLoginHomePage sparkLoginHomePage = new SparkLoginHomePage();
+            AlexaLoginHomePage alexaLoginHomePage = new AlexaLoginHomePage();
+
             channelName = channelName.toLowerCase();
             String accountName = null;
             String accountPwd = null;
 
             switch (channelName) {
                 case "thread":
-                    accountName = CustomPicoContainer.getInstance().getWebUserInfor().getThreadAccount();
+                    accountName = CustomPicoContainer.getInstance().getWebUserInfor().getThreadAccount();    //"automation.thread@gmail.com"
                     accountPwd = CustomPicoContainer.getInstance().getWebUserInfor().getThreadAccountPwd();
                     log.info(channelName + " : " + accountName + "/" + accountPwd);
 
@@ -85,9 +85,8 @@ public class WebCommonSteps implements En {
 
                     break;
                 case "cisco spark":
-                    accountName = CustomPicoContainer.getInstance().getWebUserInfor().getCiscoSparkAccount();
-                    accountPwd = CustomPicoContainer.getInstance().getWebUserInfor().getCiscoSparkAccountPwd();
-                    //automation.ciscoSpark@gmail.com/Tact0218
+                    accountName = CustomPicoContainer.getInstance().getWebUserInfor().getCiscoSparkAccount();   //automation.ciscoSpark@gmail.com
+                    accountPwd = CustomPicoContainer.getInstance().getWebUserInfor().getCiscoSparkAccountPwd(); //Tact0218
                     log.info(channelName + " : " + accountName + "/" + accountPwd);
 
                     //login homePage
@@ -111,9 +110,8 @@ public class WebCommonSteps implements En {
 
                     break;
                 case "amazon":
-                    accountName = CustomPicoContainer.getInstance().getWebUserInfor().getAlexaAccount();
-                    accountPwd = CustomPicoContainer.getInstance().getWebUserInfor().getAlexaAccountPwd();
-                    //automation.amazonAlexa@gmail.com/Tact0218
+                    accountName = CustomPicoContainer.getInstance().getWebUserInfor().getAlexaAccount();    //automation.amazonAlexa@gmail.com
+                    accountPwd = CustomPicoContainer.getInstance().getWebUserInfor().getAlexaAccountPwd();  //Tact0218
                     log.info(channelName + " : " + accountName + "/" + accountPwd);
 
                     //amazon homePage to login page

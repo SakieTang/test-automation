@@ -2,6 +2,7 @@ package ai.tact.qa.automation.runner;
 
 import ai.tact.qa.automation.utils.Appium;
 import ai.tact.qa.automation.utils.CustomPicoContainer;
+import ai.tact.qa.automation.utils.LogUtil;
 import com.paypal.selion.annotations.MobileTest;
 import com.paypal.selion.platform.dataprovider.DataProviderFactory;
 import com.paypal.selion.platform.dataprovider.SeLionDataProvider;
@@ -17,10 +18,12 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TestingCase  {
 
-    private TestNGCucumberRunner  testNGCucumberRunner;
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     @DataProvider(name="yamlDataProvider")
     public Object[][] getYamlDataProvider() throws IOException {
@@ -31,7 +34,7 @@ public class TestingCase  {
 
     @BeforeClass(alwaysRun = true)
     public void setUpClass() throws Exception {
-        System.out.println("TestRunner - BeforeClass - setUpClass");
+        log.info("TestRunner - BeforeClass - setUpClass");
 //        Appium.startServer("0.0.0.0","1234","2345");
 //        Appium.restartAppium();
     }
@@ -44,73 +47,44 @@ public class TestingCase  {
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-
     //w/ data provider
     @Test(groups = "Tact-login", description = "Runs Tact - login", dataProvider = "yamlDataProvider")//, dependsOnMethods = "TactOnboardingFeature")
     void TactSanityTest(UserInfor userInfor) throws InterruptedException {
         CustomPicoContainer.getInstance().setUserInfor(userInfor);
 
-        System.out.println("TestRunner - Test - feature");
-        System.out.println("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
-        testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
         testNGCucumberRunner.runCukes();
     }
 
     @AfterClass(alwaysRun = true)
     public void tearDownClass() throws Exception {
-        System.out.println("TestRunner - AfterClass - tearDownClass");
+        log.info("TestRunner - AfterClass - tearDownClass");
 
-//        Appium.stopServer();
-//        if ( !Appium.checkIfServerIsRunnning("4723") ) {
-//            System.out.println("Appium does not run");
-//        } else {
-//            System.out.println("Appium does run, and stop again");
-//            Appium.stopServer();
-//        }
+        Appium.stopServer();
+        if (!Appium.checkIfServerIsRunnning("4723")) {
+            log.info("Appium does not run");
+        } else {
+            log.info("Appium does run, and stop again");
+            Appium.stopServer();
+        }
     }
 
     @CucumberOptions(
-            features = ("src/test/resources/Features/Contacts.feature")
+            features = ("src/test/resources/Features/mobile/Lead.feature")
             ,glue = ("ai.tact.qa.automation.steps")
-            ,tags={"@createDupContact"}
+            ,tags={"" +
+//            "@createLead" +
+//            ", " +
+            "@P1"}
     )
     public class testCase extends AbstractTestNGCucumberTests {
         @Test
-        private void test(){ System.out.println("@Test Contacts Feature RunCukesTest"); }
+        private void test(){ log.info("@Test Contacts Feature RunCukesTest"); }
 
     }
-
-//    //Assistant
-//    @CucumberOptions(
-//            features = ("src/test/resources/Features/AssistantAI.feature")
-//            ,glue = ("ai/tact/qa/automation/steps")
-//            ,tags={"@Help"}
-//    )
-//    public class TactAssistantFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
-//        @Test
-//        private void test(){ System.out.println("@Tact Assistant Feature RunCukesNoReset"); }
-//
-//    }
-
-//    @CucumberOptions(
-//            features = ("src/test/resources/Features/TactUserAccount.feature")
-//            ,glue = ("ai.tact.qa.automation.steps")
-//            ,tags={"@getAppVersion"}
-//    )
-//    public class TactVersionFeatureCukesNoReset extends AbstractTestNGCucumberTests {
-//        @Test
-//        private void test(){ System.out.println("@Test Contacts Feature RunCukesTest"); }
-//
-//    }
-
-
-
-//        //Lead
-//        testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInncerRunCukesClass.TactLeadFeatureRunCukesNoReset.class);
-//        testNGCucumberRunner.runCukes();
-//        System.out.println("testNGCucumberRunner.finish(); FINISHED");
-//        testNGCucumberRunner.finish();
 }
 
 

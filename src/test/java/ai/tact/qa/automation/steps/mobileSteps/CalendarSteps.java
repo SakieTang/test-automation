@@ -19,13 +19,13 @@ public class CalendarSteps implements En {
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public CalendarSteps() {
-        TactCalendarMainPage tactCalendarMainPage = new TactCalendarMainPage();
-        TactPinPage tactPinPage = new TactPinPage();
-        TactEventPage tactEventPage = new TactEventPage();
-        TactTaskPage tactTaskPage = new TactTaskPage();
 
         When("^Calendar: I click plus icon and select \"([^\"]*)\" option$", (String option) -> {
             log.info("^Calendar: I click plus icon and select " + option + " option$");
+            TactCalendarMainPage tactCalendarMainPage = new TactCalendarMainPage();
+            TactPinPage tactPinPage = new TactPinPage();
+            TactEventPage tactEventPage = new TactEventPage();
+            TactTaskPage tactTaskPage = new TactTaskPage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactCalendarMainPage.getCalendarAddPlusButton());
 

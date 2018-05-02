@@ -99,12 +99,12 @@ public class Appium {
         try {
             Process process = DriverUtils.runCommand(command);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            if ( reader.readLine() != null) {
+            if (reader.readLine() != null) {
                 System.out.println("The Appium is still running");
                 isServerRunning = true;
             }
             else {
-                System.out.println("The Appium already stoped");
+                System.out.println("The Appium already stopped");
                 isServerRunning = false;
             }
         }
@@ -115,7 +115,7 @@ public class Appium {
     }
 
     /**
-     * start Server from command line
+     * start Appium Server from command line
      */
     public static void startServer(String address, String port, String bootstrapPort) {
         String commandStart;
@@ -164,7 +164,7 @@ public class Appium {
     }
 
     /**
-     * start Server from command line
+     * start Appium Server from command line
      */
     public static void startServer() {
         String commandStart;

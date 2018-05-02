@@ -1,12 +1,15 @@
 package ai.tact.qa.automation.utils.report;
 
+import ai.tact.qa.automation.testcomponents.h5.Alexa.AlexaTestPage;
 import ai.tact.qa.automation.utils.Appium;
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
+import ai.tact.qa.automation.utils.Selenium;
 import ai.tact.qa.automation.utils.dataobjects.IOSTime;
 import ai.tact.qa.automation.utils.dataobjects.Status;
 import static ai.tact.qa.automation.utils.dataobjects.Status.*;
 
+import apple.laf.JRSUIConstants;
 import com.amazonaws.services.dynamodbv2.xspec.S;
 import com.paypal.selion.internal.platform.grid.WebDriverPlatform;
 import com.google.gson.Gson;
@@ -15,8 +18,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import io.appium.java_client.AppiumDriver;
+import org.apache.commons.exec.CommandLine;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.SystemUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -637,14 +642,49 @@ public class GenerateReport {
         return appVersion;
     }
 
-    public static void deleteAllJsonReport(){
-        File testDel = new File("target/report/");
+    public static void deleteAllJsonReport(String platform){
+        String platformFolder = "";
 
-        for (File file: testDel.listFiles()) {
-            if (!file.isDirectory())
-            {
-                file.delete();
+        if (platform.equalsIgnoreCase("ios")){
+            platformFolder = "ios";
+        } else {
+            platformFolder = "android";
+        }
+
+        File testDel = new File(String.format("target/report/%s/",platformFolder));
+
+        if (testDel.exists()) {
+            for (File file : testDel.listFiles()) {
+                if (!file.isDirectory()) {
+                    file.delete();
+                }
             }
+            System.out.println("deleted");
+        } else {
+            System.out.println("already deleted");
+        }
+    }
+
+    public static void deleteAllJsonReport(){
+        String platformFolder = "";
+
+        if (DriverUtils.isIOS()){
+            platformFolder = "ios";
+        } else {
+            platformFolder = "android";
+        }
+
+        File testDel = new File(String.format("target/report/%s/",platformFolder));
+
+        if (testDel.exists()) {
+            for (File file : testDel.listFiles()) {
+                if (!file.isDirectory()) {
+                    file.delete();
+                }
+            }
+            System.out.println("deleted");
+        } else {
+            System.out.println("already deleted");
         }
     }
 
@@ -666,7 +706,7 @@ public class GenerateReport {
                 , DriverUtils.currentDateInfo("mm")
                 , DriverUtils.currentDateInfo("dd"));
 
-        if ( (new File(dir + "/" + reportName)).isFile() ){
+        if ((new File(dir + "/" + reportName)).isFile()){
             String cmd = String.format("aws s3 cp %s/%s s3://tact-automation-reports/%s/%s"
                     , dir, reportName, today, reportName);
 
@@ -682,38 +722,25 @@ public class GenerateReport {
 //        getReport(WebDriverPlatform.ANDROID);
 //        getReport(WebDriverPlatform.IOS);
 
-//        GenerateReport.deleteAllJsonReport();
+//        GenerateReport.deleteAllJsonReport("ios");
 
-//        generteHtml();
 //
 //        //submit report
-        uploadReprot();
 
 //        DriverUtils.runCommand("adb shell input keyevent 4");
 
+//        System.out.println(System.getProperty("user.dir"));
 
-//        DriverUtils.getRunCommandReturn("adb root");
+//        generteHtml();
+//        generateAIHtml();
+//        uploadReprot();
 
-//        DriverUtils.hideIOSKeyboard();
+//        DriverUtils.runCommand(new String[] {"bash", "-c", "adb root"});
+
+        String appPath = String.format("%s/Application/%s", System.getProperty("user.dir"), "TactApplication-alpha-debug.apk");
+        System.out.println("appPath " + appPath);
 
 
-        generateAIHtml();
-//        Appium.stopServer();
-
-
-    }
-
-    public static void method(String content) {
-        try {
-            RandomAccessFile randomFile = new RandomAccessFile("target/aiReport.txt", "rw" );
-            long fileLength = randomFile.length();
-
-//            randomFile.seek(fileLength);
-            randomFile.writeBytes(content + "\r\n");
-            randomFile.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 }

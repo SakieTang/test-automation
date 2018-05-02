@@ -10,7 +10,6 @@ enum IsAMPM {
 }
 
 public class AndroidClock {
-    private static AndroidTimerPage androidTimerPage = new AndroidTimerPage();
     private static int hours;
     private static int mins;
     private static IsAMPM isAMPM;
@@ -37,6 +36,8 @@ public class AndroidClock {
     }
 
     public static void changeDigitalClock( String time ){
+        AndroidTimerPage androidTimerPage = new AndroidTimerPage();
+
         convertTime(time);
 
         //Make sure in digital Mode clock
@@ -64,6 +65,7 @@ public class AndroidClock {
     }
 
     public static void changeAnalogClock( String time ){
+        AndroidTimerPage androidTimerPage = new AndroidTimerPage();
         convertTime(time);
 
         //Make sure in analog Mode clock
@@ -113,6 +115,7 @@ public class AndroidClock {
     }
 
     public static void sendTextToAnanlogMinsTextField () {
+        AndroidTimerPage androidTimerPage = new AndroidTimerPage();
         androidTimerPage.getAnalogMinsTextField().sendKeys(Integer.toString(mins));
     }
 

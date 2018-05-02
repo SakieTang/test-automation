@@ -6,7 +6,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='New Lead']"
     android:
-      US: "add_lead_button"
+      US: "fab_create_lead"
   newLeadTitleLabel:
     ios:
       US: "//XCUIElementTypeOther[@name='New Lead']"
@@ -27,26 +27,16 @@ elements:
       US: "//XCUIElementTypeStaticText[@name='Scan Business Card']"
     android:
       US: "custom_field_business_card_textview"
-  saveToIPhoneSwitch:
-    ios:
-      US: "//XCUIElementTypeSwitch[@name='Save to iPhone']"
-    android:
-      US: "//*[contains(@text, 'Save to device')]"
-  sendToSaleforceSwitch:
-    ios:
-      US: "//XCUIElementTypeSwitch[@name='Send to Salesforce']"
-    android:
-      US: "//*[contains(@text, 'Send to Salesforce')]"
   lastNameTextField:
     ios:
-      US: "//XCUIElementTypeStaticText[@name='Last Name']"
+      US: "//XCUIElementTypeStaticText[@name='Last Name']/following-sibling::XCUIElementTypeTextField"
     android:
-      US: ""
+      US: "//*[contains(@text, 'Last Name')]"
   companyTextField:
     ios:
-      US: "//XCUIElementTypeStaticText[@name='Company']"
+      US: "//XCUIElementTypeStaticText[@name='Company']/following-sibling::XCUIElementTypeTextField"
     android:
-      US: ""
+      US: "//*[contains(@text, 'Company')]"
   ownerButton:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Owner']"
@@ -59,9 +49,9 @@ elements:
       US: ""
   firstNameTextField:
     ios:
-      US: "//XCUIElementTypeStaticText[@name='First Name']"
+      US: "//XCUIElementTypeStaticText[@name='First Name']/following-sibling::XCUIElementTypeTextField"
     android:
-      US: ""
+      US: "//*[contains(@text, 'First Name')]"
   titleTextField:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Title']"

@@ -119,12 +119,33 @@ public class IOSTestInnerRunCukesClass {
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Contacts.feature")
             ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
-            ,tags={"@P0,@P1"}
+            ,tags={"" +
+            "@P0," +
+            "@P1"}
             , format = {
                 "pretty",
                 "json:target/report/ios/TactContactsFeatureRunCukesNoReset.json"}
     )
     public class TactContactsFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
+        @Test
+        private void test(){
+            System.out.println("@Test Contacts Feature RunCukesTest");
+        }
+
+    }
+
+    //Lead
+    @CucumberOptions(
+            features = ("src/test/resources/Features/mobile/Contacts.feature")
+            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,tags={"" +
+            "@createLead," +
+            "@P1"}
+            , format = {
+            "pretty",
+            "json:target/report/ios/TactLeadFeatureRunCukesNoReset.json"}
+    )
+    public class TactLeadFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
         @Test
         private void test(){
             System.out.println("@Test Contacts Feature RunCukesTest");
@@ -180,24 +201,6 @@ public class IOSTestInnerRunCukesClass {
         private void test(){
             System.out.println(">>>>>>@Test login RunCukesTest<<<<<<<");
         }
-    }
-
-    //Lead
-    //contacts
-    @CucumberOptions(
-            features = ("src/test/resources/Features/mobile/Contacts.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
-            ,tags={"@createLead"}
-            , format = {
-                "pretty",
-                "json:target/report/ios/TactLeadFeatureRunCukesNoReset.json"}
-    )
-    public class TactLeadFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
-        @Test
-        private void test(){
-            System.out.println("@Test Contacts Feature RunCukesTest");
-        }
-
     }
 
     //Calendar

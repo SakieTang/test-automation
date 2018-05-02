@@ -1,5 +1,6 @@
 package ai.tact.qa.automation.asserts;
 
+import com.sun.javafx.binding.StringFormatter;
 import org.testng.Reporter;
 import org.testng.asserts.Assertion;
 import org.testng.asserts.IAssert;
@@ -18,10 +19,9 @@ public final class TactAIHardAssert extends Assertion {
 
     private void showAssertInfo(IAssert<?> assertCommand, String msg) {
         String methodName = Reporter.getCurrentTestResult().getMethod().getMethodName();
-        String assertString = String.format("Assert ");
-
+        String assertString = "Assert ";
         if (assertCommand.getMessage() != null && !assertCommand.getMessage().trim().isEmpty()) {
-            assertString += String.format("[%s]", assertCommand);
+            assertString = String.format("[%s]", assertCommand.getMessage());
         }
         assertString += String.format("%s%s()", msg, methodName);
 

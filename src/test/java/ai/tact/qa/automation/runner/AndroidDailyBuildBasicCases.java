@@ -24,9 +24,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class AndroidTactSanityTesting {
+public class AndroidDailyBuildBasicCases {
 
-    private static final String appPackage = "appPackage:com.tactile.tact";
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     @DataProvider(name="tactUserInfo")
@@ -39,6 +38,11 @@ public class AndroidTactSanityTesting {
     @BeforeClass(alwaysRun = true)
     public void setUpClass() throws Exception {
         log.info("TestRunner - BeforeClass - setUpClass");
+
+        DriverUtils.runCommand(new String[] {"bash", "-c", "adb root"});
+        System.out.println("enable Root Access ROMs");
+        GenerateReport.deleteAllJsonReport();
+        System.out.println("delete json files");
 //        Appium.startServer("127.0.0.1","2345","3456");
         Appium.restartAppium();
     }
@@ -51,8 +55,8 @@ public class AndroidTactSanityTesting {
                     "noReset:true",
                     "fullReset:false"
                     //for Alpha only, dev do not need this part
-                    , appPackage,
-                    "appActivity:com.tactile.tact.onboarding.SignInActivity"
+//                    , appPackage       //com.tactile.tact
+//                    , "appActivity:com.tactile.tact.onboarding.SignInActivity"
             }
     )
     //w/ data provider
@@ -69,37 +73,14 @@ public class AndroidTactSanityTesting {
         testNGCucumberRunner.runCukes();
     }
 
-    //CreateSimpleOpportunity
-    @MobileTest(    //Android
-            locale = "US",
-            additionalCapabilities = {
-                    "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
-                    "fullReset:false"  //restart the iPhone/simulator and install the app
-                    , appPackage,
-                    "appActivity:com.tactile.tact.onboarding.SignInActivity"
-            }
-    )
-    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dataProvider = "tactUserInfo", dependsOnMethods = "TactOnboardingFeature")
-    void TactACreateSimpleOpptyFeature(UserInfor userInfor) throws InterruptedException {
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //Create Simple Opportunity
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactCreateSimpleOpptyNoReset.class);
-        testNGCucumberRunner.runCukes();
-    }
-
     //ReAuth
     @MobileTest(    //Android
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true"
                     ,"noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
-                                        //Android reset the app to true, will need to re-connect with SF
+                    //Android reset the app to true, will need to re-connect with SF
                     ,"fullReset:false"  //restart the iPhone/simulator and install the app
-                    , appPackage,
-                    "appActivity:com.tactile.tact.onboarding.SignInActivity"
             }
     )
     //w/ data provider
@@ -117,50 +98,6 @@ public class AndroidTactSanityTesting {
         testNGCucumberRunner.runCukes();
     }
 
-    //Calendar
-    @MobileTest(    //iOS
-            locale = "US",
-            additionalCapabilities = {
-                    "unicodeKeyboard:true","resetKeyboard:true"
-                    ,"noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
-                    //Android reset the app to true, will need to re-connect with SF
-                    ,"fullReset:false"  //restart the iPhone/simulator and install the app
-                    , appPackage,
-                    "appActivity:com.tactile.tact.onboarding.SignInActivity"
-            }
-    )
-    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
-    void TactCalendarFeature() throws InterruptedException {
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //Calendar
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactCalendarFeatureRunCukesNoReset.class);
-        testNGCucumberRunner.runCukes();
-    }
-
-    //contacts
-    @MobileTest(    //Android
-            locale = "US",
-            additionalCapabilities = {
-                    "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
-                    "fullReset:false"  //restart the iPhone/simulator and install the app
-                    , appPackage,
-                    "appActivity:com.tactile.tact.onboarding.SignInActivity"
-            }
-    )
-    //w/ data provider
-    @Test(groups = "Tact-Sanity", description = "TactDataSourcesTest", dependsOnMethods = "TactOnboardingFeature")
-    void TactContactsFeatureRunCukesNoReset( ) throws InterruptedException {
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //Contact
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactContactsFeatureRunCukesNoReset.class);
-        testNGCucumberRunner.runCukes();
-    }
-
     //getAppVersion
     @MobileTest(  //iOS
             locale = "US",
@@ -169,8 +106,6 @@ public class AndroidTactSanityTesting {
                     ,"noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
                     //Android reset the app to true, will need to re-connect with SF
                     ,"fullReset:false"  //restart the iPhone/simulator and install the app
-                    , appPackage,
-                    "appActivity:com.tactile.tact.onboarding.SignInActivity"
             }
     )
     //w/ data provider
@@ -184,27 +119,6 @@ public class AndroidTactSanityTesting {
         testNGCucumberRunner.runCukes();
     }
 
-    //EditOpportunity
-    @MobileTest(    //Android
-            locale = "US",
-            additionalCapabilities = {
-                    "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
-                    "fullReset:false"  //restart the iPhone/simulator and install the app
-                    , appPackage,
-                    "appActivity:com.tactile.tact.onboarding.SignInActivity"
-            }
-    )
-    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dataProvider = "tactUserInfo", dependsOnMethods = "TactGetAppVersion")
-    void TactEditOpptyFeature(UserInfor userInfor) throws InterruptedException {
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //Edit Opportunity
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactEditOpptyFeatureNoReset.class);
-        testNGCucumberRunner.runCukes();
-    }
-
     //Delete
     @MobileTest(    //Android
             locale = "US",
@@ -212,8 +126,6 @@ public class AndroidTactSanityTesting {
                     "unicodeKeyboard:true","resetKeyboard:true",
                     "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
-                    , appPackage,
-                    "appActivity:com.tactile.tact.onboarding.SignInActivity"
             }
     )
     //w/ data provider
@@ -232,7 +144,7 @@ public class AndroidTactSanityTesting {
         log.info("TestRunner - AfterClass - tearDownClass");
 
         Appium.stopServer();
-        if ( !Appium.checkIfServerIsRunnning("4723") ) {
+        if (!Appium.checkIfServerIsRunnning("4723")) {
             log.info("Appium does not run");
         } else {
             log.info("Appium does run, and stop again");
@@ -241,7 +153,6 @@ public class AndroidTactSanityTesting {
 
         //report
         log.info("Finished running");
-//        GenerateReport.deleteAllJsonReport();
         GenerateReport.getReport(WebDriverPlatform.ANDROID);
 
         log.info("testNGCucumberRunner.finish(); FINISHED");

@@ -17,15 +17,15 @@ public class ContactsAPPSteps implements En {
 
     public ContactsAPPSteps() {
 
-        ContactsAppPage contactsAppPage = new ContactsAppPage();
-
         And("^contactsAPP: I am in Contacts APP$", () -> {
             log.info("^contactsAPP: I am in Contacts APP$");
+            ContactsAppPage contactsAppPage = new ContactsAppPage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(contactsAppPage.getContactsTitleLabel());
         });
         Then("^I search for contact's name \"([^\"]*)\"$", (String contactName) -> {
             log.info("^I search for contact's name \"([^\"]*)\"$");
+            ContactsAppPage contactsAppPage = new ContactsAppPage();
 
             if (contactName.contains(","))
             { //Testing,fname
@@ -41,6 +41,7 @@ public class ContactsAPPSteps implements En {
         });
         And("^I edit and delete it from Contacts App$", () -> {
             log.info("^I edit and delete it from Contacts App$");
+            ContactsAppPage contactsAppPage = new ContactsAppPage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(contactsAppPage.getEditContactButton());
             contactsAppPage.getEditContactButton().tap(contactsAppPage.getCancelEditButton());

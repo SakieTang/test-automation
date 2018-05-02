@@ -14,10 +14,9 @@ public class ThreadCommonSteps implements En {
 
     public ThreadCommonSteps() {
 
-        ThreadNavigatePage threadNavigatePage = new ThreadNavigatePage();
-
         Then("^ThreadCommon: I switch to \"(Timeline|Categories|Contacts|Meet|Integrations|My To-Dos|Favorities|Mentions|User)\" from navigate$", (String navigate) -> {
             log.info("^ThreadCommon: I switch to " + navigate + " from navigate$");
+            ThreadNavigatePage threadNavigatePage = new ThreadNavigatePage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(threadNavigatePage.getThreadIconLink().getLocator());
 

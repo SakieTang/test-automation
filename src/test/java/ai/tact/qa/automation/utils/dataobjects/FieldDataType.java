@@ -6,4 +6,3 @@ public enum FieldDataType {
     randomAlphanumeric,     //rwis1DSWnm
     randomAscii             //w:vjD@D+uJ
 }
-

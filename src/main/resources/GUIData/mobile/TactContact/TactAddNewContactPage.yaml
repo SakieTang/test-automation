@@ -47,6 +47,46 @@ elements:
       US: "//XCUIElementTypeStaticText[@name='Last Name']"
     android:
       US: "//*[contains(@text, 'Last Name')]"
+  sfPhoneTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Phone']/following-sibling::XCUIElementTypeTextField"
+    android:
+      US: "//TextInputLayout[@text='Opportunity Name (required)']/android.widget.FrameLayout/android.widget.EditText"
+  sfHomeTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Home Phone']/following-sibling::XCUIElementTypeTextField"
+    android:
+      US: "//TextInputLayout[@text='Opportunity Name (required)']/android.widget.FrameLayout/android.widget.EditText"
+  sfMobileTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Mobile']/following-sibling::XCUIElementTypeTextField"
+    android:
+      US: "//TextInputLayout[@text='Opportunity Name (required)']/android.widget.FrameLayout/android.widget.EditText"
+  sfOtherPhoneTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Other Phone']/following-sibling::XCUIElementTypeTextField"
+    android:
+      US: "//TextInputLayout[@text='Opportunity Name (required)']/android.widget.FrameLayout/android.widget.EditText"
+  sfEmailTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Email']/following-sibling::XCUIElementTypeTextField"
+    android:
+      US: "//TextInputLayout[@text='Opportunity Name (required)']/android.widget.FrameLayout/android.widget.EditText"
+  addPhoneNumberButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Add Phone Number']"
+    android:
+      US: "//TextInputLayout[@text='Opportunity Name (required)']/android.widget.FrameLayout/android.widget.EditText"
+  workPhoneTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Work']/following-sibling::XCUIElementTypeTextField"
+    android:
+      US: "//TextInputLayout[@text='Opportunity Name (required)']/android.widget.FrameLayout/android.widget.EditText"
+  addEmailButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Add Email']"
+    android:
+      US: "//TextInputLayout[@text='Opportunity Name (required)']/android.widget.FrameLayout/android.widget.EditText"
 pageTitle:
   US: "page_object"
 pageValidators: [

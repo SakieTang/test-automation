@@ -25,7 +25,7 @@ public class UserInfor {
     private String gmailAndroidEmailAddress = null;
     private String gmailPwd = null;
 
-    public UserInfor() { }
+    public UserInfor() {}
 
     //set - SF
     public void setSalesforceIOSAccountName(String salesforceIOSAccountName) { this.salesforceIOSAccountName = salesforceIOSAccountName; }

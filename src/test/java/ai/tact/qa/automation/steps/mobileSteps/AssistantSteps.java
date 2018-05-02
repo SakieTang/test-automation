@@ -23,10 +23,10 @@ public class AssistantSteps implements En {
 
     public AssistantSteps() {
 
-        TactAssistantPage tactAssistantPage = new TactAssistantPage();
-
         When("^Assistant: I send \"([^\"]*)\" to \"(Tact|Tact dev1)\" Assistant and \"([^\"]*)\" verify sent msg$", (String inputText, String stage, String isVerify) -> {
             log.info("^Assistant: I send " + inputText + " to Assistant and verify it$");
+            TactAssistantPage tactAssistantPage = new TactAssistantPage();
+
             //save sent cmd to report.txt
             dataRecord = String.format("%s | %s | ", stage, inputText);
             System.out.println("typeDataRecord : " + dataRecord + "<<<<<<<,");
@@ -54,7 +54,7 @@ public class AssistantSteps implements En {
             while ( !isBotReply(getEleXCoordinate(tactAssistantPage.getDisplayTextListLabel(), labelCount(tactAssistantPage.getDisplayTextListLabel()) -1 ))
                     ){
                 checkTime = System.currentTimeMillis();
-                if ( (checkTime - beginTime)/1000 > 60 ) {
+                if ((checkTime - beginTime)/1000 > 60) {
                     break;
                 }
             }
@@ -70,7 +70,7 @@ public class AssistantSteps implements En {
             int afterSendMsgNum = labelCount(mobileElement);
 
             //check the msg sent from
-            if ( isBotReply(getEleXCoordinate(mobileElement, labelCount(mobileElement) -1 )) ) {
+            if (isBotReply(getEleXCoordinate(mobileElement, labelCount(mobileElement) -1 ))) {
                 currentMsg = getLabelTextAtIndex(mobileElement, labelCount(mobileElement) - 2 );
                 afterSendMsgNum = labelCount(mobileElement);
 //                System.out.println("Bot already replied and msg is " + currentMsg);
@@ -94,6 +94,7 @@ public class AssistantSteps implements En {
         });
          Then("^Assistant: I check bot \"([^\"]*)\"$", (String responseText) -> {
             log.info("^Assistant: I check bot " + responseText + "$");
+             TactAssistantPage tactAssistantPage = new TactAssistantPage();
 
             //get the latest display msg
              MobileElement mobileElement = tactAssistantPage.getDisplayTextListLabel();
@@ -141,6 +142,7 @@ public class AssistantSteps implements En {
         });
         When("^Assistant: I send \"([^\"]*)\" to Assistant$", (String inputText) -> {
             log.info("^Assistant: I send " + inputText + " to Assistant$");
+            TactAssistantPage tactAssistantPage = new TactAssistantPage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactAssistantPage.getTactAssistantTitleLabel());
 
@@ -160,6 +162,7 @@ public class AssistantSteps implements En {
 
         When("^Assistant: I send \"([^\"]*)\" to Assistant, and then disconnect with wifi and (with|without) verify sent msg$", (String inputText, String isVerify) -> {
             log.info("^Assistant: I send " + inputText + " to Assistant, and then disconnect and with wifi$");
+            TactAssistantPage tactAssistantPage = new TactAssistantPage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactAssistantPage.getTactAssistantTitleLabel());
 
@@ -185,6 +188,7 @@ public class AssistantSteps implements En {
         });
         And("^Assistant: I check the un-deliver error msg$", () -> {
             log.info("^Assistant: I check the un-deliver error msg$");
+            TactAssistantPage tactAssistantPage = new TactAssistantPage();
 
             if (!isBotReply( getEleXCoordinate(tactAssistantPage.getDisplayTextListLabel(), labelCount(tactAssistantPage.getDisplayTextListLabel())-1) )) {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactAssistantPage.getErrorMsgTextListLabel());
@@ -225,6 +229,7 @@ public class AssistantSteps implements En {
     protected boolean isBotReply (int xCoordinate) {
         int botReplyMsgXCoordinate = 22;
         if ( xCoordinate == botReplyMsgXCoordinate ) {
+
             return true;
         } else {
             return false;

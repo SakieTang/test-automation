@@ -1,0 +1,60 @@
+askTact: !!ai.tact.qa.automation.utils.dataobjects.AlexaResponseInfo
+  input: ask tact
+  outputSpeechSSML: <speak>Welcome to Tact. How can I help you?</speak>
+  cardContent: Glad to be here. Anything I can help with?
+  repromptSSML: <speak>Welcome to Tact. How can I help you?</speak>
+  shouldEndSession: false
+latestDeals: !!ai.tact.qa.automation.utils.dataobjects.AlexaResponseInfo
+  input: what's the latest on United Oil deals?
+  outputSpeechSSML: <speak>Which Account are you interested in?<break time=\"500ms\"/>1. United Oil and Gas, UK<break time=\"500ms\"/>2. United Oil and Gas Corp.<break time=\"500ms\"/>3. United Oil and Gas, Singapore</speak>
+  cardContent: Which Account are you interested in?\n1. United Oil & Gas, UK\n2. United Oil & Gas Corp.\n3. United Oil & Gas, Singapore
+  repromptSSML: <speak>Which Account are you interested in?<break time=\"500ms\"/>1. United Oil and Gas, UK<break time=\"500ms\"/>2. United Oil and Gas Corp.<break time=\"500ms\"/>3. United Oil and Gas, Singapore</speak>
+  shouldEndSession: false
+optionTwo: !!ai.tact.qa.automation.utils.dataobjects.AlexaResponseInfo
+  input: option two
+  outputSpeechSSML: <speak>Which Opportunity are you interested in?<break time=\"500ms\"/>1. United Oil Refinery Generators, 2018-05-13<break time=\"500ms\"/>2. United Oil Plant Standby Generators, 2018-04-29<break time=\"500ms\"/>3. United Oil Emergency Generators, 2018-03-25<break time=\"500ms\"/>4. United Oil Installations, 2018-04-01<break time=\"500ms\"/>5. United Oil Refinery Generators, 2018-05-20<break time=\"500ms\"/>6. United Oil Installations, 2018-03-31<break time=\"500ms\"/>7. United Oil Installations, 2018-04-12<break time=\"500ms\"/>8. United Oil Office Portable Generators, 2018-04-05<break time=\"500ms\"/>9. United Oil Standby Generators, 2018-05-28<break time=\"500ms\"/>10. United Oil SLA, 2018-05-27</speak>
+  cardContent: Which Opportunity are you interested in?\n1. United Oil Refinery Generators, 2018-05-13\n2. United Oil Plant Standby Generators, 2018-04-29\n3. United Oil Emergency Generators, 2018-03-25\n4. United Oil Installations, 2018-04-01\n5. United Oil Refinery Generators, 2018-05-20\n6. United Oil Installations, 2018-03-31\n7. United Oil Installations, 2018-04-12\n8. United Oil Office Portable Generators, 2018-04-05\n9. United Oil Standby Generators, 2018-05-28\n10. United Oil SLA, 2018-05-27
+  repromptSSML: <speak>Which Opportunity are you interested in?<break time=\"500ms\"/>1. United Oil Refinery Generators, 2018-05-13<break time=\"500ms\"/>2. United Oil Plant Standby Generators, 2018-04-29<break time=\"500ms\"/>3. United Oil Emergency Generators, 2018-03-25<break time=\"500ms\"/>4. United Oil Installations, 2018-04-01<break time=\"500ms\"/>5. United Oil Refinery Generators, 2018-05-20<break time=\"500ms\"/>6. United Oil Installations, 2018-03-31<break time=\"500ms\"/>7. United Oil Installations, 2018-04-12<break time=\"500ms\"/>8. United Oil Office Portable Generators, 2018-04-05<break time=\"500ms\"/>9. United Oil Standby Generators, 2018-05-28<break time=\"500ms\"/>10. United Oil SLA, 2018-05-27</speak>
+  shouldEndSession: false
+choiceSix: !!ai.tact.qa.automation.utils.dataobjects.AlexaResponseInfo
+  input: choice six
+  outputSpeechSSML: <speak>The United Oil Installations deal is currently in Closed Won stage. The deal was valued at $270,000.00 and closed on 2018-03-31.<break time=\"500ms\"/> You can view more details in your Alexa app. <break time=\"500ms\"/>Anything else I can help you with?</speak>
+  cardContent: Summary:\ The United Oil Installations deal is currently in Closed Won stage. The deal was valued at $270,000.00 and closed on 2018-03-31.\nAccount Name:\ United Oil & Gas Corp.\nAmount:\ $270,000.00\nClose Date:\ 2018-03-31\nName:\ United Oil Installations\nOwner Full Name:\ AutomationAI Alexa\nProbability (%):\ 100%\nStage:\ Closed Won\n\n
+  repromptSSML: <speak>The United Oil Installations deal is currently in Closed Won stage. The deal was valued at $270,000.00 and closed on 2018-03-31.<break time=\"500ms\"/> You can view more details in your Alexa app. <break time=\"500ms\"/>Anything else I can help you with?</speak>
+  shouldEndSession: false
+website: !!ai.tact.qa.automation.utils.dataobjects.AlexaResponseInfo
+  input: what's the website of University of Arizona?
+  outputSpeechSSML: <speak>Some of the information is not available because it was never entered. Here's what I found:\ <break time=\"500ms\"/>The Account Name is University of Arizona. <break time=\"500ms\"/>The Website is www.universityofarizona.com. <break time=\"500ms\"/><break time=\"500ms\"/> You can view more details in your Alexa app.
+  cardContent: Some of the information is not available because it was never entered. Here's what I found:\nAccount Name:\ University of Arizona\nWebsite:\ www.universityofarizona.com\n\n
+  repromptSSML: <speak>Some of the information is not available because it was never entered. Here's what I found:\ <break time=\"500ms\"/>The Account Name is University of Arizona. <break time=\"500ms\"/>The Website is www.universityofarizona.com. <break time=\"500ms\"/><break time=\"500ms\"/> You can view more details in your Alexa app.
+  shouldEndSession: false
+contactHelp: !!ai.tact.qa.automation.utils.dataobjects.AlexaResponseInfo
+  input: get contact details
+  outputSpeechSSML: <speak><break time=\"500ms\"/>Here are most common things you can do with Salesforce contacts:<break time=\"500ms\"/><break time=\"500ms\"/>Getting details about a contact:<break time=\"500ms\"/><break time=\"500ms\"/>Example:\ What's the phone number of Lisa Simpson?<break time=\"500ms\"/><break time=\"500ms\"/>
+  cardContent: \nHere are most common things you can do with Salesforce contacts:\n\nGetting details about a contact:\n\nExample:\ What's the phone number of Lisa Simpson?\n\n\n
+  repromptSSML: <speak><break time=\"500ms\"/>Here are most common things you can do with Salesforce contacts:<break time=\"500ms\"/><break time=\"500ms\"/>Getting details about a contact:<break time=\"500ms\"/><break time=\"500ms\"/>Example:\ What's the phone number of Lisa Simpson?<break time=\"500ms\"/><break time=\"500ms\"/>
+  shouldEndSession: false
+opptyHelp: !!ai.tact.qa.automation.utils.dataobjects.AlexaResponseInfo
+  input: help me get details about an opportunity
+  outputSpeechSSML: <speak><break time=\"500ms\"/>Here are the most common things you can do with Salesforce opportunities:<break time=\"500ms\"/><break time=\"500ms\"/>Getting details about an opportunity:<break time=\"500ms\"/><break time=\"500ms\"/>Example:\ What's the latest on the Globex deal?<break time=\"500ms\"/><break time=\"500ms\"/>Example:\ What's the probability of the Globex deal?<break time=\"500ms\"/><break time=\"500ms\"/>Updating an opportunity:<break time=\"500ms\"/><break time=\"500ms\"/>Example:\ Can you move Globex deal to proposal stage?<break time=\"500ms\"/><break time=\"500ms\"/>Example:\ Can you update probability to 90 for the Globex deal?<break time=\"500ms\"/><break time=\"500ms\"/>
+  cardContent: \nHere are the most common things you can do with Salesforce opportunities:\n\nGetting details about an opportunity:\n\nExample:\ What's the latest on the Globex deal?\n\nExample:\ What's the probability of the Globex deal?\n\nUpdating an opportunity:\n\nExample:\ Can you move Globex deal to proposal stage?\n\nExample:\ Can you update probability to 90 for the Globex deal?\n\n\n
+  repromptSSML: <speak><break time=\"500ms\"/>Here are the most common things you can do with Salesforce opportunities:<break time=\"500ms\"/><break time=\"500ms\"/>Getting details about an opportunity:<break time=\"500ms\"/><break time=\"500ms\"/>Example:\ What's the latest on the Globex deal?<break time=\"500ms\"/><break time=\"500ms\"/>Example:\ What's the probability of the Globex deal?<break time=\"500ms\"/><break time=\"500ms\"/>Updating an opportunity:<break time=\"500ms\"/><break time=\"500ms\"/>Example:\ Can you move Globex deal to proposal stage?<break time=\"500ms\"/><break time=\"500ms\"/>Example:\ Can you update probability to 90 for the Globex deal?<break time=\"500ms\"/><break time=\"500ms\"/>
+  shouldEndSession: false
+reportBug: !!ai.tact.qa.automation.utils.dataobjects.AlexaResponseInfo
+  input: report a bug
+  outputSpeechSSML: <speak>Please describe the problem you're facing or improvement you'd like to see.</speak>
+  cardContent: Please describe the problem you're facing or improvement you'd like to see.
+  repromptSSML: <speak>Please describe the problem you're facing or improvement you'd like to see.</speak>
+  shouldEndSession: false
+endReportBug: !!ai.tact.qa.automation.utils.dataobjects.AlexaResponseInfo
+  input: cancel
+  outputSpeechSSML: <speak>Bug cancelled.
+  cardContent: Bug cancelled.\n
+  repromptSSML: <speak>Bug cancelled.
+  shouldEndSession: false
+endSession: !!ai.tact.qa.automation.utils.dataobjects.AlexaResponseInfo
+  input: cancel
+  outputSpeechSSML: <speak>Bye</speak>
+  cardContent: Bye
+  repromptSSML: null
+  shouldEndSession: true

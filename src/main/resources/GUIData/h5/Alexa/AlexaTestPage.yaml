@@ -20,7 +20,7 @@ elements:
         US: "css=.askt-utterance__input"
     myMsgSpinnerLabel:
       locators:
-        US: "css=.askt-dialog__message--spinner"
+        US: "css=.astro-spinner-container"
     myMsgsListLabel:
       locators:
         US: "css=.askt-dialog__message--request"
@@ -33,6 +33,21 @@ elements:
     displayMsgsLabel:
       locators:
         US: "css=.askt-dialog__message"
+    jSonOutputSpeechSSMLLabel:
+      locators:
+        US: "css=div[id='right'] > div[class='ace_scroller'] > div > div[class*='ace_text-layer'] > div:nth-child(7) > span[class='ace_string']"
+    jSonOutputCardContentLabel:
+      locators:
+        US: "css=div[id='right'] > div[class='ace_scroller'] > div > div[class*='ace_text-layer'] > div:nth-child(12) > span[class='ace_string']"
+    jSonOutputRepromptSSMLLabel:
+      locators:
+        US: "css=div[id='right'] > div[class='ace_scroller'] > div > div[class*='ace_text-layer'] > div:nth-child(17) > span[class='ace_string']"
+    jSonOutputShouldEndSessionLabel:
+      locators:
+        US: "css=div[id='right'] > div[class='ace_scroller'] > div > div[class*='ace_text-layer'] > div:nth-child(20) > span[class*='ace_constant']"
+    jSonOutputEndTactSkillShouldEndSessionLabel:
+      locators:
+        US: "css=div[id='right'] > div[class='ace_scroller'] > div > div[class*='ace_text-layer'] > div:nth-child(14) > span[class*='ace_constant']"
 pageValidators: [
     testSkillButton
 ]

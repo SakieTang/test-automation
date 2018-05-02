@@ -26,14 +26,9 @@ public class AddEditDeleteOpptySteps implements En {
 
     public AddEditDeleteOpptySteps() {
 
-        TactOpptiesMainPage tactOpptiesMainPage = new TactOpptiesMainPage();
-        TactAddNewOpptyPage tactAddNewOpptyPage = new TactAddNewOpptyPage();
-        TactSearchAccountPage tactSearchAccountPage = new TactSearchAccountPage();
-        TactOpptyObjPage tactOpptyObjPage = new TactOpptyObjPage();
-        isEdit = false;
-
         When("^AddEditOppty: I do action \"([^\"]*)\" required oppty information with \"([^\"]*)\" opptyName, \"([^\"]*)\" closeDate, \"([^\"]*)\" stage and \"([^\"]*)\" probability$", (String action, String opptyName, String closeDate, String stage, String probability) -> {
             log.info("^AddEditOppty: I do action " + action + " required oppty information with " + opptyName + " opptyName, " + closeDate + " closeDate, " + stage + " stage and " + probability + " probability$");
+            TactAddNewOpptyPage tactAddNewOpptyPage = new TactAddNewOpptyPage();
 
             if (action.equalsIgnoreCase("edit")){
                 isEdit = true;
@@ -105,6 +100,7 @@ public class AddEditDeleteOpptySteps implements En {
 
         And("^AddEditOppty: I do action \"([^\"]*)\" more oppty information with \"([^\"]*)\" isPrivate, \"([^\"]*)\" accountType, \"([^\"]*)\" leadSource, \"([^\"]*)\" amount and \"([^\"]*)\" next step$", (String action, String isPrivate, String accountType, String leadSource, String amount, String nextStep) -> {
             log.info("^AddEditOppty: I do action " + action + " more oppty information with " + isPrivate + " isPrivate, " + accountType + " accountType, " + leadSource + " leadSource, " + amount + " amount and " + nextStep + " next step$");
+            TactAddNewOpptyPage tactAddNewOpptyPage = new TactAddNewOpptyPage();
 
             if (action.equalsIgnoreCase("edit")){
                 isEdit = true;
@@ -160,6 +156,7 @@ public class AddEditDeleteOpptySteps implements En {
 
         And("^AddEditOppty: I do action \"([^\"]*)\" Additional Information with \"([^\"]*)\" orderNumber, \"([^\"]*)\" mainCompetitor, \"([^\"]*)\" currentGenerator, \"([^\"]*)\" deliveryInstallationStatus and \"([^\"]*)\" tracking number$", (String action, String orderNumber, String mainCompetitor, String currentGenerator, String deliveryInstallationStatus, String trackingNum) -> {
             log.info("^AddEditOppty: I do action " + action + " Additional Information with " + orderNumber + " orderNumber, " + mainCompetitor + " mainCompetitor, " + currentGenerator + " currentGenerator, " + deliveryInstallationStatus + " deliveryInstallationStatus and " + trackingNum + " tracking number$");
+            TactAddNewOpptyPage tactAddNewOpptyPage = new TactAddNewOpptyPage();
 
             if (action.equalsIgnoreCase("edit")){
                 isEdit = true;
@@ -212,6 +209,7 @@ public class AddEditDeleteOpptySteps implements En {
         });
         And("^AddEditOppty: I do action \"([^\"]*)\" DescriptionInfo with \"([^\"]*)\" description$", (String action, String description) -> {
             log.info("^AddEditOppty: I do action " + action + " DescriptionInfo with " + description + " description$");
+            TactAddNewOpptyPage tactAddNewOpptyPage = new TactAddNewOpptyPage();
 
             if (action.equalsIgnoreCase("edit")){
                 isEdit = true;
@@ -237,6 +235,8 @@ public class AddEditDeleteOpptySteps implements En {
         });
         And("^Contacts: I search one account \"([^\"]*)\" and select it$", (String accountName) -> {
             log.info("^Contacts: I search one account " + accountName + " and select it$");
+            TactAddNewOpptyPage tactAddNewOpptyPage = new TactAddNewOpptyPage();
+            TactSearchAccountPage tactSearchAccountPage = new TactSearchAccountPage();
 
             if (!DriverUtils.isTextEmpty(accountName)) {
                 // search the name from search field
@@ -260,6 +260,10 @@ public class AddEditDeleteOpptySteps implements En {
             }
         });
         And("^AddOppty: I \"([^\"]*)\" save the new opportunity$", (String isSave) -> {
+            log.info("^AddOppty: I " + isSave + " save the new opportunity$");
+            TactOpptiesMainPage tactOpptiesMainPage = new TactOpptiesMainPage();
+            TactAddNewOpptyPage tactAddNewOpptyPage = new TactAddNewOpptyPage();
+
             boolean isSaveBoolean = Boolean.parseBoolean(isSave);
             if (isSaveBoolean)
             {
@@ -281,11 +285,13 @@ public class AddEditDeleteOpptySteps implements En {
         });
         Then("^EditOppty: I start to edit$", () -> {
             log.info("^EditOppty: I start to edit$");
+            TactOpptyObjPage tactOpptyObjPage = new TactOpptyObjPage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactOpptyObjPage.getEditOpptyObjButton());
             tactOpptyObjPage.getEditOpptyObjButton().tap();
 
         });
+
         Then("^EditOppty: I edit required oppty information with \"([^\"]*)\" opptyName$", (String arg0) -> {
             // Write code here that turns the phrase above into concrete actions
             throw new PendingException();

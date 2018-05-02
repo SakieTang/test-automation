@@ -16,10 +16,9 @@ public class AlexaCommonSteps implements En {
 
     public AlexaCommonSteps() {
 
-        AlexaNavigatePage alexaNavigatePage = new AlexaNavigatePage();
-
         Then("^AlexaTest: I switch to \"(Test)\" from navigate$", (String navigate) -> {
             log.info("^AlexaTest: I switch to " + navigate + " from navigate$");
+            AlexaNavigatePage alexaNavigatePage = new AlexaNavigatePage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(alexaNavigatePage.getNavAlexaConsolesLink().getLocator());
 

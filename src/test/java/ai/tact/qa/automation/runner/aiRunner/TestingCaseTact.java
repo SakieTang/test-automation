@@ -38,23 +38,22 @@ public class TestingCaseTact {
 //        Appium.restartAppium();
     }
 
+    //Tact AI Testing
     @MobileTest(    //iOS
             locale="US",
-            appPath="Applications/Tact Prototype.app",
+//            appPath="Applications/Tact Prototype.app",
             additionalCapabilities={
                     "unicodeKeyboard:true", "resetKeyboard:true"
                     , "noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
                     , "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    //w/ data provider
-    @Test(description="Runs Cucumber Feature - onboarding", dataProvider="yamlWebDataProvider")
-    private void TactFeature(WebUserInfor webUserInfor) throws InterruptedException {
-        CustomPicoContainer.getInstance().setWebUserInfor(webUserInfor);//userInfor = userInfor;
+    @Test(description="Runs Cucumber Feature - onboarding")//, dependsOnMethods = "TactLoginTactAIAccount")
+    private void TactAIFeature() throws InterruptedException {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
-        //onboarding
+        //Tact AI Testing
         TestNGCucumberRunner testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.testTactAI.class);
         testNGCucumberRunner.runCukes();
     }

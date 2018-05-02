@@ -20,18 +20,16 @@ public class EmailSteps implements En {
 
     private boolean isSendEmail = false;
     private boolean isSaveDraftEmail = false;
-    String sendEmailSubjectText = "";
+    private String sendEmailSubjectText = "";
 
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public EmailSteps() {
 
-        TactMailBoxesPage tactMailBoxesPage = new TactMailBoxesPage();
-        NewMessagePage newMessagePage = new NewMessagePage();
-        TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
-
         When("^Email: I switch to \"([^\"]*)\" mailType, \"([^\"]*)\" option and \"([^\"]*)\" create a new email$", (String mailType, String option, String isCreate) -> {
             log.info("^Email: I switch to " + mailType + " mailType, " + option + " option and " + isCreate + " send a new email$");
+            TactMailBoxesPage tactMailBoxesPage = new TactMailBoxesPage();
+            NewMessagePage newMessagePage = new NewMessagePage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactMailBoxesPage.getMailBoxesTitleLabel());
 
@@ -116,6 +114,7 @@ public class EmailSteps implements En {
         });
         Then("^Email: I create a simply email To \"([^\"]*)\", Subject \"([^\"]*)\" and body \"([^\"]*)\"$", (String toEmail, String subject, String body) -> {
             log.info("^Email: I create a simply email To " + toEmail + ", Subject " + subject + " and body " + body + "$");
+            NewMessagePage newMessagePage = new NewMessagePage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(newMessagePage.getNewMessageTitleLabel());
 
@@ -153,7 +152,7 @@ public class EmailSteps implements En {
 //            }
 //            currentUser = currentUser.split("\\.")[1];
             String currentOSType = DriverUtils.getCurrentMobileOSType();
-            String sendEmailSubjectText = dateMonthTime + "_" + currentOSType + "_" + fromEmailType + "_TactAPP_to_" + toEmailType + "_subject";
+            sendEmailSubjectText = dateMonthTime + "_" + currentOSType + "_" + fromEmailType + "_TactAPP_to_" + toEmailType + "_subject";
             if (!DriverUtils.isTextEmpty(subject))
             {
                 sendEmailSubjectText = sendEmailSubjectText + "_" + subject;
@@ -167,6 +166,8 @@ public class EmailSteps implements En {
         });
         And("^Email: I \"([^\"]*)\" send email and \"([^\"]*)\" save draft$", (String isSend, String isSaveDraft) -> {
             log.info("^Email: I " + isSend + " send email and " + isSaveDraft + " save draft$");
+            NewMessagePage newMessagePage = new NewMessagePage();
+            TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
 
             if(!DriverUtils.isTextEmpty(isSend)) {
                 isSendEmail = true;
@@ -193,32 +194,17 @@ public class EmailSteps implements En {
         And("^Email: I verify the email$", () -> {
             log.info("^Email: I verify the send email$");
 
-//            tactNavigateTabBarPage.getTactEmailButton().tap(tactMailBoxesPage.getMailBoxesTitleLabel());
-//
-//            if (isSendEmail){
-//                if ( isGmailType(sendEmailAddress) ){
-////                    Button googleSent = new Button("//XCUIElementTypeImage[@name='sent']");
-//                    Button googleSent = new Button("//XCUIElementTypeStaticText[@name='Sent']");
-//                    googleSent.click();
-//                    WebDriverWaitUtils.waitUntilElementIsVisible("\t//XCUIElementTypeOther[@name='Sent']");
-//                } else {
-//                    tactMailBoxesPage.getSentItemsButton().tap();
-//                    WebDriverWaitUtils.waitUntilElementIsVisible("//XCUIElementTypeNavigationBar[@name='Sent Items']");
-//                }
-//            } else if (isSaveDraftEmail) {
-//                tactMailBoxesPage.getDraftsButton().tap();
-//                WebDriverWaitUtils.waitUntilElementIsVisible("//XCUIElementTypeNavigationBar[@name='Drafts']");
-//            }
-//            if ( isSendEmail || isSaveDraftEmail ) {
-                log.info("isSendEmail " + isSendEmail + "; isSaveDraftEmail " + isSaveDraftEmail + "\nloc " + getSubjectLoc());
+            log.info("isSendEmail " + isSendEmail + "; isSaveDraftEmail " + isSaveDraftEmail + "\nloc " + getSubjectLoc());
 
-                DriverUtils.scrollToTop();
+            DriverUtils.scrollToTop();
 
-                Assert.assertTrue(Grid.driver().findElementsByXPath(getSubjectLoc()).size() != 0, "Did not find the expected email");
-//            }
+            System.out.println("before Assert.assertTrue(Grid.driver().findElementsByXPath(getSubjectLoc()).size() != 0, " + (Grid.driver().findElementsByXPath(getSubjectLoc()).size() != 0) );
+            Assert.assertTrue(Grid.driver().findElementsByXPath(getSubjectLoc()).size() != 0, "Did not find the expected email");
+            DriverUtils.sleep(5);
         });
         When("^Email: I connect with \"([^\"]*)\" email account inside Email tab bar$", (String emailOption) -> {
             log.info("^Email: I connect with " + emailOption + " email account inside Email tab bar$");
+            TactMailBoxesPage tactMailBoxesPage = new TactMailBoxesPage();
 
             if (Grid.driver().findElementsByXPath(tactMailBoxesPage.getExchangeGmailConnectedButton().getLocator()).size() == 0) {
                 String connectButtonLoc = tactMailBoxesPage.getExchangeGmailConnectButton().getLocator();

@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class AndroidDate {
-    
+
     private static Month currentMonth = Month.of( shortNameToNumber(DriverUtils.currentDateInfo("month")) );
     private static int currentDate = Integer.parseInt(DriverUtils.currentDateInfo("date"));
     private static int currentYear = Integer.parseInt(DriverUtils.currentDateInfo("year"));
@@ -25,10 +25,10 @@ public class AndroidDate {
     private static int displayDay;
     private static int displayYear;
     
-    private Month expectMonth;
-    private int expectDay;
-    private int expectYear;
-    
+    private static Month expectMonth;
+    private static int expectDay;
+    private static int expectYear;
+
     final static String DATE_FORMAT1 = "MMM dd, yyyy";
     final static String DATE_FORMAT2 = "MM/dd/yyyy";
     
@@ -38,9 +38,9 @@ public class AndroidDate {
      * //Mar 29, 2018 |  03/29/2018
      * @param date
      */
-    public void changeDate(String date){
+    public static void changeDate(String date){
         AndroidDatePage androidDatePage = new AndroidDatePage();
-        
+
         displayDate();
         if (date.equalsIgnoreCase("today")) {
             getCurrentDayMonth();
@@ -48,7 +48,7 @@ public class AndroidDate {
         else {
             splitExpectedDate(date);
         }
-        
+
         AndroidDate androidDate = new AndroidDate();
         
         //select Year
@@ -90,7 +90,7 @@ public class AndroidDate {
     
     private static void displayDate(){
         AndroidDatePage androidDatePage = new AndroidDatePage();
-        
+
         AndroidDate androidDate = new AndroidDate();
         androidDate.displayYear = Integer.parseInt(androidDatePage.getDisplayYesrButton().getValue());
         //Sat, Mar 10  ==> Mar 10
@@ -102,7 +102,7 @@ public class AndroidDate {
     }
     
     //Mar 29, 2018 |  03/29/2018
-    private void splitExpectedDate(String date){
+    private static void splitExpectedDate(String date){
         if (date.contains("/")) {    //03/29/2018
             expectMonth = Month.of( Integer.parseInt(date.split("/")[0]) );
             
@@ -135,14 +135,14 @@ public class AndroidDate {
         return month;
     }
     
-    private void getCurrentDayMonth(){
+    private static void getCurrentDayMonth(){
         Date date = DriverUtils.currentDate();
-        
+
         expectYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(date));
         expectDay = Integer.parseInt(new SimpleDateFormat("dd").format(date));
         expectMonth = Month.of( AndroidDate.shortNameToNumber(new SimpleDateFormat("MMM").format(date)) );
     }
-    
+
     public static boolean isDateValid(String date){
         if (date.contains("/")) {
             try {
@@ -188,7 +188,7 @@ public class AndroidDate {
     }
     
     public static void main(String[] args){
-        
+
         AndroidDate androidDate = new AndroidDate();
         androidDate.splitExpectedDate("10/2/2018");
         System.out.println(Month.of( Integer.parseInt("10") ));

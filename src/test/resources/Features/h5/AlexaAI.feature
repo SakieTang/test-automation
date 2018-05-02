@@ -11,14 +11,24 @@ Feature: Assistant - Alexa
   @P1
   @AlexaAIBasicTesting
   Scenario Outline: Sent msg to AI, and verify the reply
-    And AlexaTest: I click "testEnabledSkill" option
-    When AlexaTest: I send "<inputText>" to "Alexa" Assistant and "<isVerify>" verify sent msg
-#    Then AlexaTest: I check bot "<responseText>"
+    Given AlexaTest: I click "testEnabledSkill" option
+    When AlexaTest: I "<isCancel>" cancel session
+    Then AlexaTest: I send "<cmd>" to "Alexa dev1" Assistant and "<isVerify>" verify send msg
+#    When AlexaTest: I check bot response text
+    When AlexaTest: I "<isCheckOutputSpeechSSML>" check bot "jSonOutputSpeechSSML" response
+    Then AlexaTest: I "<isCheckOutputCardContent>" check bot "jSonOutputCardContent" response
+    And AlexaTest: I "<isCheckOutputRepromptSSML>" check bot "jSonOutputRepromptSSML" response
+    And AlexaTest: I "<isCheckOutputShouldEndSession>" check bot "jSonOutputShouldEndSession" response
 
     Examples:
-      | inputText                              | isVerify | responseText                                                           |
-      | What is the latest on xyz deals?       | without  |                                           |
-#      | What is the latest on GenePoint deals? | without  |                                            |
-#      | Bye                                    | with     | Goodbye.; Bye; See you later!                                          |
-#      | Hi                                     | with     | Howdy.; Hi there! How can I help?; Hello! Grad to help.; Welcome.; Hi. |
-#      | Thanks                                 | with     | Thanks.; Thank you.                                                    |
+      | isCancel | cmd         | isVerify | isCheckOutputSpeechSSML | isCheckOutputCardContent | isCheckOutputRepromptSSML | isCheckOutputShouldEndSession |
+      | true     | askTact     | true     | true                    | true                     | true                      | true                           |
+      | false    | latestDeals | true     | true                    | true                     | true                      | true                           |
+      | false    | optionTwo   | true     | true                    | true                     | true                      | true                           |
+      | false    | optionSix   | true     | true                    | true                     | true                      | true                           |
+      | false    | website     | true     | true                    | true                     | true                      | true                           |
+      | false    | contactHelp | true     | true                    | true                     | true                      | true                           |
+      | false    | reportBug   | true     | true                    | true                     | true                      | true                           |
+      | false    | endReportBug| true     | true                    | true                     | true                      | true                           |
+      | false    | endSession  | true     | true                    | true                     | false                     | true                           |
+

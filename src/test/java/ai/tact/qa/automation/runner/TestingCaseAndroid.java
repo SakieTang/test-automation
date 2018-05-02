@@ -2,6 +2,7 @@ package ai.tact.qa.automation.runner;
 
 import ai.tact.qa.automation.utils.Appium;
 import ai.tact.qa.automation.utils.CustomPicoContainer;
+import ai.tact.qa.automation.utils.DriverUtils;
 import com.paypal.selion.annotations.MobileTest;
 import com.paypal.selion.platform.dataprovider.DataProviderFactory;
 import com.paypal.selion.platform.dataprovider.SeLionDataProvider;
@@ -23,7 +24,8 @@ import java.util.logging.Logger;
 
 public class TestingCaseAndroid {
 
-    static final String appPackage = "appPackage:com.tactile.tact.alpha";
+    static final String appPackage = "appPackage:com.tactile.tact";//0iu9yo0,9o6fvbnkcexzasecvcxr  asezdzadc.alpha";
+
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     @DataProvider(name="yamlDataProvider")
@@ -36,11 +38,11 @@ public class TestingCaseAndroid {
     @BeforeClass(alwaysRun = true)
     public void setUpClass() throws Exception {
         System.out.println("TestRunner - BeforeClass - setUpClass");
-//        DriverUtils.clearChromeData();
+//        Appium.startServer("0.0.0.0","1234","2345");
+        DriverUtils.clearChromeData();
         Appium.restartAppium();
     }
 
-    //onboarding
     @MobileTest(  //Android
             locale = "US",
             additionalCapabilities = {
@@ -61,7 +63,7 @@ public class TestingCaseAndroid {
         System.out.println("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
         //contacts
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.OnboardingRunCukesFullyReset.class);
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
         testNGCucumberRunner.runCukes();
 
 
@@ -75,7 +77,7 @@ public class TestingCaseAndroid {
         System.out.println("clear chrome data");
 
         Appium.stopServer();
-        if ( !Appium.checkIfServerIsRunnning("4723") ) {
+        if (!Appium.checkIfServerIsRunnning("4723")) {
             System.out.println("Appium does not run");
         } else {
             System.out.println("Appium does run, and stop again");
@@ -84,13 +86,16 @@ public class TestingCaseAndroid {
     }
 
     @CucumberOptions(
-            features = ("src/test/resources/Features/Calendar.feature")
-            ,glue = ("ai/tact/qa/automation/steps")
-            ,tags={"@Event"}
+            features = ("src/test/resources/Features/mobile/Lead.feature")
+            ,glue = ("ai.tact.qa.automation.steps")
+            ,tags={"" +
+//            "@createLead" +
+//            "," +
+            "@P1"}
     )
-    public class test extends AbstractTestNGCucumberTests {
+    public class testCase extends AbstractTestNGCucumberTests {
         @Test
-        private void test(){ System.out.println("@Test Contacts Feature RunCukesTest"); }
+        private void test(){ log.info("@Test Contacts Feature RunCukesTest"); }
 
     }
 

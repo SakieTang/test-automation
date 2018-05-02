@@ -21,13 +21,9 @@ public class AddDeleteContactSteps implements En {
 
     public AddDeleteContactSteps() {
 
-        TactAddNewContactPage tactAddNewContactPage = new TactAddNewContactPage();
-        TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
-        TactContactObjPage tactContactObjPage = new TactContactObjPage();
-        TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
-
         When("^AddContact: I \"([^\"]*)\" save to Phone and \"([^\"]*)\" send to Salesforce$", (String saveToPhone, String sendToSF) -> {
             log.info("^AddContact: I " + saveToPhone + " save to Phone and " + sendToSF + " send to Salesforce$");
+            TactAddNewContactPage tactAddNewContactPage = new TactAddNewContactPage();
 
             //Save to Phone
             if (Grid.driver().findElementsByXPath(tactAddNewContactPage.getSaveToIPhoneSwitch().getLocator()).size() !=0
@@ -42,30 +38,21 @@ public class AddDeleteContactSteps implements En {
         });
         When("^AddContact: I input a user name \"([^\"]*)\" and \"([^\"]*)\"$", (String contactName, String isSave) -> {
             log.info("^AddContact: I input user name " + contactName);
+            TactAddNewContactPage tactAddNewContactPage = new TactAddNewContactPage();
+            TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
+            TactContactObjPage tactContactObjPage = new TactContactObjPage();
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
 
-            String fName = null;
-            String lName = contactName;
+            String fName = DriverUtils.get1stNFromFullName(contactName);
+            String lName = DriverUtils.getLastNFromFullName(contactName);
+            System.out.println(fName + " " + lName);
 
-            if (contactName.contains(" ") && !contactName.contains(", ")) {
-                fName = contactName.split(" ")[0];
-                lName = contactName.split(" ")[1];
-            }
-            else if (contactName.contains(",") && !contactName.contains(", ")) {
-                fName = contactName.split(",")[1];
-                lName = contactName.split(",")[0];
-            }
-            else if (contactName.contains(", ")) {
-                fName = contactName.split(", ")[1];
-                lName = contactName.split(", ")[0];
-            }
-
-            if (fName != null)
-            {
+            if (!fName.isEmpty()) {
                 tactAddNewContactPage.getFirstNameTextField().setText(fName);
             }
             tactAddNewContactPage.getLastNameTextField().setText(lName);
 
-            if ( !DriverUtils.isTextEmpty(isSave) ) {
+            if (!DriverUtils.isTextEmpty(isSave)) {
                 tactAddNewContactPage.getSaveNewContactButton().tap();
 
                 if (DriverUtils.isAndroid())
@@ -81,7 +68,7 @@ public class AddDeleteContactSteps implements En {
                 {
                     tactAlertsPopUpPage.getAndroidPopUpSureConfirmOKButton().tap();
                 }
-//                if ( Grid.driver().findElementsById(tactAlertsPopUpPage.getAndroidPopUpSureConfirmOKButton().getLocator()).size() !=0 ){
+//                if (Grid.driver().findElementsById(tactAlertsPopUpPage.getAndroidPopUpSureConfirmOKButton().getLocator()).size() !=0){
 //                    tactAlertsPopUpPage.getAndroidPopUpSureConfirmOKButton().tap();
 //                }
             }
@@ -95,6 +82,8 @@ public class AddDeleteContactSteps implements En {
 
         And("^AddContact: I create \"([^\"]*)\" time a \"([^\"]*)\" and \"([^\"]*)\" save to Phone and \"([^\"]*)\" send to Salesforce, with username \"([^\"]*)\" and \"([^\"]*)\"$", (String time, String userType, String saveToPhone, String sendToSF, String contactName, String isSave) -> {
             log.info("^AddContact: I create a " + time + " and "+ saveToPhone + " save to Phone and " + sendToSF + " send to Salesforce, with username " + contactName + " and " + isSave + "$");
+            TactAddNewContactPage tactAddNewContactPage = new TactAddNewContactPage();
+            TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
 
             int times = Integer.parseInt(time);
 
@@ -163,6 +152,7 @@ public class AddDeleteContactSteps implements En {
 
                 //save
                 tactAddNewContactPage.getSaveNewContactButton().tap();
+
 
             }
         });

@@ -16,8 +16,6 @@ import java.time.Month;
 
 public class IOSTime {
 
-    private static IOSDateTimePage iOSDateTimePage = new IOSDateTimePage();
-
     private static String expectDayMonth;   //Mar 2
     private static String expectDay;
     private static Month expectMonth;
@@ -36,6 +34,7 @@ public class IOSTime {
 
     //select date and time
     public static void changeDateAndTime (String date, String expectTime){
+        IOSDateTimePage iOSDateTimePage = new IOSDateTimePage();
         WebDriverWaitUtils.waitUntilElementIsVisible(iOSDateTimePage.getDateTimeDoneLabel());
 
         displayDayMonth();
@@ -91,6 +90,7 @@ public class IOSTime {
     }
 
     public static void changeDate (String date){
+        IOSDateTimePage iOSDateTimePage = new IOSDateTimePage();
         WebDriverWaitUtils.waitUntilElementIsVisible(iOSDateTimePage.getDateTimeDoneLabel());
 
         displayDayMonth();
@@ -172,6 +172,7 @@ public class IOSTime {
 
     //Sat, Sep 1
     private static void displayDayMonth(){
+        IOSDateTimePage iOSDateTimePage = new IOSDateTimePage();
         List<WebElement> allElements = Grid.driver().findElementsByClassName(iOSDateTimePage.getDateTimePicker().getLocator());
         String date = allElements.get(0).getText();
         System.out.println("display date " + date);

@@ -80,7 +80,7 @@ public final class TactAISoftAssert extends Assertion {
             if (1 == this.allErrors.size()) {
                 assertString = String.format("A soft assertion failure occurred [\n");
             } else {
-                assertString = String.format("Multiple (%s) soft assertion failures occurred [\n", this.allErrors.size());
+                assertString = String.format("Multiple (%o) soft assertion failures occurred [\n", this.allErrors.size());
             }
 
             int counter = 0;
@@ -89,14 +89,18 @@ public final class TactAISoftAssert extends Assertion {
             while(iterator.hasNext()) {
                 Map.Entry<AssertionError, IAssert<?>> eachEntry = (Map.Entry)iterator.next();
                 AssertionError eachError = (AssertionError)eachEntry.getKey();
+                String assertStringTemp = assertString + "\t";
+
                 ++counter;
+                assertStringTemp = String.format("%s. %s\n", counter, ExceptionUtils.getRootCauseMessage(eachError));
                 if (Reporter.getCurrentTestResult() != null) {
-                    assertString += String.format("%s\t]", StringUtils.substringBetween(ExceptionUtils.getStackTrace(eachError), "\n", "\tat sun.reflect").replace("\t", "\t\t"));
+                    assertString = String.format("%s", StringUtils.substringBetween(ExceptionUtils.getStackTrace(eachError), "\n", "\tat sun.reflect")).replace("\t", "\t\t");
                 } else {
-                    assertString += String.format("%s\t]", StringUtils.substringAfter(ExceptionUtils.getStackTrace(eachError), "\n").replace("\t", "\t\t"));
+                    assertString = String.format("%s", StringUtils.substringAfter(ExceptionUtils.getStackTrace(eachError), "\n")).replace("\t", "\t\t");
                 }
             }
 
+            assertString += "\t]";
             if (Reporter.getCurrentTestResult() != null) {
                 Reporter.getCurrentTestResult().setThrowable(new AssertionError(assertString));
                 Reporter.getCurrentTestResult().setStatus(2);

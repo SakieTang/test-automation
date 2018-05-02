@@ -24,10 +24,9 @@ public class SparkHomeSteps implements En {
 
     public SparkHomeSteps() {
 
-        SparkHomePage sparkHomePage = new SparkHomePage();
-
         And("^SparkHome: I click \"(TactProdBot)\" option$", (String option) -> {
             log.info("^SparkHome: I click " + option + " option$");
+            SparkHomePage sparkHomePage = new SparkHomePage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(sparkHomePage.getAccountButton().getLocator());
 
@@ -35,6 +34,7 @@ public class SparkHomeSteps implements En {
         });
         When("^SparkHome: I send \"([^\"]*)\" to \"(Spark|Spark dev1)\" Assistant and \"([^\"]*)\" verify sent msg$", (String inputText, String stage, String isVerify) -> {
             log.info("^SparkHome: I send " + inputText + " to " + stage + " Assistant and " + isVerify + " verify sent msg$");
+            SparkHomePage sparkHomePage = new SparkHomePage();
 
             //save sent cmd to report.txt
             dataRecord = String.format("%s | %s | ", stage, inputText);
@@ -47,12 +47,12 @@ public class SparkHomeSteps implements En {
 
             //send Msg
             String tactBotMsgsLabelLocator = sparkHomePage.getTactBotMsgsLabel().getLocator();
-            if (inputText.contains("What is the latest on")) {
+            if (inputText.contains("What is the latest on") && !inputText.contains("xyz")) {
                 tactBotMsgsLabelLocator = sparkHomePage.getTactBotMsgsReplyListLabel().getLocator();
             }
             System.out.println("tactBotMsgsLabelLocator ==> " + tactBotMsgsLabelLocator);
-            int sizeNum = Grid.driver().findElementsByXPath(tactBotMsgsLabelLocator).size();
             sparkHomePage.getSendMsgTextAreaTextField().type(inputTextString);
+            int sizeNum = Grid.driver().findElementsByXPath(tactBotMsgsLabelLocator).size();
             long beginTime = System.currentTimeMillis();
             long checkTime = beginTime;
             System.out.println(sizeNum + "<== beginTime ==> " + beginTime);
@@ -73,7 +73,7 @@ public class SparkHomeSteps implements En {
             int mySentMsgNum = webMyMsgEleS.size();
             String userSentMsg = webMyMsgEleS.get( mySentMsgNum - 1 ).getText();
 
-            if ( isVerify.equalsIgnoreCase("with") ) {
+            if (isVerify.equalsIgnoreCase("with")) {
                 log.info("start checking the sent msg");
                 System.out.println("inputText " + inputText);
                 System.out.println("userSentMsg " + userSentMsg);
@@ -82,6 +82,7 @@ public class SparkHomeSteps implements En {
         });
         Then("^SparkHome: I check bot \"([^\"]*)\"$", (String responseText) -> {
             log.info("^SparkHome: I check bot " + responseText + "$");
+            SparkHomePage sparkHomePage = new SparkHomePage();
 
             //get the latest display msg from bot
             String tactBotMsgsLabelLocator;

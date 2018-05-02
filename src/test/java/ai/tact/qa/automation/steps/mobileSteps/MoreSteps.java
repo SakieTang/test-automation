@@ -22,13 +22,10 @@ public class MoreSteps implements En {
 
     public MoreSteps() {
 
-        TactWelcomePage tactWelcomePage = new TactWelcomePage();
-        TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
-        TactSettingsPage tactSettingsPage = new TactSettingsPage();
-        TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
-
         And("^More: I switch to \"([^\"]*)\" option in more page$", (String option) -> {
             log.info("^More: I switch to " + option + " option in more page$");
+            TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
+            TactSettingsPage tactSettingsPage = new TactSettingsPage();
 
             switch (option) {
                 case "Notebook":
@@ -49,6 +46,9 @@ public class MoreSteps implements En {
         });
         And("^More: I log out from the app$", () -> {
             log.info("^More: I log out from the app$");
+            TactWelcomePage tactWelcomePage = new TactWelcomePage();
+            TactSettingsPage tactSettingsPage = new TactSettingsPage();
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
 
             if (DriverUtils.isAndroid()) {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactSettingsPage.getAndroidMoreOptionButton());
@@ -69,6 +69,9 @@ public class MoreSteps implements En {
         });
         And("^More: I delete current account from the app$", () -> {
             log.info("^More: I delete current account from the app$");
+            TactWelcomePage tactWelcomePage = new TactWelcomePage();
+            TactSettingsPage tactSettingsPage = new TactSettingsPage();
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
 
             if (DriverUtils.isAndroid())
             {
@@ -87,11 +90,12 @@ public class MoreSteps implements En {
             if (DriverUtils.isIOS()) {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactWelcomePage.getWelcomeTactLabel());
             } else {
-                DriverUtils.sleep(60);
+                DriverUtils.sleep(5);
             }
         });
         Then("^More: I get App Version and \"([^\"]*)\" save in file$", (String isSave) -> {
             log.info("^More: I get App Version and " + isSave + " save in file$");
+            TactSettingsPage tactSettingsPage = new TactSettingsPage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactSettingsPage.getAppVersionLabel());
             String appVersion = tactSettingsPage.getAppVersionLabel().getValue();
@@ -110,8 +114,10 @@ public class MoreSteps implements En {
         });
         And("^More: I switch back to More page$", () -> {
             log.info("^More: I switch back to More page$");
+            TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
+            TactSettingsPage tactSettingsPage = new TactSettingsPage();
 
-            if ( DriverUtils.isIOS() ) {
+            if (DriverUtils.isIOS()) {
 
                 if (Grid.driver().findElementsByXPath(tactSettingsPage.getIosBackToSettingButton().getLocator()).size() != 0) {
                     System.out.println("now in Account Page");

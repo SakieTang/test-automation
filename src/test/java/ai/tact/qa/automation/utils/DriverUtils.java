@@ -13,6 +13,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Capabilities;
 
+import java.awt.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -205,7 +206,7 @@ public class DriverUtils {
      * @return random number
      */
     public static int getRandomNumber ( int origin, int bound ) {
-        
+
         return ThreadLocalRandom.current().nextInt(origin,bound);
     }
 
@@ -677,7 +678,7 @@ public class DriverUtils {
         System.out.println("getDisplayText ==> " + getDisplayText);
 
         if (isVerify) {
-            if ( expectNumLength > maxLength) {
+            if (expectNumLength > maxLength) {
                 SeLionAsserts.assertNotEquals(randomText, getDisplayText, "They should not equals");
             } else {
                 SeLionAsserts.assertEquals(randomText, getDisplayText, "They should equal");
@@ -697,4 +698,129 @@ public class DriverUtils {
     }
 
     public static void turnOnWifi() { runCommand("networksetup -setairportpower en0 on"); }
+
+    /**
+     * get current monitor screen size
+     * @return Dimension
+     */
+    public static Dimension getCurrentMonitorScreenSize() {
+        return Toolkit.getDefaultToolkit().getScreenSize();
+    }
+
+    /**
+     * get current monitor screen width
+     * @return double
+     */
+    public static double getCurrentMonitorScreenWidth() {
+        return getCurrentMonitorScreenSize().getWidth();
+    }
+
+    /**
+     * get current monitor screen height
+     * @return double
+     */
+    public static double getCurrentMonitorScreenHeight() {
+        return getCurrentMonitorScreenSize().getHeight();
+    }
+
+    /**
+     * get current browser screen size
+     * @return org.openqa.selenium.Dimension
+     */
+    public static org.openqa.selenium.Dimension getCurrentBrowserScreenSize() {
+        return Grid.driver().manage().window().getSize();
+    }
+
+    /**
+     * get current browser screen width
+     * @return double
+     */
+    public static double getCurrentBrowserScreenWidth() {
+        return getCurrentBrowserScreenSize().getWidth();
+    }
+
+    /**
+     * get current browser screen height
+     * @return double
+     */
+    public static double getCurrentBrowserScreenHeight() {
+        return getCurrentBrowserScreenSize().getHeight();
+    }
+
+    /**
+     * resize browser
+     * @param width
+     * @param height
+     */
+    public static void resizeBrowserSize(int width, int height) {
+        org.openqa.selenium.Dimension newScreenSize=new org.openqa.selenium.Dimension(width, height);
+        Grid.driver().manage().window().setSize(newScreenSize);
+    }
+
+    /**
+     *
+     */
+    public static void resizeBrowserToMonitorSize() {
+        double monitorWidth = DriverUtils.getCurrentMonitorScreenWidth();
+        double monitorHeight = DriverUtils.getCurrentMonitorScreenHeight();
+        String monitorSizeString = String.format("monitor size : %f x %f", monitorWidth, monitorHeight);
+        System.out.println(monitorSizeString);
+        DriverUtils.resizeBrowserSize((int)monitorWidth, (int)monitorHeight);
+    }
+
+    /**
+     * get format firstName lastName
+     * @param unformatName
+     * @return String
+     */
+    public static String convertToFormatName(String unformatName) {
+        String name = unformatName;
+
+        String[] parts = name.split(",\\s?");
+        if (parts.length > 1)
+        {
+            name = parts[1] + " " + parts[0];
+        }
+        System.out.println("name inside convertToFormatName :" + name);
+
+        return name;
+    }
+
+    /**
+     * get the 1st name from given full name
+     * @param fullName
+     * @return String
+     */
+    public static String get1stNFromFullName (String fullName) {
+        String [] parts;
+
+        if (fullName.matches("\\w+,\\s?\\w+")) {
+            parts = fullName.split(",\\s?");
+            return parts[1];
+        } else if (fullName.matches("\\w+\\s+\\w+")) {
+            parts = fullName.split("\\s+");
+            return parts[0];
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * get the family name from given full name
+     * @param fullName
+     * @return String
+     */
+    public static String getLastNFromFullName (String fullName) {
+        String [] parts;
+
+        if (fullName.matches("\\w+,\\s?\\w+")) {
+            parts = fullName.split(",\\s?");
+            return parts[0];
+        } else if (fullName.matches("\\w+\\s+\\w+")) {
+            parts = fullName.split("\\s+");
+            return parts[1];
+        } else {
+            return fullName;
+        }
+    }
 }

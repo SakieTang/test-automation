@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class IOSBasicTesting {
+public class IOSDailyBuildBasicCases {
 
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
@@ -40,6 +40,10 @@ public class IOSBasicTesting {
         log.info("TestRunner - BeforeClass - setUpClass");
 //        Appium.startServer("0.0.0.0","1234","2345");
         Appium.restartAppium();
+        log.info("after restart Appium");
+
+        GenerateReport.deleteAllJsonReport();
+        System.out.println("after delete jSonReport");
     }
 
     //onboarding
@@ -94,7 +98,7 @@ public class IOSBasicTesting {
             }
     )
     @Test(groups = "Tact-Sanity", description = "After add emails, then re_auth exchange", dataProvider = "yamlDataProvider", dependsOnMethods = "TactAddEmailFeature")
-    void TactBeReauthExchangeFeature(UserInfor userInfor) throws InterruptedException {
+    void TactReauthExchangeFeature(UserInfor userInfor) throws InterruptedException {
         CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
@@ -153,7 +157,7 @@ public class IOSBasicTesting {
         log.info("TestRunner - AfterClass - tearDownClass");
 
         Appium.stopServer();
-        if ( !Appium.checkIfServerIsRunnning("4723") ) {
+        if (!Appium.checkIfServerIsRunnning("4723")) {
             log.info("Appium does not run");
         } else {
             log.info("Appium does run, and stop again");

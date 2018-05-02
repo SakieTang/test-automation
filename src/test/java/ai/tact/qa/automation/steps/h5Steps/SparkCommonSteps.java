@@ -16,10 +16,9 @@ public class SparkCommonSteps implements En {
 
     public SparkCommonSteps() {
 
-        SparkNavigatePage sparkNavigatePage = new SparkNavigatePage();
-
         Then("^SparkCommon: I switch to \"(Home|Team|HandSet)\" from navigate$", (String navigate) -> {
             log.info("^SparkCommon: I switch to " + navigate + " from navigate$");
+            SparkNavigatePage sparkNavigatePage = new SparkNavigatePage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(sparkNavigatePage.getSparkHomeButton().getLocator());
 

@@ -16,7 +16,8 @@ public class Hooks {
 
     public Hooks( ) {}
 
-    @Before("@MobileTest")
+//    @Before("@MobileTest")
+    @Before()
     public void InitializeTest() {
 
         log.info("Hook - before - relaunch the app");

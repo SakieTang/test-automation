@@ -59,7 +59,18 @@ public class AITestInnerRunCukesClass {
     @CucumberOptions(
             features = ("src/test/resources/Features/h5/AlexaAI.feature")
             ,glue = ("ai.tact.qa.automation.steps.h5Steps")
-            ,tags={"@P0,@P1"}
+            ,tags={"@P0"}
+    )
+    public class testAlexaAILogin extends AbstractTestNGCucumberTests {
+        @Test
+        private void test(){ System.out.println("@Test Contacts Feature RunCukesTest"); }
+    }
+
+    //alexaAI
+    @CucumberOptions(
+            features = ("src/test/resources/Features/h5/AlexaAI.feature")
+            ,glue = ("ai.tact.qa.automation.steps.h5Steps")
+            ,tags={"@P1"}
     )
     public class testAlexaAI extends AbstractTestNGCucumberTests {
         @Test

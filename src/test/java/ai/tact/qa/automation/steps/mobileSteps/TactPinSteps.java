@@ -35,24 +35,18 @@ public class TactPinSteps implements En {
 
     public TactPinSteps() {
 
-        TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
-        TactContactObjPage tactContactObjPage = new TactContactObjPage();
-        TactPinPage tactPinPage = new TactPinPage();
-        TactNotePage tactNotePage = new TactNotePage();
-        TactTaskPage tactTaskPage = new TactTaskPage();
-        TactLogPage tactLogPage = new TactLogPage();
-        TactEventPage tactEventPage = new TactEventPage();
-        TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
-        TactSFDetailsEventPage tactSFDetailsEventPage = new TactSFDetailsEventPage();
-        TactSelectOptionPage tactSelectOptionPage = new TactSelectOptionPage();
-        TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
-
         And("^Tact-Pin: I see a Tact pin icon display$", () -> {
             log.info("^Tact-Pin: I see a Tact pin icon display$");
+            TactPinPage tactPinPage = new TactPinPage();
+
             WebDriverWaitUtils.waitUntilElementIsVisible(tactPinPage.getTactPinIconButton());
         });
         Then("^Tact-Pin: I click Tact pin icon and select \"([^\"]*)\" option$", (String pinOption) -> {
             log.info("^Tact-Pin: I click Tact pin icon and select " + pinOption + " option$");
+            TactPinPage tactPinPage = new TactPinPage();
+            TactNotePage tactNotePage = new TactNotePage();
+            TactLogPage tactLogPage = new TactLogPage();
+            TactEventPage tactEventPage = new TactEventPage();
 
             switch (pinOption) {
                 case "Log":
@@ -64,7 +58,7 @@ public class TactPinSteps implements En {
                     tactPinPage.getAddNoteButton().tap(tactNotePage.getNewNoteTitleLabel());
                     break;
                 case "Task":
-                    if ( DriverUtils.isAndroid() ) {
+                    if (DriverUtils.isAndroid()) {
                         tactPinPage.getTactPinIconButton().tap(tactPinPage.getAddTaskButton());
                     }
                     tactPinPage.getAddTaskButton().tap();
@@ -78,7 +72,7 @@ public class TactPinSteps implements En {
                     tactPinPage.getAddOpportunityButton().tap();
                     break;
                 default:
-                    if ( DriverUtils.isIOS() ) {
+                    if (DriverUtils.isIOS()) {
                         TactAIAsserts.verifyFalse(true, "Please give a correct String (Log|Note|Task|Event|Opportunity)");
                     } else {
                         TactAIAsserts.verifyFalse(true, "Please give a correct String (Log|Task|Note|Event)");
@@ -88,6 +82,7 @@ public class TactPinSteps implements En {
         Then("^Tact-Pin: I create a new note \"([^\"]*)\" sync to SF, \"([^\"]*)\" title and \"([^\"]*)\" body$", (String isSyncToSF, String titleText, String bodyText) -> {
             log.info("^Tact-Pin: I create a new note " + isSyncToSF + " sync to SF, " +
                     titleText + " title, " + bodyText + " body$");
+            TactNotePage tactNotePage = new TactNotePage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactNotePage.getNewNoteTitleLabel());
             //Sync to SF  //android party is wrong, w/o syc it saved
@@ -104,6 +99,8 @@ public class TactPinSteps implements En {
         });
         And("^Tact-Pin: I \"([^\"]*)\" save new created$", (String isSave) -> {
             log.info("^Tact-Pin: I " + isSave + " save new created$");
+            TactNotePage tactNotePage = new TactNotePage();
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
 
             if (DriverUtils.isTextEmpty(isSave)) {
                 log.info("w/o save the new created");
@@ -119,23 +116,26 @@ public class TactPinSteps implements En {
                 tactNotePage.getSaveNewNoteButton().tap();
             }
 
-            if (DriverUtils.isAndroid()) {
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactPinPage.getTactPinIconButton());
-            }
-            else {
-                tactContactObjPage.getGoBackToContactsMainPageButton().tap();
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactContactsMainPage.getTactContactsTitleLabel());
-            }
+//            if (DriverUtils.isAndroid()) {
+//                WebDriverWaitUtils.waitUntilElementIsVisible(tactPinPage.getTactPinIconButton());
+//            }
+//            if (Grid.driver().findElementsByXPath(tactContactObjPage.getGoBackToContactsMainPageButton().getLocator()).size() != 0) {
+//                tactContactObjPage.getGoBackToContactsMainPageButton().tap();
+//                System.out.println("back to search page");
+//                tactContactObjPage.getGoBackToContactsMainPageButton().tap(tactContactsMainPage.getTactContactsTitleLabel());
+//                System.out.println("back contact main page");
+//            }
         });
         And("^Tact-Pin: I create a new task with \"([^\"]*)\" title, \"([^\"]*)\" description, \"([^\"]*)\" name, \"([^\"]*)\" related to and \"([^\"]*)\" due Date$", (String titleText, String description, String name, String relatedTo, String dueDate) -> {
             log.info("^Tact-Pin: I create a new task with " + titleText + " title, " + description + " description, "
                     + name + " name, " + relatedTo + " related to and " + dueDate + " due Date$");
+            TactTaskPage tactTaskPage = new TactTaskPage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactTaskPage.getSyncToSaleforceTaskSwitch());
 
             //Title
             if (!DriverUtils.isTextEmpty(titleText)) {
-                if ( tactTaskPage.getSyncToSaleforceTaskSwitch().getValue().equals("1") ||
+                if (tactTaskPage.getSyncToSaleforceTaskSwitch().getValue().equals("1") ||
                         tactTaskPage.getSyncToSaleforceTaskSwitch().getValue().contains("ON"))
                 {
                     log.info("SF : " + tactTaskPage.getSyncToSaleforceTaskSwitch().getValue());
@@ -181,6 +181,7 @@ public class TactPinSteps implements En {
         });
         And("^Tact-Pin: I continue to edit iOS task \"([^\"]*)\" followup-iOS, \"([^\"]*)\" with \"([^\"]*)\" and \"([^\"]*)\" reminder-iOS$", (String isFollowUp, String isReminder, String reminderDate, String reminderTime) -> {
             log.info("^Tact-Pin: I continue to edit iOS task " + isFollowUp + " followup-iOS, " + isReminder + " with " + reminderDate + " and " + reminderTime + " reminder-iOS$");
+            TactTaskPage tactTaskPage = new TactTaskPage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactTaskPage.getSyncToSaleforceTaskSwitch());
 
@@ -211,13 +212,14 @@ public class TactPinSteps implements En {
 
             log.info("^Tact-Pin: I create a new task with " + titleText + " title, " + description + " description, "
                     + name + " name and " + relatedTo + " related to,  " + isFollowUp + " followup-iOS and " + isReminder + " reminder-iOS$");
+            TactTaskPage tactTaskPage = new TactTaskPage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactTaskPage.getSyncToSaleforceTaskSwitch());
 
             //Title
             if (!DriverUtils.isTextEmpty(titleText))
             {
-                if ( tactTaskPage.getSyncToSaleforceTaskSwitch().getValue().equals("1") ||
+                if (tactTaskPage.getSyncToSaleforceTaskSwitch().getValue().equals("1") ||
                         tactTaskPage.getSyncToSaleforceTaskSwitch().getValue().contains("ON"))
                 {
                     log.info("SF : " + tactTaskPage.getSyncToSaleforceTaskSwitch().getValue());
@@ -242,12 +244,12 @@ public class TactPinSteps implements En {
                 log.info("Do not implement yet");
             }
             //isFollowUp(iOS)
-            if ( DriverUtils.isIOS() && !DriverUtils.isTextEmpty(isFollowUp))
+            if (DriverUtils.isIOS() && !DriverUtils.isTextEmpty(isFollowUp))
             {
                 tactTaskPage.getIosFollowUpButton().tap();
             }
             //isReminder(iOS)
-            if ( DriverUtils.isIOS() && DriverUtils.isTextEmpty(isFollowUp) &&
+            if (DriverUtils.isIOS() && DriverUtils.isTextEmpty(isFollowUp) &&
                     !DriverUtils.isTextEmpty(isReminder))
             {
                 log.info("Do a simple reminder");
@@ -257,6 +259,7 @@ public class TactPinSteps implements En {
         });
         And("^Tact-Pin: I edit Salesforce task with \"([^\"]*)\" comments, \"([^\"]*)\" assigned to, \"([^\"]*)\" priority and \"([^\"]*)\" Status$", (String comments, String assignedTo, String priorityOption, String statusOption) -> {
             log.info("^Tact-Pin: I edit Salesforce task with " + comments + " comments, " + assignedTo + " assigned to, " + priorityOption + " priority and " + statusOption + " Status$");
+            TactTaskPage tactTaskPage = new TactTaskPage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactTaskPage.getSyncToSaleforceTaskSwitch());
             //Sync salesforce
@@ -300,6 +303,7 @@ public class TactPinSteps implements En {
         });
         Then("^Tact-Pin: I create a new log with \"([^\"]*)\" with \"([^\"]*)\" subject, \"([^\"]*)\" name, \"([^\"]*)\" related to, \"([^\"]*)\" due Date, \"([^\"]*)\" comments, \"([^\"]*)\" priority and \"([^\"]*)\" status$", (String subjectOption, String subject, String name, String relatedTo, String dueDate, String comments, String priorityOption, String statusOption) -> {
             log.info("^Tact-Pin: I create a new log with " + subjectOption + " with " + subject + " subject, " + name + " name, " + relatedTo + " related to, " + dueDate + " due Date, " + comments + " comments, " + priorityOption + " priority and " + statusOption + " status$");
+            TactLogPage tactLogPage = new TactLogPage();
 
             //name(iOS) | Contact(Android)
             if (!DriverUtils.isTextEmpty(name))
@@ -379,6 +383,10 @@ public class TactPinSteps implements En {
         });
         And("^Tact-Pin: I \"([^\"]*)\" sync to Salesforce event with \"([^\"]*)\" name, \"([^\"]*)\" related to, \"([^\"]*)\" attendees and \"([^\"]*)\" assigned to$", (String isSyncToSF, String name, String relatedTo, String attendees, String assignedTo) -> {
             log.info("^Tact-Pin: I " + isSyncToSF + " sync to Salesforce event with " + name + " name, " + relatedTo + " related to, " + attendees + " attendees and " + assignedTo + " assigned to$");
+            TactEventPage tactEventPage = new TactEventPage();
+            TactSFDetailsEventPage tactSFDetailsEventPage = new TactSFDetailsEventPage();
+            TactSelectOptionPage tactSelectOptionPage = new TactSelectOptionPage();
+            TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
 
             //Sync salesforce       //need to modify this part<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             //0 - Salesforce Task OFF, 1 - Salesforce Task ON (0:ios, off:Android)
@@ -455,6 +463,7 @@ public class TactPinSteps implements En {
         });
         Then("^Tact-Pin: I create a new event with \"([^\"]*)\" with \"([^\"]*)\" subject, \"([^\"]*)\" all-day event with \"([^\"]*)\" starts date at \"([^\"]*)\" from time and \"([^\"]*)\" ends date at \"([^\"]*)\" to time, \"([^\"]*)\" location and \"([^\"]*)\" description$", (String subjectOption, String subject, String isAllDayEvent, String startDate, String fromTime, String endDate, String toTime, String location, String description) -> {
             log.info("^Tact-Pin: I create a new event with " + subjectOption + " with " + subject + " subject, " + isAllDayEvent + " all-day event with " + startDate + " starts date at " + fromTime + " from time and " + endDate + " ends date at " + toTime + " to time, " + location + " location and " + description + " description$");
+            TactEventPage tactEventPage = new TactEventPage();
 
             //subject
             if (DriverUtils.isAndroid() && !DriverUtils.isTextEmpty(subjectOption))
@@ -480,13 +489,13 @@ public class TactPinSteps implements En {
                 log.info("SF : " + tactEventPage.getAllDaySwitch().getValue());
                 tactEventPage.getAllDaySwitch().changeValue();
 
-                if ( !DriverUtils.isTextEmpty(startDate) ){
+                if (!DriverUtils.isTextEmpty(startDate)){
                     //10/10/2018    Oct 2, 2018
                     tactEventPage.getStartsButton().tap();
                     IOSTime.changeDate(startDate);
                 }
 
-                if ( !DriverUtils.isTextEmpty(endDate) ){
+                if (!DriverUtils.isTextEmpty(endDate)){
                     //10/10/2018    Oct 2, 2018
                     tactEventPage.getEndsButton().tap();
                     IOSTime.changeDate(endDate);

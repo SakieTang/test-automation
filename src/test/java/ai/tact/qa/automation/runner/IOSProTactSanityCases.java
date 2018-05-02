@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class IOSTactSanityTesting {
+public class IOSProTactSanityCases {
 
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
@@ -45,9 +45,9 @@ public class IOSTactSanityTesting {
     @MobileTest(    //iOS
             locale = "US",
             additionalCapabilities = {
-                    "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:false",    //continue the testing. false, reinstall the app; false, continue use the app
-                    "fullReset:true"  //restart the iPhone/simulator and install the app
+                    "unicodeKeyboard:true","resetKeyboard:true"
+                    , "noReset:false"    //continue the testing. false, reinstall the app; false, continue use the app
+                   , "fullReset:true"  //restart the iPhone/simulator and install the app
 //                    "fullReset:false"
             }
     )
@@ -121,6 +121,25 @@ public class IOSTactSanityTesting {
         testNGCucumberRunner.runCukes();
     }
 
+    //Lead
+    @MobileTest(    //iOS
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+            }
+    )
+    @Test(groups = "Tact-Sanity", description = "Contact object", dependsOnMethods = "TactOnboardingFeature")
+    void TactLeadFeature() throws InterruptedException {
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //Contact
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactLeadFeatureRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
+
     //AddEmail
     @MobileTest(    //iOS
             locale = "US",
@@ -130,9 +149,9 @@ public class IOSTactSanityTesting {
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dependsOnMethods = "TactOnboardingFeature")
-    void TactEmailAddedFeature() throws InterruptedException {
-//        CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
+    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dataProvider = "tactUserInfo", dependsOnMethods = "TactOnboardingFeature")
+    void TactEmailAddedFeature(UserInfor userInfor) throws InterruptedException {
+        CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -170,8 +189,9 @@ public class IOSTactSanityTesting {
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Send emails and verify in Tact", dependsOnMethods = "TactEmailAddedFeature")
-    void TactSendEmailFeature() throws InterruptedException {
+    @Test(groups = "Tact-Sanity", description = "Send emails and verify in Tact", dataProvider = "tactUserInfo", dependsOnMethods = "TactEmailAddedFeature")
+    void TactSendEmailFeature(UserInfor userInfor) throws InterruptedException {
+        CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -283,7 +303,7 @@ public class IOSTactSanityTesting {
         log.info("TestRunner - AfterClass - tearDownClass");
 
         Appium.stopServer();
-        if ( !Appium.checkIfServerIsRunnning("4723") ) {
+        if (!Appium.checkIfServerIsRunnning("4723")) {
             log.info("Appium does not run");
         } else {
             log.info("Appium does run, and stop again");

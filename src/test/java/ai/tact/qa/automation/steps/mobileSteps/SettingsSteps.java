@@ -27,17 +27,9 @@ public class SettingsSteps implements En {
 
     public SettingsSteps() {
 
-        TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
-        TactSettingsPage tactSettingsPage = new TactSettingsPage();
-        TactSourcesPage tactSourcesPage = new TactSourcesPage();
-        ExchangePage exchangePage = new ExchangePage();
-        GmailPage gmailPage = new GmailPage();
-        LinkedInPage linkedInPage = new LinkedInPage();
-        TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
-        TactWebviewLinkedinPage tactWebviewLinkedinPage = new TactWebviewLinkedinPage();
-
         When("^Settings: I switch to \"([^\"]*)\" option in settings page$", (String settingsOption) -> {
             log.info("^Setting: I switch to " + settingsOption + " option in settings page$");
+            TactSettingsPage tactSettingsPage = new TactSettingsPage();
 
             if (DriverUtils.isIOS())
             {
@@ -63,7 +55,8 @@ public class SettingsSteps implements En {
         });
         Then("^Settings: I switch to \"([^\"]*)\" option in Sources settings page$", (String sourceOption) -> {
             log.info("^Settings: I switch to " + sourceOption + " option in Sources settings page$");
-
+            TactSourcesPage tactSourcesPage = new TactSourcesPage();
+            LinkedInPage linkedInPage = new LinkedInPage();
 
             switch (sourceOption) {
                 case "Sync Date Now":
@@ -93,6 +86,10 @@ public class SettingsSteps implements En {
         });
         And("^Settings: I disconnect the \"([^\"]*)\" account$", (String sourceOption) -> {
             log.info("^Settings: I disconnect the " + sourceOption + " account$");
+            TactSourcesPage tactSourcesPage = new TactSourcesPage();
+            ExchangePage exchangePage = new ExchangePage();
+            GmailPage gmailPage = new GmailPage();
+            LinkedInPage linkedInPage = new LinkedInPage();
 
             switch (sourceOption) {
                 case "Exchange":
@@ -115,11 +112,15 @@ public class SettingsSteps implements En {
         });
         Then("^Settings: I back to Settings page from Sources page$", () -> {
             log.info("^Settings: I back to Settings page from Sources page$");
+            TactSettingsPage tactSettingsPage = new TactSettingsPage();
+            TactSourcesPage tactSourcesPage = new TactSourcesPage();
 
             tactSourcesPage.getBackToSettingsPageButton().tap(tactSettingsPage.getSettingsTitleLabel());
         });
         When("^Settings: I sign in the Exchange account$", () -> {
             log.info("^Settings: I sign in the Exchange account$");
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+            ExchangePage exchangePage = new ExchangePage();
 
             String exchangeEmail = null;
             String exchangePwd = null;
@@ -155,6 +156,8 @@ public class SettingsSteps implements En {
         });
         When("^Settings: I sign in the Gmail account$", () -> {
             log.info("^Settings: I sign in the Gmail account$");
+            GmailPage gmailPage = new GmailPage();
+            TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
 
             String gmailEmail = null;
             String gmailPwd = CustomPicoContainer.getInstance().getUserInfor().getGmailPwd();
@@ -201,6 +204,7 @@ public class SettingsSteps implements En {
         });
         When("^Settings: I sign in the LinkedIn account$", () -> {
             log.info("^Settings: I sign in the linkedIn account$");
+            TactWebviewLinkedinPage tactWebviewLinkedinPage = new TactWebviewLinkedinPage();
 
             String linkedInEmail = "uma@tact.ai";   //null;
             String linkedInPwd = "qwerty12";        //CustomPicoContainer.getInstance().getUserInfor().getLinkedInPwd();
@@ -227,7 +231,7 @@ public class SettingsSteps implements En {
             System.out.println("after click sign in");
             DriverUtils.sleep(10);
 
-            if ( ((AppiumDriver)Grid.driver()).findElementsByXPath(tactWebviewLinkedinPage.getEmailWebViewTextField().getLocator()).size() != 0 ){
+            if (((AppiumDriver)Grid.driver()).findElementsByXPath(tactWebviewLinkedinPage.getEmailWebViewTextField().getLocator()).size() != 0){
                 System.out.println("find the email and pwd page " + linkedInEmail + " ==> " + linkedInPwd);
                 System.out.println("tactWebviewLinkedinPage.getEmailWebViewTextField().getLocator() ==> " + tactWebviewLinkedinPage.getEmailWebViewTextField().getLocator());
                 System.out.println("tactWebviewLinkedinPage.getPwdWebViewTextField().getLocator()   ==> " + tactWebviewLinkedinPage.getPwdWebViewTextField().getLocator());

@@ -19,19 +19,18 @@ public class OpptySteps implements En {
 
     public OpptySteps() {
 
-        TactOpptiesMainPage tactOpptiesMainPage = new TactOpptiesMainPage();
-        TactSearchOpptyPage tactSearchOpptyPage = new TactSearchOpptyPage();
-
         Then("^Oppty: I go to create a new Oppty page$", () -> {
             log.info("^Oppty: I go to create a new Oppty page$");
+            TactOpptiesMainPage tactOpptiesMainPage = new TactOpptiesMainPage();
 
-//            WebDriverWaitUtils.waitUntilElementIsVisible(tactOpptiesMainPage.getTactOpportunitiesDropDownButton());
             tactOpptiesMainPage.getOpportunitiesPlusIconButton().tap();
             DriverUtils.sleep(5);
         });
 
         When("^Oppty: I search one oppty (oppty_created_Tact) from opportunities list and select it$", (String opptyName) -> {
             log.info("^Oppty: I search one oppty " + opptyName + " from opportunities list and select it$");
+            TactOpptiesMainPage tactOpptiesMainPage = new TactOpptiesMainPage();
+            TactSearchOpptyPage tactSearchOpptyPage = new TactSearchOpptyPage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactOpptiesMainPage.getTactOpportunitiesDropDownButton());
             //element id changed <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -47,7 +46,7 @@ public class OpptySteps implements En {
                 DriverUtils.sleep(0.5);
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactSearchOpptyPage.getAndroidOpptyTabSearchIconButton());
                 tactSearchOpptyPage.getAndroidOpptyTabSearchIconButton().tap();
-                if ( (Grid.driver().findElementsByXPath(tactSearchOpptyPage.getAndroidOpptyTabSearchIconButton().getLocator())).size() != 0 ) {
+                if ((Grid.driver().findElementsByXPath(tactSearchOpptyPage.getAndroidOpptyTabSearchIconButton().getLocator())).size() != 0) {
                     System.out.println("did not click it, need to re-click");
                     DriverUtils.tapXY(1160,182);
                 }

@@ -25,22 +25,16 @@ public class LoginSteps implements En {
 
     public LoginSteps() {
 
-        TactWelcomePage tactWelcomePage = new TactWelcomePage();
-        SFLoginWebviewPage sfLoginWebviewPage = new SFLoginWebviewPage();
-        TactAccessSFPage tactAccessSFPage = new TactAccessSFPage();
-        TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
-        TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
-        TactCalendarMainPage tactCalendarMainPage = new TactCalendarMainPage();
-        ExchangePage exchangePage = new ExchangePage();
-
         Given("^Login: I click connect with SF button$", () -> {
             log.info("^Login: I click connect with SF button$");
+            TactWelcomePage tactWelcomePage = new TactWelcomePage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactWelcomePage.getConnectWithSFButton());
             tactWelcomePage.getConnectWithSFButton().tap();
         });
         And("^Login-Webview: I \"([^\"]*)\" send usage to google chrome and \"([^\"]*)\" sign in Chrome$", (String isSend, String isSignIn) -> {
             log.info("^Login-Webview: I " + isSend + " send usage to google chrome and " + isSignIn + " sign in Chrome$");
+            SFLoginWebviewPage sfLoginWebviewPage = new SFLoginWebviewPage();
 
             if (Grid.driver().findElementsById(sfLoginWebviewPage.getChromeSendReportCheckboxButton().getLocator()).size() != 0)
             {
@@ -58,6 +52,7 @@ public class LoginSteps implements En {
         });
         And("^Login-Webview: I enter the user email address with dataTable$", (DataTable userData) -> {
             log.info("^Login: I enter the user email address with dataTable$");
+            SFLoginWebviewPage sfLoginWebviewPage = new SFLoginWebviewPage();
 
 //            //get Data from UserDetails using raw, and print the out
             List<List<String>> data = userData.raw();
@@ -66,8 +61,6 @@ public class LoginSteps implements En {
                 log.info( i + " " + data.get(i).toString());
             }
 
-//            | userEmailAccount | pwd |
-//            | automation.AI.tactsf.s@gmail.com | Tact0218 |
             String sfAccountName = data.get(0).get(0).toString();
             String sfPWD = data.get(0).get(1).toString();
 
@@ -75,7 +68,6 @@ public class LoginSteps implements En {
             System.out.println("pwd " + sfPWD);
 
             if (DriverUtils.isIOS()) {
-                //Webview - DriverUtils.convertToWebviewDriver();
 
                 WebDriverWaitUtils.waitUntilElementIsVisible( sfLoginWebviewPage.getUserEmailTextField().getLocator() );
                 TextField userNameSFTextField = new TextField( sfLoginWebviewPage.getUserEmailTextField().getLocator() );
@@ -96,6 +88,7 @@ public class LoginSteps implements En {
         });
         And("^Login-Webview: I enter the user email address$", () -> {
             log.info("^Login: I enter the user email address$");
+            SFLoginWebviewPage sfLoginWebviewPage = new SFLoginWebviewPage();
 
             String sfAccountName = null;
             String sfPWD = null;
@@ -130,6 +123,7 @@ public class LoginSteps implements En {
         });
         And("^Login-Webview: I \"([^\"]*)\" check remember me$", (String isCheck) -> {
             log.info("^Login-Webview: I " + isCheck + " check remember me$");
+            SFLoginWebviewPage sfLoginWebviewPage = new SFLoginWebviewPage();
 
             if (isCheck.equalsIgnoreCase("do"))
             {
@@ -144,13 +138,14 @@ public class LoginSteps implements En {
         });
         And("^Login-Webview: I click login button in \"([^\"]*)\" process$", (String processOption) -> {
             log.info("^Login: I click login button in " + processOption + " process$");
+            SFLoginWebviewPage sfLoginWebviewPage = new SFLoginWebviewPage();
 
             Button loginButton = new Button( sfLoginWebviewPage.getLoginButton().getLocator() );
             loginButton.click();
-
         });
         When("^Login-Webview: Login with existing user$", () -> {
             log.info("^Login: Login with existing user$");
+            SFLoginWebviewPage sfLoginWebviewPage = new SFLoginWebviewPage();
 
             //Webview - DriverUtils.convertToWebviewDriver();
 
@@ -166,6 +161,8 @@ public class LoginSteps implements En {
         });
         Then("^Login: Allow Tact to access salesforce user data$", () -> {
             log.info("^Login: Allow Tact to access salesforce user data$");
+            SFLoginWebviewPage sfLoginWebviewPage = new SFLoginWebviewPage();
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
 
             DriverUtils.scrollToBottom();
             if (DriverUtils.isIOS() && Grid.driver().findElementsById(sfLoginWebviewPage.getTactAccessAllowButton().getLocator()).size() !=0)
@@ -177,6 +174,8 @@ public class LoginSteps implements En {
         });
         Then("^Login: After SF connected, then Add Contacts to Tact$", () -> {
             log.info("^Login: After SF connected, then Add Contacts to Tact$");
+            TactAccessSFPage tactAccessSFPage = new TactAccessSFPage();
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible( tactAccessSFPage.getAddContactToTactTitleLabel() );
             tactAccessSFPage.getAddContactsButton().tap( );
@@ -185,20 +184,27 @@ public class LoginSteps implements En {
                 tactAlertsPopUpPage.getAlertsOKButton().tap();
             }
             else {
-                DriverUtils.sleep(3);
-                if (Grid.driver().findElementsByXPath(tactAlertsPopUpPage.getAlertsAllowButton().getLocator()).size()!=0) {
+                DriverUtils.sleep(4);
+                if (Grid.driver().findElementsById(tactAlertsPopUpPage.getAlertsAllowButton().getLocator()).size()!=0) {
                     log.info("find the allow button");
 //                DriverUtils.sleep(120);
                     WebDriverWaitUtils.waitUntilElementIsVisible(tactAlertsPopUpPage.getAlertsAllowButton());
                     tactAlertsPopUpPage.getAlertsAllowButton().tap();
+                }
+                else {
+                    System.out.println("not find the elements");
                 }
             }
 //            WebDriverWaitUtils.waitUntilElementIsVisible(tactAccessSFPage.getTactSyncingLabel());
         });
         And("^Login: Waiting for Syncing finished in \"([^\"]*)\" process$", (String processOption) -> {
             log.info("^Login: Waiting for Syncing finished in " + processOption + " process$");
-            //processOption: onboarding | login
+            TactAccessSFPage tactAccessSFPage = new TactAccessSFPage();
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+            TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
+            ExchangePage exchangePage = new ExchangePage();
 
+            //processOption: onboarding | login
             if (processOption.equalsIgnoreCase("onboarding") ||
                     Grid.driver().findElementsByXPath(tactAccessSFPage.getTactSyncingLabel().getLocator()).size() != 0 ) {
                 //login processing begin
@@ -256,7 +262,7 @@ public class LoginSteps implements En {
             //for Android, diff version should waiting for different element during login  - for old UI version
             if (DriverUtils.isAndroid())
             {
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactCalendarMainPage.getCalendarAddPlusButton());
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactNavigateTabBarPage.getTactCalendarButton());
             }
 
             DriverUtils.sleep(2);
@@ -265,9 +271,12 @@ public class LoginSteps implements En {
         });
         And("^Login: Allow all access for Tact$", () -> {
             log.info("^Login: Allow all access for Tact$");
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+            TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
+            TactCalendarMainPage tactCalendarMainPage = new TactCalendarMainPage();
 
             //notification
-            if ( DriverUtils.isIOS() ) {
+            if (DriverUtils.isIOS()) {
                 log.info("Allow to Send Notifications");
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactAlertsPopUpPage.getAlertsAllowButton());
                 tactAlertsPopUpPage.getAlertsAllowButton().tap(tactNavigateTabBarPage.getTactCalendarButton());
@@ -289,20 +298,24 @@ public class LoginSteps implements En {
             }
             else {    //Android - Connect Calendars
                 log.info("Connect Calendars and Reminders");
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactCalendarMainPage.getConnectYourCalendarAndRemindersButton());
+
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactNavigateTabBarPage.getTactCalendarButton());
+                tactNavigateTabBarPage.getTactCalendarButton().tap(tactCalendarMainPage.getConnectYourCalendarAndRemindersButton());
+
                 tactCalendarMainPage.getConnectYourCalendarAndRemindersButton().tap();
-                DriverUtils.sleep(1);
-                if (Grid.driver().findElementsByXPath(tactAlertsPopUpPage.getAlertsAllowButton().getLocator()).size() != 0 ) {
+                DriverUtils.sleep(3);
+                if (Grid.driver().findElementsById(tactAlertsPopUpPage.getAlertsAllowButton().getLocator()).size() != 0 ) {
                     tactAlertsPopUpPage.getAlertsAllowButton().tap();
                 }
                 DriverUtils.sleep(2);
                 DriverUtils.tapAndroidHardwareBackBtn();
-//                WebDriverWaitUtils.waitUntilElementIsVisible(tactNavigateTabBarPage.getTactAndroidOldVMoreOptionsButton());
                 DriverUtils.sleep(2);
             }
         });
         Then("^Login: workaround for Android app onboarding workflow only$", () -> {
             log.info("^Login: workaround for Android app onboarding workflow only$");
+            TactWelcomePage tactWelcomePage = new TactWelcomePage();
+            SFLoginWebviewPage sfLoginWebviewPage = new SFLoginWebviewPage();
 
             if(DriverUtils.isAndroid())
             {

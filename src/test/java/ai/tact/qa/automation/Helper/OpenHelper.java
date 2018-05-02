@@ -12,6 +12,14 @@ public class OpenHelper {
         System.out.println("url " + url);
 
         Grid.open(url);
+
+        System.out.println("platform == " + Grid.getWebTestSession().getPlatform());
+        System.out.println("platform == " + Grid.getWebTestSession().getBrowser());
+        System.out.println("platform == " + Grid.getWebTestSession().getAdditionalCapabilities());
+        System.out.println("platform == " + Grid.getWebTestSession().isStarted());
+        System.out.println("platform == " + Grid.getWebTestSession().getBrowserHeight());
+        System.out.println("platform == " + Grid.getWebTestSession().getBrowserWidth());
+
         System.out.println("title " + Grid.driver().getTitle());
         SeLionReporter.log(Grid.driver().getTitle(), true, true);
     }

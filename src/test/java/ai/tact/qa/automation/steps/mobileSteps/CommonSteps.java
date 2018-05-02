@@ -6,6 +6,7 @@ import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactObjPag
 import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactsMainPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactEmail.TactMailBoxesPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactNavigateTabBarPage;
+import ai.tact.qa.automation.testcomponents.mobile.TactSearch.TactSearchContactsPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactSetting.ExchangePage;
 import ai.tact.qa.automation.testcomponents.mobile.TactSetting.TactSettingsPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactWelcomePage;
@@ -27,30 +28,6 @@ public class CommonSteps implements En {
 
     public CommonSteps() {
 
-        TactWelcomePage tactWelcomePage = new TactWelcomePage();
-        TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
-        TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
-        TactAccessSFPage tactAccessSFPage = new TactAccessSFPage();
-        TactSettingsPage tactSettingsPage = new TactSettingsPage();
-
-        TactContactObjPage tactContactObjPage = new TactContactObjPage();
-        TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
-        TactMailBoxesPage tactMailBoxesPage = new TactMailBoxesPage();
-        ExchangePage exchangePage = new ExchangePage();
-
-        And("^I going check the new step cucumber-java(\\d+)$", (Integer arg0) -> {
-            log.info("^I going check the new step cucumber-java(\\d+)$");
-        });
-        And("^I get the data from dataprovider$", () -> {
-            log.info("^I get the data from dataprovider$");
-            DriverUtils.sleep(60);
-        });
-        And("^I click login button$", () -> {
-            log.info("^I click login button$");
-        });
-        Then("^I should see the userform page$", () -> {
-            log.info("^I should see the userform page$");
-        });
         And("^Common: I switch to \"([^\"]*)\" driver$", (String driverContext) -> {
             log.info("^Common: I switch to " + driverContext + " driver$");
 
@@ -65,6 +42,14 @@ public class CommonSteps implements En {
         });
         When("^Common: I switch to \"([^\"]*)\" page from tab bar$", (String tabBarOption) -> {
             log.info("^Common: I switch to " + tabBarOption + " page from tab bar$");
+            TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+            TactAccessSFPage tactAccessSFPage = new TactAccessSFPage();
+            TactSettingsPage tactSettingsPage = new TactSettingsPage();
+
+            TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
+            TactMailBoxesPage tactMailBoxesPage = new TactMailBoxesPage();
+            ExchangePage exchangePage = new ExchangePage();
 
             DriverUtils.sleep(2);
 
@@ -122,7 +107,7 @@ public class CommonSteps implements En {
             resyncPopUp();
 
             //More : Notebook, Notifications, Settings
-            if ( tabBarOption.equalsIgnoreCase("More") ||
+            if (tabBarOption.equalsIgnoreCase("More") ||
                  tabBarOption.equalsIgnoreCase("Notebook") ||
                  tabBarOption.equalsIgnoreCase("Notifications") ||
                  tabBarOption.equalsIgnoreCase("Settings")) {
@@ -233,16 +218,16 @@ public class CommonSteps implements En {
         });
         Then("^Common: I click back icon$", () -> {
             log.info("^Common: I click back icon$");
+            TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
+            TactContactObjPage tactContactObjPage = new TactContactObjPage();
 
+            WebDriverWaitUtils.waitUntilElementIsVisible(tactContactObjPage.getGoBackToContactsMainPageButton());
             tactContactObjPage.getGoBackToContactsMainPageButton().tap();
-            while (Grid.driver().findElementsByXPath(tactContactsMainPage.getContactsPlusIconButton().getLocator()).size() != 0
-                    && DriverUtils.isAndroid()) {
-                log.info("From Contact Obj to Contacts list");
+
+            if (DriverUtils.isAndroid() &&
+                    Grid.driver().findElementsById(tactSearchContactsPage.getSearchAllContactsTextField().getLocator()).size() != 0) {
                 tactContactObjPage.getGoBackToContactsMainPageButton().tap();
             }
-//            if ( DriverUtils.isIOS() ){
-//                tactContactObjPage.getGoBackToContactsMainPageButton().tap(tactContactsMainPage.getTactContactsTitleLabel());
-//            }
         });
         Then("^Common: I turn (on|off) wifi$", (String isOn) -> {
             log.info("^Common: I turn " + isOn + " wifi$");
@@ -256,9 +241,12 @@ public class CommonSteps implements En {
     }
 
     protected void whatever() {
-        log.info("^Common: I click back icon$");
         TactContactObjPage tactContactObjPage = new TactContactObjPage();
         TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
+
+        log.info("^Common: I click back icon$");
+        tactContactObjPage = new TactContactObjPage();
+        tactContactsMainPage = new TactContactsMainPage();
 
         tactContactObjPage.getGoBackToContactsMainPageButton().tap();
         while (Grid.driver().findElementsByXPath(tactContactsMainPage.getContactsPlusIconButton().getLocator()).size() != 0
@@ -266,7 +254,7 @@ public class CommonSteps implements En {
             log.info("From Contact Obj to Contacts list");
             tactContactObjPage.getGoBackToContactsMainPageButton().tap();
         }
-//            if ( DriverUtils.isIOS() ){
+//            if (DriverUtils.isIOS()){
 //                tactContactObjPage.getGoBackToContactsMainPageButton().tap(tactContactsMainPage.getTactContactsTitleLabel());
 //            }
 

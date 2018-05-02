@@ -1,0 +1,153 @@
+package ai.tact.qa.automation.utils;
+
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecuteResultHandler;
+import org.apache.commons.exec.DefaultExecutor;
+import org.testng.annotations.Test;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Selenium {
+
+    public Selenium() {}
+
+    /**
+     * stop Selenium server
+     */
+    public static void stopServer(String givenPort) {
+        String[] str = null;
+        String temp = null;
+        String line = null;
+        String command = null;
+        String port = givenPort;
+        System.out.println("port is : " + port);
+
+        command = String.format("netstat -van tcp | grep $s | awk '{print $9}'", port);
+        System.out.println("cmd : " + command);
+
+        try {
+            Process process = DriverUtils.runCommand(new String[] {"bash", "-c", command});//(command);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            while ((line = reader.readLine()) != null) {
+                System.out.println("line : " + line.toString());
+                str = line.toString().split(" ");
+                temp = str[str.length-1];
+                System.out.println("process ID : " + temp);
+                //kill running Selenium process
+                command = "kill -9 " + temp;
+                System.out.println("cmd : " + command);
+
+                DriverUtils.runCommand(command);
+                DriverUtils.sleep(5);
+            }
+            process.waitFor();
+        }
+        catch (IOException | InterruptedException e) {
+            e.getMessage();
+        }
+        if (!Selenium.isSeleniumServerRunning(port))
+        {
+            System.out.println("------------------- Selenium stoped ----------------------");
+        }
+    }
+
+    /**
+     * stop Selenium server
+     */
+    public static void stopServer() {
+        stopServer("4723");
+    }
+
+    /**
+     * check Selenium server is running
+     */
+    public static boolean isSeleniumServerRunning (String givenPort) {
+        boolean isServerRunning = false;
+        String command = null;
+        String port = givenPort;
+        System.out.println("port is : " + port);
+
+        command = "netstat -van tcp | grep 4723 | awk '{print $9}'";
+        System.out.println("cmd : " + command);
+
+        try {
+            Process process = DriverUtils.runCommand(new String[] {"bash", "-c", command});//(command);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            if (reader.readLine() != null) {
+                System.out.println("The Selenium is still running");
+                isServerRunning = true;
+            }
+            else {
+                System.out.println("The Selenium already stopped");
+                isServerRunning = true;
+            }
+        }
+        catch (IOException e) {
+            e.getMessage();
+        }
+        return isServerRunning;
+    }
+
+    /**
+     * start Selenium Server from command line
+     */
+    public static void startServer(String givenPort) {
+        String cmd;
+        String seleniumServerJar;
+        String seleniuDir;
+        String port = givenPort;
+        CommandLine commandLine;
+
+        commandLine = new CommandLine("java -jar");
+
+        seleniumServerJar = "selenium-server-standalone-3.9.1.jar";
+        seleniuDir = String.format("%s/%s", System.getProperty("user.dir"), seleniumServerJar);
+        System.out.println("Selenium Jar dir : " + seleniuDir);
+
+        commandLine.addArgument(seleniuDir);
+        commandLine.addArgument("--port");
+        commandLine.addArgument(port);
+
+        System.out.println("cmd : " + commandLine.toString());
+
+        DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();
+        DefaultExecutor executor = new DefaultExecutor();
+        executor.setExitValue(1);
+        try {
+            executor.execute(commandLine, handler);
+            Thread.sleep(10000);
+        }
+        catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * start Selenium Server from command line
+     */
+    public static void startServer() {
+        startServer("4723");
+    }
+
+    /**
+     * restart Selenium
+     */
+    public static void restartSelenium(String givenPort) {
+        stopServer(givenPort);
+        startServer(givenPort);
+    }
+
+    /**
+     * restart Selenium
+     */
+    public static void restartSelenium() {
+        restartSelenium("4723");
+    }
+
+    @Test
+    public void testSeleniumServer() {
+        DriverUtils.runCommand(new String[] {"bash", "-c", "java -jar /Users/sakie/workspace/automation/test-automation/selenium-server-standalone-3.9.1.jar -port 4723"});
+    }
+}

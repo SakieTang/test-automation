@@ -7,6 +7,21 @@ elements:
       US: "//XCUIElementTypeOther[@name='Contacts']"
     android:
       US: "//android.widget.TextView[@text='Contacts']"
+  tactAndroidAllButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.TextView[@text='ALL']"
+  tactRecentTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Recent']"
+    android:
+      US: "//android.widget.TextView[@text='Recent']"
+  tactAndroidRecentFavoritesButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.TextView[@text='RECENT/FAVORITES']"
   contactsPlusIconButton:
     ios:
       US: "//XCUIElementTypeButton[@name='Add']"

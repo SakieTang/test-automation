@@ -34,11 +34,13 @@ Feature: ContactsFeature
   @note
   Scenario Outline: Add Note to a contact
     When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "FirstN LastN" from recent field and select it
     Then Contacts: I search one user "FirstN LastN" from contacts list and select it
     And Tact-Pin: I see a Tact pin icon display
     When Tact-Pin: I click Tact pin icon and select "Note" option
     Then Tact-Pin: I create a new note "<isSync>" sync to SF, "<titleText>" title and "<bodyText>" body
     And Tact-Pin: I "<isSave>" save new created
+    And Common: I click back icon
 
     Examples:
       | isSync | titleText | bodyText | isSave |
@@ -49,12 +51,14 @@ Feature: ContactsFeature
   @Task
   Scenario Outline: Add Task to a contact
     When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "FirstN LastN" from recent field and select it
     Then Contacts: I search one user "FirstN LastN" from contacts list and select it
     And Tact-Pin: I see a Tact pin icon display
     When Tact-Pin: I click Tact pin icon and select "Task" option
     And Tact-Pin: I create a new task with "<titleText>" title, "<description>" description, "<Name>" name, "<relatedTo>" related to and "<dueDate>" due Date
     And Tact-Pin: I continue to edit iOS task "<isFollowUp>" followup-iOS, "<isReminder>" with "<reminderDate>" and "<reminderTime>" reminder-iOS
     And Tact-Pin: I "<isSave>" save new created
+    And Common: I click back icon
 
     Examples:
        | titleText     | description         | Name        | relatedTo | dueDate     | isFollowUp | isReminder | reminderDate | reminderTime | isSave |
@@ -66,12 +70,14 @@ Feature: ContactsFeature
   @SFTask
   Scenario Outline: Add SFTask to a contact
     When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "LastN, FirstN" from recent field and select it
     Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
     And Tact-Pin: I see a Tact pin icon display
     When Tact-Pin: I click Tact pin icon and select "Task" option
     Then Tact-Pin: I create a new task with "<titleText>" title, "<description>" description, "<Name>" name and "<relatedTo>" related to,  "<isFollowUp>" followup-iOS and "<isReminder>" reminder-iOS
     And Tact-Pin: I edit Salesforce task with "<Comments>" comments, "<assignedTo>" assigned to, "<priorityOption>" priority and "<statusOption>" Status
     And Tact-Pin: I "<isSave>" save new created
+    And Common: I click back icon
 
     Examples:
        | titleText     | description         | Name        | relatedTo | isFollowUp | isReminder | isSave | Comments | assignedTo | priorityOption | statusOption |
@@ -83,11 +89,13 @@ Feature: ContactsFeature
   @Log
   Scenario Outline: Add Log to a contact
     When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "LastN, FirstN" from recent field and select it
     Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
     And Tact-Pin: I see a Tact pin icon display
     When Tact-Pin: I click Tact pin icon and select "Log" option
     Then Tact-Pin: I create a new log with "<subjectOption>" with "<subject>" subject, "<Name>" name, "<relatedTo>" related to, "<dueDate>" due Date, "<Comments>" comments, "<priorityOption>" priority and "<statusOption>" status
     And Tact-Pin: I "<isSave>" save new created
+    And Common: I click back icon
 
     Examples:
        | subjectOption | subject       | Name      | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
@@ -99,12 +107,14 @@ Feature: ContactsFeature
   @Event
     Scenario Outline: Add Event to a contact
     When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "FirstN LastN" from recent field and select it
     Then Contacts: I search one user "FirstN LastN" from contacts list and select it
     And Tact-Pin: I see a Tact pin icon display
     When Tact-Pin: I click Tact pin icon and select "Event" option
     Then Tact-Pin: I create a new event with "<subjectOption>" with "<subject>" subject, "<isAllDayEvent>" all-day event with "<startDate>" starts date at "<fromTime>" from time and "<endDate>" ends date at "<toTime>" to time, "<location>" location and "<description>" description
     And Tact-Pin: I "<isSyncToSF>" sync to Salesforce event with "<name>" name, "<relatedToName>" related to, "<attendeesName>" attendees and "<assignedToName>" assigned to
     And Tact-Pin: I "<isSave>" save new created
+    And Common: I click back icon
 
     Examples:
        | subjectOption      | subject       | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSyncToSF | name | relatedToName | attendeesName | assignedToName | isSave |
@@ -116,6 +126,7 @@ Feature: ContactsFeature
   @addLinkedInSalesNavigator
   Scenario: login linkedIn - sales navigator inside a contact
     When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "Auto.Andr Tact" from recent field and select it
     Then Contacts: I search one user "Auto.Andr Tact" from contacts list and select it
     And Contacts: I click "Connect LinkedIn" action in contact obj page
     When Common: I switch to "Webview" driver
@@ -128,6 +139,7 @@ Feature: ContactsFeature
   @checkLinkedIn
   Scenario: check the contact information in linkedin
     When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "Auto.Andr Tact" from recent field and select it
     Then Contacts: I search one user "Auto.Andr Tact" from contacts list and select it
   
 #  @Test

@@ -80,8 +80,10 @@ public class AndroidTestInnerRunCukesClass {
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Contacts.feature")
             ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
-//            ,tags={"@SFTask"}
-            , tags={"@createContact,@P1"}
+//            ,tags={"@P1"}
+            , tags={"" +
+                "@P0," +
+                "@P1"}
             , format = {
             "pretty",
             "json:target/report/android/TactContactsFeatureRunCukesNoReset.json"}
@@ -93,6 +95,23 @@ public class AndroidTestInnerRunCukesClass {
         }
     }
 
+    //lead
+    @CucumberOptions(
+            features = ("src/test/resources/Features/mobile/Lead.feature")
+            ,glue = ("ai.tact.qa.automation.steps")
+            ,tags={"" +
+                "@createLead," +
+                "@P1"}
+            , format = {
+            "pretty",
+            "json:target/report/android/TactLeadFeatureRunCukesNoReset.json"}
+    )
+    public class TactLeadFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
+        @Test
+        private void test(){ System.out.println("@Test Contacts Feature RunCukesTest"); }
+
+    }
+
     //CreateSimpleOpportunities
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Opportunities.feature")
@@ -100,7 +119,7 @@ public class AndroidTestInnerRunCukesClass {
             , tags={"@createSimpleOpportunity"}
             , format = {
             "pretty",
-            "json:target/report/ios/TactCreateOpptyFeatureRunCukesNoReset.json"}
+            "json:target/report/android/TactCreateOpptyFeatureRunCukesNoReset.json"}
     )
     public class TactCreateSimpleOpptyNoReset extends AbstractTestNGCucumberTests {
         @Test
@@ -117,7 +136,7 @@ public class AndroidTestInnerRunCukesClass {
             , tags={"@editExistingOppty"}
             , format = {
             "pretty",
-            "json:target/report/ios/TactOpptyFeatureRunCukesNoReset.json"}
+            "json:target/report/android/TactOpptyFeatureRunCukesNoReset.json"}
     )
     public class TactEditOpptyFeatureNoReset extends AbstractTestNGCucumberTests {
         @Test
