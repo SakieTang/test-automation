@@ -1,0 +1,26 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+elements:
+    sparkImage:
+      locators:
+        US: "css=.onboarding-form-logo"
+    emailAddressTextField:
+      locators:
+        US: "css=.onboarding-input"
+    nextButton:
+      locators:
+        US: "css=.button"
+    pwdTextField:
+      locators:
+        US: "css=input[alt^='Password']"
+    singInButton:
+      locators:
+        US: "css=button"
+    spinnerImage:
+      locators:
+        US: "css=.onboarding-spinner"
+    onboardingTitleLabel:
+      locators:
+        US: "css=.onboarding__title"
+pageValidators: [
+    sparkImage
+]

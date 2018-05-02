@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tact.ai automation AI report</title>
+    <style>
+        body {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+table, th, td  {
+    board-collapse: collapse;
+    opacity: 0.95;
+}
+
+th  {
+    padding: 0px 35px;
+    vertical-align:baseline;
+    padding:5px 15px 5px 6px;
+    background-color:#666666;
+    border:1px solid #3F3F3F;
+    text-align:left;
+    color:#fff;
+}
+
+.app-info   {
+    color:#e65c00;
+}
+
+.feature-name   {
+    padding: 0px 10px;
+    border: 1px solid #93CE37;
+    border-right: 3px solid #9ED929;
+    font-size:
+    color: #464646;
+    background-color: #9DD929;
+    border-radius: 5px 0px 0px 5px;
+}
+
+.case-name  {
+    padding: 0px;
+    border: 1px solid #93CE37;
+    border-bottom: 3px solid #9ED929;
+    color: #666;
+    background-color: #9DD929;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.passed {
+    color: green;
+    background-color: #DEF3CA;
+    border-radius: 2px;
+}
+
+.na {
+    background-color: #cccccc
+}
+
+.failed {
+    color: #9A0400;
+    background-color: #FF827F;
+}
+
+.skipped {
+    color: blue;
+    background-color: #1C8EFC;
+}
+    </style>
+</head>
+
+<body>
+
+<table style="width:100%">
+    <caption>
+        <h2>Report</h2>
+        {TODAY}
+    </caption>
+
+    <tr>
+        <th>Feature</th>
+        <th>Case</th>
+        <th class='app-info'>{IOSVERSION}</th>
+        <th class='app-info'>{ANDROIDVERSION}</th>
+    </tr>
+
+    {RESULT}
+
+</table>
+
+</body>
+
+</html>

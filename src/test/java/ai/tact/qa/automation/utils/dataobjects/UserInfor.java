@@ -3,9 +3,11 @@ package ai.tact.qa.automation.utils.dataobjects;
 public class UserInfor {
     private String salesforceIOSAccountName = null;
     private String salesforceIOSEmailAddress = null;
+    private String saleforceIOSPwd = null;
+
     private String salesforceAndroidAccountName = null;
     private String salesforceAndroidEmailAddress = null;
-    private String salesforcePwd = null;
+    private String salesforceAndroidPwd = null;
     private String salesforceRecoverPwdKeyword = null;
     private String salesforcePhone = null;
 
@@ -27,8 +29,8 @@ public class UserInfor {
     }
 
     public UserInfor(
-            String salesforceIOSAccountName, String salesforceIOSEmailAddress,
-            String salesforceAndroidAccountName, String salesforceAndroidEmailAddress,
+            String salesforceIOSAccountName, String salesforceIOSEmailAddress, String saleforceIOSPwd,
+            String salesforceAndroidAccountName, String salesforceAndroidEmailAddress, String salesforceAndroidPwd,
             String salesforcePwd, String salesforceRecoverPwdKeyword, String salesforcePhone,
 
             String exchangeIOSEmailAddress, String exchangeIOSEmailPwd,
@@ -42,9 +44,10 @@ public class UserInfor {
         //SF
         this.setSalesforceIOSAccountName(salesforceIOSAccountName);
         this.setSalesforceIOSEmailAddress(salesforceIOSEmailAddress);
+        this.setSaleforceIOSPwd(saleforceIOSPwd);
         this.setSalesforceAndroidAccountName(salesforceAndroidAccountName);
         this.setSalesforceAndroidEmailAddress(salesforceAndroidEmailAddress);
-        this.setSalesforcePwd(salesforcePwd);
+        this.setSalesforceAndroidPwd(salesforceAndroidPwd);
         this.setSalesforceRecoverPwdKeyword(salesforceRecoverPwdKeyword);
         this.setSalesforcePhone(salesforcePhone);
         //Exchange
@@ -66,11 +69,12 @@ public class UserInfor {
     //set - SF
     public void setSalesforceIOSAccountName(String salesforceIOSAccountName) { this.salesforceIOSAccountName = salesforceIOSAccountName; }
     public void setSalesforceIOSEmailAddress(String salesforceIOSEmailAddress) { this.salesforceIOSEmailAddress = salesforceIOSEmailAddress; }
+    public void setSaleforceIOSPwd(String salesforceIOSPwd) { this.saleforceIOSPwd = salesforceIOSPwd; }
 
     public void setSalesforceAndroidAccountName(String salesforceAndroidAccountName) { this.salesforceAndroidAccountName = salesforceAndroidAccountName; }
     public void setSalesforceAndroidEmailAddress(String salesforceAndroidEmailAddress) { this.salesforceAndroidEmailAddress = salesforceAndroidEmailAddress; }
+    public void setSalesforceAndroidPwd(String saleforceAndroidPwd) { this.salesforceAndroidPwd = saleforceAndroidPwd; }
 
-    public void setSalesforcePwd(String salesforcePwd) { this.salesforcePwd = salesforcePwd; }
     public void setSalesforceRecoverPwdKeyword(String salesforceRecoverPwdKeyword) { this.salesforceRecoverPwdKeyword = salesforceRecoverPwdKeyword; }
     public void setSalesforcePhone(String salesforcePhone) { this.salesforcePhone = salesforcePhone; }
 
@@ -100,11 +104,12 @@ public class UserInfor {
     //get - SF
     public String getSalesforceIOSAccountName() { return salesforceIOSAccountName; }
     public String getSalesforceIOSEmailAddress() { return salesforceIOSEmailAddress; }
+    public String getSaleforceIOSPwd() { return saleforceIOSPwd; }
 
     public String getSalesforceAndroidAccountName() { return salesforceAndroidAccountName; }
     public String getSalesforceAndroidEmailAddress() { return salesforceAndroidEmailAddress; }
+    public String getSalesforceAndroidPwd() { return salesforceAndroidPwd; }
 
-    public String getSalesforcePwd() { return salesforcePwd; }
     public String getSalesforceRecoverPwdKeyword() { return salesforceRecoverPwdKeyword; }
     public String getSalesforcePhone() { return salesforcePhone; }
 
@@ -136,11 +141,12 @@ public class UserInfor {
                 //SF
                 "salesforceIOSAccountName='" + salesforceIOSAccountName + '\'' +
                 ", salesforceIOSEmailAddress='" + salesforceIOSEmailAddress + '\'' +
+                ", saleforceIOSPwd='" + saleforceIOSPwd + "\'" +
 
                 ", salesforceAndroidAccountName='" + salesforceAndroidAccountName + '\'' +
                 ", salesforceAndroidEmailAddress='" + salesforceAndroidEmailAddress + '\'' +
+                ", salesforceAndroidPwd='" + salesforceAndroidPwd + "\'" +
 
-                ", salesforcePwd='" + salesforcePwd + '\'' +
                 ", salesforceRecoverPwdKeyword='" + salesforceRecoverPwdKeyword + '\'' +
                 ", salesforcePhone='" + salesforcePhone + '\'' +
 

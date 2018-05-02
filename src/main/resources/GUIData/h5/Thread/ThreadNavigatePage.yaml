@@ -1,0 +1,35 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+elements:
+    threadIconLink:
+        locators:
+            US: "css=a[href='https://www.thread.id']"
+    timelineIconImage:
+        locators:
+            US: "css=.micon-timeline"
+    categoriesIconImage:
+        locators:
+            US: "css=.micon-categories"
+    contactsIconImage:
+        locators:
+            US: "css=.micon-contacts"
+    meetIconImage:
+        locators:
+            US: "css=.micon-call-calendar"
+    integrationsIconImage:
+        locators:
+            US: "css=.micon-integration"
+    myToDosIconImage:
+        locators:
+            US: "css=.micon-to-do-badge"
+    favoritesIconImage:
+        locators:
+            US: "css=.micon-fav"
+    mentionsIconImage:
+        locators:
+            US: "css=.mx-compatible-icon-mention-badge"
+    userNegButton:
+        locators:
+            US: "css=.mx-thumbnail.mx-user-avatar.thumbnail-xs"
+pageValidators: [
+    threadIconLabel
+]

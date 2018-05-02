@@ -1,0 +1,69 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  attendeesSearchTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Attendees']"
+    android:
+      US: ""
+  createNewAttendeesButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='New']"
+    android:
+      US: ""
+  backToSFDetailsButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Salesforce Details']"
+    android:
+      US: ""
+  leadsButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Leads']"
+    android:
+      US: ""
+  usersButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Users']"
+    android:
+      US: ""
+  androidAttendeesSearchIconButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.TextView[@content-desc='Search']"
+  searchAllContactsTextField:
+    ios:
+      US: "//XCUIElementTypeSearchField[@name='Search all contacts']"
+    android:
+      US: "android:id/search_src_text"
+  clearTextFromSearchAllContactsButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Clear text']"
+    android:
+      US: "android:id/search_close_btn"
+  nameEditButton:
+    ios:
+        US: "//XCUIElementTypeStaticText[@name='contactName']"
+    android:
+        US: "//android.widget.TextView[@text='contactName']"
+  searchOnSalesforceButton:
+    ios:
+      US: "(//XCUIElementTypeStaticText[@name='Search on Salesforce'])[1]"
+    android:
+      US: ""
+  noContactsFoundLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='No Contacts Found']"
+    android:
+      US: ""
+  noAdditionalContactsFoundLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='No additional contacts found']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  searchAllContactsTextField
+]

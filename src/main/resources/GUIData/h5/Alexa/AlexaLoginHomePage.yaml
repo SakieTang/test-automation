@@ -1,0 +1,29 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+elements:
+    alexaAmazonDeveloperImage:
+      locators:
+        US: "css=img[alt='Amazon Developer Logo']"
+    alexaSingInButton:
+      locators:
+        US: "css=a[href^='https://www.amazon.com/ap/signin?']"
+    sparkImage:
+      locators:
+        US: "css=.onboarding-form-logo"
+    signInLink:
+      locators:
+        US: "css=a[href*='www.amazon.com/']"
+    emailAddressTextField:
+      locators:
+        US: "css=input[name='email']"
+    nextButton:
+      locators:
+        US: "css=.button"
+    pwdTextField:
+      locators:
+        US: "css=input[name='password']"
+    signInButton:
+      locators:
+        US: "css=#signInSubmit"
+pageValidators: [
+    sparkImage
+]

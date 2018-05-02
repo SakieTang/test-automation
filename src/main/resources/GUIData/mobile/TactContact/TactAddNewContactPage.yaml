@@ -6,7 +6,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='New Contact']"
     android:
-      US: "add_contact_button"
+      US: "fab_create_contact"
   newContactTitleLabel:
     ios:
       US: "//XCUIElementTypeOther[@name='New Contact']"

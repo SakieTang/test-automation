@@ -1,0 +1,64 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  newProductTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='New Product']"
+    android:
+      US: ""
+  cancelAddNewOpptyButton:
+    ios:
+      US: "	//XCUIElementTypeButton[@name='Cancel']"
+    android:
+      US: ""
+  saveNewOpptyButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Save']"
+    android:
+      US: ""
+  priceBookEntryButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Price Book Entry']"
+    android:
+      US: ""
+  priceBookEntrySearchTextField:
+    ios:
+      US: "//XCUIElementTypeSearchField[@name='Search all products']"
+    android:
+      US: ""
+  priceBookEntryOptionTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='priceBookEntryOptionText']"
+    android:
+      US: ""
+  salesPriceTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Sales Price']"
+    android:
+      US: ""
+  quantityTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Quantity']"
+    android:
+      US: ""
+  dateButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Date']"
+    android:
+      US: ""
+  totalPriceLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Total Price']"
+    android:
+      US: ""
+  lineDescriptionTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Line Description']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  newProductTitleLabel
+]

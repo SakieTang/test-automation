@@ -16,17 +16,17 @@ elements:
     ios:
       US: "//XCUIElementTypeButton[@name='Calendar']"
     android:
-      US: "//android.widget.CheckedTextView[@text='Calendar']"
+      US: "navigation_calendar"
   tactContactsButton:
     ios:
       US: "//XCUIElementTypeButton[@name='Contacts']"
     android:
-      US: "//android.widget.CheckedTextView[@text='Contacts']"
+      US: "navigation_contacts"
   tactOpportunitiesButton:
     ios:
       US: "//XCUIElementTypeButton[@name='Opportunities']"
     android:
-      US: "//android.widget.CheckedTextView[@text='Opportunities']"
+      US: "navigation_opportunities"
   notebookButton:
     ios:
       US: "//XCUIElementTypeButton[@name='Notebook']"
@@ -36,7 +36,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Notebook']"
     android:
-      US: "//android.widget.Button[@text='Notebook']"
+      US: "navigation_notebook"
   notificationsButton:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Notifications']"
@@ -46,17 +46,17 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Settings']"
     android:
-      US: "//android.widget.Button[@text='Settings']"
+      US: "navigation_settings"
   tactMoreButton:
     ios:
       US: "//XCUIElementTypeButton[@name='More']"
     android:
-      US: "//android.widget.TextView[@text='More']"
+      US: "navigation_more"
   tactMoreTitleLabel:
     ios:
       US: "//XCUIElementTypeOther[@name='More']"
     android:
-      US: "//android.widget.RelativeLayout/android.view.ViewGroup/android.widget.TextView[@text='More']"
+      US: "main_toolbar"
   tactAndroidNavigateButton:
     ios:
       US: ""

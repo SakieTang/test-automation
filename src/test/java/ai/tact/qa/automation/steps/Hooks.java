@@ -13,6 +13,7 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import org.openqa.selenium.Capabilities;
 
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +26,7 @@ public class Hooks {
 
     public Hooks( ) {}
 
-    @Before()
+    @Before("@MobileTest")
     public void InitializeTest() {
 
         log.info("Hook - before - relaunch the app");
@@ -35,12 +36,26 @@ public class Hooks {
         {
             ((AppiumDriver) Grid.driver()).launchApp();
         }
-//        else {
-//            System.out.println("Android do not need to re-launch the app");
-//        }
 
         log.info("Grid.driver().getCapabilities() ==> " +
                 Grid.driver().getCapabilities() + "\n");
+    }
+
+    @Before("@TactAIBasicTesting")
+    public void cleanFile(){
+        System.out.println("inside AI before hook");
+
+        Capabilities capabilities = Grid.driver().getCapabilities();
+        if ((boolean)capabilities.getCapability("noReset"))
+        {
+            ((AppiumDriver) Grid.driver()).launchApp();
+        }
+//        File file = new File("target/aiTestingReport.txt");
+//
+//        if (!file.isDirectory())
+//        {
+//            file.delete();
+//        }
     }
 
     @After

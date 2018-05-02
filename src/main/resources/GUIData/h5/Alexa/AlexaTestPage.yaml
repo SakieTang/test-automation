@@ -1,0 +1,38 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+elements:
+    testSkillLabel:
+      locators:
+        US: "css=#astro-toggle-1-label"
+    testDisabledEnabledSkillCheckBox:
+      locators:
+        US: "css=#astro-toggle-1"
+    testDisabledSkillButton:
+      locators:
+        US: "css=#astro-toggle-1[aria-checked='false']"
+    checkBoxInputCheckBox:
+      locators:
+        US: "css=input[type='checkbox']"
+    testEnabledSkillButton:
+      locators:
+        US: "css=#astro-toggle-1[aria-checked='true']"
+    sendMsgTextAreaTextField:
+      locators:
+        US: "css=.askt-utterance__input"
+    myMsgSpinnerLabel:
+      locators:
+        US: "css=.askt-dialog__message--spinner"
+    myMsgsListLabel:
+      locators:
+        US: "css=.askt-dialog__message--request"
+    tacBotActiveReplyMsgLabel:
+      locators:
+        US: "css=.askt-dialog__message--active-response"
+    tactBotMsgsReplyListLabel:
+      locators:
+        US: "css=.askt-dialog__message--response"
+    displayMsgsLabel:
+      locators:
+        US: "css=.askt-dialog__message"
+pageValidators: [
+    testSkillButton
+]

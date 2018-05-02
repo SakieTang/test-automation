@@ -1,10 +1,12 @@
 package ai.tact.qa.automation.runner;
 
 
+import ai.tact.qa.automation.runner.aiRunner.AITestInnerRunCukesClass;
 import ai.tact.qa.automation.utils.Appium;
 import ai.tact.qa.automation.utils.CustomPicoContainer;
 import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.dataobjects.UserInfor;
+import ai.tact.qa.automation.utils.dataobjects.WebUserInfor;
 import ai.tact.qa.automation.utils.report.GenerateReport;
 
 import com.paypal.selion.annotations.MobileTest;
@@ -25,7 +27,7 @@ public class IOSTactSanityTesting {
 
     private Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
-    @DataProvider(name="yamlDataProvider")
+    @DataProvider(name="tactUserInfo")
     public Object[][] getYamlDataProvider() throws IOException {
         FileSystemResource resource = new FileSystemResource("src/main/resources/testData/ListOfUser.yaml", UserInfor.class);
         SeLionDataProvider dataProvider = DataProviderFactory.getDataProvider(resource);
@@ -35,7 +37,7 @@ public class IOSTactSanityTesting {
     @BeforeClass(alwaysRun = true)
     public void setUpClass() throws Exception {
         log.info("TestRunner - BeforeClass - setUpClass");
-        Appium.startServer("0.0.0.0","1234","2345");
+//        Appium.startServer("0.0.0.0","1234","2345");
         Appium.restartAppium();
     }
 
@@ -46,45 +48,23 @@ public class IOSTactSanityTesting {
                     "unicodeKeyboard:true","resetKeyboard:true",
                     "noReset:false",    //continue the testing. false, reinstall the app; false, continue use the app
                     "fullReset:true"  //restart the iPhone/simulator and install the app
+//                    "fullReset:false"
             }
     )
     //w/ data provider
-    @Test(groups = "Tact", description = "Runs Cucumber Feature - onboarding", dataProvider = "yamlDataProvider", priority = 0)
+    @Test(groups = "Tact", description = "Runs Cucumber Feature - onboarding", dataProvider = "tactUserInfo", priority = 0)
     private void TactOnboardingFeature(UserInfor userInfor) throws InterruptedException {
         CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
         //onboarding
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInncerRunCukesClass.OnboardingRunCukesFullyReset.class);
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.OnboardingRunCukesFullyReset.class);
         testNGCucumberRunner.runCukes();
 
     }
 
-//    //logout-login
-//    @MobileTest(    //iOS
-//            locale = "US",
-//            additionalCapabilities = {
-//                    "unicodeKeyboard:true","resetKeyboard:true",
-//                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
-//                    "fullReset:false"  //restart the iPhone/simulator and install the app
-//            }
-//    )
-//    @Test(groups = "Tact-Sanity", description = "After add emails, then re_auth exchange", dataProvider = "yamlDataProvider", dependsOnMethods = "TactOnboardingFeature")
-//    void TactLogoutLoginFeature(UserInfor userInfor) throws InterruptedException {
-//        CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
-//        log.info("TestRunner - Test - feature");
-//        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-//
-//        //logout
-//        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInncerRunCukesClass.TactLogoutRunCukesNoReset.class);
-//        testNGCucumberRunner.runCukes();
-//        //login
-//        testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInncerRunCukesClass.TactLoginRunCukesNoReset.class);
-//        testNGCucumberRunner.runCukes();
-//    }
-
-    //AddEmail
+    //CreateSimpleOpportunity
     @MobileTest(    //iOS
             locale = "US",
             additionalCapabilities = {
@@ -93,72 +73,13 @@ public class IOSTactSanityTesting {
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dataProvider = "yamlDataProvider", dependsOnMethods = "TactOnboardingFeature")//, dependsOnMethods = "TactGetAppVersion")
-    void TactAddEmailFeature(UserInfor userInfor) throws InterruptedException {
-        CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
+    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
+    void TactACreateSimpleOpptyFeature() throws InterruptedException {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
-        //AddEmailAccountFromTab
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInncerRunCukesClass.AddEmailFromTabFeatureRunCukesNoReset.class);
-        testNGCucumberRunner.runCukes();
-    }
-
-    //ReAuth
-    @MobileTest(    //iOS
-            locale = "US",
-            additionalCapabilities = {
-                    "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
-                    "fullReset:false"  //restart the iPhone/simulator and install the app
-            }
-    )
-    @Test(groups = "Tact-Sanity", description = "After add emails, then re_auth exchange", dataProvider = "yamlDataProvider", dependsOnMethods = "TactAddEmailFeature")
-    void TactBeReauthExchangeFeature(UserInfor userInfor) throws InterruptedException {
-        CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //reauth exchange account
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInncerRunCukesClass.TactReauthExchangeRunCukesNoReset.class);
-        testNGCucumberRunner.runCukes();
-    }
-
-    //SendEmail
-    @MobileTest(    //iOS
-            locale = "US",
-            additionalCapabilities = {
-                    "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
-                    "fullReset:false"  //restart the iPhone/simulator and install the app
-            }
-    )
-    @Test(groups = "Tact-Sanity", description = "Send emails and verify in Tact", dataProvider = "yamlDataProvider", dependsOnMethods = "TactBeReauthExchangeFeature")
-    void TactSendEmailFeature(UserInfor userInfor) throws InterruptedException {
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //SendEmail
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInncerRunCukesClass.SendEmailFeatureRunCukesNoReset.class);
-        testNGCucumberRunner.runCukes();
-    }
-
-    //Contact
-    @MobileTest(    //iOS
-            locale = "US",
-            additionalCapabilities = {
-                    "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
-                    "fullReset:false"  //restart the iPhone/simulator and install the app
-            }
-    )
-    @Test(groups = "Tact-Sanity", description = "Contact object", dataProvider = "yamlDataProvider", dependsOnMethods = "TactOnboardingFeature")
-    void TactContactsFeature(UserInfor userInfor) throws InterruptedException {
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //Contact
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInncerRunCukesClass.TactContactsFeatureRunCukesNoReset.class);
+        //Create Simple Opportunity
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactCreateSimpleOpptyNoReset.class);
         testNGCucumberRunner.runCukes();
     }
 
@@ -171,35 +92,93 @@ public class IOSTactSanityTesting {
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dataProvider = "yamlDataProvider", dependsOnMethods = "TactOnboardingFeature")
-    void TactCalendarFeature(UserInfor userInfor) throws InterruptedException {
+    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
+    void TactCalendarFeature() throws InterruptedException {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
         //Calendar
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInncerRunCukesClass.TactCalendarFeatureRunCukesNoReset.class);
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactCalendarFeatureRunCukesNoReset.class);
         testNGCucumberRunner.runCukes();
     }
 
-//    //DataSources
-//    @MobileTest(  //iOS
-//            locale = "US",
-//            additionalCapabilities = {
-//                    "unicodeKeyboard:true","resetKeyboard:true",
-//                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
-//                    "fullReset:false"  //restart the iPhone/simulator and install the app
-//            }
-//    )
-//    @Test(groups = "Tact-Sanity", description = "TactDataSourcesTest", dataProvider = "yamlDataProvider", dependsOnMethods = "TactOnboardingFeature")
-//    void TactDataSourcesTest(UserInfor userInfor) throws InterruptedException {
+    //Contact
+    @MobileTest(    //iOS
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+            }
+    )
+    @Test(groups = "Tact-Sanity", description = "Contact object", dependsOnMethods = "TactOnboardingFeature")
+    void TactContactsFeature() throws InterruptedException {
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //Contact
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactContactsFeatureRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
+
+    //AddEmail
+    @MobileTest(    //iOS
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+            }
+    )
+    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dependsOnMethods = "TactOnboardingFeature")
+    void TactEmailAddedFeature() throws InterruptedException {
 //        CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
-//        log.info("TestRunner - Test - feature");
-//        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-//
-//        //DataSources
-//        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInncerRunCukesClass.TactDataSourcesFeatureRunCukesNoReset.class);
-//        testNGCucumberRunner.runCukes();
-//    }
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //AddEmailAccountFromTab
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.AddEmailFromTabFeatureRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
+
+    //ReAuth
+    @MobileTest(    //iOS
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+            }
+    )
+    @Test(groups = "Tact-Sanity", description = "After add emails, then re_auth exchange", dataProvider = "tactUserInfo", dependsOnMethods = "TactEmailAddedFeature")
+    void TactBeReauthExchangeFeature(UserInfor userInfor) throws InterruptedException {
+        CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //reauth exchange account
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactReauthExchangeRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
+
+    //SendEmail
+    @MobileTest(    //iOS
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+            }
+    )
+    @Test(groups = "Tact-Sanity", description = "Send emails and verify in Tact", dependsOnMethods = "TactEmailAddedFeature")
+    void TactSendEmailFeature() throws InterruptedException {
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //SendEmail
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.SendEmailFeatureRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
 
     //getAppVersion
     @MobileTest(  //iOS
@@ -210,16 +189,33 @@ public class IOSTactSanityTesting {
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    //w/ data provider
-    @Test(groups = "Tact", description = "Get Tact Version", dataProvider = "yamlDataProvider", dependsOnMethods = "TactOnboardingFeature")
-    void TactGetAppVersion(UserInfor userInfor) throws InterruptedException {
+    @Test(groups = "Tact", description = "Get Tact Version", dependsOnMethods = "TactBeReauthExchangeFeature")//"TactOnboardingFeature")
+    void TactGetAppVersion() throws InterruptedException {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
-        //Email
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInncerRunCukesClass.TactVersionFeatureCukesNoReset.class);
+//        get App Version
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactVersionFeatureCukesNoReset.class);
         testNGCucumberRunner.runCukes();
+    }
 
+    //EditOpportunity
+    @MobileTest(  //iOS
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+            }
+    )
+    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactGetAppVersion")
+    void TactEditOpptyFeature() throws InterruptedException {
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //Edit Opportunity
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactEditOpptyFeatureNoReset.class);
+        testNGCucumberRunner.runCukes();
     }
 
     //deleteAccout
@@ -231,17 +227,55 @@ public class IOSTactSanityTesting {
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    //w/ data provider
-    @Test(groups = "Tact", description = "Runs Tact - delete Account", dataProvider = "yamlDataProvider", alwaysRun = true, dependsOnGroups = "Tact-Sanity")
-    void TactDeleteAccount(UserInfor userInfor) throws InterruptedException {
-
+    @Test(groups = "Tact", description = "Runs Tact - delete Account", alwaysRun = true, dependsOnGroups = "Tact-Sanity")
+    void TactDeleteAccount() throws InterruptedException {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
         //delete account
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInncerRunCukesClass.TactDeleteAccountRunCukesNoReset.class);
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactDeleteAccountRunCukesNoReset.class);
         testNGCucumberRunner.runCukes();
 
+    }
+
+    //login Tact AI account
+    @MobileTest(    //iOS
+            locale="US",
+//            appPath="Applications/Tact Prototype.app",
+            additionalCapabilities={
+                    "unicodeKeyboard:true", "resetKeyboard:true"
+                    , "noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
+                    , "fullReset:false"  //restart the iPhone/simulator and install the app
+            }
+    )
+    @Test(description="Runs Cucumber Feature - onboarding", dependsOnMethods = "TactDeleteAccount")
+    private void TactLoginTactAIAccount() throws InterruptedException {
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //onboarding
+        TestNGCucumberRunner testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.TactLogin.class);
+        testNGCucumberRunner.runCukes();
+    }
+
+    //Tact AI Testing
+    @MobileTest(    //iOS
+            locale="US",
+//            appPath="Applications/Tact Prototype.app",
+            additionalCapabilities={
+                    "unicodeKeyboard:true", "resetKeyboard:true"
+                    , "noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
+                    , "fullReset:false"  //restart the iPhone/simulator and install the app
+            }
+    )
+    @Test(description="Runs Cucumber Feature - onboarding", dependsOnMethods = "TactLoginTactAIAccount")
+    private void TactAIFeature() throws InterruptedException {
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //Tact AI Testing
+        TestNGCucumberRunner testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.testTactAI.class);
+        testNGCucumberRunner.runCukes();
     }
 
     @AfterClass(alwaysRun = true)
@@ -259,7 +293,7 @@ public class IOSTactSanityTesting {
         //report
         log.info("Finished running");
         GenerateReport.getReport(WebDriverPlatform.IOS);
-        GenerateReport.deleteAllJsonReport();
+//        GenerateReport.deleteAllJsonReport();
 
         log.info("testNGCucumberRunner.finish(); FINISHED");
     }

@@ -2,16 +2,24 @@ package ai.tact.qa.automation.utils;
 
 import ai.tact.qa.automation.testcomponents.mobile.TactWelcomePage;
 
+import ai.tact.qa.automation.utils.dataobjects.FieldDataType;
 import com.paypal.selion.internal.platform.grid.WebDriverPlatform;
 import com.paypal.selion.platform.asserts.SeLionAsserts;
 import com.paypal.selion.platform.grid.Grid;
+import com.paypal.selion.platform.mobile.elements.MobileElement;
+import com.paypal.selion.platform.mobile.elements.MobileTextField;
 import io.appium.java_client.AppiumDriver;
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Capabilities;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
+import java.util.Scanner;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class DriverUtils {
 
@@ -64,19 +72,66 @@ public class DriverUtils {
     public static void sleep(double sec) {
         try {
             Thread.sleep((long) (sec*1000));
-        }
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * hid the keyboard
+     * hide the Android keyboard
      */
-    public static void hideKeyboard(){
+    public static void hideAndroidKeyboard(){
         AppiumDriver driver = (AppiumDriver)Grid.driver();
         driver.hideKeyboard();
         driver.swipe(201,290,201,264,10);
+    }
+
+    public static void workaroundHideKeyboard() {
+        AppiumDriver driver = (AppiumDriver) Grid.driver();
+        int x = driver.manage().window().getSize().width;
+        int y = driver.manage().window().getSize().height;
+        driver.swipe(x/2, y/3, x/2, y/2, 0);
+        sleep(0.5);
+    }
+
+    /**
+     * hide the iOS keyboard
+     */
+    public static void hideIOSKeyboard() {
+        String cmd = "tell application \"Simulator\"\n" +
+                        "activate\n" +
+                     "end tell";
+        String[] args1 = {"osascript", "-e", cmd};
+//        runCommand(args1);
+        System.out.println("finished the 1st cmd : " + cmd);
+        sleep(10);
+
+        cmd = //"activate application \"Simulator\"\n" +
+                    "tell app \"System Events\"\n" +
+                        "to keystroke \"k\" using {shift down, command down}\n" +
+                    "delay (random number from 0.5 to 5)\n" +
+                    "end tell";
+        String [] args2 = {"osascript", "-e", cmd};
+//        runCommand(args2);
+        try {
+            Process process = Runtime.getRuntime().exec(args2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+        System.out.println("finished the 2nd cd : " + cmd);
+
+//        Process process = null;
+//        try {
+//            Process process = Runtime.getRuntime().exec(args);
+//            process.waitFor();
+//        } catch (IOException | InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+        sleep(3);
     }
 
     /**
@@ -90,8 +145,7 @@ public class DriverUtils {
             Process p = Runtime.getRuntime().exec("adb shell dumpsys input_method | grep mInputShown | cut -d ' ' -f4 | cut -d '=' -f2" );
             BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
             result = br.readLine();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         if (result.equals("true"))
@@ -145,14 +199,29 @@ public class DriverUtils {
 
     /**
      * get random number
-     * @param min
-     * @param max
+     * int  4 bytes -2,147,483,648 to 2,147,483,647
+     * @param origin
+     * @param bound
      * @return random number
      */
-    public static int getRandomNumber ( int min, int max ) {
-        int result = min;
-        result = (int)((max)*Math.random() + min);
-        return result;
+    public static int getRandomNumber ( int origin, int bound ) {
+        
+        return ThreadLocalRandom.current().nextInt(origin,bound);
+    }
+
+    /**
+     * get random long number
+     * long 8 bytes -9,223,372,036,854,775,808 to +9,223,372,036,854,775,807
+     * @param longLength
+     * @return random long number
+     */
+    public static long getRandomLongNumberInGivenLength ( int longLength ) {
+
+        long min = (long)Math.pow(10, (longLength-1));
+        long bound = (long)Math.pow(10, longLength);
+        long value = ThreadLocalRandom.current().nextLong(min, bound);
+
+        return value;
     }
 
     /***
@@ -281,15 +350,45 @@ public class DriverUtils {
      */
     public static Process runCommand (String command) {
         Process process = null;
+
         try {
             process = Runtime.getRuntime().exec(command);
-//			process.waitFor();
-//		} catch (IOException | InterruptedException e) {
-        }
-        catch (IOException e) {
+			process.waitFor();
+		} catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
         return process;
+    }
+
+    /**
+     * run the android command without return value
+     * @param command
+     * @return Process
+     */
+    public static Process runCommand (String[] command) {
+        Process process = null;
+
+        try {
+            process = Runtime.getRuntime().exec(command);
+            process.waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return process;
+    }
+
+    public static String getRunCommandReturn (String command) {
+        Process process = null;
+        Scanner s = null;
+
+        try {
+            process = Runtime.getRuntime().exec(command);
+            s = new Scanner(process.getInputStream()).useDelimiter("\\n");
+            process.waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return s.hasNext() ? s.next() : "";
     }
 
     //××××××××××//
@@ -300,21 +399,29 @@ public class DriverUtils {
      */
     public static void clearChromeData(){
         String command = "adb shell pm clear com.android.chrome";
-        String line = null;
+//        String line = null;
 
-        try {
-            Process process = DriverUtils.runCommand(command);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            if ((line = reader.readLine()) != null && line.equalsIgnoreCase("Success")) {
-                System.out.println("Clear Chrome Data is done");
-            }
-            else {
-                System.out.println("Clear Chrome Data is false");
-            }
+        String result = DriverUtils.getRunCommandReturn(command);
+        if (result.equalsIgnoreCase("Success")) {
+            System.out.println("Clear Chrome Data is done");
         }
-        catch (IOException e) {
-            e.getMessage();
+        else {
+            System.out.println("Clear Chrome Data is false");
         }
+//
+//        try {
+//            Process process = DriverUtils.runCommand(command);
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//            if ((line = reader.readLine()) != null && line.equalsIgnoreCase("Success")) {
+//                System.out.println("Clear Chrome Data is done");
+//            }
+//            else {
+//                System.out.println("Clear Chrome Data is false");
+//            }
+//        }
+//        catch (IOException e) {
+//            e.getMessage();
+//        }
     }
 
     //××××××××××//
@@ -325,20 +432,13 @@ public class DriverUtils {
      */
     public static void rebootEmulator(){
         String command = "adb root";
-        String line = null;
 
-        try {
-            Process process = DriverUtils.runCommand(command);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            if ((line = reader.readLine()) != null && line.equalsIgnoreCase("Success")) {
-                System.out.println("Reboot emulator is done");
-            }
-            else {
-                System.out.println("Reboot emulator is false");
-            }
+        String result = DriverUtils.getRunCommandReturn(command);
+        if (result.equalsIgnoreCase("Success")) {
+            System.out.println("Reboot emulator is done");
         }
-        catch (IOException e) {
-            e.getMessage();
+        else {
+            System.out.println("Reboot emulator is false");
         }
     }
 
@@ -352,7 +452,7 @@ public class DriverUtils {
         if (text.equalsIgnoreCase("no") || text.equalsIgnoreCase("w/o") ||
                 text.equalsIgnoreCase("without") || text.equalsIgnoreCase("not") ||
                 text.equalsIgnoreCase("don't") || text.equalsIgnoreCase("do not") ||
-                text.isEmpty() || text.equals("")) {
+                text.isEmpty() || text.equals("") || text.equalsIgnoreCase("none")) {
             System.out.println("Given a empty text");
             return true;
         }
@@ -363,6 +463,7 @@ public class DriverUtils {
 
     public static Date currentDate(){
 
+        //format: Tue May 15 11:30:30 PDT 2018
         return new Date();
     }
 
@@ -385,6 +486,9 @@ public class DriverUtils {
             case "year":
                 dateInfo = new SimpleDateFormat("yyyy").format(date);
                 break;
+            case "yyyy":
+                dateInfo = new SimpleDateFormat("yyyy").format(date);
+                break;
             case "month":
                 dateInfo = new SimpleDateFormat("MMM").format(date);
                 break;
@@ -394,7 +498,13 @@ public class DriverUtils {
             case "date":
                 dateInfo = new SimpleDateFormat("dd").format(date);
                 break;
+            case "dd":
+                dateInfo = new SimpleDateFormat("dd").format(date);
+                break;
             case "hours":
+                dateInfo = new SimpleDateFormat("hh").format(date);
+                break;
+            case "hh":
                 dateInfo = new SimpleDateFormat("hh").format(date);
                 break;
             case "mins":
@@ -402,7 +512,7 @@ public class DriverUtils {
                 break;
             default:
                 SeLionAsserts.verifyFalse(true,"Please give a correct String " +
-                        "(year|month|mm|date|hours|mins)");
+                        "(year|yyyy|month|mm|date|dd|hours|mins)");
         }
         return dateInfo;
     }
@@ -412,25 +522,44 @@ public class DriverUtils {
      * @param file
      * @param data
      */
-    public static void writeToFile(String file, String data){
-        FileWriter fw = null;
+    public static void writeToFile(String file, String data, boolean isAppand){
+//        FileWriter fw = null;
+//        try {
+//            File f = new File(file);
+//            if (isAppand) {
+//                fw = new FileWriter(f, isAppand);
+//            } else {
+//                fw = new FileWriter(f);
+//            }
+//
+//        }
+//        catch (IOException e){
+//            e.printStackTrace();
+//        }
+//        PrintWriter pw = new PrintWriter(fw);
+//        pw.println(data);
+//        pw.flush();
+//        try {
+//            fw.flush();
+//            pw.close();
+//            fw.close();
+//        }
+//        catch ( IOException e ){
+//            e.printStackTrace();
+//        }
         try {
-            File f = new File(file);
-            fw = new FileWriter(f);
+            RandomAccessFile randomFile = new RandomAccessFile(file, "rw" );
+            long fileLength = randomFile.length();
 
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        PrintWriter pw = new PrintWriter(fw);
-        pw.println(data);
-        pw.flush();
-        try {
-            fw.flush();
-            pw.close();
-            fw.close();
-        }
-        catch ( IOException e ){
+            if (isAppand) {
+//                System.out.println("+++++++is Appand+++++++" + fileLength);
+                randomFile.seek(fileLength);
+            }
+            System.out.println(fileLength + " : ******" + data + "******");
+//            randomFile.writeBytes(data + "\r\n");
+            randomFile.writeBytes(data);
+            randomFile.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -476,4 +605,96 @@ public class DriverUtils {
     public static void main(String[] args){
         tapAndroidHardwareHomeBtn();
     }
+
+
+    /**
+     * clickOption
+     * @param location
+     * @param replaceString
+     * @param option
+     */
+    public static void clickOption(MobileElement location, String replaceString, String option){
+        String stageLoc = location.getLocator().replace(replaceString, option);
+        System.out.println("stageLoc ==> " + stageLoc);
+        if (Grid.driver().findElementsByXPath(stageLoc).size()==0){
+            slideUP();
+        }
+        Grid.driver().findElementByXPath(stageLoc).click();
+        sleep(0.5);
+    }
+
+    /**
+     * check field Data Type
+     * randomNumeric - 6116388799
+     * randomAlphabetic - msWGGKDFQe
+     * randomAlphanumeric - rwis1DSWnm
+     * randomAscii - w:vjD@D+uJ
+     * @param location
+     * @param type
+     * @param maxLength
+     * @param text
+     */
+    public static void inputTextField(boolean isEdit, MobileTextField location, FieldDataType type, int maxLength, String text, boolean isVerify){
+        String randomText = text;
+        int expectNumLength = -1;
+
+        if (text.contains("TextLength")) {
+            //get the expectNum
+            expectNumLength = Integer.parseInt(text.substring(10));
+
+            //base on type get the value
+            /**
+             * randomNumeric - 6116388799
+             * randomAlphabetic - msWGGKDFQe
+             * randomAlphanumeric - rwis1DSWnm
+             * randomAscii - w:vjD@D+uJ
+             */
+            switch (type) {
+                case randomNumeric:      //6116388799
+                    randomText = String.valueOf(DriverUtils.getRandomLongNumberInGivenLength(expectNumLength));
+                    break;
+                case randomAlphabetic:   //msWGGKDFQe
+                    randomText = RandomStringUtils.randomAlphabetic(expectNumLength);
+                    break;
+                case randomAlphanumeric: //rwis1DSWnm
+                    randomText = RandomStringUtils.randomAlphanumeric(expectNumLength);
+                    break;
+                case randomAscii:        //w:vjD@D+uJ
+                    randomText = RandomStringUtils.randomAscii(expectNumLength);
+                    break;
+                default:
+                    randomText = RandomStringUtils.randomAlphanumeric(expectNumLength);
+            }
+        }
+
+        System.out.println(location.toString() + " input randomText : " + randomText);
+        if (isEdit) {
+            location.clearText();
+        }
+        location.sendKeys(randomText);
+
+        String getDisplayText = location.getValue();
+        System.out.println("getDisplayText ==> " + getDisplayText);
+
+        if (isVerify) {
+            if ( expectNumLength > maxLength) {
+                SeLionAsserts.assertNotEquals(randomText, getDisplayText, "They should not equals");
+            } else {
+                SeLionAsserts.assertEquals(randomText, getDisplayText, "They should equal");
+            }
+        } else {
+            System.out.println("No need to verify the input textField " + location.toString());
+        }
+
+//        sleep(30);
+
+        System.out.println("finish type");
+
+    }
+
+    public static void turnOffWifi(){
+        runCommand("networksetup -setairportpower en0 off");
+    }
+
+    public static void turnOnWifi() { runCommand("networksetup -setairportpower en0 on"); }
 }

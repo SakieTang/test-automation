@@ -1,0 +1,38 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+elements:
+    accountButton:
+      locators:
+        US: "css=button[class*='cui-button--none']"
+    settingsButton:
+      locators:
+        US: "css=.micon-call-calendar"
+    singOutButton:
+      locators:
+        US: "css=div[title='Sign Out']"
+    searchButton:
+      locators:
+        US: "css=button[title='Open Search Section']"
+    createNewSpaceButton:
+      locators:
+        US: "css=button[title='Create a new space']"
+    tactProdBotButton:
+      locators:
+        US: "css=.cui-avatar--40[title='Tact - tact@sparkbot.io']"
+    sendMsgTextAreaTextField:
+      locators:
+        US: "css=textarea"
+    myMsgsLabel:
+      locators:
+        US: "//*[@alt='automationAI ciscoSparksfS (You) - automation.ciscoSpark@gmail.com']//following-sibling::div/div"
+    tactBotMsgsLabel:
+      locators:
+        US: "//*[@alt='Tact - tact@sparkbot.io']//following-sibling::div/div"
+    tactBotMsgsReplyListLabel:
+      locators:
+        US: "//*[@alt='Tact - tact@sparkbot.io']//following-sibling::div/div/div"
+    displayMsgsLabel:
+      locators:
+        US: "css=.activity-text"
+pageValidators: [
+    accountButton
+]

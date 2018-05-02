@@ -1,0 +1,149 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  editOpptyTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Edit Opportunity']"
+    android:
+      US: "//android.widget.TextView[@text='Edit Opportunity']"
+  cancelAddNewOpptyButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Cancel']"
+    android:
+      US: "//android.widget.ImageButton[@content-desc='Navigate up']"
+  saveNewOpptyButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Save']"
+    android:
+      US: "//android.widget.TextView[@text='SAVE']"
+  opptyNameTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Opportunity Name']/following-sibling::XCUIElementTypeTextField"
+    android:
+      US: "//TextInputLayout[@text='Opportunity Name (required)']/android.widget.FrameLayout/android.widget.EditText"
+  closeDateButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Close Date']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: "//TextInputLayout[@text='Close Date (required)']/android.widget.FrameLayout/android.widget.EditText"
+  stageButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Stage']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: "//android.widget.TextView[@text='Stage (required)']/following-sibling::android.widget.Spinner/android.widget.TextView"
+  stageTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Stage']"
+    android:
+      US: ""
+  stageOptionTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='stageOptionText']"
+    android:
+      US: "//android.widget.CheckedTextView[@text='stageOptionText']"
+  probabilityTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Probability']"
+    android:
+      US: "//TextInputLayout[@text='Probability (%) (required)']/android.widget.FrameLayout/android.widget.EditText"
+  privateSwitch:
+    ios:
+      US: "//XCUIElementTypeSwitch[@name='Private']"
+    android:
+      US: "//android.widget.Switch"
+  accountButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Account']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: "//TextInputLayout[@text='Account']"
+  typeButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Type']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: "//android.widget.TextView[@text='Type']/following-sibling::android.widget.Spinner/android.widget.TextView"
+  typeTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Type']"
+    android:
+      US: ""
+  typeOptionTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='typeOptionText']"
+    android:
+      US: "//android.widget.CheckedTextView[@text='typeOptionText']"
+  leadSourceButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Lead Source']"
+    android:
+      US: "//android.widget.TextView[@text='Lead Source']/following-sibling::android.widget.Spinner/android.widget.TextView"
+  leadSourceTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Lead Source']"
+    android:
+      US: ""
+  leadSourceOptionTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='leadSourceOptionText']"
+    android:
+      US: "//android.widget.CheckedTextView[@text='leadSourceOptionText']"
+  amountTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Amount']/following-sibling::XCUIElementTypeTextField"
+    android:
+      US: "//TextInputLayout[@text='Amount']/android.widget.FrameLayout/android.widget.EditText"
+  nextStepTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Next Step']/following-sibling::XCUIElementTypeTextField"
+    android:
+      US: "//TextInputLayout[@text='Next Step']/android.widget.FrameLayout/android.widget.EditText"
+  addInfoOlderNumberTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Order Number']/following-sibling::XCUIElementTypeTextField"
+    android:
+      US: "//TextInputLayout[@text='Order Number']/android.widget.FrameLayout/android.widget.EditText"
+  addInfoMainCompetitorTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Main Competitor(s)']/following-sibling::XCUIElementTypeTextField"
+    android:
+      US: "//TextInputLayout[@text='Main Competitor(s)']/android.widget.FrameLayout/android.widget.EditText"
+  addInfoCurrentGeneratorTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Current Generator(s)']/following-sibling::XCUIElementTypeTextField"
+    android:
+      US: "//TextInputLayout[@text='Current Generator(s)']/android.widget.FrameLayout/android.widget.EditText"
+  addInfoDeliveryInstallationStatusButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Delivery/Installation Status']"
+    android:
+      US: "//android.widget.TextView[@text='Delivery/Installation Status']/following-sibling::android.widget.Spinner/android.widget.TextView"
+  deliveryInstallationStatusTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Delivery/Installation Status']"
+    android:
+      US: ""
+  deliveryInstallationStatusOptionTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='deliveryInstallationStatusOptionText']"
+    android:
+      US: "//android.widget.CheckedTextView[@text='deliveryInstallationStatusOptionText']"
+  addInfoTrackingNumberTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Tracking Number']/following-sibling::XCUIElementTypeTextField"
+    android:
+      US: "//TextInputLayout[@text='Tracking Number']/android.widget.FrameLayout/android.widget.EditText"
+  descriptionTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Description']"
+    android:
+      US: "//TextInputLayout[@text='Description']/android.widget.FrameLayout/android.widget.EditText"
+  addProductsButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Add Product']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  newOpptyTitleLabel
+]
