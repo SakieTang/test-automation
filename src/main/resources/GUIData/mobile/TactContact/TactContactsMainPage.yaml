@@ -1,0 +1,19 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  tactContactsTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Contacts']"
+    android:
+      US: "//android.widget.TextView[@text='Contacts']"
+  contactsPlusIconButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Add']"
+    android:
+      US: "//android.widget.RelativeLayout/android.view.ViewGroup/android.widget.ImageButton"
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  tactContactsTitleLabel
+]

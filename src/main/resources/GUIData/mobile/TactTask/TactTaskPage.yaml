@@ -1,0 +1,119 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  newTaskTitleLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='New Task']"
+    android:
+      US: "//android.widget.TextView[@text='Add Task']"
+  saveNewTaskButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Save']"
+    android:
+      US: "menu_item_save"
+  cancelNewTaskButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Cancel']"
+    android:
+      US: "//android.widget.ImageButton[@content-desc='Navigate up']"
+  syncToSaleforceTaskSwitch:
+    ios:
+      US: "//XCUIElementTypeSwitch[@name='Salesforce Task']"
+    android:
+      US: "//*[contains(@text, 'Salesforce Task')]"
+  titleTextField:
+    ios:
+      US: "//XCUIElementTypeTextField"
+    android:
+      US: "//TextInputLayout[@text='Title (required)']"
+  iosFollowUpButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='checkBox']"
+    android:
+      US: ""
+  TaskNameContactButton:
+    ios:
+      US: "	//XCUIElementTypeStaticText[@name='Name']"
+    android:
+      US: "//TextInputLayout[@text='Contact']"
+  relatedToButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Related To']"
+    android:
+      US: "//TextInputLayout[@text='Related To']"
+  dueDateButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Due Date']"
+    android:
+      US: "//TextInputLayout[@text='Due Date (required)']"
+  iosRemoveDueReminderDateButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Remove Date']"
+    android:
+      US: ""
+  androidSelectDateButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.view.View[@content-desc='selectDate']"
+  androidNextMonthButton:
+    ios:
+      US: ""
+    android:
+      US: "android:id/next"
+  selectDueReminderDateCancelButton:
+    ios:
+      US: "(//XCUIElementTypeButton[@name='Cancel'])[2]"
+    android:
+      US: "//android.widget.Button[@text='CANCEL']"
+  selectDueReminderDateDoneAndOKButton:
+    ios:
+      US:  "//XCUIElementTypeButton[@name='Done']"
+    android:
+      US: "//android.widget.Button[@text='OK']"
+  iosReminderButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Reminder']"
+    android:
+      US: ""
+  descriptionTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Description']"
+    android:
+      US: "//TextInputLayout[@text='Description']"
+  syncSFTaskCommentsTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Comments']"
+    android:
+      US: "//TextInputLayout[@text='Comments']"
+  syncSFTaskAssignedToButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Assigned To']"
+    android:
+      US: "//*[contains(@text,'Assigned To')]"
+  syncSFTaskPriorityButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Priority']"
+    android:
+      US: "//android.widget.TextView[@text='Normal']"
+  syncSFTaskPriorityOptionButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Normal']"
+    android:
+      US: "//android.widget.CheckedTextView[@text='Normal']"
+  syncSFTaskStatusButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Status']"
+    android:
+      US: "//android.widget.TextView[@text='Not Started']"
+  syncSFTaskStatusOptionButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Not Started']"
+    android:
+      US: "//android.widget.CheckedTextView[@text='Not Started']"
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  newTaskTitleLabel
+]

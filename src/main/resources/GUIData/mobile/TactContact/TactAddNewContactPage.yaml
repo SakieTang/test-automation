@@ -1,0 +1,54 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  tactAddNewContactButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='New Contact']"
+    android:
+      US: "add_contact_button"
+  newContactTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='New Contact']"
+    android:
+      US: "//android.widget.TextView[@text='New Contact']"
+  cancelAddNewContactButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Cancel']"
+    android:
+      US: "//android.widget.ImageButton[@content-desc='Navigate up']"
+  saveNewContactButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Save']"
+    android:
+      US: "//android.widget.TextView[@text='SAVE']"
+  scanBusinessCardButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Scan Business Card']"
+    android:
+      US: "custom_field_business_card_textview"
+  saveToIPhoneSwitch:
+    ios:
+      US: "//XCUIElementTypeSwitch[@name='Save to iPhone']"
+    android:
+      US: "//*[contains(@text, 'Save to device')]"
+  sendToSaleforceSwitch:
+    ios:
+      US: "//XCUIElementTypeSwitch[@name='Send to Salesforce']"
+    android:
+      US: "//*[contains(@text, 'Send to Salesforce')]"
+  firstNameTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='First Name']"
+    android:
+      US: "//TextInputLayout[@text='First Name']"
+  lastNameTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Last Name']"
+    android:
+      US: "//*[contains(@text, 'Last Name')]"
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  newContactLabel
+]

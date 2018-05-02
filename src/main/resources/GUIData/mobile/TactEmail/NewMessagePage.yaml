@@ -1,0 +1,94 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  newMessageTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='New Message']"
+    android:
+      US: ""
+  cancelNewMessageButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Cancel']"
+    android:
+      US: ""
+  cancelDeleteDraftButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Delete Draft']"
+    android:
+      US: ""
+  cancelSaveDraftButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Save Draft']"
+    android:
+      US: ""
+  cancelCancelButton:
+    ios:
+      US: "(//XCUIElementTypeButton[@name='Cancel'])[2]"
+    android:
+      US: ""
+  sendNewMessageButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Send']"
+    android:
+      US: ""
+  toNewMessageTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='To:']"
+    android:
+      US: ""
+  addEmailIconButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='add email']"
+    android:
+      US: ""
+  fromLabel:
+    ios:
+      US: "//*[contains(@value, 'From:')]"
+    android:
+      US: ""
+  subjectNewMessageTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Subject:']"
+    android:
+      US: ""
+  bodyTextField:
+    ios:
+      US: "//XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTextView"
+    android:
+      US: ""
+  moreOptionButton:
+    ios:
+      US: ""
+    android:
+      US: ""
+  trackMessageLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Track Message:']"
+    android:
+      US: ""
+  trackMessageSwitch:
+    ios:
+      US: "//XCUIElementTypeSwitch[@name='Track Message:']"
+    android:
+      US: ""
+  attachAFileButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Attach a File']"
+    android:
+      US: ""
+  attachFromPhotoLibraryButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Attach from Photo Library']"
+    android:
+      US: ""
+  cancelMoreOptionButton:
+    ios:
+      US: "(//XCUIElementTypeButton[@name='Cancel'])[2]"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  newEventTitleLabel
+]

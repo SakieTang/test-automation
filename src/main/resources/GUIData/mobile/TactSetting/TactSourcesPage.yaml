@@ -1,0 +1,39 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  sourcesTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Sources']"
+    android:
+      US: ""
+  backToSettingsPageButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Settings']"
+    android:
+      US: ""
+  syncDataNowButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Sync Data Now']"
+    android:
+      US: ""
+  exchangeButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Exchange']"
+    android:
+      US: ""
+  gmailButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Gmail']"
+    android:
+      US: ""
+  linkedInButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='LinkedIn']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  sourcesTitleLabel
+]

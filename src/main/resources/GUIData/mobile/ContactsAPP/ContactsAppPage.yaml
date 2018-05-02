@@ -1,0 +1,44 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  contactsTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Contacts']"
+    android:
+      US: ""
+  searchTextField:
+    ios:
+        US: "//XCUIElementTypeSearchField[@name='Search']"
+    android:
+        US: ""
+  nameEditButton:
+    ios:
+        US: "//XCUIElementTypeStaticText[@name='contactName']"
+    android:
+        US: ""
+  editContactButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Edit']"
+    android:
+      US: ""
+  cancelEditButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Cancel']"
+    android:
+      US: ""
+  deleteContactButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Delete Contact']"
+    android:
+      US: ""
+  confirmDeleteContactButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Delete Contact']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  sfLogoImage
+]

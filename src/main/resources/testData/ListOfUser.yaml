@@ -1,0 +1,19 @@
+- !!ai.tact.qa.automation.utils.dataobjects.UserInfor
+  salesforceIOSAccountName: ~@gmail.com
+  salesforceIOSEmailAddress: ~@gmail.com
+  salesforceAndroidAccountName: ~@gmail.com
+  salesforceAndroidEmailAddress: ~@gmail.com
+  salesforcePwd: ~
+  salesforceRecoverPwdKeyword: ~
+  salesforcePhone: ~
+  exchangeIOSEmailAddress: ~@tact.ai
+  exchangeIOSEmailPwd: ~
+  exchangeAndroidEmailAddress: ~@tact.ai
+  exchangeAndroidEmailPwd: ~
+  exchangeServer: ~
+  linkedInIOSEmailAddress: ~@gmail.com
+  linkedInAndroidEmailAddress: ~@gmail.com
+  linkedInPwd: ~
+  gmailIOSEmailAddress: ~@gmail.com
+  gmailAndroidEmailAddress: ~@gmail.com
+  gmailPwd: ~

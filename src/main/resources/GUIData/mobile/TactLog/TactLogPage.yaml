@@ -1,0 +1,109 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  newLogTitleLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Log Activity']"
+    android:
+      US: "//android.widget.TextView[@text='Log to Salesforce']"
+  saveNewTaskButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Save']"
+    android:
+      US: "menu_item_save"
+  cancelNewTaskButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Cancel']"
+    android:
+      US: "//android.widget.ImageButton[@content-desc='Navigate up']"
+  subjectButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Subject']"
+    android:
+      US: "//TextInputLayout[@text='Subject (required)']"
+  subjectOptionButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='subjectOption']"
+    android:
+      US: "//android.widget.TextView[@text='subjectOption']"
+  subjectTextField:
+    ios:
+      US: "//XCUIElementTypeTextField"
+    android:
+      US: "//android.widget.EditText"
+  subjectConfirmButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Log Activity']"
+    android:
+      US: "//android.widget.TextView[@text='CONFIRM']"
+  LogSFNameContactButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Name']"
+    android:
+      US: "//TextInputLayout[@text='Contact']"
+  relatedToButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Related To']"
+    android:
+      US: "//TextInputLayout[@text='Related To']"
+  dueDateButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Due Date']"
+    android:
+      US: "//TextInputLayout[@text='Due Date (required)']"
+  dueDateCancelButton:
+    ios:
+      US: "(//XCUIElementTypeButton[@name='Cancel'])[2]"
+    android:
+      US: "//android.widget.Button[@text='CANCEL']"
+  dueDateDoneAndOKButton:
+    ios:
+      US:  "//XCUIElementTypeButton[@name='Done']"
+    android:
+      US: "//android.widget.Button[@text='OK']"
+  androidSelectDateButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.view.View[@content-desc='selectDate']"
+  androidNextMonthButton:
+    ios:
+      US: ""
+    android:
+      US: "android:id/next"
+  logCommentsTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Comments']"
+    android:
+      US: "//TextInputLayout[@text='Comments']"
+  logAssignedToButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Assigned To']"
+    android:
+      US: "//*[contains(@text,'Assigned To')]"
+  logPriorityButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Priority']"
+    android:
+      US: "//android.widget.TextView[@text='Normal']"
+  logPriorityOptionButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Normal']"
+    android:
+      US: "//android.widget.CheckedTextView[@text='Normal']"
+  logStatusButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Completed']"
+    android:
+      US: "//android.widget.TextView[@text='Completed']"
+  logStatusOptionButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Completed']"
+    android:
+      US: "//android.widget.CheckedTextView[@text='Completed']"
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  newLogTitleLabel
+]

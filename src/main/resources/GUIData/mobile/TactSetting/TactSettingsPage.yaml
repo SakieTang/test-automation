@@ -1,0 +1,44 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  settingsTitleLabel:
+    ios:
+        US: "//XCUIElementTypeOther[@name='Settings']"
+    android:
+        US: ""
+  androidMoreOptionButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.ImageView[@content-desc='More options']"
+  logOutButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Log Out']"
+    android:
+      US: "//*[contains(@text,'Log Out')]"
+  iosAccountButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Account']"
+    android:
+      US: ""
+  iosDataSourcesButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Data Sources']"
+    android:
+      US: ""
+  appVersionLabel:
+    ios:
+      US: "//*[contains(@name,'3.')]"
+    android:
+      US: "//*[contains(@text,'1.')]"
+  deleteAccountButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Delete Account']"
+    android:
+      US: "//android.widget.TextView[@text='Delete Account']"
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  settingsTitleLabel
+]

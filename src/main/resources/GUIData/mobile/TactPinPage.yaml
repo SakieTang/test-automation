@@ -1,0 +1,39 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  tactPinIconButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='pin outline']"
+    android:
+      US: "//android.widget.RelativeLayout/android.view.ViewGroup/android.widget.ImageButton"
+  logActivityToSalesforceButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Log Activity to Salesforce']"
+    android:
+      US: "//android.widget.TextView[@text='Log to Salesforce']"
+  addNoteButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Add Note']"
+    android:
+      US: "//android.widget.TextView[@text='Add Note']"
+  addTaskButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Add Task']"
+    android:
+      US: "//android.widget.TextView[@text='Add Task']"
+  addEventButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Add Event']"
+    android:
+      US: "//android.widget.TextView[@text='New Salesforce Event']"
+  addOpportunityButton:
+    ios:
+      US: "//XCUIElementTypeImage[@name='activityCreateOpportunity']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  tactPinIconButton
+]

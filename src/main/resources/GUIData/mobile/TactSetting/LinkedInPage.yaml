@@ -1,0 +1,59 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  linkedInTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='LinkedIn']"
+    android:
+      US: ""
+  emailWebViewTextField:
+    ios:
+      US: "//*[@id='session_key-oauthAuthorizeForm']"
+    android:
+      US: ""
+  pwdWebViewTextField:
+    ios:
+      US: "//*[@id='session_password-oauthAuthorizeForm']"
+    android:
+      US: ""
+  signInWebViewAndAllowButton:
+    ios:
+      US: "//*[@value='Sign in and allow']"
+    android:
+      US: ""
+  cancelWebViewButton:
+    ios:
+      US: "//*[@class='cancel']"
+    android:
+      US: ""
+  reloadLinkedInPageButton:
+    ios:
+      US: "//XCUIElementTypeButton[3]"
+    android:
+      US: ""
+  linkedInConnectedLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Connected']"
+    android:
+      US: ""
+  linkedInDisconnectButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Disconnect']"
+    android:
+      US: ""
+  LinkedInDeleteAllDataButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Delete All Data']"
+    android:
+      US: ""
+  LinkedInDoNotDisconnectButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Do Not Disconnect']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  linkedInTitleLabel
+]

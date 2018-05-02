@@ -1,0 +1,24 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  loginLabel:
+    ios:
+      US: "Log In"
+    android:
+      US: ""
+  userEmailTextField:
+    ios:
+      US: "//XCUIElementTypeTextField"
+    android:
+      US: ""
+  pwdTextField:
+    ios:
+      US: "//XCUIElementTypeSecureTextField"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  userEmailTextField
+]

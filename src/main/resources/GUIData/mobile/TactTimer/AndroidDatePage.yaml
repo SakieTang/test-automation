@@ -1,0 +1,54 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  datePickerHeaderTitleLabel:
+    ios:
+      US: ""
+    android:
+      US: "android:id/date_picker_header"
+  DateCancelButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.Button[@text='CANCEL']"
+  DateOKButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.Button[@text='OK']"
+  displayYesrButton:
+    ios:
+      US: ""
+    android:
+      US: "android:id/date_picker_header_year"
+  displayMonthDayLabel:
+    ios:
+      US: ""
+    android:
+      US: "android:id/date_picker_header_date"
+  yearElementsButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.TextView[@text='selectedYear']"
+  previousMonthButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.ImageButton[@content-desc='Previous month']"
+  nextMonthButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.ImageButton[@content-desc='Next month']"
+  selectDayButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.view.View[@text='selectedDay']"
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  datePickerHeaderTitleLabel
+]

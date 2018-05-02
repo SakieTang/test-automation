@@ -1,0 +1,74 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  contactObjTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Contact']"
+    android:
+      US: ""
+  goBackToContactsMainPageButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Contacts']"
+    android:
+      US: "//android.widget.ImageButton[@content-desc='Navigate up']"
+  editContactsObjButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Edit']"
+    android:
+      US: ""
+  addTaskActionButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Add Task']"
+    android:
+      US: ""
+  linkedInIconLabel:
+    ios:
+      US: "//XCUIElementTypeImage[@name='linkedinGenericIcon']"
+    android:
+      US: ""
+  connectLinkedInActionButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Connect LinkedIn']"
+    android:
+      US: ""
+  noProfileFoundInLinkedInTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='No 1st-degree Profile Found']"
+    android:
+      US: ""
+  linkedInProfileButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='LinkedIn Profile']"
+    android:
+      US: ""
+  addOpportunityActionButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Add Opportunity']"
+    android:
+      US: ""
+  profileEmailActionButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='profileMail']"
+    android:
+      US: ""
+  profilePhoneActionButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='profilePhone']"
+    android:
+      US: ""
+  mapIconActionButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='maps icon']"
+    android:
+      US: ""
+  commentProfileActionButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='profileComment']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  contactObjTitleLabel
+]

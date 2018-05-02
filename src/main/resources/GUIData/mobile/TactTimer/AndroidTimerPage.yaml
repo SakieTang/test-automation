@@ -1,0 +1,99 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  switchClockModeButton:
+    ios:
+      US: ""
+    android:
+      US: "android:id/toggle_mode"
+  TimerCancelButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.Button[@text='CANCEL']"
+  TimerOKButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.Button[@text='OK']"
+  digitalClockModeTitleLabel:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.TextView[@text='Set time']"
+  digitalHoursTextField:
+    ios:
+      US: ""
+    android:
+      US: "android:id/input_hour"
+  digitalMinsTextField:
+    ios:
+      US: ""
+    android:
+      US: "android:id/input_minute"
+  digitalampmButton:
+    ios:
+      US: ""
+    android:
+      US: "android:id/am_pm_spinner"
+  digitalAMButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.CheckedTextView[@text='AM']"
+  digitalPMButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.CheckedTextView[@text='PM']"
+  analogHoursTextField:
+    ios:
+      US: ""
+    android:
+      US: "android:id/hours"
+  analogHoursButton:
+    ios:
+      US: ""
+    android:
+      US: "android:id/hours"
+  analogMinsTextField:
+    ios:
+      US: ""
+    android:
+      US: "android:id/minutes"
+  analogMinsButton:
+    ios:
+      US: ""
+    android:
+      US: "android:id/minutes"
+  analogAMButton:
+    ios:
+      US: ""
+    android:
+      US: "android:id/am_label"
+  analogPMButton:
+    ios:
+      US: ""
+    android:
+      US: "android:id/pm_label"
+  analogPickerButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.RadialTimePickerView.RadialPickerTouchHelper[@content-desc='number']"
+  analogHoursPickersButton:
+    ios:
+      US: ""
+    android:
+      US: "android.widget.RadialTimePickerView$RadialPickerTouchHelper"
+  analogMinsPickersButton:
+    ios:
+      US: ""
+    android:
+      US: "android.widget.RadialTimePickerView$RadialPickerTouchHelper"
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  switchClockModeButton
+]

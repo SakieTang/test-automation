@@ -1,0 +1,59 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  gmailHeadingTitleWebViewLabel:
+    ios:
+      US: "//*[@id='headingText']"
+    android:
+      US: ""
+  gmailUseAnotherAccountWebViewButton:
+    ios:
+      US: "//*[@id='identifierLink']"
+    android:
+      US: ""
+  gmailEmailOrPhoneWebViewTextField:
+    ios:
+      US: "//*[@id='identifierId']"
+    android:
+      US: ""
+  gmailEmailNextWebViewButton:
+    ios:
+      US: "//*[@id='identifierNext']/content/span"
+    android:
+      US: ""
+  gmailPwdWebViewTextField:
+    ios:
+      US: "//*[@id='password']/div[1]/div/div[1]/input"
+    android:
+      US: ""
+  gmailPwdNextWebViewButton:
+    ios:
+      US: "//*[@id='passwordNext']/content/span"
+    android:
+      US: ""
+  gmailAllowAccessAccountWebViewButton:
+    ios:
+      US: "//*[@id='submit_approve_access']/content/span"
+    android:
+      US: ""
+  gmailDisconnectButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Disconnect']"
+    android:
+      US: ""
+  gmailDeleteAllDataButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Delete All Data']"
+    android:
+      US: ""
+  gmailDoNotDisconnectButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Do Not Disconnect']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  exchangeTitleLabel
+]

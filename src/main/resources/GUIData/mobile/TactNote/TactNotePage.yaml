@@ -1,0 +1,44 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  newNoteTitleLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='New Note']"
+    android:
+      US: "//android.widget.TextView[@text='Add Note']"
+  saveNewNoteButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Save']"
+    android:
+      US: "menu_item_save"
+  cancelNewNoteButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Cancel']"
+    android:
+      US: "//android.widget.ImageButton[@content-desc='Navigate up']"
+  syncToSaleforceSwitch:
+     ios:
+       US: "//XCUIElementTypeSwitch[@name='Sync to Salesforce']"
+     android:
+       US: "//*[contains(@text, 'Save as Salesforce Note')]"
+  relatedToButton:
+     ios:
+       US: "//XCUIElementTypeStaticText[@name='Related To']"
+     android:
+       US: "//TextInputLayout[@text='Related To']"
+  editNoteTitleTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Title']"
+    android:
+      US: "//*[contains(@text,'Title')]"
+  bodyTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Body']"
+    android:
+      US: "//TextInputLayout[@text='Body']"
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  newNoteTitleLabel
+]

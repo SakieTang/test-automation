@@ -1,0 +1,109 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  mailBoxesTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Mailboxes']"
+    android:
+      US: ""
+  connectExchnageIconImage:
+    ios:
+      US: "//XCUIElementTypeImage[@name='connect-exchange-logo']"
+    android:
+      US: ""
+  exchangeGmailConnectButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Connect']"
+    android:
+      US: ""
+  exchangeGmailConnectedButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Connected']"
+    android:
+      US: ""
+  connectGmailIconImage:
+    ios:
+      US: "//XCUIElementTypeImage[@name='connect-gmail-logo']"
+    android:
+      US: ""
+  allInboxedButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='All Inboxes']"
+    android:
+      US: ""
+  priorityButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Priority']"
+    android:
+      US: ""
+  AllOrGmailSentButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Sent']"
+    android:
+      US: ""
+  draftsButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Drafts']"
+    android:
+      US: ""
+  trackedButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Tracked']"
+    android:
+      US: ""
+  draftsButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Drafts']"
+    android:
+      US: ""
+  exchangeLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Exchange']"
+    android:
+      US: ""
+  exchangeOrGmailInboxsButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Inbox']"
+    android:
+      US: ""
+  exchangeArchiveButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Archive']"
+    android:
+      US: ""
+  exchangeDeletedItemsButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Deleted Items']"
+    android:
+      US: ""
+  exchangeJunkEmailButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Junk Email']"
+    android:
+      US: ""
+  sentItemsButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Sent Items']"
+    android:
+      US: ""
+  googleLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Google']"
+    android:
+      US: ""
+  backToMailBoxesButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Mailboxes']"
+    android:
+      US: ""
+  composeButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Compose']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  mailBoxesTitleLabel
+]

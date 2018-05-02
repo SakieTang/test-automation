@@ -1,0 +1,30 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  tactLogoImage:
+    ios:
+      US: "//XCUIElementTypeImage[@name='tactlogo']"
+    android:
+      US: ""
+  welcomeTactLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Welcome to Tact, Your Sales Assistant']"
+    android:
+      US: ""
+  connectWithSFButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Connect with Salesforce']"
+    android:
+      US: "sign_in_sign_in_button"
+  learnMoreButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Learn More']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  tactLogoImage,
+  welcomeTactLabel
+]

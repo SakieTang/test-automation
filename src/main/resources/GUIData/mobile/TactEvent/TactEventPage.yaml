@@ -1,0 +1,124 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  newEventTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='New Event']"
+    android:
+      US: "//android.widget.TextView[@text='New Salesforce Event']"
+  saveNewEventButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Save']"
+    android:
+      US: "menu_item_save"
+  cancelNewEventButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Cancel']"
+    android:
+      US: "//android.widget.ImageButton[@content-desc='Navigate up']"
+  iosSubjectTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Subject']"
+    android:
+      US: ""
+  sfAndAndroidSubjectButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Subject']"
+    android:
+      US: "//TextInputLayout[@text='Subject (required)']"
+  sfAndAndroidSubjectOptionButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='subjectOption']"
+    android:
+      US: "//android.widget.TextView[@text='subjectOption']"
+  sfAndAndroidSubjectTextField:
+    ios:
+      US: "//XCUIElementTypeTextField"
+    android:
+      US: "//android.widget.EditText"
+  sfAndAndroidSubjectConfirmButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Log Activity']"
+    android:
+      US: "//android.widget.TextView[@text='CONFIRM']"
+  allDaySwitch:
+    ios:
+      US: "//XCUIElementTypeSwitch[@name='All Day']"
+    android:
+      US: "//android.widget.Switch"
+  startsButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Starts']"
+    android:
+      US: "//TextInputLayout[@text='Start (required)']"
+  androidFromTimeButton:
+    ios:
+      US: ""
+    android:
+      US: "//TextInputLayout[@text='From']"
+  endsButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Ends:']"
+    android:
+      US: "//TextInputLayout[@text='End (required)']"
+  androidToTimeButton:
+    ios:
+      US: ""
+    android:
+      US: "//TextInputLayout[@text='To']"
+  locationTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Location']"
+    android:
+      US: "//TextInputLayout[@text='Location']"
+  descriptionTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Description']"
+    android:
+      US: "//TextInputLayout[@text='Description']"
+  iosSyncSFSwitch:
+    ios:
+      US: "//XCUIElementTypeSwitch[@name='Sync to Salesforce']"
+    android:
+      US: ""
+  iosSFEventDetailsButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Salesforce Event Details']"
+    android:
+      US: ""
+  iosSFDetailsTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Salesforce Details']"
+    android:
+      US: ""
+  iosBackToNewEventPageButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='New Event']"
+    android:
+      US: ""
+  sfNameButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Name']"
+    android:
+      US: "//TextInputLayout[@text='Name']"
+  sfRelatedToButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Related To']"
+    android:
+      US: "//TextInputLayout[@text='Related To']"
+  sfAttendeesButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Attendees']"
+    android:
+      US: "//TextInputLayout[@text='Attendees']"
+  sfAssignedToButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Assigned To']"
+    android:
+      US: "//*[contains(@text,'Assigned To')]"
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  newEventTitleLabel
+]

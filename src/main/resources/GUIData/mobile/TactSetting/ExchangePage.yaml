@@ -1,0 +1,74 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  exchangeTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Exchange']"
+    android:
+      US: ""
+  cancelButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Cancel']"
+    android:
+      US: ""
+  submitButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Submit']"
+    android:
+      US: ""
+  exchangeEmailTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Email']"
+    android:
+      US: ""
+  exchangePwdTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Password']"
+    android:
+      US: ""
+  exchangeShowAllFieldsButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Show All Fields']"
+    android:
+      US: ""
+  exchangeUnableToConnectLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Unable to connect']"
+    android:
+      US: ""
+  exchangeServerTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Server']"
+    android:
+      US: ""
+  exchangeDomainTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Domain']"
+    android:
+      US: ""
+  exchangeUsernamaTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Username']"
+    android:
+      US: ""
+  exchangeDisconnectButton:
+    ios:
+      US: "	//XCUIElementTypeStaticText[@name='Disconnect']"
+    android:
+      US: ""
+  exchangeDeleteAllDataButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Delete All Data']"
+    android:
+      US: ""
+  exchangeDoNotDisconnectButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Do Not Disconnect']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  exchangeTitleLabel
+]

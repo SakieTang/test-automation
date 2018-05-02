@@ -1,0 +1,44 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  connectingToTactLabel:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.TextView[@text='Connecting to Tact']"
+  addContactToTactTitleLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Add Contacts to Tact']"
+    android:
+      US: "onboarding_contact_add_contact_text_view"
+  notNowButton:
+    ios:
+        US: "//XCUIElementTypeButton[@name='Not Now']"
+    android:
+        US: "not_now_button"
+  addContactsButton:
+    ios:
+        US: "//XCUIElementTypeButton[@name='Add Contacts']"
+    android:
+        US: "add_contact_button"
+  tactSyncingLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Syncing…']"
+    android:
+      US: "//android.widget.TextView[@text='Syncing...']"
+  tactSyncingDataToPhoneTitleLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Syncing data to your phone.']"
+    android:
+      US: ""
+  tactSyncingItemsLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Syncing items']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  sfLogoImage
+]

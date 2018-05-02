@@ -1,0 +1,89 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  alertsOKButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='OK']"
+    android:
+      US: ""
+  alertsAllowButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Allow']"
+    android:
+      US: "com.android.packageinstaller:id/permission_allow_button"
+  alertsNotAlowButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Don’t Allow']"
+    android:
+      US: "com.android.packageinstaller:id/permission_deny_button"
+  tactAccessContactsMsgLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Tact would like to import contacts from your address book.']"
+    android:
+      US: "com.android.packageinstaller:id/permission_message"
+  tactNotificationsMsgLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Notifications may include alerts, sounds, and icon badges. These can be configured in Settings.']"
+    android:
+      US: ""
+  tactAccessCalenderMsgLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='This is used to show your events in Tact']"
+    android:
+      US: ""
+  tactAccessRemindersMsgLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='This is used to show your tasks in Tact']"
+    android:
+      US: ""
+  tactDeleteButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Delete']"
+    android:
+      US: "//android.widget.Button[@text='DELETE']"
+  androidPopUpSureConfirmOKButton:
+    ios:
+      US: ""
+    android:
+      US: "confirmButton"
+  popUpWindowCanelButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Cancel']"
+    android:
+      US: "cancelButton"
+  tactExchangeSyncErrorMsgTitleLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Exchange Sync Error']"
+    android:
+      US: ""
+  ignoreButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Ignore']"
+    android:
+      US: ""
+  reauthorizeButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Reauthorize']"
+    android:
+      US: ""
+  tactNeedsToResyncTitleLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Tact needs to resync']"
+    android:
+      US: ""
+  notNowButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Not Now']"
+    android:
+      US: ""
+  resyncButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Resync']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  alertsNotAlowButton
+]

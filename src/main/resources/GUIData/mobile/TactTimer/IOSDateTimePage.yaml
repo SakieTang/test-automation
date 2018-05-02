@@ -1,0 +1,24 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  dateTimeDoneLabel:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Done']"
+    android:
+      US: ""
+  dateTimeDoneButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Done']"
+    android:
+      US: ""
+  dateTimePicker:
+    ios:
+      US: "XCUIElementTypePickerWheel"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  datePickerHeaderTitleLabel
+]

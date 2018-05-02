@@ -1,0 +1,79 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  sfLogoImage:
+    ios:
+      US: "//*[@id=\"logo\"]"
+    android:
+      US: "//android.view.View[@content-desc='Salesforce']"
+  sfLoginPageCloseXButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.ImageButton[@content-desc='Close tab']"
+  sfLoginUrlLabel:
+    ios:
+      US: ""
+    android:
+      US: "//*[contains(@text, 'https://login.salesforce.com')]"
+  userEmailTextField:
+    ios:
+      US: "//*[@id=\"username\"]"
+    android:
+      US: "username"
+  pwdTextField:
+    ios:
+      US: "//*[@id=\"password\"]"
+    android:
+      US: "password"
+  loginButton:
+    ios:
+      US: "//*[@id=\"Login\"]"
+    android:
+      US: "//android.widget.Button[@content-desc='Log In']"
+  rememberMeCheckBoxButton:
+    ios:
+      US: "//*[@id=\"rememberUn\"]"
+    android:
+      US: "//android.widget.CheckBox[@content-desc='Remember me']"
+  tactLoginWithExistingUserButton:
+    ios:
+      US: "/html/body/table[2]/tbody/tr[2]/td[5]/form/input[3]"
+    android:
+      US: ""
+  chromeSendReportCheckboxButton:
+    ios:
+      US: ""
+    android:
+      US: "com.android.chrome:id/send_report_checkbox"
+  chromeAcceptContinueButton:
+    ios:
+      US: ""
+    android:
+      US: "com.android.chrome:id/terms_accept"
+  chromeSignInNoThanksButton:
+    ios:
+      US: ""
+    android:
+      US: "com.android.chrome:id/negative_button"
+  tactAllowAccessLabel:
+    ios:
+      US: "//*[@id='header']"
+    android:
+      US: ""
+  tactAccessAllowButton:
+    ios:
+      US: "//*[@id='oaapprove']"
+    android:
+      US: "oaapprove"
+  tactAccessDenyButton:
+    ios:
+      US: "//*[@id='oadeny']"
+    android:
+      US: "oadeny"
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  sfLogoImage
+]
