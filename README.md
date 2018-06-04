@@ -20,3 +20,13 @@ Setting TestNG configuration in local : -DPropertyManager.file=</br>
 
 ## report
 **daily report :** https://s3.us-east-2.amazonaws.com/tact-automation-reports/yyyymmdd/report.html</br>
+
+## run project from cmd
+1. mvn install -DskipTests </br>
+2. mvn clean </br>
+3. mvn compile </br>
+4. iOS     : mvn test / mvn test -DsuiteXmlFile=testNG.xml </br>
+   Android : mvn test -DsuiteXmlFile=testNGAndroid.xml </br>
+OR</br>
+   iOS     : mvn install -DsuiteXmlFile=testNG.xml </br>
+   Android : mvn install -DsuiteXmlFile=testNGAndroid.xml </br>
