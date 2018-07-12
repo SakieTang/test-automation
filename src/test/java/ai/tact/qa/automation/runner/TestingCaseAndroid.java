@@ -23,11 +23,8 @@ import java.util.logging.Logger;
 
 public class TestingCaseAndroid {
 
-    private TestNGCucumberRunner  testNGCucumberRunner;
-
     static final String appPackage = "appPackage:com.tactile.tact.alpha";
-
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     @DataProvider(name="yamlDataProvider")
     public Object[][] getYamlDataProvider() throws IOException {
@@ -39,7 +36,6 @@ public class TestingCaseAndroid {
     @BeforeClass(alwaysRun = true)
     public void setUpClass() throws Exception {
         System.out.println("TestRunner - BeforeClass - setUpClass");
-//        Appium.startServer("0.0.0.0","1234","2345");
 //        DriverUtils.clearChromeData();
         Appium.restartAppium();
     }
@@ -56,7 +52,7 @@ public class TestingCaseAndroid {
             }
     )
     //w/ data provider
-    @Test(groups = "Tact-login", description = "Runs Tact - login", dataProvider = "yamlDataProvider", priority = 0)//, dependsOnMethods = "TactOnboardingFeature")
+    @Test(groups = "Tact-login", description = "Runs Tact - login", dataProvider = "yamlDataProvider", priority = 0)
     void TactSanityTest(UserInfor userInfor) throws InterruptedException {
         CustomPicoContainer.getInstance().setUserInfor(userInfor);
 
@@ -65,7 +61,7 @@ public class TestingCaseAndroid {
         System.out.println("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
         //contacts
-        testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.OnboardingRunCukesFullyReset.class);
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.OnboardingRunCukesFullyReset.class);
         testNGCucumberRunner.runCukes();
 
 

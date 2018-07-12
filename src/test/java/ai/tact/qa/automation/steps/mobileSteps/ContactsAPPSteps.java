@@ -13,12 +13,11 @@ import java.util.logging.Logger;
 
 public class ContactsAPPSteps implements En {
 
-    private ContactsAppPage contactsAppPage;
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public ContactsAPPSteps() {
 
-        contactsAppPage = new ContactsAppPage();
+        ContactsAppPage contactsAppPage = new ContactsAppPage();
 
         And("^contactsAPP: I am in Contacts APP$", () -> {
             log.info("^contactsAPP: I am in Contacts APP$");

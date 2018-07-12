@@ -5,31 +5,25 @@ import ai.tact.qa.automation.testcomponents.mobile.TactAssistant.TactAssistantPa
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.dataobjects.Status;
-import com.paypal.selion.platform.asserts.SeLionAsserts;
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.mobile.elements.MobileElement;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AssistantSteps implements En {
 
-    private TactAssistantPage tactAssistantPage;
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
-    private MobileElement mobileElement;
-    private String inputText;
     private String dataRecord;
     private long botRespTime = 0;
 
     public AssistantSteps() {
 
-        tactAssistantPage = new TactAssistantPage();
+        TactAssistantPage tactAssistantPage = new TactAssistantPage();
 
         When("^Assistant: I send \"([^\"]*)\" to \"(Tact|Tact dev1)\" Assistant and \"([^\"]*)\" verify sent msg$", (String inputText, String stage, String isVerify) -> {
             log.info("^Assistant: I send " + inputText + " to Assistant and verify it$");
@@ -41,14 +35,13 @@ public class AssistantSteps implements En {
             WebDriverWaitUtils.waitUntilElementIsVisible(tactAssistantPage.getTactAssistantTitleLabel());
 
             //previous Msg
-            mobileElement = tactAssistantPage.getDisplayTextListLabel();
+            MobileElement mobileElement = tactAssistantPage.getDisplayTextListLabel();
 
             String previousMsg = getLabelTextAtIndex(mobileElement, labelCount(mobileElement) - 1);
             int beforeSendMsgNum = labelCount(mobileElement);
             log.info("previousMsg ==> " + previousMsg);
 
             //sent msg to Assistant
-            this.inputText = inputText;
             tactAssistantPage.getAssistantTypeInTextField().sendKeys(inputText);
             tactAssistantPage.getAssistantSendButton().tap();
 
@@ -103,7 +96,7 @@ public class AssistantSteps implements En {
             log.info("^Assistant: I check bot " + responseText + "$");
 
             //get the latest display msg
-            mobileElement = tactAssistantPage.getDisplayTextListLabel();
+             MobileElement mobileElement = tactAssistantPage.getDisplayTextListLabel();
             String currentMsg = getLabelTextAtIndex(mobileElement, labelCount(mobileElement) -1 );
             Status isPassed = Status.failed;
 
@@ -171,7 +164,7 @@ public class AssistantSteps implements En {
             WebDriverWaitUtils.waitUntilElementIsVisible(tactAssistantPage.getTactAssistantTitleLabel());
 
             //previous Msg
-            mobileElement = tactAssistantPage.getDisplayTextListLabel();
+            MobileElement mobileElement = tactAssistantPage.getDisplayTextListLabel();
             String previousMsg = getLabelTextAtIndex(mobileElement, labelCount(mobileElement) - 1);
             log.info("previousMsg ==> " + previousMsg);
 
@@ -197,7 +190,7 @@ public class AssistantSteps implements En {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactAssistantPage.getErrorMsgTextListLabel());
 
                 //get the error msg
-                mobileElement = tactAssistantPage.getErrorMsgTextListLabel();
+                MobileElement mobileElement = tactAssistantPage.getErrorMsgTextListLabel();
                 String errorMsg = getLabelTextAtIndex(mobileElement, labelCount(mobileElement)-1);
 
                 //verify the error msg
@@ -230,7 +223,8 @@ public class AssistantSteps implements En {
     }
 
     protected boolean isBotReply (int xCoordinate) {
-        if ( xCoordinate == 22 ) {
+        int botReplyMsgXCoordinate = 22;
+        if ( xCoordinate == botReplyMsgXCoordinate ) {
             return true;
         } else {
             return false;

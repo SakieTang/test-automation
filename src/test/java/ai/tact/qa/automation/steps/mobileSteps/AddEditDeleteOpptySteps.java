@@ -2,7 +2,6 @@ package ai.tact.qa.automation.steps.mobileSteps;
 
 import ai.tact.qa.automation.asserts.TactAIAsserts;
 import ai.tact.qa.automation.testcomponents.mobile.TactOpportunity.TactAddNewOpptyPage;
-import ai.tact.qa.automation.testcomponents.mobile.TactOpportunity.TactAddNewProductPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactOpportunity.TactOpptiesMainPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactOpportunity.TactOpptyObjPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactSearch.TactSearchAccountPage;
@@ -20,23 +19,17 @@ import java.util.logging.Logger;
 
 public class AddEditDeleteOpptySteps implements En {
 
-    private TactOpptiesMainPage tactOpptiesMainPage;
-    private TactAddNewOpptyPage tactAddNewOpptyPage;
-    private TactAddNewProductPage tactAddNewProductPage;
-    private TactSearchAccountPage tactSearchAccountPage;
-    private TactOpptyObjPage tactOpptyObjPage;
     private boolean isEdit;
 
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
     private AndroidDate androidDate = new AndroidDate();
 
     public AddEditDeleteOpptySteps() {
 
-        tactOpptiesMainPage = new TactOpptiesMainPage();
-        tactAddNewOpptyPage = new TactAddNewOpptyPage();
-        tactAddNewProductPage = new TactAddNewProductPage();
-        tactSearchAccountPage = new TactSearchAccountPage();
-        tactOpptyObjPage = new TactOpptyObjPage();
+        TactOpptiesMainPage tactOpptiesMainPage = new TactOpptiesMainPage();
+        TactAddNewOpptyPage tactAddNewOpptyPage = new TactAddNewOpptyPage();
+        TactSearchAccountPage tactSearchAccountPage = new TactSearchAccountPage();
+        TactOpptyObjPage tactOpptyObjPage = new TactOpptyObjPage();
         isEdit = false;
 
         When("^AddEditOppty: I do action \"([^\"]*)\" required oppty information with \"([^\"]*)\" opptyName, \"([^\"]*)\" closeDate, \"([^\"]*)\" stage and \"([^\"]*)\" probability$", (String action, String opptyName, String closeDate, String stage, String probability) -> {
@@ -90,9 +83,6 @@ public class AddEditDeleteOpptySteps implements En {
             if (DriverUtils.isIOS()) {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactAddNewOpptyPage.getStageTitleLabel());
             }
-//            else {
-//                DriverUtils.sleep(0.5);
-//            }
             DriverUtils.clickOption(tactAddNewOpptyPage.getStageOptionTextField(), "stageOptionText", stage);
 
             if (isEdit){
@@ -137,9 +127,6 @@ public class AddEditDeleteOpptySteps implements En {
                 if (DriverUtils.isIOS()) {
                     WebDriverWaitUtils.waitUntilElementIsVisible(tactAddNewOpptyPage.getTypeTitleLabel());
                 }
-//            else {
-//                DriverUtils.sleep(0.5);
-//            }
                 DriverUtils.clickOption(tactAddNewOpptyPage.getTypeOptionTextField(), "typeOptionText", accountType);
             }
 
@@ -154,9 +141,6 @@ public class AddEditDeleteOpptySteps implements En {
                 if (DriverUtils.isIOS()) {
                     WebDriverWaitUtils.waitUntilElementIsVisible(tactAddNewOpptyPage.getLeadSourceTitleLabel());
                 }
-//            else {
-//                DriverUtils.sleep(0.5);
-//            }
                 DriverUtils.clickOption(tactAddNewOpptyPage.getLeadSourceOptionTextField(), "leadSourceOptionText", leadSource);
                 if (isEdit) {
                     WebDriverWaitUtils.waitUntilElementIsVisible(tactAddNewOpptyPage.getEditOpptyTitleLabel());
@@ -168,9 +152,7 @@ public class AddEditDeleteOpptySteps implements En {
             // amount - Currency(16, 2)
             DriverUtils.inputTextField(isEdit, tactAddNewOpptyPage.getAmountTextField(), FieldDataType.randomNumeric, 16, amount, true);
 
-//            if (DriverUtils.isIOS()) {
-                DriverUtils.workaroundHideKeyboard();
-//            }
+            DriverUtils.workaroundHideKeyboard();
 
             // nextStep - Text(255)
             DriverUtils.inputTextField(isEdit, tactAddNewOpptyPage.getNextStepTextField(), FieldDataType.randomAscii, 255, nextStep, true);
@@ -216,9 +198,6 @@ public class AddEditDeleteOpptySteps implements En {
             if (DriverUtils.isIOS()) {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactAddNewOpptyPage.getDeliveryInstallationStatusTitleLabel());
             }
-//            else {
-//                DriverUtils.sleep(0.5);
-//            }
             DriverUtils.clickOption(tactAddNewOpptyPage.getDeliveryInstallationStatusOptionTextField(), "deliveryInstallationStatusOptionText", deliveryInstallationStatus);
             if (isEdit){
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactAddNewOpptyPage.getEditOpptyTitleLabel());

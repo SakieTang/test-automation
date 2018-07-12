@@ -10,13 +10,11 @@ import java.util.logging.Logger;
 
 public class ThreadCommonSteps implements En {
 
-    private ThreadNavigatePage threadNavigatePage;
-
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public ThreadCommonSteps() {
 
-        threadNavigatePage = new ThreadNavigatePage();
+        ThreadNavigatePage threadNavigatePage = new ThreadNavigatePage();
 
         Then("^ThreadCommon: I switch to \"(Timeline|Categories|Contacts|Meet|Integrations|My To-Dos|Favorities|Mentions|User)\" from navigate$", (String navigate) -> {
             log.info("^ThreadCommon: I switch to " + navigate + " from navigate$");

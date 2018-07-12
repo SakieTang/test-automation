@@ -44,68 +44,64 @@ public final class TactAISoftAssert extends Assertion {
             methodName = testResult.getMethod().getMethodName();
         }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("Soft Assert ");
+        String assertString = "Soft Assert ";
         if (assertCommand.getMessage() != null && !assertCommand.getMessage().trim().isEmpty()) {
-            sb.append("[").append(assertCommand.getMessage()).append("] ");
+            assertString = String.format("[%s]", assertCommand.getMessage());
         }
 
         if (failedTest) {
-            sb.append("failed in ");
+            assertString += "failed in ";
         } else {
-            sb.append("passed in ");
+            assertString += "passed in ";
         }
 
-        sb.append(methodName).append("()\n");
+        assertString += String.format("%s()\n", methodName);
         if (failedTest) {
-            sb.append(ExceptionUtils.getStackTrace(ex));
+            assertString += ExceptionUtils.getStackTrace(ex);
         }
 
-        Reporter.log(sb.toString(), true);
+        Reporter.log(assertString, true);
     }
 
-    public void executeAssert(IAssert<?> a) {
+    public void executeAssert(IAssert<?> iAssert) {
         try {
-            a.doAssert();
-            this.onAssertSuccess(a);
-        } catch (AssertionError var3) {
-            this.onAssertFailure(a, var3);
-            this.allErrors.put(var3, a);
+            iAssert.doAssert();
+            this.onAssertSuccess(iAssert);
+        } catch (AssertionError ex) {
+            this.onAssertFailure(iAssert, ex);
+            this.allErrors.put(ex, iAssert);
         }
 
     }
 
     public void assertAll() {
         if (!this.allErrors.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
+            String assertString;
             if (1 == this.allErrors.size()) {
-                sb.append("A soft assertion failure occurred [\n");
+                assertString = String.format("A soft assertion failure occurred [\n");
             } else {
-                sb.append("Multiple (").append(this.allErrors.size()).append(") soft assertion failures occurred [\n");
+                assertString = String.format("Multiple (%s) soft assertion failures occurred [\n", this.allErrors.size());
             }
 
             int counter = 0;
-            Iterator var4 = this.allErrors.entrySet().iterator();
+            Iterator iterator = this.allErrors.entrySet().iterator();
 
-            while(var4.hasNext()) {
-                Map.Entry<AssertionError, IAssert<?>> eachEntry = (Map.Entry)var4.next();
+            while(iterator.hasNext()) {
+                Map.Entry<AssertionError, IAssert<?>> eachEntry = (Map.Entry)iterator.next();
                 AssertionError eachError = (AssertionError)eachEntry.getKey();
-                StringBuilder var10000 = sb.append("\t");
                 ++counter;
-                var10000.append(counter).append(". ").append(ExceptionUtils.getRootCauseMessage(eachError)).append("\n");
                 if (Reporter.getCurrentTestResult() != null) {
-                    sb.append(StringUtils.substringBetween(ExceptionUtils.getStackTrace(eachError), "\n", "\tat sun.reflect").replace("\t", "\t\t"));
+                    assertString += String.format("%s\t]", StringUtils.substringBetween(ExceptionUtils.getStackTrace(eachError), "\n", "\tat sun.reflect").replace("\t", "\t\t"));
                 } else {
-                    sb.append(StringUtils.substringAfter(ExceptionUtils.getStackTrace(eachError), "\n").replace("\t", "\t\t"));
+                    assertString += String.format("%s\t]", StringUtils.substringAfter(ExceptionUtils.getStackTrace(eachError), "\n").replace("\t", "\t\t"));
                 }
             }
 
-            sb.append("\t]");
             if (Reporter.getCurrentTestResult() != null) {
-                Reporter.getCurrentTestResult().setThrowable(new AssertionError(sb.toString()));
+                Reporter.getCurrentTestResult().setThrowable(new AssertionError(assertString));
                 Reporter.getCurrentTestResult().setStatus(2);
             } else {
-                throw new AssertionError(sb.toString());
+                throw new AssertionError(assertString);
             }
         }
     }

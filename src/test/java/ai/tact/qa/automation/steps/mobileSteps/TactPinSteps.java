@@ -10,7 +10,7 @@ import ai.tact.qa.automation.testcomponents.mobile.TactEvent.TactSelectOptionPag
 import ai.tact.qa.automation.testcomponents.mobile.TactLog.TactLogPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactNote.TactNotePage;
 import ai.tact.qa.automation.testcomponents.mobile.TactPinPage;
-import ai.tact.qa.automation.testcomponents.mobile.TactSearchContactsPage;
+import ai.tact.qa.automation.testcomponents.mobile.TactSearch.TactSearchContactsPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactTask.TactTaskPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactTimer.IOSDateTimePage;
 import ai.tact.qa.automation.utils.DriverUtils;
@@ -28,35 +28,24 @@ import java.util.logging.Logger;
 
 public class TactPinSteps implements En {
 
-    private TactContactsMainPage tactContactsMainPage;
-    private TactContactObjPage tactContactObjPage;
-    private TactPinPage tactPinPage;
-    private TactNotePage tactNotePage;
-    private TactTaskPage tactTaskPage;
-    private TactLogPage tactLogPage;
-    private TactEventPage tactEventPage;
-    private TactAlertsPopUpPage tactAlertsPopUpPage;
-    private TactSFDetailsEventPage tactSFDetailsEventPage;
-    private TactSelectOptionPage tactSelectOptionPage;
-    private TactSearchContactsPage tactSearchContactsPage;
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     private IOSDateTimePage iOSDateTimePage = new IOSDateTimePage();
     private AndroidDate androidDate = new AndroidDate();
 
     public TactPinSteps() {
 
-        tactContactsMainPage = new TactContactsMainPage();
-        tactContactObjPage = new TactContactObjPage();
-        tactPinPage = new TactPinPage();
-        tactNotePage = new TactNotePage();
-        tactTaskPage = new TactTaskPage();
-        tactLogPage = new TactLogPage();
-        tactEventPage = new TactEventPage();
-        tactAlertsPopUpPage = new TactAlertsPopUpPage();
-        tactSFDetailsEventPage = new TactSFDetailsEventPage();
-        tactSelectOptionPage = new TactSelectOptionPage();
-        tactSearchContactsPage = new TactSearchContactsPage();
+        TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
+        TactContactObjPage tactContactObjPage = new TactContactObjPage();
+        TactPinPage tactPinPage = new TactPinPage();
+        TactNotePage tactNotePage = new TactNotePage();
+        TactTaskPage tactTaskPage = new TactTaskPage();
+        TactLogPage tactLogPage = new TactLogPage();
+        TactEventPage tactEventPage = new TactEventPage();
+        TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+        TactSFDetailsEventPage tactSFDetailsEventPage = new TactSFDetailsEventPage();
+        TactSelectOptionPage tactSelectOptionPage = new TactSelectOptionPage();
+        TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
 
         And("^Tact-Pin: I see a Tact pin icon display$", () -> {
             log.info("^Tact-Pin: I see a Tact pin icon display$");
@@ -578,6 +567,8 @@ public class TactPinSteps implements En {
     }
 
     private void selectPriorityAndStatus( String priorityOption ){
+        TactTaskPage tactTaskPage = new TactTaskPage();
+
         //priority
         if (!DriverUtils.isTextEmpty(priorityOption))
         {

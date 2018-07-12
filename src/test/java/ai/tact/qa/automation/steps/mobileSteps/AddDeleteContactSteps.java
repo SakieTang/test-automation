@@ -17,18 +17,14 @@ import java.util.logging.Logger;
 
 public class AddDeleteContactSteps implements En {
 
-    private TactAddNewContactPage tactAddNewContactPage;
-    private TactContactsMainPage tactContactsMainPage;
-    private TactContactObjPage tactContactObjPage;
-    private TactAlertsPopUpPage tactAlertsPopUpPage;
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public AddDeleteContactSteps() {
 
-        tactAddNewContactPage = new TactAddNewContactPage();
-        tactContactsMainPage = new TactContactsMainPage();
-        tactContactObjPage = new TactContactObjPage();
-        tactAlertsPopUpPage = new TactAlertsPopUpPage();
+        TactAddNewContactPage tactAddNewContactPage = new TactAddNewContactPage();
+        TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
+        TactContactObjPage tactContactObjPage = new TactContactObjPage();
+        TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
 
         When("^AddContact: I \"([^\"]*)\" save to Phone and \"([^\"]*)\" send to Salesforce$", (String saveToPhone, String sendToSF) -> {
             log.info("^AddContact: I " + saveToPhone + " save to Phone and " + sendToSF + " send to Salesforce$");
@@ -166,14 +162,7 @@ public class AddDeleteContactSteps implements En {
 ////                Grid.driver().findElementByXPath(tactAddNewContactPage.getLastNameTextField().getLocator()).sendKeys(lName);
 
                 //save
-//                if ( !DriverUtils.isTextEmpty(isSave) ) {
-                    tactAddNewContactPage.getSaveNewContactButton().tap();
-
-//                    if (DriverUtils.isAndroid())
-//                    {
-//                        tactContactObjPage.getGoBackToContactsMainPageButton().tap();
-//                    }
-//                }
+                tactAddNewContactPage.getSaveNewContactButton().tap();
 
             }
         });

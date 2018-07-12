@@ -15,18 +15,14 @@ import java.util.logging.Logger;
 
 public class ThreadTimelineSteps implements En {
 
-    private ThreadTimelinePage threadTimelinePage;
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
-
-    private WebElement webElement;
-    private String inputText;
     private String dataRecord;
     private long botRespTime = 0;
 
     public ThreadTimelineSteps() {
 
-        threadTimelinePage = new ThreadTimelinePage();
+        ThreadTimelinePage threadTimelinePage = new ThreadTimelinePage();
 
         And("^ThreadTimeline: I click \"(Tact)\" option$", (String option) -> {
             log.info("^ThreadTimeline: I click " + option + " option$");
@@ -112,7 +108,6 @@ public class ThreadTimelineSteps implements En {
 
             //record cmd info
             dataRecord = String.format("%s | %sms\n", isPassed, botRespTime);
-//            String dataRecord = inputText + " | " + isPassed + " | " + botRespTime + "ms";
             System.out.println(">>>>>dataRecord : " + dataRecord + "<<<<<<<,");
             DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
 

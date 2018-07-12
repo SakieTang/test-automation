@@ -12,14 +12,11 @@ import java.util.logging.Logger;
 
 public class AlexaCommonSteps implements En {
 
-
-    private AlexaNavigatePage alexaNavigatePage;
-
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public AlexaCommonSteps() {
 
-        alexaNavigatePage = new AlexaNavigatePage();
+        AlexaNavigatePage alexaNavigatePage = new AlexaNavigatePage();
 
         Then("^AlexaTest: I switch to \"(Test)\" from navigate$", (String navigate) -> {
             log.info("^AlexaTest: I switch to " + navigate + " from navigate$");

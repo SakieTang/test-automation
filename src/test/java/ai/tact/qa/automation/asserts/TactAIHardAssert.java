@@ -18,13 +18,13 @@ public final class TactAIHardAssert extends Assertion {
 
     private void showAssertInfo(IAssert<?> assertCommand, String msg) {
         String methodName = Reporter.getCurrentTestResult().getMethod().getMethodName();
-        StringBuilder sb = new StringBuilder();
-        sb.append("Assert ");
-        if (assertCommand.getMessage() != null && !assertCommand.getMessage().trim().isEmpty()) {
-            sb.append("[").append(assertCommand.getMessage()).append("] ");
-        }
+        String assertString = String.format("Assert ");
 
-        sb.append(msg).append(methodName).append("()");
-        Reporter.log(sb.toString(), true);
+        if (assertCommand.getMessage() != null && !assertCommand.getMessage().trim().isEmpty()) {
+            assertString += String.format("[%s]", assertCommand);
+        }
+        assertString += String.format("%s%s()", msg, methodName);
+
+        Reporter.log(assertString, true);
     }
 }

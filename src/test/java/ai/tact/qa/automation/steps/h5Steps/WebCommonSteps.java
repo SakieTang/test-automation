@@ -19,29 +19,18 @@ import java.util.logging.Logger;
 
 public class WebCommonSteps implements En {
 
-    private ThreadLoginHomePage threadLoginHomePage;
-    private ThreadNavigatePage threadNavigatePage;
-    private SparkLoginHomePage sparkLoginHomePage;
-    private SparkNavigatePage sparkNavigatePage;
-    private AlexaLoginHomePage alexaLoginHomePage;
-
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public WebCommonSteps() {
 
-        threadLoginHomePage = new ThreadLoginHomePage();
-        threadNavigatePage = new ThreadNavigatePage();
-
-        sparkLoginHomePage = new SparkLoginHomePage();
-        sparkNavigatePage = new SparkNavigatePage();
-
-        alexaLoginHomePage = new AlexaLoginHomePage();
+        ThreadNavigatePage threadNavigatePage = new ThreadNavigatePage();
+        ThreadLoginHomePage threadLoginHomePage = new ThreadLoginHomePage();
+        SparkLoginHomePage sparkLoginHomePage = new SparkLoginHomePage();
+        AlexaLoginHomePage alexaLoginHomePage = new AlexaLoginHomePage();
 
         Given("^WebCommon: I launch browser and open \"([^\"]*)\"$", (String container) -> {
             log.info("^WebCommon: I launch browser and open " + container + "$");
 
-            //Thread        : https://thread.id/service3/
-            //Cisco Spark   : https://teams.webex.com/signin
             if (container.contains(".") || container.contains("|"))
             { }
             else {
@@ -72,7 +61,6 @@ public class WebCommonSteps implements En {
                 case "thread":
                     accountName = CustomPicoContainer.getInstance().getWebUserInfor().getThreadAccount();
                     accountPwd = CustomPicoContainer.getInstance().getWebUserInfor().getThreadAccountPwd();
-                    //automation.thread@gmail.com/Tact0218
                     log.info(channelName + " : " + accountName + "/" + accountPwd);
 
                     //user already login
@@ -140,25 +128,5 @@ public class WebCommonSteps implements En {
                     break;
             }
         });
-
-        //        //品质优选链接点击
-        //        String javascript = "arguments[0].scrollIntoView(true);";
-        //        ((JavascriptExecutor) Grid.driver()).executeScript(javascript, h5FengQiangPage.getYouXuanLink().getElement());
-
-
-        //Table
-//        List<WebElement> cells = Grid.driver().findElements(By.className("UIATableCell"));
-//        assertEquals(9, cells.size());
-//        // get the 1st mountain
-//        WebElement first = cells.get(0);
-//        first.click();
-
-
-        //
-//        WebPage page = (WebPage) headerPage.getLoginButton().clickAndExpectOneOf(loginPopUpPage,loginPage);
-//
-//        if(page instanceof SalesLoginPopUpPage){
-//            Grid.driver().switchTo().frame(loginPopUpPage.getIframeLabel().getLocator());
-//        }
     }
 }

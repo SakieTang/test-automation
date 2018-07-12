@@ -8,8 +8,8 @@ import org.testng.Reporter;
 //
 
 public final class TactAIAsserts {
-    private static TactAIHardAssert hardAssert = new TactAIHardAssert();
-    private static TactAISoftAssert softAssert = new TactAISoftAssert();
+    private static final TactAIHardAssert hardAssert = new TactAIHardAssert();
+    private static final TactAISoftAssert softAssert = new TactAISoftAssert();
 
     private TactAIAsserts() {
     }

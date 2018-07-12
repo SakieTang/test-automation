@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 
 public class IOSTactSanityTesting {
 
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     @DataProvider(name="tactUserInfo")
     public Object[][] getYamlDataProvider() throws IOException {
@@ -151,7 +151,7 @@ public class IOSTactSanityTesting {
             }
     )
     @Test(groups = "Tact-Sanity", description = "After add emails, then re_auth exchange", dataProvider = "tactUserInfo", dependsOnMethods = "TactEmailAddedFeature")
-    void TactBeReauthExchangeFeature(UserInfor userInfor) throws InterruptedException {
+    void TactReauthExchangeFeature(UserInfor userInfor) throws InterruptedException {
         CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
@@ -189,7 +189,7 @@ public class IOSTactSanityTesting {
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact", description = "Get Tact Version", dependsOnMethods = "TactBeReauthExchangeFeature")//"TactOnboardingFeature")
+    @Test(groups = "Tact", description = "Get Tact Version", dependsOnMethods = "TactReauthExchangeFeature")//"TactOnboardingFeature")
     void TactGetAppVersion() throws InterruptedException {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");

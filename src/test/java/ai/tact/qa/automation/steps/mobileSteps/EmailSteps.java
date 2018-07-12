@@ -18,23 +18,17 @@ import java.util.logging.Logger;
 
 public class EmailSteps implements En {
 
-    private String sendEmailAddress = "";
-    private String sendEmailSubjectText = "";
     private boolean isSendEmail = false;
     private boolean isSaveDraftEmail = false;
+    String sendEmailSubjectText = "";
 
-    private TactMailBoxesPage tactMailBoxesPage;
-    private NewMessagePage newMessagePage;
-    private TactNavigateTabBarPage tactNavigateTabBarPage;
-
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public EmailSteps() {
 
-        tactMailBoxesPage = new TactMailBoxesPage();
-        newMessagePage = new NewMessagePage();
-        tactNavigateTabBarPage = new TactNavigateTabBarPage();
-
+        TactMailBoxesPage tactMailBoxesPage = new TactMailBoxesPage();
+        NewMessagePage newMessagePage = new NewMessagePage();
+        TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
 
         When("^Email: I switch to \"([^\"]*)\" mailType, \"([^\"]*)\" option and \"([^\"]*)\" create a new email$", (String mailType, String option, String isCreate) -> {
             log.info("^Email: I switch to " + mailType + " mailType, " + option + " option and " + isCreate + " send a new email$");
@@ -125,7 +119,7 @@ public class EmailSteps implements En {
 
             WebDriverWaitUtils.waitUntilElementIsVisible(newMessagePage.getNewMessageTitleLabel());
 
-            sendEmailAddress = newMessagePage.getFromLabel().getValue();
+            String sendEmailAddress = newMessagePage.getFromLabel().getValue();
             String fromEmailType = getEmailType(sendEmailAddress);
 
             //To:
@@ -159,7 +153,7 @@ public class EmailSteps implements En {
 //            }
 //            currentUser = currentUser.split("\\.")[1];
             String currentOSType = DriverUtils.getCurrentMobileOSType();
-            sendEmailSubjectText = dateMonthTime + "_" + currentOSType + "_" + fromEmailType + "_TactAPP_to_" + toEmailType + "_subject";
+            String sendEmailSubjectText = dateMonthTime + "_" + currentOSType + "_" + fromEmailType + "_TactAPP_to_" + toEmailType + "_subject";
             if (!DriverUtils.isTextEmpty(subject))
             {
                 sendEmailSubjectText = sendEmailSubjectText + "_" + subject;

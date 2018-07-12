@@ -18,18 +18,14 @@ import java.util.logging.Logger;
 
 public class MoreSteps implements En {
 
-    private TactWelcomePage tactWelcomePage;
-    private TactNavigateTabBarPage tactNavigateTabBarPage;
-    private TactSettingsPage tactSettingsPage;
-    private TactAlertsPopUpPage tactAlertsPopUpPage;
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public MoreSteps() {
 
-        tactWelcomePage = new TactWelcomePage();
-        tactNavigateTabBarPage = new TactNavigateTabBarPage();
-        tactSettingsPage = new TactSettingsPage();
-        tactAlertsPopUpPage = new TactAlertsPopUpPage();
+        TactWelcomePage tactWelcomePage = new TactWelcomePage();
+        TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
+        TactSettingsPage tactSettingsPage = new TactSettingsPage();
+        TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
 
         And("^More: I switch to \"([^\"]*)\" option in more page$", (String option) -> {
             log.info("^More: I switch to " + option + " option in more page$");

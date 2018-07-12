@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 
 public class IOSBasicTesting {
 
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     @DataProvider(name="yamlDataProvider")
     public Object[][] getYamlDataProvider() throws IOException {

@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 public class TestingCaseTact {
 
-    private Logger log=LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log=LogUtil.setLoggerHandler(Level.ALL);
 
     @DataProvider(name = "yamlWebDataProvider")
     public Object[][] getYamlDataProvider() throws IOException {
@@ -63,18 +63,8 @@ public class TestingCaseTact {
     public void tearDownClass() throws Exception {
         log.info("TestRunner - AfterClass - tearDownClass");
 
-//        Appium.stopServer();
-//        if (!Appium.checkIfServerIsRunnning("4723")) {
-//            log.info("Appium does not run");
-//        } else {
-//            log.info("Appium does run, and stop again");
-//            Appium.stopServer();
-//        }
-
         //report
         log.info("Finished running");
-//        GenerateReport.getReport(WebDriverPlatform.IOS);
-//        GenerateReport.deleteAllJsonReport();
 
         log.info("testNGCucumberRunner.finish(); FINISHED");
     }

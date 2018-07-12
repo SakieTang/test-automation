@@ -1,6 +1,5 @@
 package ai.tact.qa.automation.steps.mobileSteps;
 
-import ai.tact.qa.automation.asserts.TactAIAsserts;
 import ai.tact.qa.automation.testcomponents.mobile.TactAccessSFPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactAlertsPopUpPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactObjPage;
@@ -17,7 +16,6 @@ import ai.tact.qa.automation.utils.LogUtil;
 import com.paypal.selion.platform.asserts.SeLionAsserts;
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 
 import java.util.logging.Level;
@@ -25,29 +23,20 @@ import java.util.logging.Logger;
 
 public class CommonSteps implements En {
 
-    private TactWelcomePage tactWelcomePage;
-    private TactNavigateTabBarPage tactNavigateTabBarPage;
-    private TactContactsMainPage tactContactsMainPage;
-    private TactContactObjPage tactContactObjPage;
-    private TactMailBoxesPage tactMailBoxesPage;
-    private TactAlertsPopUpPage tactAlertsPopUpPage;
-    private TactAccessSFPage tactAccessSFPage;
-    private TactSettingsPage tactSettingsPage;
-    private ExchangePage exchangePage;
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public CommonSteps() {
 
-        tactWelcomePage = new TactWelcomePage();
-        tactNavigateTabBarPage = new TactNavigateTabBarPage();
-        tactAlertsPopUpPage = new TactAlertsPopUpPage();
-        tactAccessSFPage = new TactAccessSFPage();
-        tactSettingsPage = new TactSettingsPage();
+        TactWelcomePage tactWelcomePage = new TactWelcomePage();
+        TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
+        TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+        TactAccessSFPage tactAccessSFPage = new TactAccessSFPage();
+        TactSettingsPage tactSettingsPage = new TactSettingsPage();
 
-        tactContactObjPage = new TactContactObjPage();
-        tactContactsMainPage = new TactContactsMainPage();
-        tactMailBoxesPage = new TactMailBoxesPage();
-        exchangePage = new ExchangePage();
+        TactContactObjPage tactContactObjPage = new TactContactObjPage();
+        TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
+        TactMailBoxesPage tactMailBoxesPage = new TactMailBoxesPage();
+        ExchangePage exchangePage = new ExchangePage();
 
         And("^I going check the new step cucumber-java(\\d+)$", (Integer arg0) -> {
             log.info("^I going check the new step cucumber-java(\\d+)$");
@@ -268,6 +257,8 @@ public class CommonSteps implements En {
 
     protected void whatever() {
         log.info("^Common: I click back icon$");
+        TactContactObjPage tactContactObjPage = new TactContactObjPage();
+        TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
 
         tactContactObjPage.getGoBackToContactsMainPageButton().tap();
         while (Grid.driver().findElementsByXPath(tactContactsMainPage.getContactsPlusIconButton().getLocator()).size() != 0
@@ -282,12 +273,15 @@ public class CommonSteps implements En {
     }
 
     protected boolean resyncPopUp(){
+        TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+        TactAccessSFPage tactAccessSFPage = new TactAccessSFPage();
+        TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
+
         //Tact needs to resync pop_up
         if (DriverUtils.isIOS() &&
                 Grid.driver().findElementsByXPath(tactAlertsPopUpPage.getTactNeedsToResyncTitleLabel().getLocator()).size()!=0) {
             log.info("Start waiting for \"Tact need to resync\"");
             tactAlertsPopUpPage.getResyncButton().tap();
-//            WebDriverWaitUtils.waitUntilElementIsInvisible(tactAccessSFPage.getTactSyncingDataToPhoneTitleLabel());
             WebDriverWaitUtils.waitUntilElementIsInvisible(tactAccessSFPage.getTactSyncingItemsLabel());
             log.info("\"Tact need to resync\" finished");
             WebDriverWaitUtils.waitUntilElementIsVisible(tactNavigateTabBarPage.getTactMoreButton());

@@ -21,24 +21,17 @@ import java.util.logging.Logger;
 
 public class LoginSteps implements En {
 
-    private TactWelcomePage tactWelcomePage;
-    private SFLoginWebviewPage sfLoginWebviewPage;
-    private TactAccessSFPage tactAccessSFPage;
-    private TactAlertsPopUpPage tactAlertsPopUpPage;
-    private TactNavigateTabBarPage tactNavigateTabBarPage;
-    private TactCalendarMainPage tactCalendarMainPage;
-    private ExchangePage exchangePage;
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public LoginSteps() {
 
-        tactWelcomePage = new TactWelcomePage();
-        sfLoginWebviewPage = new SFLoginWebviewPage();
-        tactAccessSFPage = new TactAccessSFPage();
-        tactAlertsPopUpPage = new TactAlertsPopUpPage();
-        tactNavigateTabBarPage = new TactNavigateTabBarPage();
-        tactCalendarMainPage = new TactCalendarMainPage();
-        exchangePage = new ExchangePage();
+        TactWelcomePage tactWelcomePage = new TactWelcomePage();
+        SFLoginWebviewPage sfLoginWebviewPage = new SFLoginWebviewPage();
+        TactAccessSFPage tactAccessSFPage = new TactAccessSFPage();
+        TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+        TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
+        TactCalendarMainPage tactCalendarMainPage = new TactCalendarMainPage();
+        ExchangePage exchangePage = new ExchangePage();
 
         Given("^Login: I click connect with SF button$", () -> {
             log.info("^Login: I click connect with SF button$");
@@ -154,23 +147,6 @@ public class LoginSteps implements En {
 
             Button loginButton = new Button( sfLoginWebviewPage.getLoginButton().getLocator() );
             loginButton.click();
-
-
-//            if (DriverUtils.isAndroid() ){// && processOption.equals("login")) {
-//                DriverUtils.sleep(15);
-//                log.info("to check whether syncing display or not");
-//                if ( Grid.driver().findElementsByXPath(tactAccessSFPage.getTactSyncingLabel().getLocator()).size() == 0){
-//                    DriverUtils.tapAndroidHardwareHomeBtn();
-//                    log.info("click home btn");
-//                    DriverUtils.sleep(5);
-//                    DriverUtils.relaunchApp();
-//                    log.info("relaunch app");
-//                    WebDriverWaitUtils.waitUntilElementIsVisible(tactWelcomePage.getConnectWithSFButton());
-//                    tactWelcomePage.getConnectWithSFButton().tap();
-//
-//                    WebDriverWaitUtils.waitUntilElementIsVisible(tactAccessSFPage.getTactSyncingLabel());
-//                }
-//            }
 
         });
         When("^Login-Webview: Login with existing user$", () -> {
@@ -336,8 +312,6 @@ public class LoginSteps implements En {
                 String urlPath = "//android.widget.TextView[@text='https://c.na50.content.force.com']";
 
                 if (Grid.driver().findElementsByXPath(urlPath).size() != 0) {
-//                if (Grid.driver().findElementsByXPath(tactAccessSFPage.getTactSyncingLabel().getLocator()).size()==0) {
-//                if (Grid.driver().findElementsByXPath(tactAccessSFPage.getAddContactsButton().getLocator()).size()==0) {
                     log.info("workaround");
                     WebDriverWaitUtils.waitUntilElementIsInvisible(sfLoginWebviewPage.getSfLoginUrlLabel());
                     WebDriverWaitUtils.waitUntilElementIsVisible(sfLoginWebviewPage.getSfLoginPageCloseXButton());

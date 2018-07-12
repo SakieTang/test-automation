@@ -17,18 +17,14 @@ import java.util.logging.Logger;
 
 public class SparkHomeSteps implements En {
 
-    private SparkHomePage sparkHomePage;
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
-
-    private WebElement webElement;
-    private String inputText;
     private String dataRecord;
     private long botRespTime = 0;
 
     public SparkHomeSteps() {
 
-        sparkHomePage = new SparkHomePage();
+        SparkHomePage sparkHomePage = new SparkHomePage();
 
         And("^SparkHome: I click \"(TactProdBot)\" option$", (String option) -> {
             log.info("^SparkHome: I click " + option + " option$");
@@ -62,7 +58,7 @@ public class SparkHomeSteps implements En {
             System.out.println(sizeNum + "<== beginTime ==> " + beginTime);
             while (Grid.driver().findElementsByXPath(tactBotMsgsLabelLocator).size() == sizeNum){
                 checkTime = System.currentTimeMillis();
-                if ( (checkTime - beginTime)/1000 > 120 ){
+                if ( (checkTime - beginTime)/1000 > 60 ){
                     break;
                 }
                 System.out.println(Grid.driver().findElementsByXPath(tactBotMsgsLabelLocator).size() + "<== the size is the same");
@@ -134,7 +130,6 @@ public class SparkHomeSteps implements En {
 
             //record cmd info
             dataRecord = String.format("%s | %sms\n", isPassed, botRespTime);
-//            String dataRecord = inputText + " | " + isPassed + " | " + botRespTime + "ms";
             System.out.println(">>>>>dataRecord : " + dataRecord + "<<<<<<<,");
             DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
 

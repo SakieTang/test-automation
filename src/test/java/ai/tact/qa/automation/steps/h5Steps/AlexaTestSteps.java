@@ -16,18 +16,14 @@ import java.util.logging.Logger;
 
 public class AlexaTestSteps implements En {
 
-    private AlexaTestPage alexaTestPage ;
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
-
-    private WebElement webElement;
-    private String inputText;
     private String dataRecord;
     private long botRespTime = 0;
 
     public AlexaTestSteps() {
 
-        alexaTestPage = new AlexaTestPage();
+        AlexaTestPage alexaTestPage = new AlexaTestPage();
 
         And("^AlexaTest: I click \"(testEnabledSkill)\" option$", (String option) -> {
             log.info("^AlexaTest: I click " + option + " option$");
@@ -54,12 +50,12 @@ public class AlexaTestSteps implements En {
             long checkTime = beginTime;
             WebDriverWaitUtils.waitUntilElementIsVisible(alexaTestPage.getMyMsgSpinnerLabel().getLocator());
             WebDriverWaitUtils.waitUntilElementIsVisible(alexaTestPage.getTacBotActiveReplyMsgLabel().getLocator());
-//            while ( alexaTestPage.getTacBotActiveReplyMsgLabel().getElements().size() == 0 ){
-//                checkTime = System.currentTimeMillis();
-//                if ( (checkTime - beginTime)/1000 > 120 ){
-//                    break;
-//                }
-//            }
+            while ( alexaTestPage.getTacBotActiveReplyMsgLabel().getElements().size() == 0 ){
+                checkTime = System.currentTimeMillis();
+                if ( (checkTime - beginTime)/1000 > 60 ){
+                    break;
+                }
+            }
             long endTime = System.currentTimeMillis();
             botRespTime = endTime - beginTime;
 
@@ -91,7 +87,6 @@ public class AlexaTestSteps implements En {
 
                 //Verify
                 if (responseText.isEmpty()) {
-                    //
                     //opptyName, closeDate, stage and probability
                     if (botReplyMsg.contains("Summary") && botReplyMsg.contains("Close Date") &&
                             botReplyMsg.contains("Stage") && botReplyMsg.contains("Probability")) {
@@ -120,7 +115,6 @@ public class AlexaTestSteps implements En {
 
             //record cmd info
             dataRecord = String.format("%s | %sms\n", isPassed, botRespTime);
-//            String dataRecord = inputText + " | " + isPassed + " | " + botRespTime + "ms";
             System.out.println(">>>>>dataRecord : " + dataRecord + "<<<<<<<,");
             DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
 

@@ -23,27 +23,18 @@ import java.util.logging.Logger;
 
 public class SettingsSteps implements En {
 
-    private TactAlertsPopUpPage tactAlertsPopUpPage;
-    private TactSettingsPage tactSettingsPage;
-    private TactSourcesPage tactSourcesPage;
-    private ExchangePage exchangePage;
-    private GmailPage gmailPage;
-    private LinkedInPage linkedInPage;
-    private TactNavigateTabBarPage tactNavigateTabBarPage;
-    private TactWebviewLinkedinPage tactWebviewLinkedinPage;
-
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public SettingsSteps() {
 
-        tactAlertsPopUpPage = new TactAlertsPopUpPage();
-        tactSettingsPage = new TactSettingsPage();
-        tactSourcesPage = new TactSourcesPage();
-        exchangePage = new ExchangePage();
-        gmailPage = new GmailPage();
-        linkedInPage = new LinkedInPage();
-        tactNavigateTabBarPage = new TactNavigateTabBarPage();
-        tactWebviewLinkedinPage = new TactWebviewLinkedinPage();
+        TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+        TactSettingsPage tactSettingsPage = new TactSettingsPage();
+        TactSourcesPage tactSourcesPage = new TactSourcesPage();
+        ExchangePage exchangePage = new ExchangePage();
+        GmailPage gmailPage = new GmailPage();
+        LinkedInPage linkedInPage = new LinkedInPage();
+        TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
+        TactWebviewLinkedinPage tactWebviewLinkedinPage = new TactWebviewLinkedinPage();
 
         When("^Settings: I switch to \"([^\"]*)\" option in settings page$", (String settingsOption) -> {
             log.info("^Setting: I switch to " + settingsOption + " option in settings page$");

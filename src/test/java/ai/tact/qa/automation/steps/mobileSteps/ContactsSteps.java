@@ -6,11 +6,12 @@ import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactAddNewContact
 import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactObjPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactsMainPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactLead.TactAddNewLeadPage;
-import ai.tact.qa.automation.testcomponents.mobile.TactSearchContactsPage;
+import ai.tact.qa.automation.testcomponents.mobile.TactSearch.TactSearchContactsPage;
 import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.DriverUtils;
 
 import com.paypal.selion.platform.grid.Grid;
+import com.paypal.selion.platform.mobile.elements.MobileButton;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
 import cucumber.api.java8.En;
 
@@ -19,22 +20,16 @@ import java.util.logging.Logger;
 
 public class ContactsSteps implements En {
 
-    private TactContactsMainPage tactContactsMainPage;
-    private TactContactObjPage tactContactObjPage;
-    private TactAddNewContactPage tactAddNewContactPage;
-    private TactAddNewLeadPage tactAddNewLeadPage;
-    private TactAddNewCompanyPage tactAddNewCompanyPage;
-    private TactSearchContactsPage tactSearchContactsPage;
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public ContactsSteps() {
 
-        tactContactsMainPage = new TactContactsMainPage();
-        tactContactObjPage = new TactContactObjPage();
-        tactAddNewContactPage = new TactAddNewContactPage();
-        tactAddNewLeadPage = new TactAddNewLeadPage();
-        tactAddNewCompanyPage = new TactAddNewCompanyPage();
-        tactSearchContactsPage = new TactSearchContactsPage();
+        TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
+        TactContactObjPage tactContactObjPage = new TactContactObjPage();
+        TactAddNewContactPage tactAddNewContactPage = new TactAddNewContactPage();
+        TactAddNewLeadPage tactAddNewLeadPage = new TactAddNewLeadPage();
+        TactAddNewCompanyPage tactAddNewCompanyPage = new TactAddNewCompanyPage();
+        TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
 
         Then("^Contacts: I go to create a new \"([^\"]*)\" page$", (String userType) -> {
             log.info("^Contacts: I go to create a new " + userType + " page$");
@@ -67,9 +62,10 @@ public class ContactsSteps implements En {
             if (DriverUtils.isAndroid())
             {
                 DriverUtils.sleep(0.5);
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactSearchContactsPage.getAndroidContactsTabSearchIconButton());
-                tactSearchContactsPage.getAndroidContactsTabSearchIconButton().tap();
-                if ( (Grid.driver().findElementsByXPath(tactSearchContactsPage.getAndroidContactsTabSearchIconButton().getLocator())).size() != 0 ) {
+                MobileButton androidContactsSearchIconButton = tactSearchContactsPage.getAndroidContactsTabSearchIconButton();
+                WebDriverWaitUtils.waitUntilElementIsVisible(androidContactsSearchIconButton);
+                androidContactsSearchIconButton.tap();
+                if ( (Grid.driver().findElementsByXPath(androidContactsSearchIconButton.getLocator())).size() != 0 ) {
                     System.out.println("did not click it, need to re-click");
                     DriverUtils.tapXY(1160,182);
                 }
@@ -93,11 +89,6 @@ public class ContactsSteps implements En {
 
             DriverUtils.clickOption(tactSearchContactsPage.getNameEditButton(), "contactName", name);
 
-//            String nameLoc = tactSearchContactsPage.getNameEditButton().getLocator().replace("contactName", name);
-//            log.info("loc is ==> " + nameLoc);
-//            DriverUtils.sleep(1);
-//
-//            Grid.driver().findElementByXPath(nameLoc).click();
         });
         And("^Contacts: I click \"([^\"]*)\" action in contact obj page$", (String actionOption) -> {
             log.info("^Contacts: I click " + actionOption + " action in contact obj page$");

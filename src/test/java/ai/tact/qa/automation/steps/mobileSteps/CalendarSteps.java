@@ -16,17 +16,13 @@ import java.util.logging.Logger;
 
 public class CalendarSteps implements En {
 
-    private TactCalendarMainPage tactCalendarMainPage;
-    private TactPinPage tactPinPage;
-    private TactEventPage tactEventPage;
-    private TactTaskPage tactTaskPage;
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public CalendarSteps() {
-        tactCalendarMainPage = new TactCalendarMainPage();
-        tactPinPage = new TactPinPage();
-        tactEventPage = new TactEventPage();
-        tactTaskPage = new TactTaskPage();
+        TactCalendarMainPage tactCalendarMainPage = new TactCalendarMainPage();
+        TactPinPage tactPinPage = new TactPinPage();
+        TactEventPage tactEventPage = new TactEventPage();
+        TactTaskPage tactTaskPage = new TactTaskPage();
 
         When("^Calendar: I click plus icon and select \"([^\"]*)\" option$", (String option) -> {
             log.info("^Calendar: I click plus icon and select " + option + " option$");

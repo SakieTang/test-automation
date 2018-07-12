@@ -15,14 +15,12 @@ import java.util.logging.Logger;
 
 public class OpptySteps implements En {
 
-    private TactOpptiesMainPage tactOpptiesMainPage;
-    private TactSearchOpptyPage tactSearchOpptyPage;
-    private Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public OpptySteps() {
 
-        tactOpptiesMainPage = new TactOpptiesMainPage();
-        tactSearchOpptyPage = new TactSearchOpptyPage();
+        TactOpptiesMainPage tactOpptiesMainPage = new TactOpptiesMainPage();
+        TactSearchOpptyPage tactSearchOpptyPage = new TactSearchOpptyPage();
 
         Then("^Oppty: I go to create a new Oppty page$", () -> {
             log.info("^Oppty: I go to create a new Oppty page$");
