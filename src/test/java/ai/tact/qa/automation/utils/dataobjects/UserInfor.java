@@ -25,46 +25,7 @@ public class UserInfor {
     private String gmailAndroidEmailAddress = null;
     private String gmailPwd = null;
 
-    public UserInfor() {
-    }
-
-    public UserInfor(
-            String salesforceIOSAccountName, String salesforceIOSEmailAddress, String saleforceIOSPwd,
-            String salesforceAndroidAccountName, String salesforceAndroidEmailAddress, String salesforceAndroidPwd,
-            String salesforcePwd, String salesforceRecoverPwdKeyword, String salesforcePhone,
-
-            String exchangeIOSEmailAddress, String exchangeIOSEmailPwd,
-            String exchangeAndroidEmailAddress, String exchangeAndroidEmailPwd,
-            String exchangeServer,
-
-            String linkedInIOSEmailAddress, String linkedInAndroidEmailAddress, String linkedInPwd,
-
-            String gmailIOSEmailAddress, String gmailAndroidEmailAddress, String gmailPwd) {
-        super();
-        //SF
-        this.setSalesforceIOSAccountName(salesforceIOSAccountName);
-        this.setSalesforceIOSEmailAddress(salesforceIOSEmailAddress);
-        this.setSaleforceIOSPwd(saleforceIOSPwd);
-        this.setSalesforceAndroidAccountName(salesforceAndroidAccountName);
-        this.setSalesforceAndroidEmailAddress(salesforceAndroidEmailAddress);
-        this.setSalesforceAndroidPwd(salesforceAndroidPwd);
-        this.setSalesforceRecoverPwdKeyword(salesforceRecoverPwdKeyword);
-        this.setSalesforcePhone(salesforcePhone);
-        //Exchange
-        this.setExchangeIOSEmailAddress(exchangeIOSEmailAddress);
-        this.setExchangeIOSEmailPwd(exchangeIOSEmailPwd);
-        this.setExchangeAndroidEmailAddress(exchangeAndroidEmailAddress);
-        this.setExchangeAndroidEmailPwd(exchangeAndroidEmailPwd);
-        this.setExchangeServer(exchangeServer);
-        //LinkedIn
-        this.setLinkedInIOSEmailAddress(linkedInIOSEmailAddress);
-        this.setLinkedInAndroidEmailAddress(linkedInAndroidEmailAddress);
-        this.setLinkedInPwd(linkedInPwd);
-        //Gmail
-        this.setGmailIOSEmailAddress(gmailIOSEmailAddress);
-        this.setGmailAndroidEmailAddress(gmailAndroidEmailAddress);
-        this.setGmailPwd(gmailPwd);
-    }
+    public UserInfor() { }
 
     //set - SF
     public void setSalesforceIOSAccountName(String salesforceIOSAccountName) { this.salesforceIOSAccountName = salesforceIOSAccountName; }
