@@ -25,8 +25,9 @@ public class NetworkUtils {
             OkHttpClient okHttpClient = new OkHttpClient();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("")
-//                    .baseUrl("https://login.salesforce.com/services/oauth2/token")
+//                    .baseUrl("")
+//                    .baseUrl("https://data.sfgov.org/resource/")
+                    .baseUrl("https://na50.salesforce.com/services/data/v40.0/")
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(okHttpClient)
@@ -37,5 +38,4 @@ public class NetworkUtils {
 
         return networkService;
     }
-
 }

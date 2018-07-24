@@ -303,11 +303,11 @@
 
         <!--okhttp compile dep-->
         <!-- https://mvnrepository.com/artifact/com.squareup.okio/okio -->
-        <dependency>
-            <groupId>com.squareup.okio</groupId>
-            <artifactId>okio</artifactId>
-            <version>1.11.0</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.squareup.okio</groupId>-->
+            <!--<artifactId>okio</artifactId>-->
+            <!--<version>1.11.0</version>-->
+        <!--</dependency>-->
 
 
         <!--From Android Tea retrofit-->
