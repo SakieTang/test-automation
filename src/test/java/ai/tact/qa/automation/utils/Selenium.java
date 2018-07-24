@@ -24,29 +24,37 @@ public class Selenium {
         String port = givenPort;
         System.out.println("port is : " + port);
 
-        command = String.format("netstat -van tcp | grep $s | awk '{print $9}'", port);
+        command = String.format("netstat -van tcp | grep %s | awk '{print $9}'", port);
         System.out.println("cmd : " + command);
 
-        try {
-            Process process = DriverUtils.runCommand(new String[] {"bash", "-c", command});//(command);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            while ((line = reader.readLine()) != null) {
-                System.out.println("line : " + line.toString());
-                str = line.toString().split(" ");
-                temp = str[str.length-1];
-                System.out.println("process ID : " + temp);
-                //kill running Selenium process
-                command = "kill -9 " + temp;
-                System.out.println("cmd : " + command);
+        String processId = DriverUtils.getRunCommandReturn(new String[]{"bash", "-c", command});
+        System.out.println("process Id " + processId);
 
-                DriverUtils.runCommand(command);
-                DriverUtils.sleep(5);
-            }
-            process.waitFor();
-        }
-        catch (IOException | InterruptedException e) {
-            e.getMessage();
-        }
+        command = "kill -9 " + processId;
+        System.out.println("kill cmd : " + command );
+        DriverUtils.runCommand(new String[]{"bash", "-c", command});
+
+//        try {
+//            Process process = DriverUtils.runCommand(new String[] {"bash", "-c", command});//(command);
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//            System.out.println("out side loop " + reader.readLine().toString());
+//            while ((line = reader.readLine()) != null) {
+//                System.out.println("line : " + line.toString());
+//                str = line.toString().split(" ");
+//                temp = str[str.length-1];
+//                System.out.println("process ID : " + temp);
+//                //kill running Selenium process
+//                command = "kill -9 " + temp;
+//                System.out.println("kill cmd : " + command);
+//
+//                DriverUtils.runCommand(new String[] {"bath","-c", command});
+//                DriverUtils.sleep(5);
+//            }
+//            process.waitFor();
+//        }
+//        catch (IOException | InterruptedException e) {
+//            e.getMessage();
+//        }
         if (!Selenium.isSeleniumServerRunning(port))
         {
             System.out.println("------------------- Selenium stoped ----------------------");

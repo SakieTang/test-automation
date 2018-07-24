@@ -31,6 +31,8 @@ public class CommonSteps implements En {
         And("^Common: I switch to \"([^\"]*)\" driver$", (String driverContext) -> {
             log.info("^Common: I switch to " + driverContext + " driver$");
 
+            DriverUtils.sleep(10);
+
             if (driverContext.equalsIgnoreCase("Webview") && DriverUtils.isIOS()) {
                 log.info("-> convert To Webview driver <-");
                 DriverUtils.convertToWebviewDriver();

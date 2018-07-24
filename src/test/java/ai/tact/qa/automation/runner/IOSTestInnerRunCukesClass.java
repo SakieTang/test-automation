@@ -120,7 +120,7 @@ public class IOSTestInnerRunCukesClass {
             features = ("src/test/resources/Features/mobile/Contacts.feature")
             ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
             ,tags={"" +
-            "@P0," +
+            "@createContact," +
             "@P1"}
             , format = {
                 "pretty",
@@ -131,12 +131,27 @@ public class IOSTestInnerRunCukesClass {
         private void test(){
             System.out.println("@Test Contacts Feature RunCukesTest");
         }
+    }
 
+    //contacts
+    @CucumberOptions(
+            features = ("src/test/resources/Features/mobile/Contacts.feature")
+            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,tags={"@addLinkedInSalesNavigator"}
+            , format = {
+            "pretty",
+            "json:target/report/ios/TactContactLinkedInFeatureRunCukesNoReset.json"}
+    )
+    public class TactContactLinkedInFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
+        @Test
+        private void test(){
+            System.out.println("@Test Contacts Feature RunCukesTest");
+        }
     }
 
     //Lead
     @CucumberOptions(
-            features = ("src/test/resources/Features/mobile/Contacts.feature")
+            features = ("src/test/resources/Features/mobile/Lead.feature")
             ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
             ,tags={"" +
             "@createLead," +
@@ -145,7 +160,7 @@ public class IOSTestInnerRunCukesClass {
             "pretty",
             "json:target/report/ios/TactLeadFeatureRunCukesNoReset.json"}
     )
-    public class TactLeadFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
+    public class TactLeadsFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
         @Test
         private void test(){
             System.out.println("@Test Contacts Feature RunCukesTest");

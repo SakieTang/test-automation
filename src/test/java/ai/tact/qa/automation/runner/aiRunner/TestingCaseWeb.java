@@ -65,10 +65,10 @@ public class TestingCaseWeb {
 
     @WebTest
     @Test(groups = "Web", description = "Runs Web AI testing", dataProvider = "yamlWebUserInforDataProvider")//, dependsOnMethods = "testTactRun")
-    public void testAAThreadRun (WebUserInfor webUserInfor) {
+    public void testAASparkRun (WebUserInfor webUserInfor) {
         CustomPicoContainer.getInstance().setWebUserInfor(webUserInfor);
 
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AITestInnerRunCukesClass.testThreadAI.class);
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AITestInnerRunCukesClass.testSparkAI.class);
         testNGCucumberRunner.runCukes();
 
         DriverUtils.sleep(5);
@@ -76,10 +76,10 @@ public class TestingCaseWeb {
 
     @WebTest
     @Test(groups = "Web", description = "Runs Web AI testing", dataProvider = "yamlWebUserInforDataProvider")//, dependsOnMethods = "testTactRun")
-    public void testAASparkRun (WebUserInfor webUserInfor) {
+    public void testAAThreadRun (WebUserInfor webUserInfor) {
         CustomPicoContainer.getInstance().setWebUserInfor(webUserInfor);
 
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AITestInnerRunCukesClass.testSparkAI.class);
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AITestInnerRunCukesClass.testThreadAI.class);
         testNGCucumberRunner.runCukes();
 
         DriverUtils.sleep(5);
@@ -107,39 +107,39 @@ public class TestingCaseWeb {
         DriverUtils.sleep(5);
     }
 
+    @WebTest
+    @Test(description = "stop selenium, start appium", alwaysRun = true, dependsOnGroups = "Web")
+    public void stopSelenium () {
+        Selenium.stopServer();
+        System.out.println("selenium stopped");
+    }
 
     @WebTest
-    @Test(description = "stop selenium, start appium", dependsOnGroups = "Web")
-    public void stopSeleniumStartAppium () {
-        Selenium.stopServer();
-
-        System.out.println("selenium stopped");
-        DriverUtils.sleep(10);
-
+    @Test(description = "stop selenium, start appium", alwaysRun = true, dependsOnMethods = "stopSelenium")
+    public void startAppium () {
         Appium.startServer();
         System.out.println("start appium");
-        DriverUtils.sleep(10);
     }
-
-    //login Tact AI account
-    @MobileTest(    //iOS
-            locale="US",
-//            appPath="Applications/Tact Prototype.app",
-            additionalCapabilities={
-                    "unicodeKeyboard:true", "resetKeyboard:true"
-                    , "noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
-                    , "fullReset:false"  //restart the iPhone/simulator and install the app
-            }
-    )
-    @Test(description="Runs Cucumber Feature - onboarding", dependsOnMethods = "stopSeleniumStartAppium")
-    private void TactLoginTactAIAccount() throws InterruptedException {
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //onboarding
-        TestNGCucumberRunner testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.TactLogin.class);
-        testNGCucumberRunner.runCukes();
-    }
+////
+//    //login Tact AI account
+//    @MobileTest(    //iOS
+//            locale="US",
+////            appPath="Applications/Tact Prototype.app",
+//            additionalCapabilities={
+//                    "unicodeKeyboard:true", "resetKeyboard:true"
+//                    , "noReset:false"    //continue the testing. false, reinstall the app; false, continue use the app
+//                    , "fullReset:true"  //restart the iPhone/simulator and install the app
+//            }
+//    )
+//    @Test(description="Runs Cucumber Feature - onboarding", dependsOnMethods = "startAppium")
+//    private void TactLoginTactAIAccount() throws InterruptedException {
+//        log.info("TestRunner - Test - feature");
+//        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+//
+//        //onboarding
+//        TestNGCucumberRunner testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.TactLogin.class);
+//        testNGCucumberRunner.runCukes();
+//    }
 
     //Tact AI Testing
     @MobileTest(    //iOS
@@ -151,7 +151,10 @@ public class TestingCaseWeb {
                     , "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(description="Runs Cucumber Feature - onboarding", dependsOnMethods = "TactLoginTactAIAccount")
+    @Test(description="Runs Cucumber Feature - onboarding"
+            , dependsOnMethods = "startAppium"
+//            , dependsOnMethods = "TactLoginTactAIAccount"
+    )
     private void TactAIFeature() throws InterruptedException {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
@@ -160,7 +163,6 @@ public class TestingCaseWeb {
         TestNGCucumberRunner testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.testTactAI.class);
         testNGCucumberRunner.runCukes();
     }
-
 
     @AfterClass(alwaysRun = true)
     public void tearDownClass() throws Exception {
@@ -173,6 +175,7 @@ public class TestingCaseWeb {
 //            log.info("Selenium does run, and stop again");
 //            Selenium.stopServer();
 //        }
+        Appium.stopServer();
 
         log.info("Finished running");
         log.info("testNGCucumberRunner.finish(); FINISHED");

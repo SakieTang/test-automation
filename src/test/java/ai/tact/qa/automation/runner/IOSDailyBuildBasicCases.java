@@ -68,6 +68,27 @@ public class IOSDailyBuildBasicCases {
 
     }
 
+    //getAppVersion
+    @MobileTest(  //iOS
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+            }
+    )
+    //w/ data provider
+    @Test(groups = "Tact", description = "Get Tact Version", dataProvider = "yamlDataProvider", dependsOnMethods = "TactOnboardingFeature")
+    void TactGetAppVersion(UserInfor userInfor) throws InterruptedException {
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //Email
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactVersionFeatureCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+
+    }
+
     //AddEmail
     @MobileTest(    //iOS
             locale = "US",
@@ -106,28 +127,6 @@ public class IOSDailyBuildBasicCases {
         //reauth exchange account
         TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactReauthExchangeRunCukesNoReset.class);
         testNGCucumberRunner.runCukes();
-    }
-
-
-    //getAppVersion
-    @MobileTest(  //iOS
-            locale = "US",
-            additionalCapabilities = {
-                    "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
-                    "fullReset:false"  //restart the iPhone/simulator and install the app
-            }
-    )
-    //w/ data provider
-    @Test(groups = "Tact", description = "Get Tact Version", dataProvider = "yamlDataProvider", dependsOnMethods = "TactOnboardingFeature")
-    void TactGetAppVersion(UserInfor userInfor) throws InterruptedException {
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //Email
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactVersionFeatureCukesNoReset.class);
-        testNGCucumberRunner.runCukes();
-
     }
 
     //deleteAccout

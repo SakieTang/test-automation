@@ -3,7 +3,7 @@ Feature: LeadsFeature
 
   @P0
   @createLead
-  Scenario Outline: Create a new contact in TactAPP with basic information and w/o save in iphone and SF
+  Scenario Outline: Create a new contact in TactAPP with basic information
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I go to create a new "Lead" page
     And AddLead: I input a user name "<contactName>", company name "<companyName>" and "<isSave>"

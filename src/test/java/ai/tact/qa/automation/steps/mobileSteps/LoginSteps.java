@@ -251,13 +251,20 @@ public class LoginSteps implements En {
                 log.info("\"exchange Reauth Sync\" finished");
                 DriverUtils.sleep(2);
             }
-            if (DriverUtils.isIOS() && processOption.equalsIgnoreCase("onboarding")) {
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactAlertsPopUpPage.getAlertsAllowButton());
-//            } else if (DriverUtils.isIOS() && processOption.equalsIgnoreCase("login")) {
-            }
-            else if (DriverUtils.isIOS() && processOption.equalsIgnoreCase("login")) {
+
+            //Allow "Tact" would like to send you notification in iOS
+            if (DriverUtils.isIOS()) {
+                if (Grid.driver().findElementsByXPath(tactAlertsPopUpPage.getAlertsAllowButton().getLocator()).size() != 0) {
+                    tactAlertsPopUpPage.getAlertsAllowButton().tap();
+                }
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactNavigateTabBarPage.getTactMoreButton());
             }
+//            if (DriverUtils.isIOS() && processOption.equalsIgnoreCase("onboarding")) {
+//                WebDriverWaitUtils.waitUntilElementIsVisible(tactAlertsPopUpPage.getAlertsAllowButton());
+//            }
+//            else if (DriverUtils.isIOS() && processOption.equalsIgnoreCase("login")) {
+//                WebDriverWaitUtils.waitUntilElementIsVisible(tactNavigateTabBarPage.getTactMoreButton());
+//            }
 
             //for Android, diff version should waiting for different element during login  - for old UI version
             if (DriverUtils.isAndroid())
@@ -277,9 +284,9 @@ public class LoginSteps implements En {
 
             //notification
             if (DriverUtils.isIOS()) {
-                log.info("Allow to Send Notifications");
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactAlertsPopUpPage.getAlertsAllowButton());
-                tactAlertsPopUpPage.getAlertsAllowButton().tap(tactNavigateTabBarPage.getTactCalendarButton());
+//                log.info("Allow to Send Notifications");
+//                WebDriverWaitUtils.waitUntilElementIsVisible(tactAlertsPopUpPage.getAlertsAllowButton());
+//                tactAlertsPopUpPage.getAlertsAllowButton().tap(tactNavigateTabBarPage.getTactCalendarButton());
 
                 //switch to Calendar tab
                 tactNavigateTabBarPage.getTactCalendarButton().tap(tactCalendarMainPage.getConnectYourCalendarAndRemindersButton());

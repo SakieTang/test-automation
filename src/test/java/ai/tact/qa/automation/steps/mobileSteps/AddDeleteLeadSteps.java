@@ -1,7 +1,6 @@
 package ai.tact.qa.automation.steps.mobileSteps;
 
 import ai.tact.qa.automation.testcomponents.mobile.TactAlertsPopUpPage;
-import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactObjPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactLead.TactAddNewLeadPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactLead.TactLeadObjPage;
 import ai.tact.qa.automation.utils.DriverUtils;

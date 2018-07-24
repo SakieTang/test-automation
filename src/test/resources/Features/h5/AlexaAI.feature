@@ -26,9 +26,9 @@ Feature: Assistant - Alexa
       | false    | latestDeals | true     | true                    | true                     | true                      | true                           |
       | false    | optionTwo   | true     | true                    | true                     | true                      | true                           |
       | false    | optionSix   | true     | true                    | true                     | true                      | true                           |
-      | false    | website     | true     | true                    | true                     | true                      | true                           |
-      | false    | contactHelp | true     | true                    | true                     | true                      | true                           |
+      | false    | website     | true     | true                    | false                    | true                      | true                           |
+      | false    | contactHelp | true     | true                    | false                    | true                      | true                           |
       | false    | reportBug   | true     | true                    | true                     | true                      | true                           |
       | false    | endReportBug| true     | true                    | true                     | true                      | true                           |
-      | false    | endSession  | true     | true                    | true                     | false                     | true                           |
+      | false    | endSession  | false    | false                   | false                    | false                     | false                          |
 

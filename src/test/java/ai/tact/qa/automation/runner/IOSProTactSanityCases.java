@@ -121,6 +121,25 @@ public class IOSProTactSanityCases {
         testNGCucumberRunner.runCukes();
     }
 
+    //Contact - LinkedIn
+    @MobileTest(    //iOS
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+            }
+    )
+    @Test(groups = "Tact-Sanity", description = "Contact object", dependsOnMethods = "TactOnboardingFeature")
+    void TactContactLinkedInFeature() throws InterruptedException {
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //Contact
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactContactLinkedInFeatureRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
+
     //Lead
     @MobileTest(    //iOS
             locale = "US",
@@ -136,7 +155,7 @@ public class IOSProTactSanityCases {
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
         //Contact
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactLeadFeatureRunCukesNoReset.class);
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactLeadsFeatureRunCukesNoReset.class);
         testNGCucumberRunner.runCukes();
     }
 

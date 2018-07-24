@@ -1,27 +1,16 @@
 package ai.tact.qa.automation.utils.report;
 
-import ai.tact.qa.automation.testcomponents.h5.Alexa.AlexaTestPage;
-import ai.tact.qa.automation.utils.Appium;
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
-import ai.tact.qa.automation.utils.Selenium;
-import ai.tact.qa.automation.utils.dataobjects.IOSTime;
 import ai.tact.qa.automation.utils.dataobjects.Status;
 import static ai.tact.qa.automation.utils.dataobjects.Status.*;
 
-import apple.laf.JRSUIConstants;
-import com.amazonaws.services.dynamodbv2.xspec.S;
 import com.paypal.selion.internal.platform.grid.WebDriverPlatform;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-import io.appium.java_client.AppiumDriver;
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.SystemUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -32,10 +21,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.Scanner;
 
@@ -155,9 +142,11 @@ public class GenerateReport {
         try {
             String tempReportDir = System.getProperty("user.dir") + "/src/test/java/ai/tact/qa/automation/utils/report/tempAIReport.html";
             String report = loadFileFromResources(tempReportDir);
-            String today = String.format("%s%s%s", DriverUtils.currentDateInfo("yyyy")
+            String today = String.format("%s%s%s - %s:%s", DriverUtils.currentDateInfo("yyyy")
                     , DriverUtils.currentDateInfo("mm")
-                    , DriverUtils.currentDateInfo("dd"));
+                    , DriverUtils.currentDateInfo("dd")
+                    , DriverUtils.currentDateInfo("24hh")
+                    , DriverUtils.currentDateInfo("mins"));
 
             report = report.replace("{TODAY}", today);
 
@@ -262,6 +251,7 @@ public class GenerateReport {
     //report Mobile platforms html table
     public static String reportsToHtmlTable(Report iosReport, Report android) {
         List<Report.Feature> features = iosReport.getFeatures();
+        List<Report.Feature> androidFeaturesRest = android.getFeatures();
 
         // maybe sort the features list here.
 
@@ -280,6 +270,11 @@ public class GenerateReport {
                 }
             }
             html += featureToHtml(iosFeature, androidFeature);
+            androidFeaturesRest.remove(androidFeature);
+        }
+
+        for (Report.Feature androidFeature : androidFeaturesRest) {
+            html += featureToHtml("ios", androidFeature);
         }
 
         return html;
@@ -347,66 +342,18 @@ public class GenerateReport {
         return html;
     }
 
-    public static String featureToHtml(Report.Feature iosFeature, Report.Feature androidFeature) {
-
-        List<Report.Feature.Case> iosCases = iosFeature.getCases();
+    public static String featureToHtml(String ios, Report.Feature androidFeature) {
         String html = "";
 
-        Map<String, Report.Feature.Result> androidReults = new HashMap<>();
-        if (androidFeature != null && androidFeature.getCases() != null)
-        {
-            for (Report.Feature.Case androidCase : androidFeature.getCases()) {
-                androidReults.put(androidCase.getCaseName(), androidCase.getResult());
-            }
+        Map<String, Report.Feature.Result> androidReults=new HashMap<>();
+        for (Report.Feature.Case androidCase : androidFeature.getCases()) {
+            androidReults.put(androidCase.getCaseName(), androidCase.getResult());
         }
-
-        for (Report.Feature.Case iosCase : iosCases) {
-            String line = "<tr>";
-            // line += "<td>" + iosCase.getPriority() + "</td>";
-            line += "<td class='feature-name'>" + iosFeature.getFeatureName() + "</td>";
-            line += "<td class='case-name'>" + iosCase.getCaseName() + "</td>";
-
-            if (iosCase.getResult() != null) {
-                if (iosCase.getResult().getStatus().equals(Status.passed)) {
-                    line += "<td class='passed'>" + Status.passed + "</td>";
-                }
-                else if (iosCase.getResult().getStatus().equals(Status.failed)) {
-                    line += "<td class='failed'>" + Status.failed + "</td>";
-                }
-                else {
-                    line += "<td class='skipped'>" + Status.skipped + "</td>";
-                }
-//                line += "<td>" + iosCase.getResult().getStatus() + "</td>";
-            } else {
-                line += "<td class='na'>n/a</td>";
-            }
-
-            if (androidReults.containsKey(iosCase.getCaseName())) {
-                Status androidResult = androidReults.get(iosCase.getCaseName()).getStatus();
-                if (androidResult.equals(Status.passed)) {
-                    line += "<td class='passed'>" + Status.passed + "</td>";
-                }
-                else if (androidResult.equals(Status.failed)) {
-                    line += "<td class='failed'>" + Status.failed + "</td>";
-                }
-                else {
-                    line += "<td class='skipped'>" + Status.skipped + "</td>";
-                }
-//                line += "<td>" + androidReults.get(iosCase.getCaseName()).getStatus() + "</td>";
-                androidReults.remove(iosCase.getCaseName());
-            }
-            else {
-                line += "<td class='na'>n/a</td>";
-            }
-            line += "</tr> \n";
-            html += line ;
-        }
-
 
         for (Map.Entry<String, Report.Feature.Result> entry : androidReults.entrySet()) {
             String line = "<tr>";
             // line += "<td>" + iosCase.getPriority() + "</td>";
-            line += "<td class='feature-name'>" + iosFeature.getFeatureName() + "</td>";
+            line += "<td class='feature-name'>" + androidFeature.getFeatureName() + "</td>";
             line += "<td class='case-name'>" + entry.getKey() + "</td>";
             line += "<td class='na'>n/a</td>";
 
@@ -424,6 +371,80 @@ public class GenerateReport {
 //            line += "<td>" + entry.getValue().getStatus() + "</td>";
             line += "</tr> \n";
             html += line ;
+        }
+        return html;
+    }
+
+    public static String featureToHtml(Report.Feature iosFeature, Report.Feature androidFeature) {
+
+        String html = "";
+
+        List<Report.Feature.Case> iosCases=iosFeature.getCases();
+
+        Map<String, Report.Feature.Result> androidReults=new HashMap<>();
+        if (androidFeature != null && androidFeature.getCases() != null) {
+            for (Report.Feature.Case androidCase : androidFeature.getCases()) {
+                androidReults.put(androidCase.getCaseName(), androidCase.getResult());
+            }
+        }
+
+        for (Report.Feature.Case iosCase : iosCases) {
+            String line="<tr>";
+            // line += "<td>" + iosCase.getPriority() + "</td>";
+            line+="<td class='feature-name'>" + iosFeature.getFeatureName() + "</td>";
+            line+="<td class='case-name'>" + iosCase.getCaseName() + "</td>";
+
+            if (iosCase.getResult() != null) {
+                if (iosCase.getResult().getStatus().equals(Status.passed)) {
+                    line+="<td class='passed'>" + Status.passed + "</td>";
+                } else if (iosCase.getResult().getStatus().equals(Status.failed)) {
+                    line+="<td class='failed'>" + Status.failed + "</td>";
+                } else {
+                    line+="<td class='skipped'>" + Status.skipped + "</td>";
+                }
+//                line += "<td>" + iosCase.getResult().getStatus() + "</td>";
+            } else {
+                line+="<td class='na'>n/a</td>";
+            }
+
+            if (androidReults.containsKey(iosCase.getCaseName())) {
+                Status androidResult=androidReults.get(iosCase.getCaseName()).getStatus();
+                if (androidResult.equals(Status.passed)) {
+                    line+="<td class='passed'>" + Status.passed + "</td>";
+                } else if (androidResult.equals(Status.failed)) {
+                    line+="<td class='failed'>" + Status.failed + "</td>";
+                } else {
+                    line+="<td class='skipped'>" + Status.skipped + "</td>";
+                }
+//                line += "<td>" + androidReults.get(iosCase.getCaseName()).getStatus() + "</td>";
+                androidReults.remove(iosCase.getCaseName());
+            } else {
+                line+="<td class='na'>n/a</td>";
+            }
+            line+="</tr> \n";
+            html+=line;
+        }
+
+
+        for (Map.Entry<String, Report.Feature.Result> entry : androidReults.entrySet()) {
+            String line="<tr>";
+            // line += "<td>" + iosCase.getPriority() + "</td>";
+            line+="<td class='feature-name'>" + iosFeature.getFeatureName() + "</td>";
+            line+="<td class='case-name'>" + entry.getKey() + "</td>";
+            line+="<td class='na'>n/a</td>";
+
+            if (entry.getValue().getStatus().equals(Status.passed)) {
+                line+="<td class='passed'><font color=\"green\">" + Status.passed + "</font></td>";
+            } else if (entry.getValue().getStatus().equals(Status.failed)) {
+                line+="<td class='failed'>" + Status.failed + "</td>";
+            } else {
+                line+="<td class='skipped'>" + Status.skipped + "</td>";
+            }
+
+            //<td class='feature-name'>Feature</td><td class='case-name'>case</td><td class='failed'><font color="red">failed</font></td><td class='skipped'><font color=\"blue\">skipped</font></td>
+//            line += "<td>" + entry.getValue().getStatus() + "</td>";
+            line+="</tr> \n";
+            html+=line;
         }
 
         return html;
@@ -699,16 +720,22 @@ public class GenerateReport {
         return contentBuilder.toString();
     }
 
-    protected static void uploadReprot (){
-        String dir = System.getProperty("user.dir")+"/target";
-        String reportName = "report.html";
+    protected static void uploadReprot (String reportName){
+        String fileDir = String.format("%s/%s", System.getProperty("user.dir"),"target");
         String today = String.format("%s%s%s", DriverUtils.currentDateInfo("yyyy")
                 , DriverUtils.currentDateInfo("mm")
                 , DriverUtils.currentDateInfo("dd"));
 
-        if ((new File(dir + "/" + reportName)).isFile()){
-            String cmd = String.format("aws s3 cp %s/%s s3://tact-automation-reports/%s/%s"
-                    , dir, reportName, today, reportName);
+
+        if (reportName.contains("2")){
+            fileDir = String.format("%s/%s%s", fileDir, reportName.split("2")[0], reportName.split("2")[1]);
+        } else {
+            fileDir = String.format("%s/%s", fileDir, reportName);
+        }
+        log.info("fileDir" + fileDir);
+        if ((new File(fileDir)).isFile()){
+            String cmd = String.format("aws s3 cp %s s3://tact-automation-reports/%s/%s"
+                    , fileDir, today, reportName);
 
             log.info("cmd ==> " + cmd);
 //            log.info(DriverUtils.getRunCommandReturn(cmd));
@@ -718,29 +745,21 @@ public class GenerateReport {
     }
 
     public static void main(String[] args) {
-
+//        BasicConfigurator.configure();
 //        getReport(WebDriverPlatform.ANDROID);
 //        getReport(WebDriverPlatform.IOS);
-
 //        GenerateReport.deleteAllJsonReport("ios");
 
-//
 //        //submit report
-
-//        DriverUtils.runCommand("adb shell input keyevent 4");
-
 //        System.out.println(System.getProperty("user.dir"));
 
 //        generteHtml();
+//        uploadReprot("report.html");
+
 //        generateAIHtml();
-//        uploadReprot();
+//        uploadReprot("aiReport.html");
 
-//        DriverUtils.runCommand(new String[] {"bash", "-c", "adb root"});
-
-        String appPath = String.format("%s/Application/%s", System.getProperty("user.dir"), "TactApplication-alpha-debug.apk");
-        System.out.println("appPath " + appPath);
-
-
+        generateAIHtml();
+        uploadReprot("aiReport2.html");
     }
-
 }

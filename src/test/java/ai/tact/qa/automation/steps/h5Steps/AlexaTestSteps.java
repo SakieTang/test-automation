@@ -104,70 +104,69 @@ public class AlexaTestSteps implements En {
             String jSonOutput = "";
             isPassed = Status.failed;
 
-            switch (outputType) {
-                case "jSonOutputSpeechSSML":
-                    expectedOutput= String.format("%s", ((AlexaResponseInfo) allUsers.get(cmd)).getOutputSpeechSSML()).replaceAll(":\\\\", ":" );
+            if (isCheck.equalsIgnoreCase("true")) {
+                switch (outputType) {
+                    case "jSonOutputSpeechSSML":
+                        expectedOutput=String.format("%s", ((AlexaResponseInfo) allUsers.get(cmd)).getOutputSpeechSSML()).replaceAll(":\\\\", ":");
 
-                    if (alexaTestPage.getJSonOutputSpeechSSMLLabel().getElements().size() > 1) {
-                        //resize the screen
-                        if (DriverUtils.getCurrentBrowserScreenWidth() < DriverUtils.getCurrentMonitorScreenWidth()) {
-                            DriverUtils.resizeBrowserToMonitorSize();
-                        }
+                        if (alexaTestPage.getJSonOutputSpeechSSMLLabel().getElements().size() > 1) {
+                            //resize the screen
+                            if (DriverUtils.getCurrentBrowserScreenWidth() < DriverUtils.getCurrentMonitorScreenWidth()) {
+                                DriverUtils.resizeBrowserToMonitorSize();
+                            }
 
-                        System.out.println("more than one element");
-                        List<WebElement> jSonOutputSpeechSSMLS=alexaTestPage.getJSonOutputSpeechSSMLLabel().getElements();
-                        jSonOutput=getListElemenetText(jSonOutputSpeechSSMLS, "\\\"");
-                    } else {
-                        System.out.println("only one element");
-                        jSonOutput=alexaTestPage.getJSonOutputSpeechSSMLLabel().getText();
-                    }
-                    System.out.println("expectedOutput : " + expectedOutput + "\njSonOutputSpeechSSML : " + jSonOutput);
-                    break;
-                case "jSonOutputCardContent":
-                    expectedOutput=String.format("%s", ((AlexaResponseInfo) allUsers.get(cmd)).getCardContent()).replaceAll(":\\\\", ":" );
-
-                    if (alexaTestPage.getJSonOutputCardContentLabel().getElements().size() > 1) {
-                        System.out.println("more than one element");
-                        List<WebElement> jSonOutputCardContentS=alexaTestPage.getJSonOutputCardContentLabel().getElements();
-                        jSonOutput=getListElemenetText(jSonOutputCardContentS, "\\n");
-                    } else {
-                        System.out.println("only one element");
-                        jSonOutput=alexaTestPage.getJSonOutputCardContentLabel().getText();
-                    }
-                    System.out.println("\njSonOutputCardContent : " + jSonOutput);
-                    break;
-                case "jSonOutputRepromptSSML":
-                    System.out.println("before if jSonOutputRepromptSSML check");
-                    if (!cmd.equalsIgnoreCase("endSession")) {
-                        expectedOutput=String.format("%s", ((AlexaResponseInfo) allUsers.get(cmd)).getRepromptSSML()).replaceAll(":\\\\", ":" );
-                        if (alexaTestPage.getJSonOutputRepromptSSMLLabel().getElements().size() > 1) {
                             System.out.println("more than one element");
-                            List<WebElement> jSonOutputRepromptSSMLS=alexaTestPage.getJSonOutputRepromptSSMLLabel().getElements();
-                            jSonOutput=getListElemenetText(jSonOutputRepromptSSMLS, "\\\"");
+                            List<WebElement> jSonOutputSpeechSSMLS=alexaTestPage.getJSonOutputSpeechSSMLLabel().getElements();
+                            jSonOutput=getListElemenetText(jSonOutputSpeechSSMLS, "\\\"");
                         } else {
                             System.out.println("only one element");
-                            jSonOutput=alexaTestPage.getJSonOutputRepromptSSMLLabel().getText();
+                            jSonOutput=alexaTestPage.getJSonOutputSpeechSSMLLabel().getText();
                         }
-                        System.out.println("\njSonOutputRepromptSSML : " + jSonOutput);
-                    }
-                    System.out.println("after if jSonOutputRepromptSSML check");
-                    break;
-                case "jSonOutputShouldEndSession":
-                    expectedOutput=String.valueOf(((AlexaResponseInfo) allUsers.get(cmd)).getShouldEndSession());
+                        System.out.println("expectedOutput : " + expectedOutput + "\njSonOutputSpeechSSML : " + jSonOutput);
+                        break;
+                    case "jSonOutputCardContent":
+                        expectedOutput=String.format("%s", ((AlexaResponseInfo) allUsers.get(cmd)).getCardContent()).replaceAll(":\\\\", ":");
 
-                    if (cmd.equalsIgnoreCase("endSession")) {
-                        //use cancel to end session
-                        List<WebElement> jSonOutputEndTactSkillShouldEndSessionLabelS=alexaTestPage.getJSonOutputEndTactSkillShouldEndSessionLabel().getElements();
-                        jSonOutput=getListElemenetText(jSonOutputEndTactSkillShouldEndSessionLabelS, "\\\"");
-                    } else {
-                        List<WebElement> jSonOutputShouldEndSessionLabelS=alexaTestPage.getJSonOutputShouldEndSessionLabel().getElements();
-                        jSonOutput=getListElemenetText(jSonOutputShouldEndSessionLabelS, "\\\"");
-                    }
-                    System.out.println("\njSonOutputShouldEndSession : " + jSonOutput);
-                    break;
-            }
+                        if (alexaTestPage.getJSonOutputCardContentLabel().getElements().size() > 1) {
+                            System.out.println("more than one element");
+                            List<WebElement> jSonOutputCardContentS=alexaTestPage.getJSonOutputCardContentLabel().getElements();
+                            jSonOutput=getListElemenetText(jSonOutputCardContentS, "\\n");
+                        } else {
+                            System.out.println("only one element");
+                            jSonOutput=alexaTestPage.getJSonOutputCardContentLabel().getText();
+                        }
+                        System.out.println("\njSonOutputCardContent : " + jSonOutput);
+                        break;
+                    case "jSonOutputRepromptSSML":
+                        System.out.println("before if jSonOutputRepromptSSML check");
+                        if (!cmd.equalsIgnoreCase("endSession")) {
+                            expectedOutput=String.format("%s", ((AlexaResponseInfo) allUsers.get(cmd)).getRepromptSSML()).replaceAll(":\\\\", ":");
+                            if (alexaTestPage.getJSonOutputRepromptSSMLLabel().getElements().size() > 1) {
+                                System.out.println("more than one element");
+                                List<WebElement> jSonOutputRepromptSSMLS=alexaTestPage.getJSonOutputRepromptSSMLLabel().getElements();
+                                jSonOutput=getListElemenetText(jSonOutputRepromptSSMLS, "\\\"");
+                            } else {
+                                System.out.println("only one element");
+                                jSonOutput=alexaTestPage.getJSonOutputRepromptSSMLLabel().getText();
+                            }
+                            System.out.println("\njSonOutputRepromptSSML : " + jSonOutput);
+                        }
+                        System.out.println("after if jSonOutputRepromptSSML check");
+                        break;
+                    case "jSonOutputShouldEndSession":
+                        expectedOutput=String.valueOf(((AlexaResponseInfo) allUsers.get(cmd)).getShouldEndSession());
 
-            if (isCheck.equalsIgnoreCase("true")) {
+                        if (cmd.equalsIgnoreCase("endSession")) {
+                            //use cancel to end session
+                            List<WebElement> jSonOutputEndTactSkillShouldEndSessionLabelS=alexaTestPage.getJSonOutputEndTactSkillShouldEndSessionLabel().getElements();
+                            jSonOutput=getListElemenetText(jSonOutputEndTactSkillShouldEndSessionLabelS, "\\\"");
+                        } else {
+                            List<WebElement> jSonOutputShouldEndSessionLabelS=alexaTestPage.getJSonOutputShouldEndSessionLabel().getElements();
+                            jSonOutput=getListElemenetText(jSonOutputShouldEndSessionLabelS, "\\\"");
+                        }
+                        System.out.println("\njSonOutputShouldEndSession : " + jSonOutput);
+                        break;
+                }
                 isPassed = Status.failed;
                 if (jSonOutput.contains(expectedOutput)) {  //expectedOutput.contains(jSonOutput)
                     isPassed = Status.passed;
@@ -183,9 +182,11 @@ public class AlexaTestSteps implements En {
                 }
 
                 dataRecord = String.format("%s  | %s - %s | %s | %sms\n", stage, input, outputType, isPassed, botRespTime);
+                System.out.println(dataRecord);
                 DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
+            } else {
+                System.out.println("Do not need to save");
             }
-
         });
         And("^AlexaTest: I check bot response text$", () -> {
             log.info("^AlexaTest: I check bot response text$");

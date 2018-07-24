@@ -328,7 +328,7 @@ public class DriverUtils {
      */
     public static void tapAndroidHardwareBackBtn() {
         String command = "adb shell input keyevent 4";
-        runCommand(command);
+        runCommand(new String[]{"bash", "-c", command});
         sleep(5);
     }
 
@@ -379,6 +379,20 @@ public class DriverUtils {
     }
 
     public static String getRunCommandReturn (String command) {
+        Process process = null;
+        Scanner s = null;
+
+        try {
+            process = Runtime.getRuntime().exec(command);
+            s = new Scanner(process.getInputStream()).useDelimiter("\\n");
+            process.waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return s.hasNext() ? s.next() : "";
+    }
+
+    public static String getRunCommandReturn (String[] command) {
         Process process = null;
         Scanner s = null;
 
@@ -507,6 +521,9 @@ public class DriverUtils {
                 break;
             case "hh":
                 dateInfo = new SimpleDateFormat("hh").format(date);
+                break;
+            case "24hh":
+                dateInfo = new SimpleDateFormat("kk").format(date);
                 break;
             case "mins":
                 dateInfo = new SimpleDateFormat("mm").format(date);

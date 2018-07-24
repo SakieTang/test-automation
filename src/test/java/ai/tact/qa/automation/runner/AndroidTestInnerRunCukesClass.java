@@ -82,7 +82,7 @@ public class AndroidTestInnerRunCukesClass {
             ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
 //            ,tags={"@P1"}
             , tags={"" +
-                "@P0," +
+                "@createContact," +
                 "@P1"}
             , format = {
             "pretty",
