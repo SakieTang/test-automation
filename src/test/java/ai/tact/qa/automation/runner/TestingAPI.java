@@ -1,10 +1,6 @@
 package ai.tact.qa.automation.runner;
 
 import okhttp3.*;
-import retrofit2.Retrofit;
-import retrofit2.http.POST;
-
-
 import java.io.IOException;
 
 public class TestingAPI {
@@ -49,29 +45,20 @@ public class TestingAPI {
         System.out.println("token ==>" + token);
 
         NetworkUtils networkUtils = NetworkUtils.getInstance();
+        networkUtils.setSalesforceToken(token);
 
         try {
-            System.out.println(networkUtils.getService().getSoql().execute().body().string());
+            // TODO: will check sqlQuery part automatically url encoding in retrofit or not
+//            String sqlQuery = "SELECT+Id%2C+FirstName%2C+LastName+FROM+Lead+WHERE+FirstName+LIKE+%27%25t%25%27\""
+
+            String keyword = "test";
+            String sqlQuery = "SELECT Id, FirstName, LastName FROM Lead WHERE FirstName LIKE '%"+keyword+"%'";
+
+            System.out.println(networkUtils.getService().getSqlQuery(sqlQuery).execute().body().string());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-//
-//        networkUtils.getService().getTest().enqueue(new retrofit2.Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-//                try {
-//                    System.out.println(response.body().string());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(retrofit2.Call<ResponseBody> call, Throwable throwable) {
-//
-//            }
-//        });
     }
 
 }
