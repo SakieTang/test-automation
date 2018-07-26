@@ -41,17 +41,14 @@ public class TestingAPI {
 
     public static void main(String[] args) {
         String token = TestingAPI.api().replace("\"","");
-        token = String.format("Bearer %s", token);
         System.out.println("token ==>" + token);
 
         NetworkUtils networkUtils = NetworkUtils.getInstance();
         networkUtils.setSalesforceToken(token);
 
         try {
-            // TODO: will check sqlQuery part automatically url encoding in retrofit or not
-//            String sqlQuery = "SELECT+Id%2C+FirstName%2C+LastName+FROM+Lead+WHERE+FirstName+LIKE+%27%25t%25%27\""
 
-            String keyword = "test";
+            String keyword = "";
             String sqlQuery = "SELECT Id, FirstName, LastName FROM Lead WHERE FirstName LIKE '%"+keyword+"%'";
 
             System.out.println(networkUtils.getService().getSqlQuery(sqlQuery).execute().body().string());

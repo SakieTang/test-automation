@@ -6,7 +6,7 @@ import retrofit2.http.*;
 
 public interface NetworkService {
 
-    @GET("query/${query}")
-    Call<ResponseBody> getSqlQuery(@Path("query") String sqlQuery);
+    @GET("query/")
+    Call<ResponseBody> getSqlQuery(@Query("q") String sqlQuery);
 
 }
