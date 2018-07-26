@@ -1,5 +1,6 @@
 package ai.tact.qa.automation.runner;
 
+import ai.tact.qa.automation.runner.response_model.SqlResponse;
 import okhttp3.*;
 import java.io.IOException;
 
@@ -47,11 +48,12 @@ public class TestingAPI {
         networkUtils.setSalesforceToken(token);
 
         try {
-
-            String keyword = "";
+            String keyword = "t";
             String sqlQuery = "SELECT Id, FirstName, LastName FROM Lead WHERE FirstName LIKE '%"+keyword+"%'";
 
-            System.out.println(networkUtils.getService().getSqlQuery(sqlQuery).execute().body().string());
+            SqlResponse sqlResponse = networkUtils.getService().getSqlQuery(sqlQuery).execute().body();
+
+            System.out.println(String.format("RESULT: TOTAL SIZE: %d,   Records Size: %d", sqlResponse.totalSize, sqlResponse.records.size()));
         } catch (IOException e) {
             e.printStackTrace();
         }
