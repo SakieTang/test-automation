@@ -43,19 +43,19 @@ public class TestingCase  {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
     //w/ data provider
     @Test(groups = "Tact-login", description = "Runs Tact - login", dataProvider = "yamlDataProvider")//, dependsOnMethods = "TactOnboardingFeature")
-    void TactSanityTest(UserInfor userInfor) throws InterruptedException {
+    void TactSanityTest(UserInfor userInfor) {
         CustomPicoContainer.getInstance().setUserInfor(userInfor);
 
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactLeadsFeatureRunCukesNoReset.class);
         testNGCucumberRunner.runCukes();
     }
 

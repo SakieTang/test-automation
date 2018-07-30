@@ -44,12 +44,12 @@ public class TestingCaseTact {
 //            appPath="Applications/Tact Prototype.app",
             additionalCapabilities={
                     "unicodeKeyboard:true", "resetKeyboard:true"
-                    , "noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
+                    , "noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     , "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
     @Test(description="Runs Cucumber Feature - onboarding")//, dependsOnMethods = "TactLoginTactAIAccount")
-    private void TactAIFeature() throws InterruptedException {
+    private void TactAIFeature() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 

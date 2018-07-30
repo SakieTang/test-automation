@@ -35,7 +35,7 @@ public class SparkCommonSteps implements En {
             }
 
             System.out.println("after click home button");
-            DriverUtils.sleep(20);
+            DriverUtils.sleep(10);
         });
     }
 }

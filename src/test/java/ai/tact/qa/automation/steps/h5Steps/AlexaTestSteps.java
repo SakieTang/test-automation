@@ -490,6 +490,7 @@ public class AlexaTestSteps implements En {
 
         String textString = "";
         JavascriptExecutor js = (JavascriptExecutor) Grid.driver();
+        int scrollToLeft = 0;
         //connector : "\\\""  "\\n\\n"
 
         for (int i = 0; i < elements.size(); i++) {
@@ -499,13 +500,27 @@ public class AlexaTestSteps implements En {
                 js.executeScript(s);
                 scrollPix += 50;
             }
-            System.out.println(">>>>>>>>> " + elements.get(i).getText());
+            System.out.println(i+1 + "> " + elements.get(i).getText());
             if (i==0) {
                 textString = elements.get(i).getText();
             } else {
                 textString=textString + connector + elements.get(i).getText();
             }
+            scrollToLeft = scrollPix;
         }
+        DriverUtils.sleep(5);
+
+        if (scrollToLeft > 50){
+            System.out.println(scrollToLeft + "after find all element");
+            String s=String.format("%s.animate({ scrollLeft: \"%dpx\" })", "$(\"div[id='right'] > div[class='ace_scroller']\")", -scrollToLeft+50);
+            System.out.println(s);
+            js.executeScript(s);
+            DriverUtils.sleep(10);
+            System.out.println("after waiting, then scroll back");
+        }
+
+// "<speak>Which Account are you interested in?<break time=\"500ms\"" +
+//         "/>1. United Oil and Gas, UK<break time=\"500ms\"/>2. United Oil and Gas Corp.<break time=\"500ms\"/>3. United Oil and Gas, Singapore</speak>"
 
         return textString;
     }

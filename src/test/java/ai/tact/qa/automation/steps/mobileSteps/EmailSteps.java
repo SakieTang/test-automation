@@ -123,19 +123,22 @@ public class EmailSteps implements En {
 
             //To:
             if (toEmail.equalsIgnoreCase("anotherPlatformExchangeEmail")) {
-                if (DriverUtils.isIOS()) {
-                    toEmail = CustomPicoContainer.getInstance().getUserInfor().getExchangeAndroidEmailAddress();
-                }
-                else {
-                    toEmail = CustomPicoContainer.getInstance().getUserInfor().getExchangeIOSEmailAddress();
-                }
+                toEmail = CustomPicoContainer.getInstance().getUser().getExchangeEmailAddress();
+//                if (DriverUtils.isIOS()) {
+//                    toEmail = CustomPicoContainer.getInstance().getUserInfor().getExchangeAndroidEmailAddress();
+//                }
+//                else {
+//                    toEmail = CustomPicoContainer.getInstance().getUserInfor().getExchangeIOSEmailAddress();
+//                }
             }
             else if (toEmail.equalsIgnoreCase("samePlatformDiffEmail")) {
                 if (fromEmailType.equalsIgnoreCase("gmail")) {
-                    toEmail = CustomPicoContainer.getInstance().getUserInfor().getExchangeIOSEmailAddress();
+                    toEmail = CustomPicoContainer.getInstance().getUser().getExchangeEmailAddress();
+                    //CustomPicoContainer.getInstance().getUserInfor().getExchangeIOSEmailAddress();
                 }
                 else {
-                    toEmail = CustomPicoContainer.getInstance().getUserInfor().getGmailIOSEmailAddress();
+                    toEmail = CustomPicoContainer.getInstance().getUser().getGmailEmailAddress();
+                    //CustomPicoContainer.getInstance().getUserInfor().getGmailIOSEmailAddress();
                 }
             }
             String toEmailType = getEmailType(toEmail);

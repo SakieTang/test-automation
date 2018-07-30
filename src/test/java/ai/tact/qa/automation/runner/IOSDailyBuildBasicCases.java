@@ -3,8 +3,11 @@ package ai.tact.qa.automation.runner;
 
 import ai.tact.qa.automation.utils.Appium;
 import ai.tact.qa.automation.utils.CustomPicoContainer;
+import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
+import ai.tact.qa.automation.utils.dataobjects.User;
 import ai.tact.qa.automation.utils.dataobjects.UserInfor;
+import ai.tact.qa.automation.utils.dataobjects.UserTestingChannel;
 import ai.tact.qa.automation.utils.report.GenerateReport;
 
 import com.paypal.selion.annotations.MobileTest;
@@ -21,19 +24,49 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class IOSDailyBuildBasicCases {
 
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final String DATA_PATH = "%s/%s";
+    private static final UserTestingChannel testingChannel = UserTestingChannel.mobileIOS;
+    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Prototype1681.app";
 
-    @DataProvider(name="yamlDataProvider")
-    public Object[][] getYamlDataProvider() throws IOException {
-        FileSystemResource resource = new FileSystemResource("src/main/resources/testData/ListOfUser.yaml", UserInfor.class);
+//    private User getUserDataFromYaml() {
+//        String fileDir = "src/main/resources/testData/ArrayOfUser.yaml";
+//        String arrayOfUsers = String.format(DATA_PATH, System.getProperty("user.dir"), fileDir);
+//
+//        FileSystemResource resource = new FileSystemResource(arrayOfUsers, User.class);
+//        SeLionDataProvider dataProvider =null;
+//        try {
+//            dataProvider=DataProviderFactory.getDataProvider(resource);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Hashtable<String, Object> allUsers = dataProvider.getDataAsHashtable();
+//        return (User) allUsers.get(testingChannel.toString());
+//    }
+
+    @DataProvider(name="tactUserInfo")
+    public Object[][] getYamlNewDataProvider() throws IOException {
+        String fileDir = "src/main/resources/testData/ArrayOfUser.yaml";
+        String arrayOfUsers = String.format(DATA_PATH, System.getProperty("user.dir"), fileDir);
+
+        FileSystemResource resource = new FileSystemResource(arrayOfUsers, User.class);
+
         SeLionDataProvider dataProvider = DataProviderFactory.getDataProvider(resource);
-        return dataProvider.getAllData();
+        return dataProvider.getDataByKeys(new String[] {testingChannel.toString()});
     }
+
+//    @DataProvider(name="yamlDataProvider")
+//    public Object[][] getYamlDataProvider() throws IOException {
+//        FileSystemResource resource = new FileSystemResource("src/main/resources/testData/ListOfUser.yaml", UserInfor.class);
+//        SeLionDataProvider dataProvider = DataProviderFactory.getDataProvider(resource);
+//        return dataProvider.getAllData();
+//    }
 
     @BeforeClass(alwaysRun = true)
     public void setUpClass() throws Exception {
@@ -48,17 +81,21 @@ public class IOSDailyBuildBasicCases {
 
     //onboarding
     @MobileTest(    //iOS
+            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:false",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:false",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:true"  //restart the iPhone/simulator and install the app
             }
     )
     //w/ data provider
-    @Test(groups = "Tact", description = "Runs Cucumber Feature - onboarding", dataProvider = "yamlDataProvider", priority = 0)
-    private void TactOnboardingFeature(UserInfor userInfor) throws InterruptedException {
-        CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
+    @Test(groups = "Tact", description = "Runs Cucumber Feature - onboarding", dataProvider = "tactUserInfo", priority = 0)
+    private void TactOnboardingFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);
+
+        System.out.println("user " + CustomPicoContainer.getInstance().getUser().getSalesforceEmailAddress());
+
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -70,16 +107,17 @@ public class IOSDailyBuildBasicCases {
 
     //getAppVersion
     @MobileTest(  //iOS
+            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
     //w/ data provider
-    @Test(groups = "Tact", description = "Get Tact Version", dataProvider = "yamlDataProvider", dependsOnMethods = "TactOnboardingFeature")
-    void TactGetAppVersion(UserInfor userInfor) throws InterruptedException {
+    @Test(groups = "Tact", description = "Get Tact Version", dependsOnMethods = "TactOnboardingFeature")
+    void TactGetAppVersion() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -91,16 +129,17 @@ public class IOSDailyBuildBasicCases {
 
     //AddEmail
     @MobileTest(    //iOS
+            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dataProvider = "yamlDataProvider", dependsOnMethods = "TactGetAppVersion")
-    void TactAddEmailFeature(UserInfor userInfor) throws InterruptedException {
-        CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
+    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dataProvider = "tactUserInfo", dependsOnMethods = "TactGetAppVersion")
+    void TactAddEmailFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -111,16 +150,17 @@ public class IOSDailyBuildBasicCases {
 
     //ReAuth
     @MobileTest(    //iOS
+            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact-Sanity", description = "After add emails, then re_auth exchange", dataProvider = "yamlDataProvider", dependsOnMethods = "TactAddEmailFeature")
-    void TactReauthExchangeFeature(UserInfor userInfor) throws InterruptedException {
-        CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
+    @Test(groups = "Tact-Sanity", description = "After add emails, then re_auth exchange", dataProvider = "tactUserInfo", dependsOnMethods = "TactAddEmailFeature")
+    void TactReauthExchangeFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -131,16 +171,17 @@ public class IOSDailyBuildBasicCases {
 
     //deleteAccout
     @MobileTest(  //iOS
+            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
     //w/ data provider
-    @Test(groups = "Tact", description = "Runs Tact - delete Account", dataProvider = "yamlDataProvider", alwaysRun = true, dependsOnGroups = "Tact-Sanity")
-    void TactDeleteAccount(UserInfor userInfor) throws InterruptedException {
+    @Test(groups = "Tact", description = "Runs Tact - delete Account", alwaysRun = true, dependsOnGroups = "Tact-Sanity")
+    void TactDeleteAccount() {
 
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");

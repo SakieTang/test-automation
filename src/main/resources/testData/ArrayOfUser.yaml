@@ -1,0 +1,114 @@
+mobileIOS: !!ai.tact.qa.automation.utils.dataobjects.User
+  salesforceAccount: automation.tactsf.s@gmail.com
+  salesforceAccountPwd: Tact2018
+  salesforceEmailAddress: autoation.tact.s@gmail.com
+  salesforceEmailPwd: Tact2018
+  exchangeEmailAddress: automation.TactiOS@tact.ai
+  exchangeEmailPwd: Tact2018
+  exchangeServer: outlook.office365.com
+  gmailEmailAddress: automation.tact.s@gmail.com
+  gmailEmailPwd: Tact2018
+  linkedInEmailAddress: automation.tact.s@gmail.com
+  linkedInPwd: Tact0218
+  apiClientId: 3MVG9CEn_O3jvv0ydnh2Gwu9Kq.SoCleHJwlIjZg_Q2mjI8gSaaJ6qw0Df_qtTrb7L__rAfPKne7zILZfeE32
+  apiClientSecret: 6884892550614520415
+  apiUserName: automation.tactsf.s@gmail.com
+  apiPassword: Tact20189ilpMZITdoDz6ABvYGrn8xHS
+  aiWebsiteUrl:
+  aiChannelAccount:
+  aiChannelAccountPwd:
+mobileAndroid: !!ai.tact.qa.automation.utils.dataobjects.User
+  salesforceAccount: automation.tactAndrSF.s@gmail.com
+  salesforceAccountPwd: Tact2018
+  salesforceEmailAddress: automation.tactAndr.s@gmail.com
+  salesforceEmailPwd: Tact2018
+  exchangeEmailAddress: automation.TactAndroid@tact.ai
+  exchangeEmailPwd: Tact2018
+  exchangeServer: outlook.office365.com
+  gmailEmailAddress: automation.tactAndr.s@gmail.com
+  gmailEmailPwd: Tact2018
+  linkedInEmailAddress:
+  linkedInPwd:
+  apiClientId: 3MVG9CEn_O3jvv0yiRj2fbfaQUhUaoUKiB8Os5x9BcWqzjOABcnt2LmRpqLT17SnV1ANFktY3tegiN_E2QHzP
+  apiClientSecret: 6864499967095259178
+  apiUserName: automation.tactAndrSF.s@gmail.com
+  apiPassword: Tact2018wPe9wOwxW0zz80uvdsaVwvw2z
+  aiWebsiteUrl:
+  aiChannelAccount:
+  aiChannelAccountPwd:
+aiTactiOS: !!ai.tact.qa.automation.utils.dataobjects.User
+  salesforceAccount: automation.AI.tactsf.s@gmail.com
+  salesforceAccountPwd: Tact0218
+  salesforceEmailAddress: automation.tact@gmail.com
+  salesforceEmailPwd: Tact2018
+  exchangeEmailAddress:
+  exchangeEmailPwd:
+  exchangeServer:
+  gmailEmailAddress: automation.tact@gmail.com
+  gmailEmailPwd: Tact2018
+  linkedInEmailAddress:
+  linkedInPwd:
+  apiClientId: 3MVG9oNqAtcJCF.EXeIfylx1wT1M1Ikt_hXpMx8hakhHtsLTsX5CK6LdxfqZn7Y9LpR52DIMq0nBYr22hRS_q
+  apiClientSecret: 6162408232360054272
+  apiUserName: automation.AI.tactsf.s@gmail.com
+  apiPassword: Tact0218sBT0DVUuD5N8BaYWHCsbop2Ll
+  aiWebsiteUrl:
+  aiChannelAccount:
+  aiChannelAccountPwd:
+aiThread: !!ai.tact.qa.automation.utils.dataobjects.User
+  salesforceAccount: automation.AI.threadsf.s@gmail.com
+  salesforceAccountPwd: Tact0218
+  salesforceEmailAddress: automation.thread@gmail.com
+  salesforceEmailPwd: Tact2018
+  exchangeEmailAddress:
+  exchangeEmailPwd:
+  exchangeServer:
+  gmailEmailAddress: automation.thread@gmail.com
+  gmailEmailPwd: Tact2018
+  linkedInEmailAddress:
+  linkedInPwd:
+  apiClientId: 3MVG9oNqAtcJCF.Ga4ag.QV6HsqrK8IpF2vnXQAlGU9JXq7r8m7svys7ezKKKOk6P1TcLNxZRbH7SAH22P4iO
+  apiClientSecret: 6829090414932701795
+  apiUserName: automation.AI.threadsf.s@gmail.com
+  apiPassword: Tact0218CPOwY0rnxJDTjGVS6kK3Mp6nG
+  aiWebsiteUrl: https://thread.id/service3/
+  aiChannelAccount: automation.thread@gmail.com
+  aiChannelAccountPwd: Tact0218
+aiCiscoSpark: !!ai.tact.qa.automation.utils.dataobjects.User
+  salesforceAccount: automation.AI.ciscoSparksf.s@gmail.com
+  salesforceAccountPwd: Tact0218
+  salesforceEmailAddress: automation.ciscoSpark@gmail.com
+  salesforceEmailPwd: Tact2018
+  exchangeEmailAddress:
+  exchangeEmailPwd:
+  exchangeServer:
+  gmailEmailAddress: automation.ciscoSpark@gmail.com
+  gmailEmailPwd: Tact2018
+  linkedInEmailAddress:
+  linkedInPwd:
+  apiClientId: 3MVG9oNqAtcJCF.F0f2u98d2JBADh6JVBOEM4f7nl.eaq8oMMyckdMn7fQhebP16aHUL8V7AXpfLaPtqVjh19
+  apiClientSecret: 8390856651465840954
+  apiUserName: automation.AI.ciscoSparksf.s@gmail.com
+  apiPassword: Tact0218RhYCgI5EoiJM7WKM86JuAGePC
+  aiWebsiteUrl: https://teams.webex.com/signin
+  aiChannelAccount: automation.ciscoSpark@gmail.com
+  aiChannelAccountPwd: Tact0218
+aiAlexa: !!ai.tact.qa.automation.utils.dataobjects.User
+  salesforceAccount: automation.AI.amazonAlexaSF.s@gmail.com
+  salesforceAccountPwd: Tact0218
+  salesforceEmailAddress: automation.AmazonAlexa@gmail.com
+  salesforceEmailPwd: Tact2018
+  exchangeEmailAddress:
+  exchangeEmailPwd:
+  exchangeServer:
+  gmailEmailAddress: automation.AmazonAlexa@gmail.com
+  gmailEmailPwd: Tact2018
+  linkedInEmailAddress:
+  linkedInPwd:
+  apiClientId: 3MVG9oNqAtcJCF.GDJOtQO82OJYnZXd6_V4lfB1lxSUU0XK7OdLHmqL69l4IXfzN5OPwlYMh0sJdyjwDGZSCG
+  apiClientSecret: 809289799693295643
+  apiUserName: automation.AI.amazonAlexaSF.s@gmail.com
+  apiPassword: Tact0218VJdsvEFj7gHTjq5pttFU9Qiyy
+  aiWebsiteUrl: https://developer.amazon.com/
+  aiChannelAccount: automation.amazonAlexa@gmail.com
+  aiChannelAccountPwd: Tact0218

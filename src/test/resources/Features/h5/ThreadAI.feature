@@ -16,9 +16,9 @@ Feature: Assistant - Thread
     Then ThreadTimeline: I check bot "<responseText>"
 
     Examples:
-       | inputText                              | isVerify | responseText                                                           |
-       | What is the latest on xyz deals?       | with     |                                           |
-       | What is the latest on GenePoint deals? | with     |                                            |
-       | Bye                                    | with     | Goodbye.; Bye; See you later!                                          |
-       | Hi                                     | with     | Howdy.; Hi there! How can I help?; Hello! Grad to help.; Welcome.; Hi. |
-       | Thanks                                 | with     | Thanks.; Thank you.                                                    |
+       | inputText                              | isVerify | responseText                                                                      |
+       | What is the latest on xyz deals?       | with     |                                                                                   |
+       | What is the latest on GenePoint deals? | with     |                                                                                   |
+       | Bye                                    | with     | Goodbye.; Bye; See you later!                                                     |
+       | Hi                                     | with     | Howdy.; Hi there! How can I help?; Hello! Grad to help.; Welcome.; Hi.; Hi there! |
+       | Thanks                                 | with     | Thanks.; Thank you.                                                               |

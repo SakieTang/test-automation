@@ -31,6 +31,10 @@ public class SparkHomeSteps implements En {
             WebDriverWaitUtils.waitUntilElementIsVisible(sparkHomePage.getAccountButton().getLocator());
 
             sparkHomePage.getTactProdBotButton().click();
+            System.out.println("after click prod bot button");
+            DriverUtils.sleep(10);
+            System.out.println("after 10 sec wait");
+            DriverUtils.sleep(5);
         });
         When("^SparkHome: I send \"([^\"]*)\" to \"(Spark|Spark dev1)\" Assistant and \"([^\"]*)\" verify sent msg$", (String inputText, String stage, String isVerify) -> {
             log.info("^SparkHome: I send " + inputText + " to " + stage + " Assistant and " + isVerify + " verify sent msg$");

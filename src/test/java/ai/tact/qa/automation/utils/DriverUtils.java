@@ -25,7 +25,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DriverUtils {
 
     /**
-     * check the current testing environment is iOS
+     * check the current UserInformation environment is iOS
      * @return boolean
      */
     public static boolean isIOS() {
@@ -39,7 +39,7 @@ public class DriverUtils {
     }
 
     /**
-     * check the current testing environment is Android
+     * check the current UserInformation environment is Android
      * @return boolean
      */
     public static boolean isAndroid() {
@@ -53,7 +53,7 @@ public class DriverUtils {
     }
 
     /**
-     * get the current testing environment type
+     * get the current UserInformation environment type
      * @return String
      */
     public static String getCurrentMobileOSType() {

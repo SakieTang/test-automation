@@ -2,6 +2,8 @@ package ai.tact.qa.automation.runner.aiRunner;
 
 import ai.tact.qa.automation.utils.*;
 import ai.tact.qa.automation.utils.dataobjects.AlexaResponseInfo;
+import ai.tact.qa.automation.utils.dataobjects.User;
+import ai.tact.qa.automation.utils.dataobjects.UserTestingChannel;
 import ai.tact.qa.automation.utils.dataobjects.WebUserInfor;
 import ai.tact.qa.automation.utils.report.GenerateReport;
 import com.paypal.selion.annotations.MobileTest;
@@ -31,6 +33,7 @@ import static org.testng.Assert.assertTrue;
 public class TestingCaseWeb {
 
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final String DATA_PATH = "%s/%s";
 
     @DataProvider(name = "yamlWebUserInforDataProvider")
     public Object[][] getYamlDataProvider() throws IOException {
@@ -64,9 +67,11 @@ public class TestingCaseWeb {
     }
 
     @WebTest
-    @Test(groups = "Web", description = "Runs Web AI testing", dataProvider = "yamlWebUserInforDataProvider")//, dependsOnMethods = "testTactRun")
-    public void testAASparkRun (WebUserInfor webUserInfor) {
-        CustomPicoContainer.getInstance().setWebUserInfor(webUserInfor);
+    @Test(groups = "Web", description = "Runs Web AI UserInformation")//, dataProvider = "yamlWebUserInforDataProvider")//, dependsOnMethods = "testTactRun")
+    public void testAASparkRun (){//WebUserInfor webUserInfor) {
+//        CustomPicoContainer.getInstance().setWebUserInfor(webUserInfor);
+        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.aiCiscoSpark));
+        System.out.println(CustomPicoContainer.getInstance().getUser().getSalesforceAccount());
 
         TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AITestInnerRunCukesClass.testSparkAI.class);
         testNGCucumberRunner.runCukes();
@@ -75,9 +80,11 @@ public class TestingCaseWeb {
     }
 
     @WebTest
-    @Test(groups = "Web", description = "Runs Web AI testing", dataProvider = "yamlWebUserInforDataProvider")//, dependsOnMethods = "testTactRun")
-    public void testAAThreadRun (WebUserInfor webUserInfor) {
-        CustomPicoContainer.getInstance().setWebUserInfor(webUserInfor);
+    @Test(groups = "Web", description = "Runs Web AI UserInformation")//, dataProvider = "yamlWebUserInforDataProvider")//, dependsOnMethods = "testTactRun")
+    public void testAAThreadRun (){//WebUserInfor webUserInfor) {
+//        CustomPicoContainer.getInstance().setWebUserInfor(webUserInfor);
+        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.aiThread));
+        System.out.println(CustomPicoContainer.getInstance().getUser().getSalesforceAccount());
 
         TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AITestInnerRunCukesClass.testThreadAI.class);
         testNGCucumberRunner.runCukes();
@@ -86,10 +93,10 @@ public class TestingCaseWeb {
     }
 
     @WebTest
-    @Test(groups = "Web", description = "Runs Web AI testing", dataProvider = "yamlWebUserInforDataProvider")
-    public void testAlexaAIRun(WebUserInfor webUserInfor) throws IOException {
+    @Test(groups = "Web", description = "Runs Web AI UserInformation")//, dataProvider = "yamlAlexaResponseDataProvider")
+    public void testAlexaAIRun() throws IOException {
         //Get web User infor
-        CustomPicoContainer.getInstance().setWebUserInfor(webUserInfor);
+        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.aiAlexa));
         //Get Alexa Response data
         String alexaResponseFile = "src/main/resources/testData/ListOfAlexaResponse.yaml";
         FileSystemResource resource = new FileSystemResource(alexaResponseFile, AlexaResponseInfo.class);
@@ -120,19 +127,20 @@ public class TestingCaseWeb {
         Appium.startServer();
         System.out.println("start appium");
     }
-////
+
 //    //login Tact AI account
 //    @MobileTest(    //iOS
 //            locale="US",
 ////            appPath="Applications/Tact Prototype.app",
 //            additionalCapabilities={
 //                    "unicodeKeyboard:true", "resetKeyboard:true"
-//                    , "noReset:false"    //continue the testing. false, reinstall the app; false, continue use the app
+//                    , "noReset:false"    //continue the UserInformation. false, reinstall the app; false, continue use the app
 //                    , "fullReset:true"  //restart the iPhone/simulator and install the app
 //            }
 //    )
 //    @Test(description="Runs Cucumber Feature - onboarding", dependsOnMethods = "startAppium")
-//    private void TactLoginTactAIAccount() throws InterruptedException {
+//    private void TactLoginTactAIAccount()  {
+//        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.aiTactiOS));
 //        log.info("TestRunner - Test - feature");
 //        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 //
@@ -147,7 +155,7 @@ public class TestingCaseWeb {
 //            appPath="Applications/Tact Prototype.app",
             additionalCapabilities={
                     "unicodeKeyboard:true", "resetKeyboard:true"
-                    , "noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
+                    , "noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     , "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
@@ -179,5 +187,20 @@ public class TestingCaseWeb {
 
         log.info("Finished running");
         log.info("testNGCucumberRunner.finish(); FINISHED");
+    }
+
+    private User getUserDataFromYaml(UserTestingChannel testingChannel) {
+        String fileDir = "src/main/resources/testData/ArrayOfUser.yaml";
+        String arrayOfUsers = String.format(DATA_PATH, System.getProperty("user.dir"), fileDir);
+
+        FileSystemResource resource = new FileSystemResource(arrayOfUsers, User.class);
+        SeLionDataProvider dataProvider =null;
+        try {
+            dataProvider=DataProviderFactory.getDataProvider(resource);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Hashtable<String, Object> allUsers = dataProvider.getDataAsHashtable();
+        return (User) allUsers.get(testingChannel.toString());
     }
 }

@@ -122,15 +122,15 @@ public class SettingsSteps implements En {
             TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
             ExchangePage exchangePage = new ExchangePage();
 
-            String exchangeEmail = null;
-            String exchangePwd = null;
-            String exchangeServer = CustomPicoContainer.getInstance().getUserInfor().getExchangeServer();
+            String exchangeEmail = CustomPicoContainer.getInstance().getUser().getExchangeEmailAddress();
+            String exchangePwd = CustomPicoContainer.getInstance().getUser().getExchangeEmailPwd();
+            String exchangeServer = CustomPicoContainer.getInstance().getUser().getExchangeServer();
 
-            if (DriverUtils.isIOS())
-            {
-                exchangeEmail = CustomPicoContainer.getInstance().getUserInfor().getExchangeIOSEmailAddress();
-                exchangePwd = CustomPicoContainer.getInstance().getUserInfor().getExchangeIOSEmailPwd();
-            }
+//            if (DriverUtils.isIOS())
+//            {
+//                exchangeEmail = CustomPicoContainer.getInstance().getUserInfor().getExchangeIOSEmailAddress();
+//                exchangePwd = CustomPicoContainer.getInstance().getUserInfor().getExchangeIOSEmailPwd();
+//            }
             log.info("exchange : " + exchangeEmail + "/" + exchangePwd );
             log.info("exchange server : " + exchangeServer);
 
@@ -159,13 +159,13 @@ public class SettingsSteps implements En {
             GmailPage gmailPage = new GmailPage();
             TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
 
-            String gmailEmail = null;
-            String gmailPwd = CustomPicoContainer.getInstance().getUserInfor().getGmailPwd();
+            String gmailEmail = CustomPicoContainer.getInstance().getUser().getGmailEmailAddress();
+            String gmailPwd = CustomPicoContainer.getInstance().getUser().getGmailEmailPwd();
 
-            if (DriverUtils.isIOS())
-            {
-                gmailEmail = CustomPicoContainer.getInstance().getUserInfor().getGmailIOSEmailAddress();
-            }
+//            if (DriverUtils.isIOS())
+//            {
+//                gmailEmail = CustomPicoContainer.getInstance().getUserInfor().getGmailIOSEmailAddress();
+//            }
             log.info("gmail : " + gmailEmail + "/" + gmailPwd);
 
             Label gmailTitleLabel = new Label(gmailPage.getGmailHeadingTitleWebViewLabel().getLocator());

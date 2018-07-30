@@ -4,8 +4,11 @@ package ai.tact.qa.automation.runner;
 import ai.tact.qa.automation.runner.aiRunner.AITestInnerRunCukesClass;
 import ai.tact.qa.automation.utils.Appium;
 import ai.tact.qa.automation.utils.CustomPicoContainer;
+import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
+import ai.tact.qa.automation.utils.dataobjects.User;
 import ai.tact.qa.automation.utils.dataobjects.UserInfor;
+import ai.tact.qa.automation.utils.dataobjects.UserTestingChannel;
 import ai.tact.qa.automation.utils.dataobjects.WebUserInfor;
 import ai.tact.qa.automation.utils.report.GenerateReport;
 
@@ -20,22 +23,37 @@ import cucumber.api.testng.TestNGCucumberRunner;
 import org.testng.annotations.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
 public class IOSProTactSanityCases {
 
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final String DATA_PATH = "%s/%s";
+    private static final UserTestingChannel testingMobileIOSChannel = UserTestingChannel.mobileIOS;
+    private static final UserTestingChannel testingAITactIOSChannel = UserTestingChannel.aiTactiOS;
 
-    @DataProvider(name="tactUserInfo")
-    public Object[][] getYamlDataProvider() throws IOException {
-        FileSystemResource resource = new FileSystemResource("src/main/resources/testData/ListOfUser.yaml", UserInfor.class);
-        SeLionDataProvider dataProvider = DataProviderFactory.getDataProvider(resource);
-        return dataProvider.getAllData();
+    @DataProvider(name="tactMobileIOSUserInfo")
+    public Object[][] getYamlMobileDataProvider() throws IOException {
+        SeLionDataProvider dataProvider = getDataProvider();
+        return dataProvider.getDataByKeys(new String[] {testingMobileIOSChannel.toString()});
+    }
+
+    @DataProvider(name="tactAITactIOSUserInfo")
+    public Object[][] getYamlAIDataProvider() throws IOException {
+        SeLionDataProvider dataProvider = getDataProvider();
+        return dataProvider.getDataByKeys(new String[] {testingAITactIOSChannel.toString()});
     }
 
     @BeforeClass(alwaysRun = true)
-    public void setUpClass() throws Exception {
+    public void setUpClass() {
         log.info("TestRunner - BeforeClass - setUpClass");
 //        Appium.startServer("0.0.0.0","1234","2345");
         Appium.restartAppium();
@@ -46,15 +64,18 @@ public class IOSProTactSanityCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true"
-                    , "noReset:false"    //continue the testing. false, reinstall the app; false, continue use the app
-                   , "fullReset:true"  //restart the iPhone/simulator and install the app
-//                    "fullReset:false"
+//                    , "noReset:false"    //continue the UserInformation. false, reinstall the app; false, continue use the app
+//                   , "fullReset:true"  //restart the iPhone/simulator and install the app
+                    , "noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    , "fullReset:false"
             }
     )
     //w/ data provider
-    @Test(groups = "Tact", description = "Runs Cucumber Feature - onboarding", dataProvider = "tactUserInfo", priority = 0)
-    private void TactOnboardingFeature(UserInfor userInfor) throws InterruptedException {
-        CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
+    @Test(groups = "Tact", description = "Runs Cucumber Feature - onboarding", dataProvider = "tactMobileIOSUserInfo", priority = 0)
+    private void TactOnboardingFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);
+
+//        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.mobileIOS));
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -69,12 +90,12 @@ public class IOSProTactSanityCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
     @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
-    void TactACreateSimpleOpptyFeature() throws InterruptedException {
+    void TactACreateSimpleOpptyFeature() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -88,12 +109,12 @@ public class IOSProTactSanityCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
     @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
-    void TactCalendarFeature() throws InterruptedException {
+    void TactCalendarFeature() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -107,12 +128,12 @@ public class IOSProTactSanityCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
     @Test(groups = "Tact-Sanity", description = "Contact object", dependsOnMethods = "TactOnboardingFeature")
-    void TactContactsFeature() throws InterruptedException {
+    void TactContactsFeature() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -126,12 +147,12 @@ public class IOSProTactSanityCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
     @Test(groups = "Tact-Sanity", description = "Contact object", dependsOnMethods = "TactOnboardingFeature")
-    void TactContactLinkedInFeature() throws InterruptedException {
+    void TactContactLinkedInFeature() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -145,12 +166,12 @@ public class IOSProTactSanityCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
     @Test(groups = "Tact-Sanity", description = "Contact object", dependsOnMethods = "TactOnboardingFeature")
-    void TactLeadFeature() throws InterruptedException {
+    void TactLeadFeature() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -164,13 +185,13 @@ public class IOSProTactSanityCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dataProvider = "tactUserInfo", dependsOnMethods = "TactOnboardingFeature")
-    void TactEmailAddedFeature(UserInfor userInfor) throws InterruptedException {
-        CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
+    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dataProvider = "tactMobileIOSUserInfo", alwaysRun = true, dependsOnMethods = "TactLeadFeature")
+    void TactEmailAddedFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -184,13 +205,14 @@ public class IOSProTactSanityCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact-Sanity", description = "After add emails, then re_auth exchange", dataProvider = "tactUserInfo", dependsOnMethods = "TactEmailAddedFeature")
-    void TactReauthExchangeFeature(UserInfor userInfor) throws InterruptedException {
-        CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
+    @Test(groups = "Tact-Sanity", description = "After add emails, then re_auth exchange", dataProvider = "tactMobileIOSUserInfo", dependsOnMethods = "TactEmailAddedFeature")
+    void TactEmailReauthExchangeFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);
+//        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.mobileIOS));
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -204,13 +226,13 @@ public class IOSProTactSanityCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Send emails and verify in Tact", dataProvider = "tactUserInfo", dependsOnMethods = "TactEmailAddedFeature")
-    void TactSendEmailFeature(UserInfor userInfor) throws InterruptedException {
-        CustomPicoContainer.getInstance().setUserInfor(userInfor);//userInfor = userInfor;
+    @Test(groups = "Tact-Sanity", description = "Send emails and verify in Tact", dataProvider = "tactMobileIOSUserInfo", dependsOnMethods = "TactEmailAddedFeature")
+    void TactEmailSendFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -224,12 +246,12 @@ public class IOSProTactSanityCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact", description = "Get Tact Version", dependsOnMethods = "TactReauthExchangeFeature")//"TactOnboardingFeature")
-    void TactGetAppVersion() throws InterruptedException {
+    @Test(groups = "Tact", description = "Get Tact Version", dependsOnMethods = "TactOnboardingFeature")
+    void TactGetAppVersion() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -243,12 +265,12 @@ public class IOSProTactSanityCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactGetAppVersion")
-    void TactEditOpptyFeature() throws InterruptedException {
+    @Test(groups = "Tact-Sanity", description = "Calendar Actions", alwaysRun = true, dependsOnMethods = "TactEmailSendFeature")
+    void TactEditOpptyFeature() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -262,12 +284,12 @@ public class IOSProTactSanityCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
     @Test(groups = "Tact", description = "Runs Tact - delete Account", alwaysRun = true, dependsOnGroups = "Tact-Sanity")
-    void TactDeleteAccount() throws InterruptedException {
+    void TactDeleteAccount() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -283,12 +305,14 @@ public class IOSProTactSanityCases {
 //            appPath="Applications/Tact Prototype.app",
             additionalCapabilities={
                     "unicodeKeyboard:true", "resetKeyboard:true"
-                    , "noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
+                    , "noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     , "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(description="Runs Cucumber Feature - onboarding", dependsOnMethods = "TactDeleteAccount")
-    private void TactLoginTactAIAccount() throws InterruptedException {
+    @Test(description="Runs Cucumber Feature - onboarding", dataProvider = "tactAITactIOSUserInfo", dependsOnMethods = "TactDeleteAccount")
+    private void TactLoginTactAIAccount(User user) {
+        CustomPicoContainer.getInstance().setUser(user);
+//        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.aiTactiOS));
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -303,12 +327,12 @@ public class IOSProTactSanityCases {
 //            appPath="Applications/Tact Prototype.app",
             additionalCapabilities={
                     "unicodeKeyboard:true", "resetKeyboard:true"
-                    , "noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
+                    , "noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     , "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
     @Test(description="Runs Cucumber Feature - onboarding", dependsOnMethods = "TactLoginTactAIAccount")
-    private void TactAIFeature() throws InterruptedException {
+    private void TactAIFeature() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -318,7 +342,7 @@ public class IOSProTactSanityCases {
     }
 
     @AfterClass(alwaysRun = true)
-    public void tearDownClass() throws Exception {
+    public void tearDownClass() {
         log.info("TestRunner - AfterClass - tearDownClass");
 
         Appium.stopServer();
@@ -335,6 +359,15 @@ public class IOSProTactSanityCases {
 //        GenerateReport.deleteAllJsonReport();
 
         log.info("testNGCucumberRunner.finish(); FINISHED");
+    }
+
+    private SeLionDataProvider getDataProvider () throws IOException {
+        String fileDir = "src/main/resources/testData/ArrayOfUser.yaml";
+        String arrayOfUsers = String.format(DATA_PATH, System.getProperty("user.dir"), fileDir);
+
+        FileSystemResource resource = new FileSystemResource(arrayOfUsers, User.class);
+
+        return DataProviderFactory.getDataProvider(resource);
     }
 }
 

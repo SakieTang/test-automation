@@ -55,15 +55,14 @@ public class TestingCaseAndroid {
     )
     //w/ data provider
     @Test(groups = "Tact-login", description = "Runs Tact - login", dataProvider = "yamlDataProvider", priority = 0)
-    void TactSanityTest(UserInfor userInfor) throws InterruptedException {
+    void TactSanityTest(UserInfor userInfor) {
         CustomPicoContainer.getInstance().setUserInfor(userInfor);
-
 
         System.out.println("TestRunner - Test - feature");
         System.out.println("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
         //contacts
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactLeadFeatureRunCukesNoReset.class);
         testNGCucumberRunner.runCukes();
 
 

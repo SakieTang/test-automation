@@ -90,15 +90,15 @@ public class LoginSteps implements En {
             log.info("^Login: I enter the user email address$");
             SFLoginWebviewPage sfLoginWebviewPage = new SFLoginWebviewPage();
 
-            String sfAccountName = null;
-            String sfPWD = null;
+            String sfAccountName = CustomPicoContainer.getInstance().getUser().getSalesforceAccount();
+            String sfPWD = CustomPicoContainer.getInstance().getUser().getSalesforceAccountPwd();
 
             //iOS
             if (DriverUtils.isIOS()) {
                 log.info("IOS");
 
-                sfAccountName = CustomPicoContainer.getInstance().getUserInfor().getSalesforceIOSAccountName();
-                sfPWD = CustomPicoContainer.getInstance().getUserInfor().getSaleforceIOSPwd();
+//                sfAccountName = CustomPicoContainer.getInstance().getUserInfor().getSalesforceIOSAccountName();
+//                sfPWD = CustomPicoContainer.getInstance().getUserInfor().getSaleforceIOSPwd();
 
                 WebDriverWaitUtils.waitUntilElementIsVisible( sfLoginWebviewPage.getUserEmailTextField().getLocator() );
                 TextField userNameSFTextField = new TextField( sfLoginWebviewPage.getUserEmailTextField().getLocator() );
@@ -111,8 +111,8 @@ public class LoginSteps implements En {
             }
             else {
                 log.info("Android");
-                sfAccountName = CustomPicoContainer.getInstance().getUserInfor().getSalesforceAndroidAccountName();
-                sfPWD = CustomPicoContainer.getInstance().getUserInfor().getSalesforceAndroidPwd();
+//                sfAccountName = CustomPicoContainer.getInstance().getUserInfor().getSalesforceAndroidAccountName();
+//                sfPWD = CustomPicoContainer.getInstance().getUserInfor().getSalesforceAndroidPwd();
 
                 WebDriverWaitUtils.waitUntilElementIsVisible(sfLoginWebviewPage.getSfLogoImage());
                 sfLoginWebviewPage.getUserEmailTextField().setText(sfAccountName);
@@ -244,7 +244,8 @@ public class LoginSteps implements En {
                 log.info("Start waiting for \"exchange Reauth Sync\"");
                 tactAlertsPopUpPage.getReauthorizeButton().tap(exchangePage.getExchangeTitleLabel());
 
-                String exchangePwdText = CustomPicoContainer.getInstance().getUserInfor().getExchangeIOSEmailPwd();
+                String exchangePwdText = CustomPicoContainer.getInstance().getUser().getExchangeEmailPwd();
+                //CustomPicoContainer.getInstance().getUserInfor().getExchangeIOSEmailPwd();
                 log.info("exchange pwd " + exchangePwdText);
                 exchangePage.getExchangePwdTextField().sendKeys(exchangePwdText);
                 exchangePage.getSubmitButton().tap();

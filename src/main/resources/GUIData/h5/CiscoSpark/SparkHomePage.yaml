@@ -17,7 +17,7 @@ elements:
         US: "css=button[title='Create a new space']"
     tactProdBotButton:
       locators:
-        US: "css=.cui-avatar--40[title='Tact - tact@sparkbot.io']"
+        US: "css=.space-list-avatar[title='Tact - tact@sparkbot.io']"
     sendMsgTextAreaTextField:
       locators:
         US: "css=textarea"

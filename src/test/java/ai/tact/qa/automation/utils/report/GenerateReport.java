@@ -751,15 +751,18 @@ public class GenerateReport {
 //        GenerateReport.deleteAllJsonReport("ios");
 
 //        //submit report
-//        System.out.println(System.getProperty("user.dir"));
+        System.out.println(System.getProperty("user.dir"));
 
 //        generteHtml();
 //        uploadReprot("report.html");
-
+//
 //        generateAIHtml();
 //        uploadReprot("aiReport.html");
 
-        generateAIHtml();
-        uploadReprot("aiReport2.html");
+//        generateAIHtml();
+//        uploadReprot("aiReport2.html");
+
+//        uploadReprot("report.html");
+//        uploadReprot("aiReport.html");
     }
 }

@@ -4,7 +4,9 @@ import ai.tact.qa.automation.utils.Appium;
 import ai.tact.qa.automation.utils.CustomPicoContainer;
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
+import ai.tact.qa.automation.utils.dataobjects.User;
 import ai.tact.qa.automation.utils.dataobjects.UserInfor;
+import ai.tact.qa.automation.utils.dataobjects.UserTestingChannel;
 import ai.tact.qa.automation.utils.report.GenerateReport;
 
 import com.paypal.selion.annotations.MobileTest;
@@ -21,19 +23,51 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 public class AndroidDailyBuildBasicCases {
 
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final String DATA_PATH = "%s/%s";
+    private static final UserTestingChannel testingChannel = UserTestingChannel.mobileAndroid;
+
+//    private User getUserDataFromYaml() {
+//        String fileDir = "src/main/resources/testData/ArrayOfUser.yaml";
+//        String arrayOfUsers = String.format(DATA_PATH, System.getProperty("user.dir"), fileDir);
+//
+//        FileSystemResource resource = new FileSystemResource(arrayOfUsers, User.class);
+//        SeLionDataProvider dataProvider =null;
+//        try {
+//            dataProvider=DataProviderFactory.getDataProvider(resource);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Hashtable<String, Object> allUsers = dataProvider.getDataAsHashtable();
+//        return (User) allUsers.get(testingChannel.toString());
+//    }
 
     @DataProvider(name="tactUserInfo")
-    public Object[][] getYamlDataProvider() throws IOException {
-        FileSystemResource resource = new FileSystemResource("src/main/resources/testData/ListOfUser.yaml", UserInfor.class);
+    public Object[][] getYamlNewDataProvider() throws IOException {
+        String fileDir = "src/main/resources/testData/ArrayOfUser.yaml";
+        String arrayOfUsers = String.format(DATA_PATH, System.getProperty("user.dir"), fileDir);
+
+        FileSystemResource resource = new FileSystemResource(arrayOfUsers, User.class);
+
         SeLionDataProvider dataProvider = DataProviderFactory.getDataProvider(resource);
-        return dataProvider.getAllData();
+        return dataProvider.getDataByKeys(new String[] {testingChannel.toString()});
     }
+
+//    @DataProvider(name="tactUserInfo")
+//    public Object[][] getYamlDataProvider() throws IOException {
+//        FileSystemResource resource = new FileSystemResource("src/main/resources/testData/ListOfUser.yaml", UserInfor.class);
+//        SeLionDataProvider dataProvider = DataProviderFactory.getDataProvider(resource);
+//        return dataProvider.getAllData();
+//    }
 
     @BeforeClass(alwaysRun = true)
     public void setUpClass() throws Exception {
@@ -61,8 +95,8 @@ public class AndroidDailyBuildBasicCases {
     )
     //w/ data provider
     @Test(groups = "Tact", description = "Runs Cucumber Feature - onboarding", dataProvider = "tactUserInfo", priority = 0)
-    private void TactOnboardingFeature(UserInfor userInfor) throws InterruptedException {
-        CustomPicoContainer.getInstance().setUserInfor(userInfor);
+    private void TactOnboardingFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -78,15 +112,15 @@ public class AndroidDailyBuildBasicCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true"
-                    ,"noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
+                    ,"noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     //Android reset the app to true, will need to re-connect with SF
                     ,"fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
     //w/ data provider
     @Test(groups = "Tact-Sanity", description = "TactDataSourcesTest", dataProvider = "tactUserInfo", dependsOnMethods = "TactOnboardingFeature")
-    void TactBeReauthExchangeFeature(UserInfor userInfor) throws InterruptedException {
-        CustomPicoContainer.getInstance().setUserInfor(userInfor);
+    void TactBeReauthExchangeFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -103,14 +137,14 @@ public class AndroidDailyBuildBasicCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true"
-                    ,"noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
+                    ,"noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     //Android reset the app to true, will need to re-connect with SF
                     ,"fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
     //w/ data provider
     @Test(groups = "Tact-Sanity", description = "Get Tact Version", dependsOnMethods = "TactOnboardingFeature")
-    void TactGetAppVersion() throws InterruptedException {
+    void TactGetAppVersion() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -124,13 +158,13 @@ public class AndroidDailyBuildBasicCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
     //w/ data provider
     @Test(groups = "Tact", description = "TactDataSourcesTest", alwaysRun = true, dependsOnGroups = "Tact-Sanity")
-    void TactDeleteAccount() throws InterruptedException {
+    void TactDeleteAccount() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -140,7 +174,7 @@ public class AndroidDailyBuildBasicCases {
     }
 
     @AfterClass(alwaysRun = true)
-    public void tearDownClass() throws Exception {
+    public void tearDownClass() {
         log.info("TestRunner - AfterClass - tearDownClass");
 
         Appium.stopServer();
