@@ -12,7 +12,7 @@ elements:
       US: "//XCUIElementTypeButton[@name='Contacts']"
     android:
       US: "//android.widget.ImageButton[@content-desc='Navigate up']"
-  editContactsObjButton:
+  editContactObjButton:
     ios:
       US: "//XCUIElementTypeButton[@name='Edit']"
     android:
@@ -20,6 +20,11 @@ elements:
   addTaskActionButton:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Add Task']"
+    android:
+      US: ""
+  linkedInButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='contact toolbar linkedin']"
     android:
       US: ""
   linkedInIconLabel:

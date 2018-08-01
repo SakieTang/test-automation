@@ -39,6 +39,8 @@ public class Appium {
         System.out.println("cmd : " + command);
 
         try {
+//            str = DriverUtils.runCommand(command).split(" ");
+//            temp = str[str.length-1];
             Process process = DriverUtils.runCommand(command);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             while ((line = reader.readLine()) != null) {

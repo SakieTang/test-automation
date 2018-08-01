@@ -1,0 +1,14 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+elements:
+    sparkHomeButton:
+      locators:
+        US: "css=span[class^='icon icon-home']"
+    sparkTeamButton:
+      locators:
+        US: "css=span[class^='icon icon-team']"
+    sparkHandsetButton:
+      locators:
+        US: "css=span[class^='icon icon-handset']"
+pageValidators: [
+    sparkHomeButton
+]

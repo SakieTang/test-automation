@@ -1,15 +1,16 @@
 - !!ai.tact.qa.automation.utils.dataobjects.UserInfor
   salesforceIOSAccountName: automation.tactsf.s@gmail.com
   salesforceIOSEmailAddress: automation.tact.s@gmail.com
+  saleforceIOSPwd: Tact2018
   salesforceAndroidAccountName: automation.tactAndrSF.s@gmail.com
   salesforceAndroidEmailAddress: automation.tactAndr.s@gmail.com
-  salesforcePwd: Tact0218
+  salesforceAndroidPwd: Tact2018
   salesforceRecoverPwdKeyword: tactile
   salesforcePhone: 650-560-5668
   exchangeIOSEmailAddress: automation.TactiOS@tact.ai
-  exchangeIOSEmailPwd: e8WHr7EUvasgJm3G
+  exchangeIOSEmailPwd: Tact2018
   exchangeAndroidEmailAddress: automation.TactAndroid@tact.ai
-  exchangeAndroidEmailPwd: JYGvi2JXAr6RH4kP
+  exchangeAndroidEmailPwd: Tact2018
   exchangeServer: outlook.office365.com
   linkedInIOSEmailAddress: automation.tact.s@gmail.com
   linkedInAndroidEmailAddress: automation.tactAndr.s@gmail.com

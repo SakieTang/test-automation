@@ -7,6 +7,16 @@ elements:
         US: "//XCUIElementTypeOther[@name='Settings']"
     android:
         US: ""
+  iosBackToSettingButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Settings']"
+    android:
+      US: ""
+  iosBackToMoreButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='More']"
+    android:
+      US: ""
   androidMoreOptionButton:
     ios:
       US: ""

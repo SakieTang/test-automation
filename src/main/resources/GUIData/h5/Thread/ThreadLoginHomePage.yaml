@@ -1,0 +1,20 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+elements:
+    threadImage:
+      locators:
+        US: "css=.mx-logo"
+    emailAddressTextField:
+      locators:
+        US: "css=input[name='email']"
+    pwdTextField:
+      locators:
+        US: "css=input[name='password']"
+    rememberMeCheckBox:
+      locators:
+        US: "css=input[name='remember_me']"
+    logInButton:
+      locators:
+        US: "css=.btn.btn-primary.pull-right"
+pageValidators: [
+    threadImage
+]

@@ -1,0 +1,59 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  tactAssistantTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Assistant']"
+    android:
+      US: ""
+  yesOptionButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Yes']"
+    android:
+      US: ""
+  noOptionButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='No']"
+    android:
+      US: ""
+  numberOptionButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='number']"
+    android:
+      US: ""
+  assistantSendButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='AssistantSendButton']"
+    android:
+      US: ""
+  assistantTypeInTextField:
+    ios:
+      US: "//XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTextView"
+    android:
+      US: ""
+  botIconImage:
+    ios:
+      US: "//XCUIElementTypeImage[@name='assistant-avatar']"
+    android:
+      US: ""
+  botIconImageLabel:
+    ios:
+      US: "//XCUIElementTypeImage[@name='assistant-avatar']"
+    android:
+      US: ""
+  displayTextListLabel:
+    ios:
+      US: "//XCUIElementTypeOther[2]/XCUIElementTypeTextView"
+    android:
+      US: ""
+  errorMsgTextListLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Message not delivered']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  tactAssistantTitleLabel
+]

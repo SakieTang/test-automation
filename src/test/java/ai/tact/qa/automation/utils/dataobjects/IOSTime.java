@@ -57,6 +57,7 @@ public class IOSTime {
         {
             while (loop != 0) {
                 sendKey = getMonthForInt(month).substring(0, 3) + " " + 28;
+                System.out.println("loop ==> " + loop + "/n allElements.get(0)  ==> " + allElements.get(0).getText());
                 allElements.get(0).sendKeys(sendKey);
                 month++;
                 loop--;
@@ -66,15 +67,20 @@ public class IOSTime {
         {
             while (loop!=0) {
                 sendKey = getMonthForInt(month).substring(0, 3) + " " + 1;
+                System.out.println("month ==> " + month + "//loop ==> " + loop + "/n allElements.get(0)  ==> " + allElements.get(0).getText());
                 allElements.get(0).sendKeys(sendKey);
                 month--;
                 loop++;
             }
         }
+        System.out.println("allElements.get(0) ==> " + allElements.get(0).getText());
         allElements.get(0).sendKeys(expectDayMonth);
         //select Time
+        System.out.println("allElements.get(1) ==> " + allElements.get(1).getText());
         allElements.get(1).sendKeys(expectHours);
+        System.out.println("allElements.get(2) ==> " + allElements.get(2).getText());
         allElements.get(2).sendKeys(expectMins);
+        System.out.println("allElements.get(3) ==> " + allElements.get(3).getText());
         allElements.get(3).sendKeys(expectIsAMPM.toString());
 
         System.out.println(expectDayMonth + " " + expectHours + " " + expectMins + " " + expectIsAMPM );
@@ -122,7 +128,11 @@ public class IOSTime {
         System.out.println(expectDayMonth );
 
         WebDriverWaitUtils.waitUntilElementIsVisible(iOSDateTimePage.getDateTimeDoneButton());
+        DriverUtils.sleep(2);
         iOSDateTimePage.getDateTimeDoneButton().tap();
+        if (Grid.driver().findElementsByXPath(iOSDateTimePage.getDateTimeDoneButton().getLocator()).size() != 0) {
+            iOSDateTimePage.getDateTimeDoneButton().tap();
+        }
     }
 
     private static void currentDate(){

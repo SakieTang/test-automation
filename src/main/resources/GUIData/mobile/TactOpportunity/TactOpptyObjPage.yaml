@@ -1,0 +1,139 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  opportunityObjTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Opportunity']"
+    android:
+      US: ""
+  goBackToOpptiesMainPageButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Back']"
+    android:
+      US: ""
+  editOpptyObjButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Edit']"
+    android:
+      US: "//android.widget.TextView[@content-desc='EDIT']"
+  amountLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Amount']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: "//TextInputLayout[@text='Amount']/android.widget.FrameLayout/android.widget.EditText"
+  nextStepLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Next Step']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: "//TextInputLayout[@text='Next Step']/android.widget.FrameLayout/android.widget.EditText"
+  stageLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Stage']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: "//android.widget.TextView[@text='Stage (required)']/following-sibling::android.widget.Spinner/android.widget.TextView"
+  probabilityLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Probability']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: "//TextInputLayout[@text='Probability (%) (required)']/android.widget.FrameLayout/android.widget.EditText"
+  addTaskFromTasksFieldButton:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Tasks']/following-sibling::XCUIElementTypeCell/XCUIElementTypeStaticText[@name='Add Task']"
+    android:
+      US: ""
+  addRelatedContactButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Add Related Contact']"
+    android:
+      US: ""
+  addProductButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Add Product']"
+    android:
+      US: ""
+  opptyInfoOwnerLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Owner']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: ""
+  opptyInfoPrivateSwitch:
+    ios:
+      US: "	//XCUIElementTypeSwitch[@name='Private']"
+    android:
+      US: ""
+  opptyInfoTypeLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Type']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: ""
+  opptyInfoLeadSourceLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Lead Source']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: ""
+  opptyInfoExpectedRevenueLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Expected Revenue']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: ""
+  opptyInfoCloseDateLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Close Date']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: ""
+  addInfoOrderNumberLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Order Number']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: ""
+  addInfoMainCompetitorLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Main Competitor(s)']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: "//TextInputLayout[@text='Main Competitor(s)']/android.widget.FrameLayout/android.widget.EditText"
+  addInfoCurrentGeneratorLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Current Generator(s)']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: "//TextInputLayout[@text='Current Generator(s)']/android.widget.FrameLayout/android.widget.EditText"
+  addInfoDeliveryInstallationLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Delivery/Installation Status']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: "//android.widget.TextView[@text='Delivery/Installation Status']/following-sibling::android.widget.Spinner/android.widget.TextView"
+  addInfoTrackingNumberLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Tracking Number']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: "//TextInputLayout[@text='Tracking Number']/android.widget.FrameLayout/android.widget.EditText"
+  sysInfoCreatedByLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Created By']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: ""
+  sysInfoDateCreatedLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Date Created']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: ""
+  sysInfoLastModifiedByLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Last Modified By']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: ""
+  sysInfoLastModifiedLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Last Modified']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: ""
+  descriptionInfoLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Description']/following-sibling::XCUIElementTypeTextView"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  opportunityObjTitleLabel
+]

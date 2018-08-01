@@ -1,0 +1,34 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  tactOpportunitiesDropDownButton:
+    ios:
+      US: "//XCUIElementTypeNavigationBar[@name='TactOpportunitiesView']/XCUIElementTypeButton"
+    android:
+      US: "//android.widget.TextView[@text='OPEN']"
+  ownedByMeOptionButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Owned by Me']"
+    android:
+      US: ""
+  openOptionButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Open']"
+    android:
+      US: ""
+  closedOptionButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Closed']"
+    android:
+      US: ""
+  opportunitiesPlusIconButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Add']"
+    android:
+      US: "//android.widget.ImageButton"
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  tactOpportunitiesDropDownButton
+]

@@ -1,0 +1,54 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  accountSearchTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Account']"
+    android:
+      US: ""
+  createNewAccountButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='New']"
+    android:
+      US: ""
+  backToNewOpptyButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='New Opportunity']"
+    android:
+      US: ""
+  searchTextField:
+    ios:
+      US: "//XCUIElementTypeSearchField[@name='Search all accounts']"
+    android:
+      US: ""
+  clearTextFromSearchAllContactsButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Clear text']"
+    android:
+      US: "android:id/search_close_btn"
+  nameEditTextField:
+    ios:
+        US: "//*[contains(@name, 'accountName')]"
+    android:
+        US: "//android.widget.TextView[@text='accountName']"
+  searchOnSalesforceButton:
+    ios:
+      US: "(//XCUIElementTypeStaticText[@name='Search on Salesforce'])[1]"
+    android:
+      US: ""
+  noContactsFoundLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='No Accounts Found']"
+    android:
+      US: ""
+  noAdditionalContactsFoundLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='No additional accounts found']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  exchangeTitleLabel
+]

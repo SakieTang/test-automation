@@ -1,0 +1,17 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+elements:
+    navAlexaConsolesLink:
+      locators:
+        US: "css=#navFlyoutYourAlexaConsoles"
+    skillsButton:
+      locators:
+        US: "css=li[class='dphdItem'] a[href='/alexa/console/ask']"
+    tactAutomationSkillButton:
+      locators:
+        US: "css=.astro-text-large"
+    testLink:
+      locators:
+        US: "css=#test"
+pageValidators: [
+    navAlexaConsolesLink
+]

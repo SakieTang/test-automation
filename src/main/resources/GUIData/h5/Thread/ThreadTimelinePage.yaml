@@ -1,0 +1,26 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+elements:
+    threadImage:
+      locators:
+        US: "css=.mx-logo"
+    threadTimelineActiveLabel:
+      locators:
+        US: "css=.active>a>span"
+    tactProBotImage:
+      locators:
+        US: "css=img[src*='/user/board/17/']"
+    sendMsgTextAreaTextField:
+      locators:
+        US: "css=textarea"
+    myMsgsLabel:
+      locators:
+        US: "css=.mx-my-msg>div>div>div>span"
+    tactBotMsgsLabel:
+      locators:
+        US: "css=div[class^='mx-chat-item mx-chat-comment  mx-hover-show'] span[class='mx-board-comment-content']"
+    displayMsgsLabel:
+      locators:
+        US: "css=div[class^='mx-chat-item mx-chat-comment'] span[class='mx-board-comment-content']"
+pageValidators: [
+    threadTimelineActiveLabel
+]
