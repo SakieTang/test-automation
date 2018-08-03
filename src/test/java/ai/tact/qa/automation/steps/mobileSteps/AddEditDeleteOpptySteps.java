@@ -10,6 +10,7 @@ import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.dataobjects.AndroidDate;
 import ai.tact.qa.automation.utils.dataobjects.FieldDataType;
 import ai.tact.qa.automation.utils.dataobjects.IOSTime;
+import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
 import cucumber.api.PendingException;
 import cucumber.api.java8.En;
@@ -274,7 +275,13 @@ public class AddEditDeleteOpptySteps implements En {
 //                TactAIAsserts.assertNotEquals(tactAddNewOpptyPage.getNewOpptyTitleLabel(), tactAddNewOpptyPage.getNewOpptyTitleLabel(), "There is an error in your oppty");
             }
             System.out.println("finish eidt");
-            DriverUtils.sleep(10);
+            DriverUtils.sleep(2);
+
+            if (DriverUtils.isAndroid()) {
+                System.out.println("in Android");
+                String backLoc = "//android.widget.ImageButton[@content-desc='Navigate up']";
+                Grid.driver().findElementByXPath(backLoc).click();
+            }
         });
         Then("^AddOppty: I check the oppty value$", () -> {
             log.info("^AddOppty: I check the oppty value$");

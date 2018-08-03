@@ -18,7 +18,6 @@ Feature: OpportunitiesFeature
     Then API: I check Object "Opportunity" saved in salesforce
     And Common: I click back icon
 
-
     Examples:
     | opptyName          | closeDate | stage         | probability | isPrivate | accountName | AccountType  | LeadSource | Amount     | nextStep   | description    | isSave |
     | oppty_created_Tact | Today     | Qualification | 20        | false     | none        | New Customer | none       | 9999999999 | needToEdit | TextLength10 | true   |

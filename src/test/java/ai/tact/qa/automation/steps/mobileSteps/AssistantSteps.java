@@ -23,7 +23,7 @@ public class AssistantSteps implements En {
 
     private String dataRecord;
     private long botRespTime = 0;
-    private String timeDateStamp;
+    private String dateTimeStamp;
 
     public AssistantSteps() {
 
@@ -52,7 +52,7 @@ public class AssistantSteps implements En {
             //start time
 //            1s=1000ms，1 ms=1000μs，1μs=1000ns
             long beginTime = System.currentTimeMillis();
-            timeDateStamp = DriverUtils.getTimeDateStamp();
+            dateTimeStamp = DriverUtils.getDateTimeDetailsStamp();
             long checkTime = beginTime;
 
             //(System.currentTimeMillis() - checkTime)/1000000 < 120   1s = 1000 000 μs  check 120s => 2mins
@@ -139,7 +139,7 @@ public class AssistantSteps implements En {
             }
 
             //record cmd info
-            dataRecord = String.format("%s | %s | %sms\n", timeDateStamp, isPassed, botRespTime);
+            dataRecord = String.format("%s | %s | %sms\n", dateTimeStamp, isPassed, botRespTime);
             System.out.println("ResultDataRecord : " + dataRecord + "<<<<<<<,");
             DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
 

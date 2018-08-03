@@ -21,7 +21,7 @@ public class SparkHomeSteps implements En {
 
     private String dataRecord;
     private long botRespTime = 0;
-    private String timeDateStamp;
+    private String dateTimeStamp;
 
     public SparkHomeSteps() {
 
@@ -59,7 +59,7 @@ public class SparkHomeSteps implements En {
             sparkHomePage.getSendMsgTextAreaTextField().type(inputTextString);
             int sizeNum = Grid.driver().findElementsByXPath(tactBotMsgsLabelLocator).size();
             long beginTime = System.currentTimeMillis();
-            timeDateStamp = DriverUtils.getTimeDateStamp();
+            dataRecord = DriverUtils.getDateTimeDetailsStamp();
             long checkTime = beginTime;
             System.out.println(sizeNum + "<== beginTime ==> " + beginTime);
             while (Grid.driver().findElementsByXPath(tactBotMsgsLabelLocator).size() == sizeNum){
@@ -136,7 +136,7 @@ public class SparkHomeSteps implements En {
             }
 
             //record cmd info
-            dataRecord = String.format("%s | %s | %sms\n", timeDateStamp, isPassed, botRespTime);
+            dataRecord = String.format("%s | %s | %sms\n", dataRecord, isPassed, botRespTime);
             System.out.println(">>>>>dataRecord : " + dataRecord + "<<<<<<<,");
             DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
 

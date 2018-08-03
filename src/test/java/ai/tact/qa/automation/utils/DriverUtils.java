@@ -547,6 +547,16 @@ public class DriverUtils {
     }
 
     /**
+     * get Date-Time stamp
+     */
+    public static String getDateTimeDetailsStamp () {
+        Date date = DriverUtils.currentDate();
+        String stamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(date);
+
+        return stamp;
+    }
+
+    /**
      * write the data into fileDir
      * @param file
      * @param data
@@ -864,5 +874,20 @@ public class DriverUtils {
         }
 
         return lastName;
+    }
+
+    /**
+     * Add a time stamp before the name
+     * @param name
+     * @param addStamp
+     * @return
+     */
+    public static String getNameWithStamp (String name, boolean addStamp) {
+        String resultName = "";
+
+        if (addStamp) {
+            resultName = String.format("%s_%s", getTimeDateStamp(), name);
+        }
+        return resultName;
     }
 }

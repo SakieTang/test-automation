@@ -117,37 +117,12 @@ public class TestingCaseWeb {
     @WebTest
     @Test(description = "stop selenium, start appium", alwaysRun = true, dependsOnGroups = "Web")
     public void stopSelenium () {
+        //stop Selenium Server
         Selenium.stopServer();
-        System.out.println("selenium stopped");
-    }
 
-    @WebTest
-    @Test(description = "stop selenium, start appium", alwaysRun = true, dependsOnMethods = "stopSelenium")
-    public void startAppium () {
+        //start Appium server
         Appium.startServer();
-        System.out.println("start appium");
     }
-
-//    //login Tact AI account
-//    @MobileTest(    //iOS
-//            locale="US",
-////            appPath="Applications/Tact Prototype.app",
-//            additionalCapabilities={
-//                    "unicodeKeyboard:true", "resetKeyboard:true"
-//                    , "noReset:false"    //continue the UserInformation. false, reinstall the app; false, continue use the app
-//                    , "fullReset:true"  //restart the iPhone/simulator and install the app
-//            }
-//    )
-//    @Test(description="Runs Cucumber Feature - onboarding", dependsOnMethods = "startAppium")
-//    private void TactLoginTactAIAccount()  {
-//        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.aiTactiOS));
-//        log.info("TestRunner - Test - feature");
-//        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-//
-//        //onboarding
-//        TestNGCucumberRunner testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.TactLogin.class);
-//        testNGCucumberRunner.runCukes();
-//    }
 
     //Tact AI Testing
     @MobileTest(    //iOS
@@ -160,15 +135,20 @@ public class TestingCaseWeb {
             }
     )
     @Test(description="Runs Cucumber Feature - onboarding"
-            , dependsOnMethods = "startAppium"
-//            , dependsOnMethods = "TactLoginTactAIAccount"
+            , alwaysRun = true
+//            , dependsOnMethods = "startAppium"
     )
     private void TactAIFeature() throws InterruptedException {
+        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.aiTactiOS));
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
+        //onboarding
+        TestNGCucumberRunner testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.TactLogin.class);
+        testNGCucumberRunner.runCukes();
+
         //Tact AI Testing
-        TestNGCucumberRunner testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.testTactAI.class);
+        testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.testTactAI.class);
         testNGCucumberRunner.runCukes();
     }
 
@@ -176,13 +156,6 @@ public class TestingCaseWeb {
     public void tearDownClass() throws Exception {
         log.info("TestRunner - AfterClass - tearDownClass");
 
-//        Selenium.stopServer();
-//        if (!Selenium.isSeleniumServerRunning("4723")) {
-//            log.info("Selenium does not run");
-//        } else {
-//            log.info("Selenium does run, and stop again");
-//            Selenium.stopServer();
-//        }
         Appium.stopServer();
 
         log.info("Finished running");

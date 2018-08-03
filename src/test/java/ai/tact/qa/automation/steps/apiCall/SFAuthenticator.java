@@ -1,5 +1,6 @@
 package ai.tact.qa.automation.steps.apiCall;
 
+import ai.tact.qa.automation.utils.CustomPicoContainer;
 import okhttp3.*;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,14 +11,12 @@ public class SFAuthenticator {
 
     private static SFAuthenticator instance;
 
-    final String url = "https://login.salesforce.com/services/oauth2/token";
-    final String grant_type = "password";
-    final String client_id = "3MVG9CEn_O3jvv0ydnh2Gwu9Kq.SoCleHJwlIjZg_Q2mjI8gSaaJ6qw0Df_qtTrb7L__rAfPKne7zILZfeE32";
-    final String client_secret = "6884892550614520415";
-    final String username = "automation.tactsf.s@gmail.com";    //sf account name
-    final String password = "Tact20189ilpMZITdoDz6ABvYGrn8xHS";
-
-    private static SFNetworkService SFNetworkService;
+    private final String url = "https://login.salesforce.com/services/oauth2/token";
+    private final String grant_type = "password";
+    private final String client_id = CustomPicoContainer.getInstance().getUser().getApiClientId(); //"3MVG9CEn_O3jvv0ydnh2Gwu9Kq.SoCleHJwlIjZg_Q2mjI8gSaaJ6qw0Df_qtTrb7L__rAfPKne7zILZfeE32";
+    private final String client_secret = CustomPicoContainer.getInstance().getUser().getApiClientSecret(); //"6884892550614520415";
+    private final String username = CustomPicoContainer.getInstance().getUser().getApiUserName(); //"automation.tactsf.s@gmail.com";    //sf account name
+    private final String password = CustomPicoContainer.getInstance().getUser().getApiPassword(); //"Tact20189ilpMZITdoDz6ABvYGrn8xHS";
 
     private static String salesforceToken;
     private static String salesforceTokenType;

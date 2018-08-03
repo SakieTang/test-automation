@@ -46,17 +46,19 @@ public class OpptySteps implements En {
             if (DriverUtils.isAndroid())
             {
                 DriverUtils.sleep(0.5);
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactSearchOpptyPage.getAndroidOpptyTabSearchIconButton());
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactSearchOpptyPage.getAndroidOpptyTabSearchIconButton().getLocator());
                 tactSearchOpptyPage.getAndroidOpptyTabSearchIconButton().tap();
+                System.out.println("loc : " + tactSearchOpptyPage.getAndroidOpptyTabSearchIconButton().getLocator());
+                DriverUtils.sleep(2);
                 if ((Grid.driver().findElementsByXPath(tactSearchOpptyPage.getAndroidOpptyTabSearchIconButton().getLocator())).size() != 0) {
                     System.out.println("did not click it, need to re-click");
                     DriverUtils.tapXY(1160,182);
+                    DriverUtils.sleep(5);
                 }
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactSearchOpptyPage.getSearchTextField());
             }
 
             tactSearchOpptyPage.getSearchTextField().setText(opptyName);
-            DriverUtils.sleep(5);
 
             DriverUtils.clickOption(tactSearchOpptyPage.getNameEditTextField(), "opptyName", opptyName);
 

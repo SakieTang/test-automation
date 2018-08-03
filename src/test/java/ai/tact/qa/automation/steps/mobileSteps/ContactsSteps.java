@@ -202,6 +202,8 @@ public class ContactsSteps implements En {
             TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
             TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
 
+            WebDriverWaitUtils.waitUntilElementIsVisible(tactContactsMainPage.getTactContactsTitleLabel().getLocator());
+
             //get the contact location in Recent field
             String searchName;
             switch (objName) {

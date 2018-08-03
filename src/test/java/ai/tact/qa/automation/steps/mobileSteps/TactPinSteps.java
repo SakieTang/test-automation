@@ -95,7 +95,8 @@ public class TactPinSteps implements En {
                 tactNotePage.getSyncToSaleforceSwitch().changeValue();
             }
             //Title (required)      //element  changed <<<<<<<<<<<<<<<<<<<<<<<
-            tactNotePage.getEditNoteTitleTextField().sendKeys(titleText);
+            noteTitle = DriverUtils.getNameWithStamp(titleText, true);
+            tactNotePage.getEditNoteTitleTextField().sendKeys(noteTitle);
             //note Body
             if (!DriverUtils.isTextEmpty(bodyText))
             {

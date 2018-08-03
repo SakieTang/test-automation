@@ -19,7 +19,7 @@ public class ThreadTimelineSteps implements En {
 
     private String dataRecord;
     private long botRespTime = 0;
-    private String timeDateStamp;
+    private String dateTimeStamp;
 
     public ThreadTimelineSteps() {
 
@@ -47,7 +47,7 @@ public class ThreadTimelineSteps implements En {
             int sizeNum = threadTimelinePage.getTactBotMsgsLabel().getElements().size();
             threadTimelinePage.getSendMsgTextAreaTextField().type(inputTextString);
             long beginTime = System.currentTimeMillis();
-            timeDateStamp = DriverUtils.getTimeDateStamp();
+            dataRecord = DriverUtils.getDateTimeDetailsStamp();
             long checkTime = beginTime;
             System.out.println(sizeNum + "<== beginTime ==> " + beginTime);
             while (threadTimelinePage.getTactBotMsgsLabel().getElements().size() == sizeNum){
@@ -110,7 +110,7 @@ public class ThreadTimelineSteps implements En {
             }
 
             //record cmd info
-            dataRecord = String.format("%s | %s | %sms\n", timeDateStamp, isPassed, botRespTime);
+            dataRecord = String.format("%s | %s | %sms\n", dataRecord, isPassed, botRespTime);
             System.out.println(">>>>>dataRecord : " + dataRecord + "<<<<<<<,");
             DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
 

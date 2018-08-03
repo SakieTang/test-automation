@@ -3,6 +3,8 @@ package ai.tact.qa.automation.runner;
 import ai.tact.qa.automation.utils.Appium;
 import ai.tact.qa.automation.utils.CustomPicoContainer;
 import ai.tact.qa.automation.utils.DriverUtils;
+import ai.tact.qa.automation.utils.dataobjects.User;
+import ai.tact.qa.automation.utils.dataobjects.UserTestingChannel;
 import com.paypal.selion.annotations.MobileTest;
 import com.paypal.selion.platform.dataprovider.DataProviderFactory;
 import com.paypal.selion.platform.dataprovider.SeLionDataProvider;
@@ -25,6 +27,8 @@ import java.util.logging.Logger;
 public class TestingCaseAndroid {
 
     static final String appPackage = "appPackage:com.tactile.tact";//0iu9yo0,9o6fvbnkcexzasecvcxr  asezdzadc.alpha";
+    private static final String DATA_PATH = "%s/%s";
+    private static final UserTestingChannel testingChannel = UserTestingChannel.mobileAndroid;
 
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
@@ -33,6 +37,17 @@ public class TestingCaseAndroid {
         FileSystemResource resource = new FileSystemResource("src/main/resources/testData/ListOfUser.yaml", UserInfor.class);
         SeLionDataProvider dataProvider = DataProviderFactory.getDataProvider(resource);
         return dataProvider.getAllData();
+    }
+
+    @DataProvider(name="tactUserInfo")
+    public Object[][] getYamlNewDataProvider() throws IOException {
+        String fileDir = "src/main/resources/testData/ArrayOfUser.yaml";
+        String arrayOfUsers = String.format(DATA_PATH, System.getProperty("user.dir"), fileDir);
+
+        FileSystemResource resource = new FileSystemResource(arrayOfUsers, User.class);
+
+        SeLionDataProvider dataProvider = DataProviderFactory.getDataProvider(resource);
+        return dataProvider.getDataByKeys(new String[] {testingChannel.toString()});
     }
 
     @BeforeClass(alwaysRun = true)
@@ -54,15 +69,15 @@ public class TestingCaseAndroid {
             }
     )
     //w/ data provider
-    @Test(groups = "Tact-login", description = "Runs Tact - login", dataProvider = "yamlDataProvider", priority = 0)
-    void TactSanityTest(UserInfor userInfor) {
-        CustomPicoContainer.getInstance().setUserInfor(userInfor);
+    @Test(groups = "Tact-login", description = "Runs Tact - login", dataProvider = "tactUserInfo", priority = 0)
+    void TactSanityTest(User user) {
+        CustomPicoContainer.getInstance().setUser(user);
 
         System.out.println("TestRunner - Test - feature");
         System.out.println("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
         //contacts
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactLeadFeatureRunCukesNoReset.class);
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
         testNGCucumberRunner.runCukes();
 
 
@@ -88,14 +103,18 @@ public class TestingCaseAndroid {
             features = ("src/test/resources/Features/mobile/Lead.feature")
             ,glue = ("ai.tact.qa.automation.steps")
             ,tags={"" +
-//            "@createLead" +
-//            "," +
-            "@P1"}
+                "@createLead"
+//                "@createContact"
+//                "@createSimpleOpportunity"
+//              "," +
+//              "@P1"
+                }
     )
     public class testCase extends AbstractTestNGCucumberTests {
         @Test
-        private void test(){ log.info("@Test Contacts Feature RunCukesTest"); }
-
+        private void test(){
+            log.info("@Test Contacts Feature RunCukesTest");
+        }
     }
 
 }
