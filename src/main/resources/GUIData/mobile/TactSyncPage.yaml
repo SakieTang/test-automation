@@ -1,0 +1,18 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  pendingSyncToSFLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Pending sync to Salesforce']"
+    android:
+      US: ""
+  syncedWithSFLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Synced with Salesforce']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+]

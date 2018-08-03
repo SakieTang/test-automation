@@ -6,10 +6,14 @@ Feature: LeadsFeature
   Scenario Outline: Create a new contact in TactAPP with basic information
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I go to create a new "Lead" page
-    And AddLead: I input a user name "<contactName>", company name "<companyName>" and "<isSave>"
+    And AddLead: I input a user name "<leadName>", company name "<companyName>" and "<isSave>"
+    And Contact: I search this "Lead" from recent field and select it
+    When Common: I am waiting for syncing done
+    Then API: I check Object "Lead" saved in salesforce
+    And Common: I click back icon
 
     Examples:
-      | contactName           | companyName | isSave |
+      | leadName              | companyName | isSave |
 #      | LeadLName, LeadFName  | Tactile     | w/o    |
 #      | leadName2             | United Oil  | yes    |
       | LastNLead, FirstNLead | Tactile     | yes    |

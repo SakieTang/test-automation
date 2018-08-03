@@ -5,6 +5,7 @@ import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.dataobjects.Status;
 import static ai.tact.qa.automation.utils.dataobjects.Status.*;
 
+import com.amazonaws.services.dynamodbv2.xspec.S;
 import com.paypal.selion.internal.platform.grid.WebDriverPlatform;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -20,6 +21,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -299,11 +301,12 @@ public class GenerateReport {
                 String line = "<tr>";
                 line += "<td class='channel-name'>" + cmdResultLine.split("\\|")[0] + "</td>";
                 line += "<td class='command-name'>" + cmdResultLine.split(" \\| ")[1] + "</td>";
-                String cmdResult = cmdResultLine.split(" \\| ")[2];
-                String cmdTime = cmdResultLine.split(" \\| ")[3];
+                line += "<td class='command-name'>" + cmdResultLine.split("\\| ")[2] + "</td>"; //time-date stamp
+                String cmdResult = cmdResultLine.split(" \\| ")[3];
+                String cmdTime = cmdResultLine.split(" \\| ")[4];
 //                System.out.println("cmd " + cmdResultLine.split(" \\| ")[0]);
-                System.out.println("cmdResult " + cmdResult);
-//                System.out.println("cmdTime " + cmdTime);
+//                System.out.println("cmdResult " + cmdResult);
+                System.out.println("cmdTime " + cmdTime);
 
                 int time = Integer.parseInt(cmdTime.replaceAll("ms",""));
 
@@ -747,22 +750,23 @@ public class GenerateReport {
     public static void main(String[] args) {
 //        BasicConfigurator.configure();
 //        getReport(WebDriverPlatform.ANDROID);
-//        getReport(WebDriverPlatform.IOS);
+        getReport(WebDriverPlatform.IOS);
 //        GenerateReport.deleteAllJsonReport("ios");
 
 //        //submit report
-        System.out.println(System.getProperty("user.dir"));
+//        System.out.println(System.getProperty("user.dir"));
 
-//        generteHtml();
-//        uploadReprot("report.html");
+        generteHtml();
+        uploadReprot("report.html");
+
+//        generateAIHtml();
+//        uploadReprot("aiReport.html");
 //
 //        generateAIHtml();
-//        uploadReprot("aiReport.html");
-
-//        generateAIHtml();
 //        uploadReprot("aiReport2.html");
-
+//
 //        uploadReprot("report.html");
 //        uploadReprot("aiReport.html");
+
     }
 }

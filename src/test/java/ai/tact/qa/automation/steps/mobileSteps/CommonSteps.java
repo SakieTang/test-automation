@@ -1,15 +1,12 @@
 package ai.tact.qa.automation.steps.mobileSteps;
 
-import ai.tact.qa.automation.testcomponents.mobile.TactAccessSFPage;
-import ai.tact.qa.automation.testcomponents.mobile.TactAlertsPopUpPage;
+import ai.tact.qa.automation.testcomponents.mobile.*;
 import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactObjPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactsMainPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactEmail.TactMailBoxesPage;
-import ai.tact.qa.automation.testcomponents.mobile.TactNavigateTabBarPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactSearch.TactSearchContactsPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactSetting.ExchangePage;
 import ai.tact.qa.automation.testcomponents.mobile.TactSetting.TactSettingsPage;
-import ai.tact.qa.automation.testcomponents.mobile.TactWelcomePage;
 import ai.tact.qa.automation.utils.CustomPicoContainer;
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
@@ -17,6 +14,7 @@ import ai.tact.qa.automation.utils.LogUtil;
 import com.paypal.selion.platform.asserts.SeLionAsserts;
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
+import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 
 import java.util.logging.Level;
@@ -31,9 +29,8 @@ public class CommonSteps implements En {
         And("^Common: I switch to \"([^\"]*)\" driver$", (String driverContext) -> {
             log.info("^Common: I switch to " + driverContext + " driver$");
 
-            DriverUtils.sleep(10);
-
             if (driverContext.equalsIgnoreCase("Webview") && DriverUtils.isIOS()) {
+                DriverUtils.sleep(10);
                 log.info("-> convert To Webview driver <-");
                 DriverUtils.convertToWebviewDriver();
             }
@@ -222,14 +219,29 @@ public class CommonSteps implements En {
             log.info("^Common: I click back icon$");
             TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
             TactContactObjPage tactContactObjPage = new TactContactObjPage();
+            String backLoc;
 
-            WebDriverWaitUtils.waitUntilElementIsVisible(tactContactObjPage.getGoBackToContactsMainPageButton());
-            tactContactObjPage.getGoBackToContactsMainPageButton().tap();
-
-            if (DriverUtils.isAndroid() &&
-                    Grid.driver().findElementsById(tactSearchContactsPage.getSearchAllContactsTextField().getLocator()).size() != 0) {
-                tactContactObjPage.getGoBackToContactsMainPageButton().tap();
+            if (DriverUtils.isIOS()) {
+                backLoc = "//XCUIElementTypeNavigationBar/XCUIElementTypeButton[1]";
+            } else {
+                backLoc = "//android.widget.ImageButton[@content-desc='Navigate up']";
             }
+
+            if (Grid.driver().findElementsByXPath(backLoc).size() != 0) {
+                Grid.driver().findElementByXPath(backLoc).click();
+            }
+            DriverUtils.sleep(1);
+            //oppty back
+            // < //XCUIElementTypeButton[@name="Back"]
+            //contact
+            // < //XCUIElementTypeNavigationBar/XCUIElementTypeButton[1]
+//            WebDriverWaitUtils.waitUntilElementIsVisible(tactContactObjPage.getGoBackToContactsMainPageButton());
+//            tactContactObjPage.getGoBackToContactsMainPageButton().tap();
+//
+//            if (DriverUtils.isAndroid() &&
+//                    Grid.driver().findElementsById(tactSearchContactsPage.getSearchAllContactsTextField().getLocator()).size() != 0) {
+//                tactContactObjPage.getGoBackToContactsMainPageButton().tap();
+//            }
         });
         Then("^Common: I turn (on|off) wifi$", (String isOn) -> {
             log.info("^Common: I turn " + isOn + " wifi$");
@@ -238,6 +250,18 @@ public class CommonSteps implements En {
                 DriverUtils.turnOnWifi();
             } else {
                 DriverUtils.turnOffWifi();
+            }
+        });
+        When("^Common: I am waiting for syncing done$", () -> {
+            log.info("^Common: I am waiting for syncing done$");
+            TactSyncPage tactSyncPage = new TactSyncPage();
+
+            if (DriverUtils.isIOS()) {
+                DriverUtils.scrollToBottom();
+                WebDriverWaitUtils.waitUntilElementIsInvisible(tactSyncPage.getPendingSyncToSFLabel().getLocator());
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactSyncPage.getSyncedWithSFLabel().getLocator());
+            } else {
+                DriverUtils.sleep(20);
             }
         });
     }

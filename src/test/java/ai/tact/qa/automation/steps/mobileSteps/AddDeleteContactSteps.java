@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 public class AddDeleteContactSteps implements En {
 
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    public static String contactName;
 
     public AddDeleteContactSteps() {
 
@@ -43,9 +44,14 @@ public class AddDeleteContactSteps implements En {
             TactContactObjPage tactContactObjPage = new TactContactObjPage();
             TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
 
-            String fName = DriverUtils.get1stNFromFullName(contactName);
-            String lName = DriverUtils.getLastNFromFullName(contactName);
-            System.out.println(fName + " " + lName);
+            String fName = DriverUtils.get1stNFromFullName(contactName, false);
+            String lName = DriverUtils.getLastNFromFullName(contactName, true);
+            if (fName.isEmpty()) {
+                this.contactName = lName;
+            } else {
+                this.contactName=String.format("%s %s", fName, lName);
+                System.out.println(AddDeleteContactSteps.contactName);
+            }
 
             if (!fName.isEmpty()) {
                 tactAddNewContactPage.getFirstNameTextField().setText(fName);
@@ -152,9 +158,8 @@ public class AddDeleteContactSteps implements En {
 
                 //save
                 tactAddNewContactPage.getSaveNewContactButton().tap();
-
-
             }
         });
+
     }
 }

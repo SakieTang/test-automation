@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 public class AddDeleteAccountSteps implements En {
 
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    public static String accountName;
 
     public AddDeleteAccountSteps() {
 
@@ -30,8 +31,8 @@ public class AddDeleteAccountSteps implements En {
             TactAddNewLeadPage tactAddNewLeadPage = new TactAddNewLeadPage();
 
             //set username Text
-            String fName = DriverUtils.get1stNFromFullName(leadName);
-            String lName = DriverUtils.getLastNFromFullName(leadName);
+            String fName = DriverUtils.get1stNFromFullName(leadName, true);
+            String lName = DriverUtils.getLastNFromFullName(leadName, false);
             System.out.println(fName + " " + lName);
 
             if (!fName.isEmpty()){

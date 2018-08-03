@@ -8,12 +8,15 @@ Feature: OpportunitiesFeature
     When Common: I switch to "Opportunities" page from tab bar
     Then Oppty: I go to create a new Oppty page
     When AddEditOppty: I do action "add" required oppty information with "<opptyName>" opptyName, "<closeDate>" closeDate, "<stage>" stage and "<probability>" probability
-    And AddEditOppty: I do action "add" more oppty information with "<isPrivate>" isPrivate, "<AccountType>" accountType, "<LeadSource>" leadSource, "<Amount>" amount and "<nextStep>" next step
-    And Contacts: I search one account "<accountName>" and select it
-    And AddEditOppty: I do action "add" DescriptionInfo with "<description>" description
+#    And AddEditOppty: I do action "add" more oppty information with "<isPrivate>" isPrivate, "<AccountType>" accountType, "<LeadSource>" leadSource, "<Amount>" amount and "<nextStep>" next step
+#    And Contacts: I search one account "<accountName>" and select it
+#    And AddEditOppty: I do action "add" DescriptionInfo with "<description>" description
     And AddOppty: I "<isSave>" save the new opportunity
-#    When Oppty: I search one oppty "<opptyName>" from opportunities list and select it
+    Then Oppty: I search one oppty oppty_created_Tact from opportunities list and select it
 #    Then AddOppty: I check the oppty value
+    When Common: I am waiting for syncing done
+    Then API: I check Object "Opportunity" saved in salesforce
+    And Common: I click back icon
 
 
     Examples:

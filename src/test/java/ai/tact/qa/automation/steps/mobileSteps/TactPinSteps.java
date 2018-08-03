@@ -33,6 +33,11 @@ public class TactPinSteps implements En {
     private IOSDateTimePage iOSDateTimePage = new IOSDateTimePage();
     private AndroidDate androidDate = new AndroidDate();
 
+    public static String eventSubject;
+    public static String logSubject;
+    public static String taskSubject;
+    public static String noteTitle;
+
     public TactPinSteps() {
 
         And("^Tact-Pin: I see a Tact pin icon display$", () -> {

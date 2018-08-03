@@ -8,11 +8,15 @@ Feature: ContactsFeature
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I go to create a new "Contact" page
     When AddContact: I "<saveToIphone>" save to Phone and "<sendToSF>" send to Salesforce
-    And AddContact: I input a user name "<contactName>" and "<isSave>"
+    Then AddContact: I input a user name "<contactName>" and "<isSave>"
+    And Contact: I search this "Contact" from recent field and select it
+    When Common: I am waiting for syncing done
+    Then API: I check Object "Contact" saved in salesforce
+    And Common: I click back icon
 
     Examples:
     | saveToIphone | sendToSF | contactName             | isSave |
-    | don't        | don't    | Umi, Singh              | yes    |
+    | don't        | do       | Umi, Singh              | yes    |
 #    | do           | do       | contactName2            | no     |
 #    | don't        | don't    | FirstN LastN            | yes    |
 

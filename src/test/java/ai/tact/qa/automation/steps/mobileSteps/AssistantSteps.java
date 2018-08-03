@@ -6,9 +6,12 @@ import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.dataobjects.Status;
 import com.paypal.selion.platform.grid.Grid;
+import com.paypal.selion.platform.mobile.elements.MobileButton;
 import com.paypal.selion.platform.mobile.elements.MobileElement;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
+import cucumber.api.PendingException;
 import cucumber.api.java8.En;
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.logging.Level;
@@ -20,6 +23,7 @@ public class AssistantSteps implements En {
 
     private String dataRecord;
     private long botRespTime = 0;
+    private String timeDateStamp;
 
     public AssistantSteps() {
 
@@ -48,6 +52,7 @@ public class AssistantSteps implements En {
             //start time
 //            1s=1000ms，1 ms=1000μs，1μs=1000ns
             long beginTime = System.currentTimeMillis();
+            timeDateStamp = DriverUtils.getTimeDateStamp();
             long checkTime = beginTime;
 
             //(System.currentTimeMillis() - checkTime)/1000000 < 120   1s = 1000 000 μs  check 120s => 2mins
@@ -134,7 +139,7 @@ public class AssistantSteps implements En {
             }
 
             //record cmd info
-            dataRecord = String.format("%s | %sms\n", isPassed, botRespTime);
+            dataRecord = String.format("%s | %s | %sms\n", timeDateStamp, isPassed, botRespTime);
             System.out.println("ResultDataRecord : " + dataRecord + "<<<<<<<,");
             DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
 
@@ -200,6 +205,41 @@ public class AssistantSteps implements En {
                 //verify the error msg
                 TactAIAsserts.assertEquals(errorMsg, "Message not delivered", "The Msg is not delivered, please resend or check your wifi");
             }
+        });
+        And("^Assistant: I \"(dismiss|skip)\" welcome page$", (String option) -> {
+            log.info("^Assistant: I " + option + " welcome page$");
+            TactAssistantPage tactAssistantPage = new TactAssistantPage();
+            String welcomeImage = "";
+
+            for (int i=1; i<4; i++) {
+                System.out.println("loop : " + i);
+                welcomeImage = tactAssistantPage.getTactAssistantWelcomeScreen1Image().getLocator().replaceAll("Number", String.valueOf(i));
+                System.out.println("welcomeImage = " + welcomeImage);
+
+                if (i==1 && Grid.driver().findElementsByXPath(welcomeImage).size()==0){
+                    log.info("there is no welcome page display now");
+                    break;
+                }
+
+                if (option.equalsIgnoreCase("skip")){
+                    tactAssistantPage.getTactAssistantSkipWelcomePageButton().tap();
+                    log.info("skip the ");
+                    break;
+                }
+
+                String nextButtonLoc = tactAssistantPage.getTactAssistantWelcomeNextButton().getLocator().replaceAll("Number", String.valueOf(i));
+                System.out.println("nextButtonLoc = " + nextButtonLoc);
+                Grid.driver().findElementByXPath(nextButtonLoc).click();
+                welcomeImage = tactAssistantPage.getTactAssistantWelcomeScreen1Image().getLocator().replaceAll("Number", String.valueOf(i+1));
+                System.out.println("welcomeImage next = " + welcomeImage);
+            }
+
+            if ( Grid.driver().findElementsByXPath(welcomeImage).size() !=0 && option.equalsIgnoreCase("dismiss")){
+                tactAssistantPage.getTactAssistantWelcomeGetStartButton().tap();
+            }
+
+            WebDriverWaitUtils.waitUntilElementIsVisible(tactAssistantPage.getAssistantTypeInTextField().getLocator());
+
         });
     }
 

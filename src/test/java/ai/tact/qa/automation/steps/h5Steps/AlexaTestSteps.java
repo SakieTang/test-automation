@@ -35,6 +35,7 @@ public class AlexaTestSteps implements En {
     private String stage;
     private String input;
     private long botRespTime = 0;
+    private String timeDateStamp;
     private Status isPassed = Status.failed;
 
     public AlexaTestSteps() {
@@ -81,6 +82,7 @@ public class AlexaTestSteps implements En {
             alexaTestPage.getSendMsgTextAreaTextField().type(inputTextString);
             System.out.println("input ==> " + inputTextString);
             long beginTime = System.currentTimeMillis();
+            timeDateStamp = DriverUtils.getTimeDateStamp();
             long checkTime = beginTime;
             WebDriverWaitUtils.waitUntilElementIsVisible(alexaTestPage.getMyMsgSpinnerLabel().getLocator());
             while ( Grid.driver().findElementsByCssSelector(alexaTestPage.getTacBotActiveReplyMsgLabel().getLocator().substring(4)).size() == 0 ){
@@ -181,7 +183,7 @@ public class AlexaTestSteps implements En {
                     input = input + "-" + cmd;
                 }
 
-                dataRecord = String.format("%s  | %s - %s | %s | %sms\n", stage, input, outputType, isPassed, botRespTime);
+                dataRecord = String.format("%s  | %s - %s | %s | %s | %sms\n", stage, input, outputType, timeDateStamp, isPassed, botRespTime);
                 System.out.println(dataRecord);
                 DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
             } else {
@@ -343,7 +345,7 @@ public class AlexaTestSteps implements En {
             System.out.println(shouldEndSession );
 
             //save sent cmd to report.txt
-            dataRecord = String.format("%s  | %s | ", stage, input);
+            dataRecord = String.format("%s | %s  | %s | ",  stage, input);
             System.out.println(">>>>>dataRecord : " + dataRecord + "<<<<<<<,");
             DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
 
@@ -356,6 +358,7 @@ public class AlexaTestSteps implements En {
             alexaTestPage.getSendMsgTextAreaTextField().type(inputTextString);
             System.out.println("input ==> " + inputTextString);
             long beginTime = System.currentTimeMillis();
+            timeDateStamp = DriverUtils.getTimeDateStamp();
             long checkTime = beginTime;
             WebDriverWaitUtils.waitUntilElementIsVisible(alexaTestPage.getMyMsgSpinnerLabel().getLocator());
             while ( Grid.driver().findElementsByCssSelector(alexaTestPage.getTacBotActiveReplyMsgLabel().getLocator().substring(4)).size() == 0 ){
@@ -382,7 +385,7 @@ public class AlexaTestSteps implements En {
             boolean expectedShouldEndSession = ((AlexaResponseInfo) allUsers.get(cmd)).getShouldEndSession();
 
             //save sent cmd to report.txt
-            dataRecord = String.format("%s  | %s | ", stage, input);
+            dataRecord = String.format("%s | %s  | %s | ", timeDateStamp, stage, input);
             System.out.println(">>>>>dataRecord : " + dataRecord + "<<<<<<<,");
             DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
 
@@ -421,7 +424,7 @@ public class AlexaTestSteps implements En {
             activeTact();
 
             //save sent cmd to report.txt
-            dataRecord = String.format("%s  | %s | ", stage, inputText);
+            dataRecord = String.format("%s | %s  | %s | ", timeDateStamp, stage, inputText);
             System.out.println(">>>>>dataRecord : " + dataRecord + "<<<<<<<,");
             DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
 

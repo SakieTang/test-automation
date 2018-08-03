@@ -7,6 +7,26 @@ elements:
       US: "//XCUIElementTypeOther[@name='Assistant']"
     android:
       US: ""
+  tactAssistantWelcomeScreen1Image:
+    ios:
+      US: "//XCUIElementTypeImage[@name='welcomeScreenNumber']"
+    android:
+      US: ""
+  tactAssistantWelcomeNextButton:
+    ios:
+      US: "(//XCUIElementTypeButton[@name='Next'])[Number]"
+    android:
+      US: ""
+  tactAssistantWelcomeGetStartButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Get Started']"
+    android:
+      US: ""
+  tactAssistantSkipWelcomePageButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Skip']"
+    android:
+      US: ""
   yesOptionButton:
     ios:
       US: "//XCUIElementTypeButton[@name='Yes']"

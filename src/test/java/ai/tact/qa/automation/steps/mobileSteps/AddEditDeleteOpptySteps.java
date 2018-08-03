@@ -24,6 +24,8 @@ public class AddEditDeleteOpptySteps implements En {
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
     private AndroidDate androidDate = new AndroidDate();
 
+    public static String opportunityName;
+
     public AddEditDeleteOpptySteps() {
 
         When("^AddEditOppty: I do action \"([^\"]*)\" required oppty information with \"([^\"]*)\" opptyName, \"([^\"]*)\" closeDate, \"([^\"]*)\" stage and \"([^\"]*)\" probability$", (String action, String opptyName, String closeDate, String stage, String probability) -> {
@@ -36,10 +38,10 @@ public class AddEditDeleteOpptySteps implements En {
             } else {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactAddNewOpptyPage.getNewOpptyTitleLabel());
             }
-            opptyName = opptyName + "_" + DriverUtils.currentDateInfo("mm") + "_" + DriverUtils.currentDateInfo("dd");
+            opportunityName = String.format("%s%s", DriverUtils.getTimeDateStamp(), opptyName);
 
             //Opportunity Name - Text(120)
-            DriverUtils.inputTextField(isEdit, tactAddNewOpptyPage.getOpptyNameTextField(), FieldDataType.randomAscii, 120, opptyName, true);
+            DriverUtils.inputTextField(isEdit, tactAddNewOpptyPage.getOpptyNameTextField(), FieldDataType.randomAscii, 120, opportunityName, true);
             if (DriverUtils.isIOS()) {
                 tactAddNewOpptyPage.getAmountTextField().tap();
             }

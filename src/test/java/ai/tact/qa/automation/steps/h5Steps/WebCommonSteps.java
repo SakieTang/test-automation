@@ -72,6 +72,7 @@ public class WebCommonSteps implements En {
                             DriverUtils.sleep(5);
                             threadLoginHomePage.getEmailAddressTextField().type(accountName);
                             System.out.println("switch the frame and input the accountName");
+                            System.out.println("let's start to wait");
                             DriverUtils.sleep(50);
                         }
                     }

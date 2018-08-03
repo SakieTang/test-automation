@@ -34,10 +34,12 @@ public class OpptySteps implements En {
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactOpptiesMainPage.getTactOpportunitiesDropDownButton());
             //element id changed <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            if (DriverUtils.isIOS()) {
-                opptyName=opptyName + "_" + DriverUtils.currentDateInfo("mm") + "_" + DriverUtils.currentDateInfo("dd");
-                System.out.println("name : " + opptyName);
-            }
+//            if (DriverUtils.isIOS()) {
+//                opptyName=opptyName + "_" + DriverUtils.currentDateInfo("mm") + "_" + DriverUtils.currentDateInfo("dd");
+//                System.out.println("name : " + opptyName);
+//            }
+            opptyName = AddEditDeleteOpptySteps.opportunityName;
+            System.out.println("oppty name " +  opptyName);
             DriverUtils.slideDown();
 
             //

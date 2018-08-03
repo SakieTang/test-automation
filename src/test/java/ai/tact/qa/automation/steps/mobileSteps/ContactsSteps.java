@@ -197,5 +197,36 @@ public class ContactsSteps implements En {
                             "(Contact|Lead|Company)");
             }
         });
+        And("^Contact: I search this \"(Contact|Lead|Account)\" from recent field and select it$", (String objName) -> {
+            log.info("^Contact: I search this " + objName + " from recent field and select it$");
+            TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
+            TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
+
+            //get the contact location in Recent field
+            String searchName;
+            switch (objName) {
+                case "Contact":
+                    searchName = AddDeleteContactSteps.contactName;
+                    break;
+                case "Lead":
+                    searchName = AddDeleteLeadSteps.leadName;
+                    break;
+                case "Account":
+                    searchName = AddDeleteAccountSteps.accountName;
+                    break;
+                default:
+                    searchName = AddDeleteContactSteps.contactName;
+            }
+            String stageLoc = tactSearchContactsPage.getNameEditButton().getLocator().replace("contactName", searchName);
+            System.out.println("stageLoc ==> " + stageLoc);
+
+            //click it
+            if (DriverUtils.isAndroid())
+            {
+                tactContactsMainPage.getTactAndroidRecentFavoritesButton().tap();
+                DriverUtils.sleep(0.5);
+            }
+            Grid.driver().findElementByXPath(stageLoc).click();
+        });
     }
 }

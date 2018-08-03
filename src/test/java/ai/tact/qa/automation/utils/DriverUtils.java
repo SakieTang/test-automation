@@ -536,6 +536,17 @@ public class DriverUtils {
     }
 
     /**
+     * get Time-Date stamp
+     * @return
+     */
+    public static String getTimeDateStamp () {
+        Date date = currentDate();
+        String stamp = new SimpleDateFormat("kkmmMMdd").format(date);
+
+        return stamp;
+    }
+
+    /**
      * write the data into fileDir
      * @param file
      * @param data
@@ -808,18 +819,25 @@ public class DriverUtils {
      * @param fullName
      * @return String
      */
-    public static String get1stNFromFullName (String fullName) {
+    public static String get1stNFromFullName (String fullName, boolean addStamp) {
         String [] parts;
+        String firstName;
 
         if (fullName.matches("\\w+,\\s?\\w+")) {
             parts = fullName.split(",\\s?");
-            return parts[1];
+            firstName = parts[1];
         } else if (fullName.matches("\\w+\\s+\\w+")) {
             parts = fullName.split("\\s+");
-            return parts[0];
+            firstName = parts[0];
         } else {
-            return "";
+            firstName = "";
         }
+
+        if (addStamp) {
+            firstName = String.format("%s%s", getTimeDateStamp(), firstName);
+        }
+
+        return firstName;
     }
 
     /**
@@ -827,17 +845,24 @@ public class DriverUtils {
      * @param fullName
      * @return String
      */
-    public static String getLastNFromFullName (String fullName) {
+    public static String getLastNFromFullName (String fullName, boolean addStamp) {
         String [] parts;
+        String lastName;
 
         if (fullName.matches("\\w+,\\s?\\w+")) {
             parts = fullName.split(",\\s?");
-            return parts[0];
+            lastName = parts[0];
         } else if (fullName.matches("\\w+\\s+\\w+")) {
             parts = fullName.split("\\s+");
-            return parts[1];
+            lastName = parts[1];
         } else {
-            return fullName;
+            lastName = fullName;
         }
+
+        if (addStamp) {
+            lastName = String.format("%s%s", getTimeDateStamp(), lastName );
+        }
+
+        return lastName;
     }
 }

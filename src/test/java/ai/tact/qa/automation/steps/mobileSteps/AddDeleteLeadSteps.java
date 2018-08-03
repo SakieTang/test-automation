@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 public class AddDeleteLeadSteps implements En {
 
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    public static String leadName;
 
     public AddDeleteLeadSteps() {
 
@@ -25,9 +26,16 @@ public class AddDeleteLeadSteps implements En {
             TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
 
             //set username Text
-            String fName = DriverUtils.get1stNFromFullName(leadName);
-            String lName = DriverUtils.getLastNFromFullName(leadName);
-            System.out.println(fName + " " + lName);
+            String fName = DriverUtils.get1stNFromFullName(leadName, false);
+            String lName = DriverUtils.getLastNFromFullName(leadName, true);
+
+            if (fName.isEmpty()) {
+                this.leadName = lName;
+            } else {
+                this.leadName=String.format("%s %s", fName, lName);
+            }
+
+            System.out.println(this.leadName);
 
             if (!fName.isEmpty()){
                 tactAddNewLeadPage.getFirstNameTextField().setText(fName);
