@@ -88,6 +88,8 @@ public class ContactsSteps implements En {
             TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
             TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
 
+            System.out.println("waiting for the title");
+            DriverUtils.sleep(2);
             if (Grid.driver().findElementsByXPath(tactContactsMainPage.getTactContactsTitleLabel().getLocator()).size() != 0) {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactContactsMainPage.getTactContactsTitleLabel());
 
@@ -229,6 +231,29 @@ public class ContactsSteps implements En {
                 DriverUtils.sleep(0.5);
             }
             Grid.driver().findElementByXPath(stageLoc).click();
+        });
+        And("^Contacts: I click back icon after created Salesflow activities$", () -> {
+            log.info("^^Contacts: I click back icon after created Salesflow activities$");
+            TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
+            TactContactObjPage tactContactObjPage = new TactContactObjPage();
+            String backLoc;
+
+            if (DriverUtils.isIOS()) {
+                backLoc = "//XCUIElementTypeNavigationBar/XCUIElementTypeButton[1]";
+            } else {
+                backLoc = "//android.widget.ImageButton[@content-desc='Navigate up']";
+            }
+
+            if (DriverUtils.isAndroid()) {
+                while (Grid.driver().findElementsByXPath(backLoc).size() != 0) {
+                    System.out.println("inside the loop, and still can see the back button");
+                    DriverUtils.sleep(0.5);
+                    Grid.driver().findElementByXPath(backLoc).click();
+                }
+            } else {
+                Grid.driver().findElementByXPath(backLoc).click();
+            }
+            DriverUtils.sleep(0.5);
         });
     }
 }

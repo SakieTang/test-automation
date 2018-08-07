@@ -497,11 +497,11 @@ public class AlexaTestSteps implements En {
         //connector : "\\\""  "\\n\\n"
 
         for (int i = 0; i < elements.size(); i++) {
-            int scrollPix = 50;
+            int scrollPix = 100;
             while (!elements.get(i).isDisplayed()) {
                 String s=String.format("%s.animate({ scrollLeft: \"%dpx\" })", "$(\"div[id='right'] > div[class='ace_scroller']\")", scrollPix);
                 js.executeScript(s);
-                scrollPix += 50;
+                scrollPix += 500;
             }
             System.out.println(i+1 + "> " + elements.get(i).getText());
             if (i==0) {
@@ -512,14 +512,16 @@ public class AlexaTestSteps implements En {
             scrollToLeft = scrollPix;
         }
         DriverUtils.sleep(5);
+        System.out.println("after finish the all scroll");
 
         if (scrollToLeft > 50){
-            System.out.println(scrollToLeft + "after find all element");
+            System.out.println(scrollToLeft + "px after find all element");
             String s=String.format("%s.animate({ scrollLeft: \"%dpx\" })", "$(\"div[id='right'] > div[class='ace_scroller']\")", -scrollToLeft+50);
             System.out.println(s);
             js.executeScript(s);
-            DriverUtils.sleep(10);
+            DriverUtils.sleep(5);
             System.out.println("after waiting, then scroll back");
+            scrollToLeft = 0;
         }
 
 // "<speak>Which Account are you interested in?<break time=\"500ms\"" +

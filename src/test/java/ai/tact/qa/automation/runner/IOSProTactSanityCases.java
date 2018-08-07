@@ -64,10 +64,10 @@ public class IOSProTactSanityCases {
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true"
-//                    , "noReset:false"    //continue the UserInformation. false, reinstall the app; false, continue use the app
-//                   , "fullReset:true"  //restart the iPhone/simulator and install the app
-                    , "noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
-                    , "fullReset:false"
+                    , "noReset:false"    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                   , "fullReset:true"  //restart the iPhone/simulator and install the app
+//                    , "noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
+//                    , "fullReset:false"
             }
     )
     //w/ data provider
@@ -189,7 +189,7 @@ public class IOSProTactSanityCases {
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dataProvider = "tactMobileIOSUserInfo", alwaysRun = true, dependsOnMethods = "TactLeadFeature")
+    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dataProvider = "tactMobileIOSUserInfo", alwaysRun = true, dependsOnMethods = "TactLeadFeature")//"")
     void TactEmailAddedFeature(User user) {
         CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");
@@ -198,6 +198,8 @@ public class IOSProTactSanityCases {
         //AddEmailAccountFromTab
         TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.AddEmailFromTabFeatureRunCukesNoReset.class);
         testNGCucumberRunner.runCukes();
+
+        DriverUtils.sleep(30);
     }
 
     //ReAuth
@@ -230,7 +232,7 @@ public class IOSProTactSanityCases {
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Send emails and verify in Tact", dataProvider = "tactMobileIOSUserInfo", dependsOnMethods = "TactEmailAddedFeature")
+    @Test(groups = "Tact-Sanity", description = "Send emails and verify in Tact", dataProvider = "tactMobileIOSUserInfo", dependsOnMethods = "TactEmailReauthExchangeFeature")
     void TactEmailSendFeature(User user) {
         CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");

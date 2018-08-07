@@ -1,9 +1,6 @@
 package ai.tact.qa.automation.runner;
 
-import ai.tact.qa.automation.utils.Appium;
-import ai.tact.qa.automation.utils.CustomPicoContainer;
-import ai.tact.qa.automation.utils.DriverUtils;
-import ai.tact.qa.automation.utils.LogUtil;
+import ai.tact.qa.automation.utils.*;
 import ai.tact.qa.automation.utils.dataobjects.User;
 import ai.tact.qa.automation.utils.dataobjects.UserTestingChannel;
 import com.paypal.selion.annotations.MobileTest;
@@ -11,6 +8,7 @@ import com.paypal.selion.platform.dataprovider.DataProviderFactory;
 import com.paypal.selion.platform.dataprovider.SeLionDataProvider;
 import com.paypal.selion.platform.dataprovider.impl.FileSystemResource;
 import com.paypal.selion.platform.grid.Grid;
+
 import cucumber.api.CucumberOptions;
 import cucumber.api.testng.AbstractTestNGCucumberTests;
 import cucumber.api.testng.TestNGCucumberRunner;
@@ -28,7 +26,7 @@ public class TestingCase  {
 
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
     private static final String DATA_PATH = "%s/%s";
-    private static final UserTestingChannel testingChannel = UserTestingChannel.mobileAndroid;
+    private static final UserTestingChannel testingChannel = UserTestingChannel.mobileIOS;
 
     @DataProvider(name="yamlDataProvider")
     public Object[][] getYamlDataProvider() throws IOException {
@@ -51,8 +49,6 @@ public class TestingCase  {
     @BeforeClass(alwaysRun = true)
     public void setUpClass() throws Exception {
         log.info("TestRunner - BeforeClass - setUpClass");
-//        Appium.startServer("0.0.0.0","1234","2345");
-//        Appium.restartAppium();
     }
 
     @MobileTest(  //iOS
@@ -64,12 +60,15 @@ public class TestingCase  {
             }
     )
     //w/ data provider
-    @Test(groups = "Tact-login", description = "Runs Tact - login", dataProvider = "tactUserInfo")//, dependsOnMethods = "TactOnboardingFeature")
+    @Test(description = "Runs Tact - login", dataProvider = "tactUserInfo")//, dependsOnMethods = "TactOnboardingFeature")
     void TestingCase(User user) {
         CustomPicoContainer.getInstance().setUser(user);
 
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+//        testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.OnboardingRunCukesFullyReset.class);
+//        testNGCucumberRunner.runCukes();
 
         TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
         testNGCucumberRunner.runCukes();
@@ -78,23 +77,15 @@ public class TestingCase  {
     @AfterClass(alwaysRun = true)
     public void tearDownClass() throws Exception {
         log.info("TestRunner - AfterClass - tearDownClass");
-
-        Appium.stopServer();
-        if (!Appium.checkIfServerIsRunnning("4723")) {
-            log.info("Appium does not run");
-        } else {
-            log.info("Appium does run, and stop again");
-            Appium.stopServer();
-        }
     }
 
     @CucumberOptions(
-            features = ("src/test/resources/Features/mobile/Contacts.feature")
+            features = ("src/test/resources/Features/mobile/Lead.feature")
             ,glue = ("ai.tact.qa.automation.steps")
             ,tags={"" +
                 "@note"
-//           + ", " +
-//            "@P1"
+//                + ", " +
+//                "@createContact"
             }
     )
     public class testCase extends AbstractTestNGCucumberTests {

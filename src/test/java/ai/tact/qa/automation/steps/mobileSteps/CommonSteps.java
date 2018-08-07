@@ -212,7 +212,7 @@ public class CommonSteps implements En {
             }
 
             log.info("swtich to " + tabBarOption);
-
+//
 //            DriverUtils.sleep(60);
         });
         Then("^Common: I click back icon$", () -> {
@@ -230,7 +230,6 @@ public class CommonSteps implements En {
             if (Grid.driver().findElementsByXPath(backLoc).size() != 0) {
                 Grid.driver().findElementByXPath(backLoc).click();
             }
-            DriverUtils.sleep(1);
             //oppty back
             // < //XCUIElementTypeButton[@name="Back"]
             //contact
@@ -242,6 +241,7 @@ public class CommonSteps implements En {
 //                    Grid.driver().findElementsById(tactSearchContactsPage.getSearchAllContactsTextField().getLocator()).size() != 0) {
 //                tactContactObjPage.getGoBackToContactsMainPageButton().tap();
 //            }
+            System.out.println("should back to contact main page");
         });
         Then("^Common: I turn (on|off) wifi$", (String isOn) -> {
             log.info("^Common: I turn " + isOn + " wifi$");
@@ -261,7 +261,9 @@ public class CommonSteps implements En {
                 WebDriverWaitUtils.waitUntilElementIsInvisible(tactSyncPage.getPendingSyncToSFLabel().getLocator());
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactSyncPage.getSyncedWithSFLabel().getLocator());
             } else {
-                DriverUtils.sleep(20);
+                System.out.println("in Android");
+                DriverUtils.sleep(25);
+                System.out.println("after wait for 30 sec");
             }
         });
     }

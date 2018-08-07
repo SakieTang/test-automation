@@ -152,7 +152,19 @@ public class SettingsSteps implements En {
                 exchangePage.getExchangeUsernamaTextField().sendKeys(exchangeEmail);
                 exchangePage.getSubmitButton().tap();
             }
-            DriverUtils.sleep(5);
+
+            //workaround for "no policy" error msg (bug5580)
+            String noPolicyLoc;
+            if (DriverUtils.isIOS()) {
+                noPolicyLoc = "//XCUIElementTypeStaticText[@name=\"There is no policy for this client.\"]";
+            } else {
+                noPolicyLoc = "//android.widget.TextView[@text='There is no policy for this client.']";
+            }
+            if (Grid.driver().findElementsByXPath(noPolicyLoc).size() !=0) {
+                exchangePage.getSubmitButton().tap();
+                DriverUtils.sleep(2);
+                tactAlertsPopUpPage.getAlertsAllowButton().tap();
+            }
         });
         When("^Settings: I sign in the Gmail account$", () -> {
             log.info("^Settings: I sign in the Gmail account$");

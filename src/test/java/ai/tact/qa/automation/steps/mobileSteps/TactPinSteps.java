@@ -44,7 +44,7 @@ public class TactPinSteps implements En {
             log.info("^Tact-Pin: I see a Tact pin icon display$");
             TactPinPage tactPinPage = new TactPinPage();
 
-            WebDriverWaitUtils.waitUntilElementIsVisible(tactPinPage.getTactPinIconButton());
+            WebDriverWaitUtils.waitUntilElementIsVisible(tactPinPage.getTactPinIconButton().getLocator());
         });
         Then("^Tact-Pin: I click Tact pin icon and select \"([^\"]*)\" option$", (String pinOption) -> {
             log.info("^Tact-Pin: I click Tact pin icon and select " + pinOption + " option$");
@@ -90,13 +90,24 @@ public class TactPinSteps implements En {
             TactNotePage tactNotePage = new TactNotePage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactNotePage.getNewNoteTitleLabel());
-            //Sync to SF  //android party is wrong, w/o syc it saved
-            if (DriverUtils.isTextEmpty(isSyncToSF)){
+
+            //Sync or not Sync to SF
+            if ( (DriverUtils.isTextEmpty(isSyncToSF)
+                  && (tactNotePage.getSyncToSaleforceSwitch().getValue().equalsIgnoreCase("1") ||   //for iOS
+                      tactNotePage.getSyncToSaleforceSwitch().getValue().contains("ON")))                        //for Android
+                    ||
+                 (!DriverUtils.isTextEmpty(isSyncToSF)
+                  && (tactNotePage.getSyncToSaleforceSwitch().getValue().equalsIgnoreCase("0") ||
+                      tactNotePage.getSyncToSaleforceSwitch().getValue().contains("OFF")))
+               ){
+                System.out.println(DriverUtils.isTextEmpty(isSyncToSF) + " and value is " + tactNotePage.getSyncToSaleforceSwitch().getValue());
                 tactNotePage.getSyncToSaleforceSwitch().changeValue();
             }
+
             //Title (required)      //element  changed <<<<<<<<<<<<<<<<<<<<<<<
             noteTitle = DriverUtils.getNameWithStamp(titleText, true);
             tactNotePage.getEditNoteTitleTextField().sendKeys(noteTitle);
+
             //note Body
             if (!DriverUtils.isTextEmpty(bodyText))
             {
@@ -121,6 +132,7 @@ public class TactPinSteps implements En {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactNotePage.getSaveNewNoteButton());
                 tactNotePage.getSaveNewNoteButton().tap();
             }
+            DriverUtils.sleep(0.5);
 
 //            if (DriverUtils.isAndroid()) {
 //                WebDriverWaitUtils.waitUntilElementIsVisible(tactPinPage.getTactPinIconButton());

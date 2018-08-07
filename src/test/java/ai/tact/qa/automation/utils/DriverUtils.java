@@ -7,7 +7,9 @@ import com.paypal.selion.internal.platform.grid.WebDriverPlatform;
 import com.paypal.selion.platform.asserts.SeLionAsserts;
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.mobile.elements.MobileElement;
+import com.paypal.selion.platform.mobile.elements.MobileSwitch;
 import com.paypal.selion.platform.mobile.elements.MobileTextField;
+import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
 import io.appium.java_client.AppiumDriver;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -655,6 +657,7 @@ public class DriverUtils {
     public static void clickOption(MobileElement location, String replaceString, String option){
         String stageLoc = location.getLocator().replace(replaceString, option);
         System.out.println("stageLoc ==> " + stageLoc);
+        WebDriverWaitUtils.waitUntilElementIsVisible(stageLoc);
         if (Grid.driver().findElementsByXPath(stageLoc).size()==0){
             slideUP();
         }
@@ -889,5 +892,19 @@ public class DriverUtils {
             resultName = String.format("%s_%s", getTimeDateStamp(), name);
         }
         return resultName;
+    }
+
+    public static void switchButton(String isSwitch, MobileSwitch mobileSwitch) {
+        if ((DriverUtils.isTextEmpty(isSwitch)
+                && (mobileSwitch.getValue().equalsIgnoreCase("1") ||   //for iOS
+                    mobileSwitch.getValue().contains("ON")))                        //for Android
+             ||
+             (!DriverUtils.isTextEmpty(isSwitch)
+                && (mobileSwitch.getValue().equalsIgnoreCase("0") ||
+                    mobileSwitch.getValue().contains("OFF")))
+             ){
+            System.out.println(DriverUtils.isTextEmpty(isSwitch) + " and value is " + mobileSwitch.getValue());
+            mobileSwitch.changeValue();
+        }
     }
 }

@@ -63,19 +63,19 @@ public class WebCommonSteps implements En {
 //                    accountPwd = CustomPicoContainer.getInstance().getWebUserInfor().getThreadAccountPwd();
                     log.info(channelName + " : " + accountName + "/" + accountPwd);
 
-                    //user already login
-                    if (!threadLoginHomePage.getThreadImage().isElementPresent()) {
-                        WebPage page = (WebPage)threadNavigatePage.getThreadIconLink().clickAndExpectOneOf(threadLoginHomePage, threadNavigatePage);
-                        if (page instanceof ThreadLoginHomePage) {
-                            Grid.driver().switchTo().frame(threadLoginHomePage.getThreadImage().getLocator());
-                            System.out.println("now in the login home page");
-                            DriverUtils.sleep(5);
-                            threadLoginHomePage.getEmailAddressTextField().type(accountName);
-                            System.out.println("switch the frame and input the accountName");
-                            System.out.println("let's start to wait");
-                            DriverUtils.sleep(50);
-                        }
-                    }
+//                    //user already login
+//                    if (!threadLoginHomePage.getThreadImage().isElementPresent()) {
+//                        WebPage page = (WebPage)threadNavigatePage.getThreadIconLink().clickAndExpectOneOf(threadLoginHomePage, threadNavigatePage);
+//                        if (page instanceof ThreadLoginHomePage) {
+//                            Grid.driver().switchTo().frame(threadLoginHomePage.getThreadImage().getLocator());
+//                            System.out.println("now in the login home page");
+//                            DriverUtils.sleep(5);
+//                            threadLoginHomePage.getEmailAddressTextField().type(accountName);
+//                            System.out.println("switch the frame and input the accountName");
+//                            System.out.println("let's start to wait");
+//                            DriverUtils.sleep(50);
+//                        }
+//                    }
 
                     //login homePage
                     WebDriverWaitUtils.waitUntilElementIsVisible(threadLoginHomePage.getEmailAddressTextField().getLocator());//threadLoginHomePage.getThreadImage().getLocator());

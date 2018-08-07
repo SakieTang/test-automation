@@ -26,16 +26,10 @@ public class AddDeleteContactSteps implements En {
             log.info("^AddContact: I " + saveToPhone + " save to Phone and " + sendToSF + " send to Salesforce$");
             TactAddNewContactPage tactAddNewContactPage = new TactAddNewContactPage();
 
-            //Save to Phone
-            if (Grid.driver().findElementsByXPath(tactAddNewContactPage.getSaveToIPhoneSwitch().getLocator()).size() !=0
-                    && DriverUtils.isTextEmpty(saveToPhone))
-            {
-                tactAddNewContactPage.getSaveToIPhoneSwitch().changeValue();
-            }
-            if (DriverUtils.isTextEmpty(sendToSF))
-            {
-                tactAddNewContactPage.getSendToSaleforceSwitch().changeValue();
-            }
+            //Save or not save to Phone
+            DriverUtils.switchButton(saveToPhone, tactAddNewContactPage.getSaveToIPhoneSwitch());
+            //send or not send to Salesforce
+            DriverUtils.switchButton(sendToSF, tactAddNewContactPage.getSendToSaleforceSwitch());
         });
         When("^AddContact: I input a user name \"([^\"]*)\" and \"([^\"]*)\"$", (String contactName, String isSave) -> {
             log.info("^AddContact: I input user name " + contactName);
@@ -109,23 +103,6 @@ public class AddDeleteContactSteps implements En {
                 lName = contactName.split(", ")[0];
             }
 
-//            //switch to create contacts page
-//            tactContactsMainPage.getContactsPlusIconButton().tap();
-//            tactAddNewContactPage.getTactAddNewContactButton().tap();
-//
-//            //Save to Phone
-//            if (Grid.driver().findElementsByXPath(tactAddNewContactPage.getSaveToIPhoneSwitch().getLocator()).size() !=0
-//                    && DriverUtils.isTextEmpty(saveToPhone))
-//            {
-//                tactAddNewContactPage.getSaveToIPhoneSwitch().changeValue();
-//            }
-//            //Send to SF
-//            if (DriverUtils.isTextEmpty(sendToSF))
-//            {
-//                tactAddNewContactPage.getSendToSaleforceSwitch().changeValue();
-//            }
-//            tactAddNewContactPage.getCancelAddNewContactButton().tap(tactContactsMainPage.getTactContactsTitleLabel());
-
             for (int i=0; i<times; i++) {
 
                 System.out.println("Time: " + i);
@@ -134,32 +111,11 @@ public class AddDeleteContactSteps implements En {
                 tactContactsMainPage.getContactsPlusIconButton().tap();
                 tactAddNewContactPage.getTactAddNewContactButton().tap();
 
-//                //Save to Phone
-//                if (Grid.driver().findElementsByXPath(tactAddNewContactPage.getSaveToIPhoneSwitch().getLocator()).size() !=0
-//                        && DriverUtils.isTextEmpty(saveToPhone))
-//                {
-//                    tactAddNewContactPage.getSaveToIPhoneSwitch().changeValue();
-//                }
-//                //Send to SF
-//                if (DriverUtils.isTextEmpty(sendToSF))
-//                {
-//                    tactAddNewContactPage.getSendToSaleforceSwitch().changeValue();
-//                }
-
-//                if (fName != null)
-//                {
-//                    tactAddNewContactPage.getFirstNameTextField().setText(fName);
-//                }
                 tactAddNewContactPage.getLastNameTextField().setText(lName);
-                //try 1
-//                tactAddNewContactPage.getLastNameTextField().sendKeys(lName);
-////                //try 2
-////                Grid.driver().findElementByXPath(tactAddNewContactPage.getLastNameTextField().getLocator()).sendKeys(lName);
 
                 //save
                 tactAddNewContactPage.getSaveNewContactButton().tap();
             }
         });
-
     }
 }

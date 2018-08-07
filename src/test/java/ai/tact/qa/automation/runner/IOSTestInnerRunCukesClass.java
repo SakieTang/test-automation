@@ -10,7 +10,7 @@ public class IOSTestInnerRunCukesClass {
     //onboarding
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Onboarding.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@onboarding"}
             , format = {
                     "pretty",
@@ -27,7 +27,7 @@ public class IOSTestInnerRunCukesClass {
     //appVersion
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/TactUserAccount.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@getAppVersion"}
     )
     public class TactVersionFeatureCukesNoReset extends AbstractTestNGCucumberTests {
@@ -39,7 +39,7 @@ public class IOSTestInnerRunCukesClass {
     //Email
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Email.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@P0"}
             , format = {
                     "pretty",
@@ -54,7 +54,7 @@ public class IOSTestInnerRunCukesClass {
     //Email
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Email.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@P1,@P2"}
 //            ,tags={"@gmailDraft"}
             , format = {
@@ -70,7 +70,7 @@ public class IOSTestInnerRunCukesClass {
     //logout
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/TactUserAccount.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@logout"}
             , format = {
                 "pretty",
@@ -86,7 +86,7 @@ public class IOSTestInnerRunCukesClass {
     //login
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/TactUserAccount.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@login"}
             , format = {
                 "pretty",
@@ -102,7 +102,7 @@ public class IOSTestInnerRunCukesClass {
     //reauthExchangeAccount
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/TactUserAccount.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@reauthExchange"}
             , format = {
             "pretty",
@@ -118,10 +118,12 @@ public class IOSTestInnerRunCukesClass {
     //contacts
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Contacts.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"" +
-            "@createContact," +
-            "@P1"}
+            "@createContact,"
+                +
+            "@P1"
+            }
             , format = {
                 "pretty",
                 "json:target/report/ios/TactContactsFeatureRunCukesNoReset.json"}
@@ -136,7 +138,7 @@ public class IOSTestInnerRunCukesClass {
     //contacts
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Contacts.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@addLinkedInSalesNavigator"}
             , format = {
             "pretty",
@@ -152,7 +154,7 @@ public class IOSTestInnerRunCukesClass {
     //Lead
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Lead.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"" +
             "@createLead," +
             "@P1"}
@@ -171,7 +173,7 @@ public class IOSTestInnerRunCukesClass {
     //CreateSimpleOpportunities
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Opportunities.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             , tags={"@createSimpleOpportunity"}
             , format = {
             "pretty",
@@ -188,7 +190,7 @@ public class IOSTestInnerRunCukesClass {
     //EditOpportunities
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Opportunities.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             , tags={"@editExistingOppty"}
             , format = {
             "pretty",
@@ -205,7 +207,7 @@ public class IOSTestInnerRunCukesClass {
     //Delete
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/TactUserAccount.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@deleteAccount"}
             , format = {
                 "pretty",
@@ -222,7 +224,7 @@ public class IOSTestInnerRunCukesClass {
     //Event
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Calendar.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@Event"}
             , format = {
             "pretty",
@@ -237,7 +239,7 @@ public class IOSTestInnerRunCukesClass {
     //Assistant
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/AssistantAI.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@Help"}
             , format = {
             "pretty",
@@ -256,7 +258,7 @@ public class IOSTestInnerRunCukesClass {
     // from 3.8(1657)+ , can only add sales navigator from any contacts/lead/account from 'in' icon
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/DataSources.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags = {"@addLinkedIn"}
             , format = {
             "pretty",

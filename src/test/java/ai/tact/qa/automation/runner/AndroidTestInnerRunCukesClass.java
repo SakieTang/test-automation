@@ -12,7 +12,7 @@ public class AndroidTestInnerRunCukesClass {
     //onboarding
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Onboarding.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@onboarding"}
             , format = {
             "pretty",
@@ -31,7 +31,7 @@ public class AndroidTestInnerRunCukesClass {
     //logout
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/TactUserAccount.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@logout"}
             , format = {
             "pretty",
@@ -47,7 +47,7 @@ public class AndroidTestInnerRunCukesClass {
     //login
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/TactUserAccount.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@login"}
             , format = {
             "pretty",
@@ -63,7 +63,7 @@ public class AndroidTestInnerRunCukesClass {
     //reauthExchangeAccount
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/TactUserAccount.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@reauthExchange"}
             , format = {
             "pretty",
@@ -79,7 +79,7 @@ public class AndroidTestInnerRunCukesClass {
     //contacts
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Contacts.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
 //            ,tags={"@P1"}
             , tags={"" +
                 "@createContact," +
@@ -115,7 +115,7 @@ public class AndroidTestInnerRunCukesClass {
     //CreateSimpleOpportunities
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Opportunities.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             , tags={"@createSimpleOpportunity"}
             , format = {
             "pretty",
@@ -132,7 +132,7 @@ public class AndroidTestInnerRunCukesClass {
     //EditOpportunities
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Opportunities.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             , tags={"@editExistingOppty"}
             , format = {
             "pretty",
@@ -149,7 +149,7 @@ public class AndroidTestInnerRunCukesClass {
     //appVersion
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/TactUserAccount.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@getAppVersion"}
     )
     public class TactVersionFeatureCukesNoReset extends AbstractTestNGCucumberTests {
@@ -161,7 +161,7 @@ public class AndroidTestInnerRunCukesClass {
     //Delete
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/TactUserAccount.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@deleteAccount"}
             , format = {
             "pretty",
@@ -178,7 +178,7 @@ public class AndroidTestInnerRunCukesClass {
     //Event
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Calendar.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@Event"}
             , format = {
             "pretty",

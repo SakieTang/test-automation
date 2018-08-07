@@ -31,7 +31,7 @@ elements:
     ios:
       US: "//XCUIElementTypeButton[@name='Notebook']"
     android:
-      US: "//android.widget.CheckedTextView[@text='Notebook']"
+      US: "//android.widget.Button[@text='Notebook']"
   notebookMoreButton:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Notebook']"

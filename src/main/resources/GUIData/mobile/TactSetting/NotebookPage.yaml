@@ -1,0 +1,19 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  notebookTitleLabel:
+    ios:
+        US: "//XCUIElementTypeOther[@name='Notebook']"
+    android:
+        US: ""
+  targetActivityNameLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='activityName']"
+    android:
+      US: "//android.widget.TextView[@text='activityName']"
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  notebookTitleLabel
+]

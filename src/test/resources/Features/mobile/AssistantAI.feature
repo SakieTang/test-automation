@@ -25,14 +25,14 @@ Feature: Assistant - Tact proto 2
     Then Assistant: I check bot "<responseText>"
 
     Examples:
-       | inputText                              | isVerify | responseText                                                               |
-       | What is the latest on xyz deals?       | without  |                                                                            |
-       | What is the latest on GenePoint deals? | without  |                                                                            |
-       | Bye                                    | with     | Goodbye.; Bye; See you later!                                              |
-       | Hi                                     | with     | Howdy.; Hi there! How can I help?; Hello! Glad to help.; Welcome.; Hi.     |
-       | Thanks                                 | with     | Thanks.; Thank you.                                                        |
-       | Report a bug                           | with     | Please describe the problem you're facing or improvement you'd like to see.|
-       | Cancel                                 | with     | Bug cancelled.                                                             |
+         | inputText                              | isVerify | responseText                                                                        |
+       | What is the latest on xyz deals?       | without  |                                                                                       |
+       | What is the latest on GenePoint deals? | without  |                                                                                       |
+       | Bye                                    | with     | Goodbye.; Bye; See you later!                                                         |
+       | Hi                                     | with     | Howdy.; Hi there! How can I help?; Hello! Glad to help.; Welcome.; Hi.; Hi there!     |
+       | Thanks                                 | with     | Thanks.; Thank you.                                                                   |
+       | Report a bug                           | with     | Please describe the problem you're facing or improvement you'd like to see.           |
+       | Cancel                                 | with     | Bug cancelled.                                                                        |
 
 
   @P2

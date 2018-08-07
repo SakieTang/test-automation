@@ -53,9 +53,11 @@ public class TestingCaseAndroid {
     @BeforeClass(alwaysRun = true)
     public void setUpClass() throws Exception {
         System.out.println("TestRunner - BeforeClass - setUpClass");
+        DriverUtils.runCommand(new String[] {"bash", "-c", "adb root"});
+        System.out.println("enable Root Access ROMs");
 //        Appium.startServer("0.0.0.0","1234","2345");
-        DriverUtils.clearChromeData();
-        Appium.restartAppium();
+//        DriverUtils.clearChromeData();
+//        Appium.restartAppium();
     }
 
     @MobileTest(  //Android
@@ -103,11 +105,9 @@ public class TestingCaseAndroid {
             features = ("src/test/resources/Features/mobile/Lead.feature")
             ,glue = ("ai.tact.qa.automation.steps")
             ,tags={"" +
-                "@createLead"
-//                "@createContact"
-//                "@createSimpleOpportunity"
-//              "," +
-//              "@P1"
+                "@note"
+              + "," +
+              "@createLead"
                 }
     )
     public class testCase extends AbstractTestNGCucumberTests {

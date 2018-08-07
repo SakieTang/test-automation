@@ -136,15 +136,15 @@ public class TestingCaseWeb {
     )
     @Test(description="Runs Cucumber Feature - onboarding"
             , alwaysRun = true
-//            , dependsOnMethods = "startAppium"
+            , dependsOnMethods = "stopSelenium"
     )
     private void TactAIFeature() throws InterruptedException {
         CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.aiTactiOS));
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
+        TestNGCucumberRunner testNGCucumberRunner;
         //onboarding
-        TestNGCucumberRunner testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.TactLogin.class);
+        testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.TactLogin.class);
         testNGCucumberRunner.runCukes();
 
         //Tact AI Testing

@@ -28,11 +28,16 @@ Feature: LeadsFeature
     When Tact-Pin: I click Tact pin icon and select "Note" option
     Then Tact-Pin: I create a new note "<isSync>" sync to SF, "<titleText>" title and "<bodyText>" body
     And Tact-Pin: I "<isSave>" save new created
-    And Common: I click back icon
+    And Contacts: I click back icon after created Salesflow activities
+    When Common: I switch to "Notebook" page from tab bar
+    Then Notebook: I search this "note" from Notebook and select it
+    When Common: I am waiting for syncing done
+    Then API: I check activity "Note" saved in salesforce
+    And Notebook: I click back icon back to more page
 
     Examples:
       | isSync | titleText | bodyText | isSave |
-      | w/o    | testing   |          | yes    |
+      | do     | lead_note |          | yes    |
 
   @P1
   @Task
