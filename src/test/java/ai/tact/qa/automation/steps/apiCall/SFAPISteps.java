@@ -89,6 +89,42 @@ public class SFAPISteps implements En {
                 Grid.driver().findElementByXPath(backLoc).click();
             }
         });
+        And("^API: I delete Object \"(Contact|Account|Lead|Opportunity)\" from salesforce and wait for \"(\\d+)\" sec$", (String objName, Integer waitingTime) -> {
+            log.info("^API: I delete Object " + objName + " from salesforce and wait for " + waitingTime + " sec$");
+
+            //get name field value
+            String nameValue;
+            SFOBJECT sfObject;
+            switch (objName) {
+                case "Contact":
+                    nameValue = AddDeleteContactSteps.contactName;
+                    sfObject = SFOBJECT.Contact;
+                    break;
+                case "Account":
+                    nameValue = AddDeleteAccountSteps.accountName;
+                    sfObject = SFOBJECT.Account;
+                    break;
+                case "Lead":
+                    nameValue = AddDeleteLeadSteps.leadName;
+                    sfObject = SFOBJECT.Lead;
+                    break;
+                case "Opportunity":
+                    nameValue = AddEditDeleteOpptySteps.opportunityName;
+                    sfObject = SFOBJECT.Opportunity;
+                    break;
+                default:
+                    nameValue = AddDeleteContactSteps.contactName;
+                    sfObject = SFOBJECT.Contact;
+            }
+            deleteRecord(sfObject, "name", nameValue);
+            if (DriverUtils.isAndroid()) {
+                DriverUtils.sleep(30);
+                System.out.println("after 30 sec waiting");
+                DriverUtils.sleep(20);
+                System.out.println("after 20 sec waiting");
+                DriverUtils.sleep(waitingTime - 30 - 20);
+            }
+        });
         Then("^API: I check activity \"(Note|Event|Log|Task)\" saved in salesforce$", (String activityOption) -> {
             log.info("^API: I check activity " + activityOption + " saved in salesforce$");
 
@@ -123,6 +159,39 @@ public class SFAPISteps implements En {
 
             boolean isRecordExisting = isRecordExisting(sfactivity, fieldName, fieldValue);
             System.out.println("is existing ? " + isRecordExisting);
+        });
+        And("^API: I delete activity \"(Note|Event|Log|Task)\" from salesforce$", (String activityOption) -> {
+            log.info("^API: I delete Object " + activityOption + " from salesforce$");
+
+            //get name field value
+            SFACTIVITY sfactivity;
+            String fieldName;
+            String fieldValue;
+            switch (activityOption) {
+                case "Task":
+                    sfactivity = SFACTIVITY.Task;
+                    fieldName = "subject";
+                    fieldValue = TactPinSteps.taskSubject;
+                    break;
+                case "Event":
+                    sfactivity = SFACTIVITY.Event;
+                    fieldName = "subject";
+                    fieldValue = TactPinSteps.eventSubject;
+                    break;
+                case "Note":
+                    sfactivity = SFACTIVITY.Note;
+                    fieldName = "title";
+                    fieldValue = TactPinSteps.noteTitle;
+                    break;
+                default:
+                    log.info("it is log");
+                    sfactivity = SFACTIVITY.Task;
+                    fieldName = "subject";
+                    fieldValue = TactPinSteps.logSubject;
+            }
+
+            deleteRecord(sfactivity, fieldName, fieldValue);
+            DriverUtils.sleep(10);
         });
     }
 
@@ -176,9 +245,7 @@ public class SFAPISteps implements En {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return recordId;
-
     }
     public static void deleteRecord (SFOBJECT objectName, String fieldName, String fieldValue) {
 
@@ -218,6 +285,46 @@ public class SFAPISteps implements En {
 
         return isExisting;
     }
+    public static String getRecordID (SFACTIVITY activityName, String fieldName, String fieldValue) {
+        String recordId = null;
+        int totalSize = 0;
+
+        getSFNetworkService();
+
+        String sqlQuery = String.format("select id from %s where %s = '%s'", activityName, fieldName, fieldValue);
+        System.out.println("sqlQuery " + sqlQuery);
+
+        try {
+            System.out.println(sfNetworkService.getSqlQueryBody(sqlQuery).execute().body().string());   //{"totalSize":1,"done":true,"records":[]}
+            SqlResponse sqlResponse = sfNetworkService.getSqlQuery(sqlQuery).execute().body();
+            totalSize = sqlResponse.totalSize;
+            if (totalSize == 0){
+                recordId = null;
+            } else {
+                recordId=sqlResponse.records.get(0).get("Id").toString().split("\"")[1];
+            }
+            System.out.println(recordId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return recordId;
+    }
+    public static void deleteRecord (SFACTIVITY activityName, String fieldName, String fieldValue) {
+
+        String activityType = activityName.toString();
+        String objectId = getRecordID(activityName, fieldName, fieldValue);
+        System.out.println("objectTypeAndId " + activityName + " " + objectId);
+
+        try {
+            System.out.println(sfNetworkService.deleteRecord(activityType, objectId).execute());   //{"totalSize":1,"done":true,"records":[{"attributes":{"type":"Contact","url":"/services/data/v40.0/sobjects/Contact/0036A00000bsrxAQAQ"},"Id":"0036A00000bsrxAQAQ"}]}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (!isRecordExisting(SFOBJECT.Contact, "name", fieldValue)){
+            System.out.println(fieldValue + " " + activityName + " is deleted");
+        }
+    }
 
     public void test(String sqlQuery) {
 
@@ -243,34 +350,34 @@ public class SFAPISteps implements En {
 
     public static void main(String[] args) {
 
-//        String fieldValue = "Singh 14000807Umi";
-//        int totalSize = 0;
-//        String id = getRecordID(SFOBJECT.Contact, "name", fieldValue);
+        String fieldValue = "15350810_lead_note";
+        String fieldName = "title";
+//        //    Task, Event,        //subject
+//        //    Note,               //title
 //
-//        getSFNetworkService();
+        String noteId = getRecordID(SFACTIVITY.Note, fieldName, fieldValue);
+        System.out.println("id " + noteId);
+        deleteRecord(SFACTIVITY.Note, fieldName, fieldValue);
 //
-//        String objectType = SFOBJECT.Contact.toString();
-//        String objectId = id;
-//        System.out.println("objectTypeAndId " + objectType + " " + objectId);
-//
-//        try {
-//
-//            System.out.println(sfNetworkService.deleteRecord(objectType, objectId).execute());   //{"totalSize":1,"done":true,"records":[{"attributes":{"type":"Contact","url":"/services/data/v40.0/sobjects/Contact/0036A00000bsrxAQAQ"},"Id":"0036A00000bsrxAQAQ"}]}
-//            System.out.println(isRecordExisting(SFOBJECT.Contact, "name", fieldValue));
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-////        String id = getRecordID(SFOBJECT.Contact, "name", fieldValue);
-////        System.out.println("id " + id); //0036A00000bsrxAQAQ
-//
-//        String a = "\"0036A00000bsrxAQAQ\"";
-//        System.out.println(a);
-//        System.out.println(a.split("\"")[1]);
+////        deleteRecord(SFOBJECT.Lead, "name", fieldValue);
+//        DriverUtils.sleep(30);
+//        System.out.println("after 30 sec wait");
+//        DriverUtils.sleep(15);
+//        System.out.println("after 45 sec wait");
+//        DriverUtils.sleep(5);
+//        System.out.println("after 50 sec wait");    //everything will be gone after 50-60 sec
+//        DriverUtils.sleep(10);
+//        System.out.println("after 60 sec wait");
 
-        deleteRecord(SFOBJECT.Contact, "name", "Singh 14410808Umi");
+        /**
+         * beginTime 1533937666059
+         * 1 contacts beginTime 1533937667271
+         * 2 contacts beginTime 1533937673088
+         */
 
+//
+//        int i = 153393768 - 153393766;
+//        System.out.println(i);
     }
 
 

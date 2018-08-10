@@ -7,6 +7,7 @@ import ai.tact.qa.automation.testcomponents.mobile.TactSetting.NotebookPage;
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
 import com.paypal.selion.platform.grid.Grid;
+import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
 import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 
@@ -34,7 +35,7 @@ public class NotebookSteps implements En {
 
             DriverUtils.clickOption(notebookPage.getTargetActivityNameLabel(), "activityName", activityName);
         });
-        And("^Notebook: I click back icon back to more page$", () -> {
+        And("^Notebook: I click back icon back to notebook page$", () -> {
             log.info("^Notebook: I click back icon back to more page$");
             TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
 
@@ -50,8 +51,8 @@ public class NotebookSteps implements En {
                 System.out.println("inside the loop, and still can see the back button");
                 DriverUtils.sleep(0.5);
                 Grid.driver().findElementByXPath(backLoc).click();
-                if (Grid.driver().findElementsByXPath(tactNavigateTabBarPage.getTactContactsButton().getLocator()).size() != 0){
-                    System.out.println("now I am in More page");
+                if (Grid.driver().findElementsByXPath(tactNavigateTabBarPage.getNotebookButton().getLocator()).size() != 0){
+                    System.out.println("now I am in notebook page");
                     break;
                 }
             }
@@ -65,6 +66,34 @@ public class NotebookSteps implements En {
 //                Grid.driver().findElementByXPath(backLoc).click();
 //            }
 //            DriverUtils.sleep(200);
+        });
+        Then("^Notebook: I veirfy deleted \"(note|task)\" from Notebook page$", (String activityOption) -> {
+            log.info("^Notebook: I veirfy deleted " + activityOption + " from Notebook page$");
+            NotebookPage notebookPage = new NotebookPage();
+            long beginTime = System.currentTimeMillis();
+            System.out.println("beginTime " + beginTime);
+
+            String activityName = null;
+            switch (activityOption) {
+                case "note":
+                    activityName = TactPinSteps.noteTitle;
+                    break;
+                case "task":
+                    activityName = TactPinSteps.taskSubject;
+                    break;
+            }
+
+//            String stageLoc = notebookPage.getTargetActivityNameLabel().getLocator().replace("activityName", activityName);
+//            System.out.println("stageLoc ==> " + stageLoc);
+//            WebDriverWaitUtils.waitUntilElementIsInvisible(stageLoc);
+//            long endTime = System.currentTimeMillis();
+//            System.out.println("endTime " + endTime);
+//
+//            long time = (endTime - beginTime)/(1000*1000);
+//            System.out.println("sync time " + time );
+
+            System.out.println("activity is gone");
+            DriverUtils.sleep(30);
         });
     }
 }

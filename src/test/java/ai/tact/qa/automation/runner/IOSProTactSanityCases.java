@@ -36,6 +36,7 @@ import static org.testng.Assert.assertNotNull;
 public class IOSProTactSanityCases {
 
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
+    private static final String timeout = "newCommandTimeout:360";
     private static final String DATA_PATH = "%s/%s";
     private static final UserTestingChannel testingMobileIOSChannel = UserTestingChannel.mobileIOS;
     private static final UserTestingChannel testingAITactIOSChannel = UserTestingChannel.aiTactiOS;
@@ -92,6 +93,7 @@ public class IOSProTactSanityCases {
                     "unicodeKeyboard:true","resetKeyboard:true",
                     "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
+                    , timeout
             }
     )
     @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
@@ -111,10 +113,12 @@ public class IOSProTactSanityCases {
                     "unicodeKeyboard:true","resetKeyboard:true",
                     "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
+                    , timeout
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
-    void TactCalendarFeature() {
+    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dataProvider = "tactMobileIOSUserInfo", dependsOnMethods = "TactOnboardingFeature")
+    void TactCalendarFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -130,10 +134,12 @@ public class IOSProTactSanityCases {
                     "unicodeKeyboard:true","resetKeyboard:true",
                     "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
+                    , timeout
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Contact object", dependsOnMethods = "TactOnboardingFeature")
-    void TactContactsFeature() {
+    @Test(groups = "Tact-Sanity", description = "Contact object", dataProvider = "tactMobileIOSUserInfo", dependsOnMethods = "TactOnboardingFeature")
+    void TactContactsFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -149,10 +155,12 @@ public class IOSProTactSanityCases {
                     "unicodeKeyboard:true","resetKeyboard:true",
                     "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
+                    , timeout
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Contact object", dependsOnMethods = "TactOnboardingFeature")
-    void TactContactLinkedInFeature() {
+    @Test(groups = "Tact-Sanity", description = "Contact object", dataProvider = "tactMobileIOSUserInfo", dependsOnMethods = "TactOnboardingFeature")
+    void TactContactLinkedInFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -168,10 +176,12 @@ public class IOSProTactSanityCases {
                     "unicodeKeyboard:true","resetKeyboard:true",
                     "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
+                    , timeout
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Contact object", dependsOnMethods = "TactOnboardingFeature")
-    void TactLeadFeature() {
+    @Test(groups = "Tact-Sanity", description = "Contact object", dataProvider = "tactMobileIOSUserInfo", dependsOnMethods = "TactOnboardingFeature")
+    void TactLeadFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -187,6 +197,7 @@ public class IOSProTactSanityCases {
                     "unicodeKeyboard:true","resetKeyboard:true",
                     "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
+                    , timeout
             }
     )
     @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dataProvider = "tactMobileIOSUserInfo", alwaysRun = true, dependsOnMethods = "TactLeadFeature")//"")
@@ -211,7 +222,7 @@ public class IOSProTactSanityCases {
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact-Sanity", description = "After add emails, then re_auth exchange", dataProvider = "tactMobileIOSUserInfo", dependsOnMethods = "TactEmailAddedFeature")
+    @Test(groups = "Tact-Sanity", description = "After add emails, then re_auth exchange", dataProvider = "tactMobileIOSUserInfo")//, dependsOnMethods = "TactEmailAddedFeature")
     void TactEmailReauthExchangeFeature(User user) {
         CustomPicoContainer.getInstance().setUser(user);
 //        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.mobileIOS));

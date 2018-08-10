@@ -36,7 +36,7 @@ public class IOSTestInnerRunCukesClass {
 
     }
 
-    //Email
+    //AddEmail
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Email.feature")
             ,glue = ("ai/tact/qa/automation/steps")
@@ -51,7 +51,7 @@ public class IOSTestInnerRunCukesClass {
 
     }
 
-    //Email
+    //SendEmail
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Email.feature")
             ,glue = ("ai/tact/qa/automation/steps")
@@ -119,7 +119,7 @@ public class IOSTestInnerRunCukesClass {
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Contacts.feature")
             ,glue = ("ai/tact/qa/automation/steps")
-            ,tags={"" +
+            ,tags={
             "@createContact,"
                 +
             "@P1"

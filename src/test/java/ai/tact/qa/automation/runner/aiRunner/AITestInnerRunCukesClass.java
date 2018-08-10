@@ -19,6 +19,19 @@ public class AITestInnerRunCukesClass {
         }
     }
 
+    //logout
+    @CucumberOptions(
+            features = ("src/test/resources/Features/mobile/AssistantAI.feature")
+            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,tags={"@logout"}
+    )
+    public class TactLogout extends AbstractTestNGCucumberTests {
+        @Test
+        private void test(){
+            System.out.println(">>>>>>@Test login RunCukesTest<<<<<<<");
+        }
+    }
+
     //Tact-iOS-AI
     @CucumberOptions(
             features=("src/test/resources/Features/mobile/AssistantAI.feature")

@@ -20,5 +20,5 @@ Feature: Assistant - Thread
        | What is the latest on xyz deals?       | with     |                                                                                   |
        | What is the latest on GenePoint deals? | with     |                                                                                   |
        | Bye                                    | with     | Goodbye.; Bye; See you later!                                                     |
-       | Hi                                     | with     | Howdy.; Hi there! How can I help?; Hello! Grad to help.; Welcome.; Hi.; Hi there! |
+       | Hi                                     | with     | Howdy.; Hi there! How can I help?; Hello! Glad to help.; Welcome.; Hi.; Hi there! |
        | Thanks                                 | with     | Thanks.; Thank you.                                                               |

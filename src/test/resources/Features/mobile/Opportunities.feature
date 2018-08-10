@@ -4,7 +4,7 @@ Feature: OpportunitiesFeature
   @P0
   @MobileTest
   @createSimpleOpportunity
-  Scenario Outline: Create a new opportunity in TactAPP with basic information
+  Scenario Outline: Create a new opportunity in TactAPP with basic information and verify in SF(API)
     When Common: I switch to "Opportunities" page from tab bar
     Then Oppty: I go to create a new Oppty page
     When AddEditOppty: I do action "add" required oppty information with "<opptyName>" opptyName, "<closeDate>" closeDate, "<stage>" stage and "<probability>" probability

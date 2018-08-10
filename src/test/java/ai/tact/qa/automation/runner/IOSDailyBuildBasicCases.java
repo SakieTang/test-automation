@@ -33,8 +33,8 @@ public class IOSDailyBuildBasicCases {
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
     private static final String DATA_PATH = "%s/%s";
     private static final UserTestingChannel testingChannel = UserTestingChannel.mobileIOS;
-    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Prototype1684.app";
-//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Beta1682.app";
+    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Prototype1686.app";
+//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Beta1685.app";
 
 //    private User getUserDataFromYaml() {
 //        String fileDir = "src/main/resources/testData/ArrayOfUser.yaml";

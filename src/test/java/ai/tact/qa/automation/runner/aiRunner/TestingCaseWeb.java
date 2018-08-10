@@ -150,6 +150,10 @@ public class TestingCaseWeb {
         //Tact AI Testing
         testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.testTactAI.class);
         testNGCucumberRunner.runCukes();
+
+        //logout
+        testNGCucumberRunner = new TestNGCucumberRunner(AITestInnerRunCukesClass.TactLogout.class);
+        testNGCucumberRunner.runCukes();
     }
 
     @AfterClass(alwaysRun = true)

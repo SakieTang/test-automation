@@ -750,7 +750,7 @@ public class GenerateReport {
     public static void main(String[] args) {
 //        BasicConfigurator.configure();
 //        getReport(WebDriverPlatform.ANDROID);
-        getReport(WebDriverPlatform.IOS);
+//        getReport(WebDriverPlatform.IOS);
 //        GenerateReport.deleteAllJsonReport("ios");
 
 //        //submit report
@@ -758,10 +758,10 @@ public class GenerateReport {
 
         generteHtml();
         uploadReprot("report.html");
-
+//
 //        generateAIHtml();
 //        uploadReprot("aiReport.html");
-//
+
 //        generateAIHtml();
 //        uploadReprot("aiReport2.html");
 //

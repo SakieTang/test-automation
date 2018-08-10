@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 
 public class TestingCaseAndroid {
 
+    private static final String appActivity = "appActivity:com.tactile.tact.onboarding.SignInActivity";
     static final String appPackage = "appPackage:com.tactile.tact";//0iu9yo0,9o6fvbnkcexzasecvcxr  asezdzadc.alpha";
     private static final String DATA_PATH = "%s/%s";
     private static final UserTestingChannel testingChannel = UserTestingChannel.mobileAndroid;
@@ -66,8 +67,9 @@ public class TestingCaseAndroid {
                     "unicodeKeyboard:true","resetKeyboard:true"
                     , "noReset:true"
                     , "fullReset:false"
-                    , appPackage,
-                    "appActivity:com.tactile.tact.onboarding.SignInActivity"
+                    , appPackage
+                    , appActivity
+                    ,"newCommandTimeout:360"
             }
     )
     //w/ data provider
@@ -106,8 +108,8 @@ public class TestingCaseAndroid {
             ,glue = ("ai.tact.qa.automation.steps")
             ,tags={"" +
                 "@note"
-              + "," +
-              "@createLead"
+//              + "," +
+//              "@createLead"
                 }
     )
     public class testCase extends AbstractTestNGCucumberTests {

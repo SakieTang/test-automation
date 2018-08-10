@@ -3,7 +3,7 @@ Feature: LeadsFeature
 
   @P0
   @createLead
-  Scenario Outline: Create a new contact in TactAPP with basic information
+  Scenario Outline: Create a new lead in TactAPP with basic information and verify in SF(API), then delete from SF(API)
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I go to create a new "Lead" page
     And AddLead: I input a user name "<leadName>", company name "<companyName>" and "<isSave>"
@@ -11,6 +11,8 @@ Feature: LeadsFeature
     When Common: I am waiting for syncing done
     Then API: I check Object "Lead" saved in salesforce
     And Common: I click back icon
+    When API: I delete Object "Lead" from salesforce and wait for "60" sec
+    Then Contact: I verity deleted "Lead" from search field
 
     Examples:
       | leadName              | companyName | isSave |
@@ -20,7 +22,7 @@ Feature: LeadsFeature
 
   @P1
   @note
-  Scenario Outline: Add Note to a lead
+  Scenario Outline: Add Note to a lead w/ sync SF and verify in SF(API), then delete from SF(API)
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastNLead, FirstNLead" from recent field and select it
     And Contacts: I search one user "LastNLead, FirstNLead" from contacts list and select it
@@ -33,7 +35,9 @@ Feature: LeadsFeature
     Then Notebook: I search this "note" from Notebook and select it
     When Common: I am waiting for syncing done
     Then API: I check activity "Note" saved in salesforce
-    And Notebook: I click back icon back to more page
+    And Notebook: I click back icon back to notebook page
+    When API: I delete activity "Note" from salesforce
+    Then Notebook: I veirfy deleted "note" from Notebook page
 
     Examples:
       | isSync | titleText | bodyText | isSave |

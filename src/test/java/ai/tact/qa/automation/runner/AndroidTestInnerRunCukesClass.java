@@ -81,9 +81,10 @@ public class AndroidTestInnerRunCukesClass {
             features = ("src/test/resources/Features/mobile/Contacts.feature")
             ,glue = ("ai/tact/qa/automation/steps")
 //            ,tags={"@P1"}
-            , tags={"" +
+            , tags={
                 "@createContact," +
-                "@P1"}
+                "@P1"
+                }
             , format = {
             "pretty",
             "json:target/report/android/TactContactsFeatureRunCukesNoReset.json"}

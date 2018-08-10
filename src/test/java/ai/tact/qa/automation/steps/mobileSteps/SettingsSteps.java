@@ -165,6 +165,8 @@ public class SettingsSteps implements En {
                 DriverUtils.sleep(2);
                 tactAlertsPopUpPage.getAlertsAllowButton().tap();
             }
+            System.out.println("finish Connect the exchange account");
+            DriverUtils.sleep(30);
         });
         When("^Settings: I sign in the Gmail account$", () -> {
             log.info("^Settings: I sign in the Gmail account$");
@@ -173,23 +175,22 @@ public class SettingsSteps implements En {
 
             String gmailEmail = CustomPicoContainer.getInstance().getUser().getGmailEmailAddress();
             String gmailPwd = CustomPicoContainer.getInstance().getUser().getGmailEmailPwd();
-
-//            if (DriverUtils.isIOS())
-//            {
-//                gmailEmail = CustomPicoContainer.getInstance().getUserInfor().getGmailIOSEmailAddress();
-//            }
             log.info("gmail : " + gmailEmail + "/" + gmailPwd);
 
+            //Handle the account already login
             Label gmailTitleLabel = new Label(gmailPage.getGmailHeadingTitleWebViewLabel().getLocator());
             log.info("new label " + gmailTitleLabel.getText()) ;
             Button useAnotherAccountButton = new Button(gmailPage.getGmailUseAnotherAccountWebViewButton().getLocator());
+            System.out.println("1");
             if (gmailTitleLabel.getText().equalsIgnoreCase("Choose an account"))
             {
                 log.info("click create another account");
                 useAnotherAccountButton.click();
                 DriverUtils.sleep(2);
             }
+            System.out.println("2");
 
+            //gmail Account and next button
             TextField gmailOrPhoneTextField = new TextField(gmailPage.getGmailEmailOrPhoneWebViewTextField().getLocator());
             Button gmailNextButton = new Button(gmailPage.getGmailEmailNextWebViewButton().getLocator());
 
@@ -197,6 +198,7 @@ public class SettingsSteps implements En {
             gmailNextButton.click();
             DriverUtils.sleep(1);
 
+            //Password and next button
             TextField pwdTextField = new TextField(gmailPage.getGmailPwdWebViewTextField().getLocator());
             Button pwdNextButton = new Button(gmailPage.getGmailPwdNextWebViewButton().getLocator());
 
@@ -204,15 +206,16 @@ public class SettingsSteps implements En {
             pwdNextButton.click();
             DriverUtils.sleep(2);
 
+            //Allow Access Button
             Button gmailAllowAccessButton = new Button(gmailPage.getGmailAllowAccessAccountWebViewButton().getLocator());
-            WebDriverWaitUtils.waitUntilElementIsVisible(gmailAllowAccessButton.getLocator());
-            gmailAllowAccessButton.click();
+            if (Grid.driver().findElementsByXPath(gmailAllowAccessButton.getLocator()).size() != 0) {
+                gmailAllowAccessButton.click();
+            }
 
             DriverUtils.sleep(2);
             DriverUtils.convertToNativeAPPDriver();
-//            WebDriverWaitUtils.waitUntilElementIsVisible(tactSourcesPage.getSourcesTitleLabel());
             WebDriverWaitUtils.waitUntilElementIsVisible(tactNavigateTabBarPage.getTactEmailButton());
-            DriverUtils.sleep(5);
+
         });
         When("^Settings: I sign in the LinkedIn account$", () -> {
             log.info("^Settings: I sign in the linkedIn account$");

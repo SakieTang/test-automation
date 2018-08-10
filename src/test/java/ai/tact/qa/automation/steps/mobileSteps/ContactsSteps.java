@@ -230,6 +230,7 @@ public class ContactsSteps implements En {
                 tactContactsMainPage.getTactAndroidRecentFavoritesButton().tap();
                 DriverUtils.sleep(0.5);
             }
+            DriverUtils.sleep(1);
             Grid.driver().findElementByXPath(stageLoc).click();
         });
         And("^Contacts: I click back icon after created Salesflow activities$", () -> {
@@ -254,6 +255,89 @@ public class ContactsSteps implements En {
                 Grid.driver().findElementByXPath(backLoc).click();
             }
             DriverUtils.sleep(0.5);
+        });
+        Then("^Contact: I verity deleted \"(Contact|Lead|Account)\" from search field$", (String objOption) -> {
+            log.info("^Contact: I verity deleted " + objOption + " from search field$");
+            TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
+            TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
+
+            long beginTime = System.currentTimeMillis();
+            System.out.println("1 contacts beginTime " + beginTime);
+
+            System.out.println("waiting for the title");
+            WebDriverWaitUtils.waitUntilElementIsVisible(tactContactsMainPage.getTactContactsTitleLabel());
+
+            String name;
+            switch (objOption) {
+                case "Contact":
+                    name = AddDeleteContactSteps.contactName;
+                    break;
+                case "Lead":
+                    name = AddDeleteLeadSteps.leadName;
+                    break;
+                case "Account":
+                    name = AddDeleteAccountSteps.accountName;
+                    break;
+                default:
+                    name = null;
+                    break;
+            }
+            System.out.println("name : " + name);
+
+            //search the name from search field - workaround for android only [bug1776]
+            if (DriverUtils.isAndroid())
+            {
+                DriverUtils.sleep(0.5);
+                MobileButton androidContactsSearchIconButton = tactSearchContactsPage.getAndroidContactsTabSearchIconButton();
+                WebDriverWaitUtils.waitUntilElementIsVisible(androidContactsSearchIconButton);
+                androidContactsSearchIconButton.tap();
+                if ( (Grid.driver().findElementsByXPath(androidContactsSearchIconButton.getLocator())).size() != 0 ) {
+                    System.out.println("did not click it, need to re-click");
+//                    DriverUtils.tapXY(1160,182);
+                    Grid.driver().findElementById("menu_search").submit();
+                    System.out.println("after submit");
+                    DriverUtils.sleep(10);
+                    Grid.driver().findElementById("menu_search").click();
+                    System.out.println("after click");
+                    DriverUtils.sleep(10);
+
+                    System.out.println("another way to click");
+                    AppiumDriver driver = (AppiumDriver) Grid.driver();
+
+                    TouchActions action = new TouchActions(driver);
+                    action.singleTap((WebElement)tactSearchContactsPage.getAndroidContactsTabSearchIconButton());
+                    action.perform();
+
+                    DriverUtils.sleep(2);
+                    System.out.println("after action click ");
+                    DriverUtils.sleep(10);
+
+                }
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactSearchContactsPage.getSearchAllContactsTextField());
+
+                //element id changed <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                System.out.println("name : " + name);
+                tactSearchContactsPage.getSearchAllContactsTextField().setText(name);
+                DriverUtils.sleep(0.5);
+
+                //Should not see the name in the list
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactSearchContactsPage.getNoContactsFoundLabel());
+                System.out.println("now the contacts is invisible");
+                DriverUtils.sleep(10);
+            }
+            else
+            {    //verify from recent feild
+                String stageLoc = tactSearchContactsPage.getNameEditButton().getLocator().replace("contactName", name);
+                System.out.println("stageLoc ==> " + stageLoc);
+
+                WebDriverWaitUtils.waitUntilElementIsInvisible(stageLoc);
+                long endTime = System.currentTimeMillis();
+                long time = (endTime - beginTime)/(1000*1000);
+                System.out.println("sync time " + time );
+
+                System.out.println("now the contacts is invisible");
+                DriverUtils.sleep(30);
+            }
         });
     }
 }

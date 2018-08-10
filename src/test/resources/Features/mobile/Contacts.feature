@@ -4,7 +4,7 @@ Feature: ContactsFeature
   @P0
   @MobileTest
   @createContact
-  Scenario Outline: Create a new contact in TactAPP with basic information and w/o save in iphone and SF
+  Scenario Outline: Create a new contact in TactAPP with basic information w/o save in iphone, w/ send to SF, and verify in SF(API), then delete it from SF(API)
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I go to create a new "Contact" page
     When AddContact: I "<saveToIphone>" save to Phone and "<sendToSF>" send to Salesforce
@@ -13,6 +13,7 @@ Feature: ContactsFeature
     When Common: I am waiting for syncing done
     Then API: I check Object "Contact" saved in salesforce
     And Common: I click back icon
+    When API: I delete Object "Contact" from salesforce and wait for "60" sec
 
     Examples:
     | saveToIphone | sendToSF | contactName             | isSave |
@@ -36,7 +37,7 @@ Feature: ContactsFeature
   @P1
   @MobileTest
   @note
-  Scenario Outline: Add Note to a contact. Saved it to SF and verify it via API
+  Scenario Outline: Add Note to a contact w/ sync SF and verify in SF(API), then delete from SF(API)
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "FirstN LastN" from recent field and select it
     Then Contacts: I search one user "FirstN LastN" from contacts list and select it

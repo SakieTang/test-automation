@@ -35,6 +35,7 @@ public class AndroidProTactSanityCases {
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
     private static final String appPackage = "appPackage:com.tactile.tact";
     private static final String appActivity = "appActivity:com.tactile.tact.onboarding.SignInActivity";
+    private static final String timeout = "newCommandTimeout:360";
     private static final String DATA_PATH = "%s/%s";
     private static final UserTestingChannel testingChannel = UserTestingChannel.mobileAndroid;
 
@@ -118,6 +119,7 @@ public class AndroidProTactSanityCases {
                     //for Alpha only, dev do not need this part
                     , appPackage
                     , appActivity
+                    , timeout
             }
     )
     //w/ data provider
@@ -145,10 +147,12 @@ public class AndroidProTactSanityCases {
                     //for Alpha only, dev do not need this part
                     , appPackage
                     , appActivity
+                    , timeout
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
-    void TactCalendarFeature() {
+    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dataProvider = "tactUserInfo", dependsOnMethods = "TactOnboardingFeature")
+    void TactCalendarFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -167,11 +171,13 @@ public class AndroidProTactSanityCases {
                     //for Alpha only, dev do not need this part
                     , appPackage
                     , appActivity
+                    , timeout
             }
     )
     //w/ data provider
-    @Test(groups = "Tact-Sanity", description = "TactDataSourcesTest", dependsOnMethods = "TactOnboardingFeature")
-    void TactContactsFeatureRunCukesNoReset( ) {
+    @Test(groups = "Tact-Sanity", description = "TactDataSourcesTest", dataProvider = "tactUserInfo", dependsOnMethods = "TactOnboardingFeature")
+    void TactContactsFeatureRunCukesNoReset(User user) {
+        CustomPicoContainer.getInstance().setUser(user);
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -190,11 +196,13 @@ public class AndroidProTactSanityCases {
                     //for Alpha only, dev do not need this part
                     , appPackage
                     , appActivity
+                    , timeout
             }
     )
     //w/ data provider
-    @Test(groups = "Tact-Sanity", description = "TactDataSourcesTest", dependsOnMethods = "TactOnboardingFeature")
-    void TactLeadFeatureRunCukesNoReset( ) {
+    @Test(groups = "Tact-Sanity", description = "TactDataSourcesTest", dataProvider = "tactUserInfo", dependsOnMethods = "TactOnboardingFeature")
+    void TactLeadFeatureRunCukesNoReset(User user) {
+        CustomPicoContainer.getInstance().setUser(user);
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
@@ -237,6 +245,7 @@ public class AndroidProTactSanityCases {
                     //for Alpha only, dev do not need this part
                     , appPackage
                     , appActivity
+                    , timeout
             }
     )
     @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactGetAppVersion")

@@ -36,7 +36,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='No Contacts Found']"
     android:
-      US: ""
+      US: "//android.widget.TextView[@text='No contacts found']"
   noAdditionalContactsFoundLabel:
     ios:
       US: "//XCUIElementTypeStaticText[@name='No additional contacts found']"
