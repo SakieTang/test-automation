@@ -26,7 +26,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Syncing…']"
     android:
-      US: "//android.widget.TextView[@text='Syncing...']"
+      US: "//android.widget.TextView[@text='Syncing…']"
   tactSyncingDataToPhoneTitleLabel:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Syncing data to your phone.']"

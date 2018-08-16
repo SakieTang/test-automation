@@ -36,6 +36,11 @@ public class AndroidDailyBuildBasicCases {
     private static final String DATA_PATH = "%s/%s";
     private static final UserTestingChannel testingChannel = UserTestingChannel.mobileAndroid;
 
+    private static final String appPackage = "appPackage:com.tactile.tact";
+    private static final String appActivity = "appActivity:com.tactile.tact.onboarding.SignInActivity";
+//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-alpha-debug1529.apk";
+    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-production-release1529.apk";
+
 //    private User getUserDataFromYaml() {
 //        String fileDir = "src/main/resources/testData/ArrayOfUser.yaml";
 //        String arrayOfUsers = String.format(DATA_PATH, System.getProperty("user.dir"), fileDir);
@@ -69,6 +74,26 @@ public class AndroidDailyBuildBasicCases {
 //        return dataProvider.getAllData();
 //    }
 
+//=======
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
+//
+//public class AndroidDailyBuildBasicCases {
+//
+//    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
+//    private static final String appPackage = "appPackage:com.tactile.tact";
+//    private static final String appActivity = "appActivity:com.tactile.tact.onboarding.SignInActivity";
+////    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-alpha-debug1529.apk";
+//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-production-release1529.apk";
+//
+//    @DataProvider(name="tactUserInfo")
+//    public Object[][] getYamlDataProvider() throws IOException {
+//        FileSystemResource resource = new FileSystemResource("src/main/resources/testData/ListOfUser.yaml", UserInfor.class);
+//        SeLionDataProvider dataProvider = DataProviderFactory.getDataProvider(resource);
+//        return dataProvider.getAllData();
+//    }
+//
+//>>>>>>> c4185b1... - Stop selenium server stops
     @BeforeClass(alwaysRun = true)
     public void setUpClass() throws Exception {
         log.info("TestRunner - BeforeClass - setUpClass");
@@ -83,14 +108,15 @@ public class AndroidDailyBuildBasicCases {
 
     //onboarding
     @MobileTest(  //Android
+            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
                     "noReset:true",
                     "fullReset:false"
                     //for Alpha only, dev do not need this part
-//                    , appPackage       //com.tactile.tact
-//                    , "appActivity:com.tactile.tact.onboarding.SignInActivity"
+                    , appPackage
+                    , appActivity
             }
     )
     //w/ data provider
@@ -107,14 +133,44 @@ public class AndroidDailyBuildBasicCases {
         testNGCucumberRunner.runCukes();
     }
 
-    //ReAuth
+    //AddEmail
     @MobileTest(    //Android
+            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true"
-                    ,"noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    ,"noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
                     //Android reset the app to true, will need to re-connect with SF
                     ,"fullReset:false"  //restart the iPhone/simulator and install the app
+                    //for Alpha only, dev do not need this part
+                    , appPackage
+                    , appActivity
+            }
+    )
+    //w/ data provider
+    @Test(groups = "Tact-Sanity", description = "TactDataSourcesTest", dataProvider = "tactUserInfo", dependsOnMethods = "TactOnboardingFeature")
+    void TactAddEmailFeature(UserInfor userInfor) throws InterruptedException {
+        CustomPicoContainer.getInstance().setUserInfor(userInfor);
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //AddExchangeEmailAccountFromTab
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.AddExchangeEmailFromTabFeatureRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
+
+    //ReAuth
+    @MobileTest(    //Android
+            appPath = appPath,
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true"
+                    ,"noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
+                    //Android reset the app to true, will need to re-connect with SF
+                    ,"fullReset:false"  //restart the iPhone/simulator and install the app
+                    //for Alpha only, dev do not need this part
+                    , appPackage
+                    , appActivity
             }
     )
     //w/ data provider
@@ -127,6 +183,10 @@ public class AndroidDailyBuildBasicCases {
         //logout
         TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactLogoutRunCukesNoReset.class);
         testNGCucumberRunner.runCukes();
+
+        //clear chrome date
+        DriverUtils.clearChromeData();
+
         //login
         testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactLoginRunCukesNoReset.class);
         testNGCucumberRunner.runCukes();
@@ -134,12 +194,16 @@ public class AndroidDailyBuildBasicCases {
 
     //getAppVersion
     @MobileTest(  //iOS
+            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true"
-                    ,"noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    ,"noReset:true"    //continue the testing. false, reinstall the app; false, continue use the app
                     //Android reset the app to true, will need to re-connect with SF
                     ,"fullReset:false"  //restart the iPhone/simulator and install the app
+                    //for Alpha only, dev do not need this part
+                    , appPackage
+                    , appActivity
             }
     )
     //w/ data provider
@@ -155,11 +219,15 @@ public class AndroidDailyBuildBasicCases {
 
     //Delete
     @MobileTest(    //Android
+            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
+                    //for Alpha only, dev do not need this part
+                    , appPackage
+                    , appActivity
             }
     )
     //w/ data provider

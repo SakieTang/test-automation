@@ -5,7 +5,6 @@ import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.dataobjects.Status;
 import static ai.tact.qa.automation.utils.dataobjects.Status.*;
 
-import com.amazonaws.services.dynamodbv2.xspec.S;
 import com.paypal.selion.internal.platform.grid.WebDriverPlatform;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

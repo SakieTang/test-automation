@@ -237,15 +237,15 @@ public class LoginSteps implements En {
                 DriverUtils.sleep(5);
             }
             //exchangeSync
-            if (DriverUtils.isIOS() &&
-                    processOption.equalsIgnoreCase("login") &&
+//            if (DriverUtils.isIOS() &&
+            if (    processOption.equalsIgnoreCase("login") &&
                     Grid.driver().findElementsByXPath(tactAlertsPopUpPage.getTactExchangeSyncErrorMsgTitleLabel().getLocator()).size() != 0)
             {
                 log.info("Start waiting for \"exchange Reauth Sync\"");
                 tactAlertsPopUpPage.getReauthorizeButton().tap(exchangePage.getExchangeTitleLabel());
 
                 String exchangePwdText = CustomPicoContainer.getInstance().getUser().getExchangeEmailPwd();
-                //CustomPicoContainer.getInstance().getUserInfor().getExchangeIOSEmailPwd();
+
                 log.info("exchange pwd " + exchangePwdText);
                 exchangePage.getExchangePwdTextField().sendKeys(exchangePwdText);
                 exchangePage.getSubmitButton().tap();

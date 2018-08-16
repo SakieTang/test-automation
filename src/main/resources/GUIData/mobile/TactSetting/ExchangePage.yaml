@@ -6,7 +6,7 @@ elements:
     ios:
       US: "//XCUIElementTypeOther[@name='Exchange']"
     android:
-      US: ""
+      US: "//*[contains(@resource-id, 'toolbar')]/android.widget.TextView[@text='Connect Email']"
   cancelButton:
     ios:
       US: "//XCUIElementTypeButton[@name='Cancel']"
@@ -16,17 +16,17 @@ elements:
     ios:
       US: "//XCUIElementTypeButton[@name='Submit']"
     android:
-      US: ""
+      US: "connect_email_button"
   exchangeEmailTextField:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Email']"
     android:
-      US: ""
+      US: "email"
   exchangePwdTextField:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Password']"
     android:
-      US: ""
+      US: "password"
   exchangeShowAllFieldsButton:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Show All Fields']"
@@ -41,7 +41,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Server']"
     android:
-      US: ""
+      US: "host"
   exchangeDomainTextField:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Domain']"
@@ -51,7 +51,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Username']"
     android:
-      US: ""
+      US: "username"
   exchangeDisconnectButton:
     ios:
       US: "	//XCUIElementTypeStaticText[@name='Disconnect']"

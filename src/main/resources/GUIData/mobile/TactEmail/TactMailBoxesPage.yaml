@@ -6,17 +6,17 @@ elements:
     ios:
       US: "//XCUIElementTypeOther[@name='Mailboxes']"
     android:
-      US: ""
+      US: "//*[contains(@resource-id, 'main_toolbar')]/android.widget.TextView[@text='Email']"
   connectExchnageIconImage:
     ios:
       US: "//XCUIElementTypeImage[@name='connect-exchange-logo']"
     android:
-      US: ""
+      US: "//*[contains(@text, 'Exchange Sync Error')]"
   exchangeGmailConnectButton:
     ios:
       US: "//XCUIElementTypeButton[@name='Connect']"
     android:
-      US: ""
+      US: "email_connect_button"
   exchangeGmailConnectedButton:
     ios:
       US: "//XCUIElementTypeButton[@name='Connected']"

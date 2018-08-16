@@ -16,12 +16,12 @@ elements:
     ios:
       US: "//XCUIElementTypeSearchField[@name='Search all contacts']"
     android:
-      US: "android:id/search_src_text"
+      US: "search_src_text"
   clearTextFromSearchAllContactsButton:
     ios:
       US: "//XCUIElementTypeButton[@name='Clear text']"
     android:
-      US: "android:id/search_close_btn"
+      US: "search_close_btn"
   nameEditButton:
     ios:
         US: "//XCUIElementTypeStaticText[@name='contactName']"

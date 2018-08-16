@@ -51,8 +51,9 @@ public class MoreSteps implements En {
             TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
 
             if (DriverUtils.isAndroid()) {
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactSettingsPage.getAndroidMoreOptionButton());
-                tactSettingsPage.getAndroidMoreOptionButton().tap(tactSettingsPage.getLogOutButton());
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactSettingsPage.getAccountButton());
+                tactSettingsPage.getAccountButton().tap(tactSettingsPage.getDeleteAccountButton());
+
                 tactSettingsPage.getLogOutButton().tap(tactAlertsPopUpPage.getAndroidPopUpSureConfirmOKButton());
                 tactAlertsPopUpPage.getAndroidPopUpSureConfirmOKButton().tap();
             }
@@ -73,19 +74,8 @@ public class MoreSteps implements En {
             TactSettingsPage tactSettingsPage = new TactSettingsPage();
             TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
 
-            if (DriverUtils.isAndroid())
-            {
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactSettingsPage.getAndroidMoreOptionButton());
-                tactSettingsPage.getAndroidMoreOptionButton().tap();
-
-                if ((Grid.driver().findElementsByXPath(tactSettingsPage.getAndroidMoreOptionButton().getLocator())).size() != 0 ){
-                    System.out.println("Did not click the more option button in the corner, need to re-click by x-y");
-                    DriverUtils.tapXY(1342, 182);
-                }
-            }
             WebDriverWaitUtils.waitUntilElementIsVisible(tactSettingsPage.getDeleteAccountButton());
             tactSettingsPage.getDeleteAccountButton().tap(tactAlertsPopUpPage.getTactDeleteButton());
-//            DriverUtils.sleep(60);
             tactAlertsPopUpPage.getTactDeleteButton().tap();
             if (DriverUtils.isIOS()) {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactWelcomePage.getWelcomeTactLabel());
@@ -97,6 +87,10 @@ public class MoreSteps implements En {
             log.info("^More: I get App Version and " + isSave + " save in file$");
             TactSettingsPage tactSettingsPage = new TactSettingsPage();
 
+            if (DriverUtils.isIOS()) {
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactSettingsPage.getAccountButton());
+                tactSettingsPage.getAccountButton().tap(tactSettingsPage.getDeleteAccountButton());
+            }
             WebDriverWaitUtils.waitUntilElementIsVisible(tactSettingsPage.getAppVersionLabel());
             String appVersion = tactSettingsPage.getAppVersionLabel().getValue();
             String appName = DriverUtils.getAppName();

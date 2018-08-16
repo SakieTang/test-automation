@@ -209,7 +209,7 @@ public class EmailSteps implements En {
             log.info("^Email: I connect with " + emailOption + " email account inside Email tab bar$");
             TactMailBoxesPage tactMailBoxesPage = new TactMailBoxesPage();
 
-            if (Grid.driver().findElementsByXPath(tactMailBoxesPage.getExchangeGmailConnectedButton().getLocator()).size() == 0) {
+            if (DriverUtils.isIOS() && Grid.driver().findElementsByXPath(tactMailBoxesPage.getExchangeGmailConnectedButton().getLocator()).size() == 0) {
                 String connectButtonLoc = tactMailBoxesPage.getExchangeGmailConnectButton().getLocator();
 
                 if (emailOption.equalsIgnoreCase("exchange")) {

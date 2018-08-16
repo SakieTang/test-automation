@@ -162,6 +162,21 @@ public class AndroidTestInnerRunCukesClass {
 
     }
 
+    //Email
+    @CucumberOptions(
+            features = ("src/test/resources/Features/mobile/Email.feature")
+            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,tags={"@ConnectExchangeTabBar"}
+            , format = {
+            "pretty",
+            "json:target/report/android/AddEmailFromTabFeatureRunCukesNoReset.json"}
+    )
+    public class AddExchangeEmailFromTabFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
+        @Test
+        private void test(){ System.out.println("@Test Contacts Feature RunCukesTest"); }
+
+    }
+
     //Delete
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/TactUserAccount.feature")

@@ -5,6 +5,7 @@ import ai.tact.qa.automation.testcomponents.mobile.TactAlertsPopUpPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactLinkedIn.TactWebviewLinkedinPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactNavigateTabBarPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactSetting.*;
+import ai.tact.qa.automation.utils.Appium;
 import ai.tact.qa.automation.utils.CustomPicoContainer;
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
@@ -12,6 +13,7 @@ import ai.tact.qa.automation.utils.LogUtil;
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.html.Button;
 import com.paypal.selion.platform.html.Label;
+import com.paypal.selion.platform.mobile.elements.MobileElement;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
 import com.paypal.selion.platform.html.TextField;
 import cucumber.api.java8.En;
@@ -31,26 +33,28 @@ public class SettingsSteps implements En {
             log.info("^Setting: I switch to " + settingsOption + " option in settings page$");
             TactSettingsPage tactSettingsPage = new TactSettingsPage();
 
-            if (DriverUtils.isIOS())
-            {
-                switch (settingsOption) {
-                    case "Account":
-                        WebDriverWaitUtils.waitUntilElementIsVisible(tactSettingsPage.getIosAccountButton());
-                        tactSettingsPage.getIosAccountButton().tap(tactSettingsPage.getDeleteAccountButton());
-                        break;
-                    case "Data Sources":
-                        WebDriverWaitUtils.waitUntilElementIsVisible(tactSettingsPage.getIosDataSourcesButton());
-                        tactSettingsPage.getIosDataSourcesButton().tap();
-                        break;
-                    case "Notification Settings":
+            switch (settingsOption) {
+                case "Account":
+                    WebDriverWaitUtils.waitUntilElementIsVisible(tactSettingsPage.getAccountButton());
+                    tactSettingsPage.getAccountButton().tap(tactSettingsPage.getDeleteAccountButton());
+                    break;
+                case "Data Sources":
+                    WebDriverWaitUtils.waitUntilElementIsVisible(tactSettingsPage.getDataSourcesButton());
+                    tactSettingsPage.getDataSourcesButton().tap();
+                    break;
+                case "Notification Settings":
 //                    WebDriverWaitUtils.waitUntilElementIsVisible();
-                        break;
-                    case "Contact Us":
-//                    WebDriverWaitUtils.waitUntilElementIsVisible();
-                        break;
-                    default:
-                        TactAIAsserts.verifyFalse(true, "Please give a correct String (Account|Data Sources|Notification Settings|Contact Us)");
-                }
+                    break;
+                case "Contact Us":
+                    WebDriverWaitUtils.waitUntilElementIsVisible(tactSettingsPage.getContactUsButton());
+                    tactSettingsPage.getContactUsButton().tap();
+                    break;
+                case "Rate Tact":
+                    WebDriverWaitUtils.waitUntilElementIsVisible(tactSettingsPage.getRateTactButton());
+                    tactSettingsPage.getRateTactButton().tap();
+                    break;
+                default:
+                    TactAIAsserts.verifyFalse(true, "Please give a correct String (Account|Data Sources|Notification Settings|Contact Us)");
             }
         });
         Then("^Settings: I switch to \"([^\"]*)\" option in Sources settings page$", (String sourceOption) -> {
@@ -126,18 +130,15 @@ public class SettingsSteps implements En {
             String exchangePwd = CustomPicoContainer.getInstance().getUser().getExchangeEmailPwd();
             String exchangeServer = CustomPicoContainer.getInstance().getUser().getExchangeServer();
 
-//            if (DriverUtils.isIOS())
-//            {
-//                exchangeEmail = CustomPicoContainer.getInstance().getUserInfor().getExchangeIOSEmailAddress();
-//                exchangePwd = CustomPicoContainer.getInstance().getUserInfor().getExchangeIOSEmailPwd();
-//            }
             log.info("exchange : " + exchangeEmail + "/" + exchangePwd );
             log.info("exchange server : " + exchangeServer);
 
             exchangePage.getExchangeEmailTextField().sendKeys(exchangeEmail);
             exchangePage.getExchangePwdTextField().sendKeys(exchangePwd);
-            exchangePage.getSubmitButton().tap();
-            DriverUtils.sleep(2);
+            if (DriverUtils.isIOS()) {
+                exchangePage.getSubmitButton().tap();
+                DriverUtils.sleep(2);
+            }
 
             if (DriverUtils.isIOS() &&
                     Grid.driver().findElementsByXPath(tactAlertsPopUpPage.getAlertsAllowButton().getLocator()).size() != 0) {
@@ -148,6 +149,10 @@ public class SettingsSteps implements En {
             if (DriverUtils.isIOS() &&
                     Grid.driver().findElementsByXPath(exchangePage.getExchangeUnableToConnectLabel().getLocator()).size() !=0) {
                 log.info("inside server");
+                exchangePage.getExchangeServerTextField().sendKeys(exchangeServer);
+                exchangePage.getExchangeUsernamaTextField().sendKeys(exchangeEmail);
+                exchangePage.getSubmitButton().tap();
+            } else if (DriverUtils.isAndroid()) {
                 exchangePage.getExchangeServerTextField().sendKeys(exchangeServer);
                 exchangePage.getExchangeUsernamaTextField().sendKeys(exchangeEmail);
                 exchangePage.getSubmitButton().tap();

@@ -124,7 +124,20 @@ public class TestingCaseWeb {
         Appium.startServer();
     }
 
-    //Tact AI Testing
+    @WebTest
+    @Test(description = "stop selenium, start appium", dependsOnGroups = "Web")
+    public void stopSeleniumStartAppium () {
+        Selenium.stopServer();
+
+        System.out.println("selenium stopped");
+        DriverUtils.sleep(10);
+
+        Appium.startServer();
+        System.out.println("start appium");
+        DriverUtils.sleep(10);
+    }
+
+    //login Tact AI account
     @MobileTest(    //iOS
             locale="US",
 //            appPath="Applications/Tact Prototype.app",

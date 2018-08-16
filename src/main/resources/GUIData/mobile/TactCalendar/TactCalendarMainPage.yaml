@@ -11,7 +11,7 @@ elements:
     ios:
       US: "//XCUIElementTypeButton[@name='Connect']"
     android:
-      US: "//android.widget.Button[@text='CONNECT']"
+      US: "//android.widget.Button[@text='CONNECT CALENDARS']"
   connectCalendarTitleLabel:
     ios:
       US: "//XCUIElementTypeOther[@name='Calendars']"

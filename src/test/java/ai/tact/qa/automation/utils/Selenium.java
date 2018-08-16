@@ -59,6 +59,9 @@ public class Selenium {
         {
             System.out.println("------------------- Selenium stoped ----------------------");
         }
+        else {
+            System.out.println("");
+        }
     }
 
     /**
@@ -72,30 +75,21 @@ public class Selenium {
      * check Selenium server is running
      */
     public static boolean isSeleniumServerRunning (String givenPort) {
-        boolean isServerRunning = false;
         String command = null;
         String port = givenPort;
         System.out.println("port is : " + port);
 
-        command = "netstat -van tcp | grep 4723 | awk '{print $9}'";
+        command = String.format("netstat -van tcp | grep %s | awk '{print $9}'", port);
         System.out.println("cmd : " + command);
 
-        try {
-            Process process = DriverUtils.runCommand(new String[] {"bash", "-c", command});//(command);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            if (reader.readLine() != null) {
-                System.out.println("The Selenium is still running");
-                isServerRunning = true;
-            }
-            else {
-                System.out.println("The Selenium already stopped");
-                isServerRunning = true;
-            }
+        String processID = DriverUtils.getRunCommandReturn(new String[] {"bash", "-c", command});
+        if (processID.isEmpty()) {
+            System.out.println("The Selenium already stopped");
+            return false;
+        } else {
+            System.out.println("The Selenium is still running");
+            return true;
         }
-        catch (IOException e) {
-            e.getMessage();
-        }
-        return isServerRunning;
     }
 
     /**

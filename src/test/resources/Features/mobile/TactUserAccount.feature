@@ -42,7 +42,6 @@ Feature: TactUserAccountFeature
   @getAppVersion
   Scenario: Get Tact App Information
     Given Common: I switch to "Settings" page from tab bar
-    When Settings: I switch to "Account" option in settings page
     Then More: I get App Version and "yes" save in file
     And More: I switch back to More page
 
