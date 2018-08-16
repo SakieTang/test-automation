@@ -30,6 +30,9 @@ elements:
     userNegButton:
         locators:
             US: "css=.mx-thumbnail.mx-user-avatar.thumbnail-xs"
+    stagingPriorityIconImage:
+        locators:
+            US: "css=.micon-highlights"
 pageValidators: [
     threadIconLabel
 ]

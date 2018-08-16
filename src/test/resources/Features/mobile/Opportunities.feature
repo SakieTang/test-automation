@@ -13,9 +13,8 @@ Feature: OpportunitiesFeature
 #    And AddEditOppty: I do action "add" DescriptionInfo with "<description>" description
     And AddOppty: I "<isSave>" save the new opportunity
     Then Oppty: I search one oppty oppty_created_Tact from opportunities list and select it
-#    Then AddOppty: I check the oppty value
     When Common: I am waiting for syncing done
-    Then API: I check Object "Opportunity" saved in salesforce
+    Then API: I check Object "Opportunity" is "saved" in salesforce
     And Common: I click back icon
 
     Examples:

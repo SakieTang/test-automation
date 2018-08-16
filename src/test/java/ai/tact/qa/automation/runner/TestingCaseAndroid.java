@@ -69,7 +69,7 @@ public class TestingCaseAndroid {
                     , "fullReset:false"
                     , appPackage
                     , appActivity
-                    ,"newCommandTimeout:360"
+//                    ,"newCommandTimeout:360"
             }
     )
     //w/ data provider
@@ -104,12 +104,13 @@ public class TestingCaseAndroid {
     }
 
     @CucumberOptions(
-            features = ("src/test/resources/Features/mobile/Lead.feature")
+            features = ("src/test/resources/Features/mobile/Contacts.feature")
             ,glue = ("ai.tact.qa.automation.steps")
             ,tags={"" +
-                "@note"
-//              + "," +
-//              "@createLead"
+                "@logAndroid"
+                    + "," +
+                "@noteAndroid"
+
                 }
     )
     public class testCase extends AbstractTestNGCucumberTests {

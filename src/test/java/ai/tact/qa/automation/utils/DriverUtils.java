@@ -625,7 +625,7 @@ public class DriverUtils {
      */
     public static String getAppFrom() {
         String appName = getAppName();
-        if (isIOS() && getAppName().equals("Tact")) {
+        if (isIOS() && (getAppName().equals("Tact") || getAppName().equals("TactNew"))) {
             return "App_store";
         }
         else if (isAndroid() && getAppName().contains("release")) {
@@ -654,15 +654,20 @@ public class DriverUtils {
      * @param replaceString
      * @param option
      */
-    public static void clickOption(MobileElement location, String replaceString, String option){
+    public static boolean clickOption(MobileElement location, String replaceString, String option){
         String stageLoc = location.getLocator().replace(replaceString, option);
         System.out.println("stageLoc ==> " + stageLoc);
-        WebDriverWaitUtils.waitUntilElementIsVisible(stageLoc);
+
         if (Grid.driver().findElementsByXPath(stageLoc).size()==0){
             slideUP();
         }
-        Grid.driver().findElementByXPath(stageLoc).click();
-        sleep(0.5);
+        if (Grid.driver().findElementsByXPath(stageLoc).size()!=0) {
+            Grid.driver().findElementByXPath(stageLoc).click();
+            sleep(0.5);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

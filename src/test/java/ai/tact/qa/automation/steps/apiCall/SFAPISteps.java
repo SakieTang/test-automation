@@ -23,7 +23,7 @@ enum SFOBJECT {
     Opportunity         //name
 }
 enum SFACTIVITY {
-    Task, Event,        //subject
+    Log, Task, Event,        //subject
     Note                //title
 }
 
@@ -52,8 +52,8 @@ public class SFAPISteps implements En {
 //            System.out.println("is existing ? " + isRecordExisting);
         });
 
-        Then("^API: I check Object \"(Contact|Account|Lead|Opportunity)\" saved in salesforce$", (String objName) -> {
-            log.info("^API: I check Object " + objName + " saved in salesforce$");
+        Then("^API: I check Object \"(Contact|Account|Lead|Opportunity)\" is \"(saved|deleted)\" in salesforce$", (String objName, String option) -> {
+            log.info("^API: I check Object " + objName + " is " + option + " saved in salesforce$");
 
             //get name field value
             String nameValue;
@@ -81,7 +81,15 @@ public class SFAPISteps implements En {
             }
 
             boolean isRecordExisting = isRecordExisting(sfObject, "name", nameValue);
-            System.out.println("is existing ? " + isRecordExisting);
+            //saved|deleted
+            switch (option) {
+                case "saved":
+                    System.out.println("is existing? " + isRecordExisting);
+                    break;
+                case "deleted":
+                    System.out.println("is existing? " + isRecordExisting);
+                    break;
+            }
 
             //back to previous page for Android Opportunity
             if (DriverUtils.isAndroid() && objName.equalsIgnoreCase("Opportunity")) {
@@ -117,28 +125,35 @@ public class SFAPISteps implements En {
                     sfObject = SFOBJECT.Contact;
             }
             deleteRecord(sfObject, "name", nameValue);
-            if (DriverUtils.isAndroid()) {
-                DriverUtils.sleep(30);
-                System.out.println("after 30 sec waiting");
-                DriverUtils.sleep(20);
-                System.out.println("after 20 sec waiting");
-                DriverUtils.sleep(waitingTime - 30 - 20);
-            }
+//            if (DriverUtils.isAndroid()) {
+//                DriverUtils.sleep(30);
+//                System.out.println("after 30 sec waiting");
+//                DriverUtils.sleep(20);
+//                System.out.println("after 20 sec waiting");
+//                DriverUtils.sleep(waitingTime - 30 - 20);
+//            }
+
+            DriverUtils.sleep(waitingTime);
         });
-        Then("^API: I check activity \"(Note|Event|Log|Task)\" saved in salesforce$", (String activityOption) -> {
-            log.info("^API: I check activity " + activityOption + " saved in salesforce$");
+        Then("^API: I check activity \"(Note|Log|Task|Event)\" is \"(saved|deleted)\" in salesforce$", (String activityOption, String option) -> {
+            log.info("^API: I check activity " + activityOption + " is " + option + " in salesforce$");
 
             //get name field value
             SFACTIVITY sfactivity;
             String fieldName;
             String fieldValue;
-            //    Task, Event,        //subject
+            //    Task, Event, Log    //subject
             //    Note,               //title
             switch (activityOption) {
                 case "Task":
                     sfactivity = SFACTIVITY.Task;
                     fieldName = "subject";
                     fieldValue = TactPinSteps.taskSubject;
+                    break;
+                case "Log":
+                    sfactivity = SFACTIVITY.Task;
+                    fieldName = "subject";
+                    fieldValue = TactPinSteps.logSubject;
                     break;
                 case "Event":
                     sfactivity = SFACTIVITY.Event;
@@ -158,9 +173,18 @@ public class SFAPISteps implements En {
             }
 
             boolean isRecordExisting = isRecordExisting(sfactivity, fieldName, fieldValue);
-            System.out.println("is existing ? " + isRecordExisting);
+
+            //saved|deleted
+            switch (option) {
+                case "saved":
+                    System.out.println("is existing? " + isRecordExisting);
+                    break;
+                case "deleted":
+                    System.out.println("is existing? " + isRecordExisting);
+                    break;
+            }
         });
-        And("^API: I delete activity \"(Note|Event|Log|Task)\" from salesforce$", (String activityOption) -> {
+        And("^API: I delete activity \"(Note|Log|Task|Event)\" from salesforce$", (String activityOption) -> {
             log.info("^API: I delete Object " + activityOption + " from salesforce$");
 
             //get name field value
@@ -172,6 +196,11 @@ public class SFAPISteps implements En {
                     sfactivity = SFACTIVITY.Task;
                     fieldName = "subject";
                     fieldValue = TactPinSteps.taskSubject;
+                    break;
+                case "Log":
+                    sfactivity = SFACTIVITY.Task;
+                    fieldName = "subject";
+                    fieldValue = TactPinSteps.logSubject;
                     break;
                 case "Event":
                     sfactivity = SFACTIVITY.Event;
@@ -350,14 +379,15 @@ public class SFAPISteps implements En {
 
     public static void main(String[] args) {
 
-        String fieldValue = "15350810_lead_note";
-        String fieldName = "title";
-//        //    Task, Event,        //subject
+        String fieldValue = "Send Quote 14390814_test";
+        String fieldName = "subject";
+//        //    Task, Event, Log        //subject
 //        //    Note,               //title
 //
-        String noteId = getRecordID(SFACTIVITY.Note, fieldName, fieldValue);
-        System.out.println("id " + noteId);
-        deleteRecord(SFACTIVITY.Note, fieldName, fieldValue);
+        System.out.println(isRecordExisting(SFACTIVITY.Task, fieldName, fieldValue));
+//        String noteId = getRecordID(SFACTIVITY.Note, fieldName, fieldValue);
+//        System.out.println("id " + noteId);
+//        deleteRecord(SFACTIVITY.Note, fieldName, fieldValue);
 //
 ////        deleteRecord(SFOBJECT.Lead, "name", fieldValue);
 //        DriverUtils.sleep(30);
@@ -369,15 +399,6 @@ public class SFAPISteps implements En {
 //        DriverUtils.sleep(10);
 //        System.out.println("after 60 sec wait");
 
-        /**
-         * beginTime 1533937666059
-         * 1 contacts beginTime 1533937667271
-         * 2 contacts beginTime 1533937673088
-         */
-
-//
-//        int i = 153393768 - 153393766;
-//        System.out.println(i);
     }
 
 

@@ -222,7 +222,7 @@ public class IOSProTactSanityCases {
                     "fullReset:false"  //restart the iPhone/simulator and install the app
             }
     )
-    @Test(groups = "Tact-Sanity", description = "After add emails, then re_auth exchange", dataProvider = "tactMobileIOSUserInfo")//, dependsOnMethods = "TactEmailAddedFeature")
+    @Test(groups = "Tact-Sanity", description = "After add emails, then re_auth exchange", dataProvider = "tactMobileIOSUserInfo", dependsOnMethods = "TactEmailAddedFeature")
     void TactEmailReauthExchangeFeature(User user) {
         CustomPicoContainer.getInstance().setUser(user);
 //        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.mobileIOS));
@@ -312,47 +312,51 @@ public class IOSProTactSanityCases {
 
     }
 
-    //login Tact AI account
-    @MobileTest(    //iOS
-            locale="US",
-//            appPath="Applications/Tact Prototype.app",
-            additionalCapabilities={
-                    "unicodeKeyboard:true", "resetKeyboard:true"
-                    , "noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
-                    , "fullReset:false"  //restart the iPhone/simulator and install the app
-            }
-    )
-    @Test(description="Runs Cucumber Feature - onboarding", dataProvider = "tactAITactIOSUserInfo", dependsOnMethods = "TactDeleteAccount")
-    private void TactLoginTactAIAccount(User user) {
-        CustomPicoContainer.getInstance().setUser(user);
-//        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.aiTactiOS));
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //onboarding
-        TestNGCucumberRunner testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.TactLogin.class);
-        testNGCucumberRunner.runCukes();
-    }
-
-    //Tact AI Testing
-    @MobileTest(    //iOS
-            locale="US",
-//            appPath="Applications/Tact Prototype.app",
-            additionalCapabilities={
-                    "unicodeKeyboard:true", "resetKeyboard:true"
-                    , "noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
-                    , "fullReset:false"  //restart the iPhone/simulator and install the app
-            }
-    )
-    @Test(description="Runs Cucumber Feature - onboarding", dependsOnMethods = "TactLoginTactAIAccount")
-    private void TactAIFeature() {
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //Tact AI Testing
-        TestNGCucumberRunner testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.testTactAI.class);
-        testNGCucumberRunner.runCukes();
-    }
+//    //login Tact AI account
+//    @MobileTest(    //iOS
+//            locale="US",
+////            appPath="Applications/Tact Prototype.app",
+//            additionalCapabilities={
+//                    "unicodeKeyboard:true", "resetKeyboard:true"
+//                    , "noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
+//                    , "fullReset:false"  //restart the iPhone/simulator and install the app
+//            }
+//    )
+//    @Test(description="Runs Cucumber Feature - onboarding", dataProvider = "tactAITactIOSUserInfo", dependsOnMethods = "TactDeleteAccount")
+//    private void TactLoginTactAIAccount(User user) {
+//        CustomPicoContainer.getInstance().setUser(user);
+////        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.aiTactiOS));
+//        log.info("TestRunner - Test - feature");
+//        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+//
+//        //onboarding
+//        TestNGCucumberRunner testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.TactLogin.class);
+//        testNGCucumberRunner.runCukes();
+//    }
+//
+//    //Tact AI Testing
+//    @MobileTest(    //iOS
+//            locale="US",
+////            appPath="Applications/Tact Prototype.app",
+//            additionalCapabilities={
+//                    "unicodeKeyboard:true", "resetKeyboard:true"
+//                    , "noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
+//                    , "fullReset:false"  //restart the iPhone/simulator and install the app
+//            }
+//    )
+//    @Test(description="Runs Cucumber Feature - onboarding", dependsOnMethods = "TactLoginTactAIAccount")
+//    private void TactAIFeature() {
+//        log.info("TestRunner - Test - feature");
+//        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+//
+//        //Tact AI Testing
+//        TestNGCucumberRunner testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.testTactAI.class);
+//        testNGCucumberRunner.runCukes();
+//
+//        //logout
+//        testNGCucumberRunner = new TestNGCucumberRunner(AITestInnerRunCukesClass.TactLogout.class);
+//        testNGCucumberRunner.runCukes();
+//    }
 
     @AfterClass(alwaysRun = true)
     public void tearDownClass() {

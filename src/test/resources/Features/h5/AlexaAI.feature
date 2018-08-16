@@ -5,7 +5,7 @@ Feature: Assistant - Alexa
   @loginAlexa
   Scenario: open browser and login Thread
     Given WebCommon: I launch browser and open "developer.amazon.com/alexa"
-    When WebCommon: I login with "Amazon" user account and password
+    When WebCommon: I login with "Amazon" user account "w/o" and password "w/o"
     Then AlexaTest: I switch to "Test" from navigate
 
   @P1

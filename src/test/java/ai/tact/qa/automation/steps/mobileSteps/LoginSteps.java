@@ -251,6 +251,26 @@ public class LoginSteps implements En {
                 exchangePage.getSubmitButton().tap();
                 log.info("\"exchange Reauth Sync\" finished");
                 DriverUtils.sleep(2);
+
+
+                //workaround for "no policy" error msg (bug5580)
+                String noPolicyLoc;
+                if (DriverUtils.isIOS()) {
+                    noPolicyLoc = "//XCUIElementTypeStaticText[@name=\"There is no policy for this client.\"]";
+                } else {
+                    noPolicyLoc = "//android.widget.TextView[@text='There is no policy for this client.']";
+                }
+                if (Grid.driver().findElementsByXPath(noPolicyLoc).size() !=0) {
+                    System.out.println("should see the no policy");
+                    exchangePage.getSubmitButton().tap();
+                    DriverUtils.sleep(2);
+                    tactAlertsPopUpPage.getAlertsAllowButton().tap();
+                } else {
+                    System.out.println("should not see the no policy");
+                }
+                System.out.println("finish Connect the exchange account");
+                DriverUtils.sleep(30);
+
             }
 
             //Allow "Tact" would like to send you notification in iOS

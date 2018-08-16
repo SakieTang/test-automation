@@ -217,8 +217,7 @@ public class CommonSteps implements En {
         });
         Then("^Common: I click back icon$", () -> {
             log.info("^Common: I click back icon$");
-            TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
-            TactContactObjPage tactContactObjPage = new TactContactObjPage();
+            TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
             String backLoc;
 
             if (DriverUtils.isIOS()) {
@@ -228,20 +227,16 @@ public class CommonSteps implements En {
             }
 
             if (Grid.driver().findElementsByXPath(backLoc).size() != 0) {
-                Grid.driver().findElementByXPath(backLoc).click();
+
+                System.out.println("back button can be saw.");
+                if ((DriverUtils.isIOS() && Grid.driver().findElementsByXPath(tactNavigateTabBarPage.getTactCalendarButton().getLocator()).size()==0) ||
+                        (DriverUtils.isAndroid() && Grid.driver().findElementsById(tactNavigateTabBarPage.getTactCalendarButton().getLocator()).size()==0)){
+                    Grid.driver().findElementByXPath(backLoc).click();
+                } else {
+                    System.out.println("there is no back button");
+                    DriverUtils.sleep(10);
+                }
             }
-            //oppty back
-            // < //XCUIElementTypeButton[@name="Back"]
-            //contact
-            // < //XCUIElementTypeNavigationBar/XCUIElementTypeButton[1]
-//            WebDriverWaitUtils.waitUntilElementIsVisible(tactContactObjPage.getGoBackToContactsMainPageButton());
-//            tactContactObjPage.getGoBackToContactsMainPageButton().tap();
-//
-//            if (DriverUtils.isAndroid() &&
-//                    Grid.driver().findElementsById(tactSearchContactsPage.getSearchAllContactsTextField().getLocator()).size() != 0) {
-//                tactContactObjPage.getGoBackToContactsMainPageButton().tap();
-//            }
-            System.out.println("should back to contact main page");
         });
         Then("^Common: I turn (on|off) wifi$", (String isOn) -> {
             log.info("^Common: I turn " + isOn + " wifi$");
@@ -265,6 +260,12 @@ public class CommonSteps implements En {
                 DriverUtils.sleep(25);
                 System.out.println("after wait for 30 sec");
             }
+        });
+        And("^Common: I am waiting for \"(\\d+)\" sec$", (Integer time) -> {
+            log.info("^Common: I am waiting for " + time + " sec$");
+
+            DriverUtils.sleep(50);
+
         });
     }
 

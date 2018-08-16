@@ -1,0 +1,23 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+elements:
+    mentionTrackingContainer:
+      locators:
+        US: "css=.tracking-list-container"
+    mentionNameLabel:
+      locators:
+        US: "css=.mention-token"
+    dismissButton:
+      locators:
+        US: "css=.btn.btn-xs.btn-secondary"
+    mentionDismissedLabel:
+      locators:
+        US: "css=.mx-notify.alert.alert-success.mx-notify-success"
+    noMoreMentionsContentLabel:
+      locators:
+        US: "css=.empty-content"
+    endOfMentionContainer:
+      locators:
+        US: "css=.micon-at"
+pageValidators: [
+    dismissButton
+]

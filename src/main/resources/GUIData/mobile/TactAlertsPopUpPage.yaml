@@ -6,7 +6,7 @@ elements:
     ios:
       US: "//XCUIElementTypeButton[@name='OK']"
     android:
-      US: ""
+      US: "//android.widget.Button[@text='OK']"
   alertsAllowButton:
     ios:
       US: "//XCUIElementTypeButton[@name='Allow']"

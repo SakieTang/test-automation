@@ -15,13 +15,14 @@ public class ThreadCommonSteps implements En {
 
     public ThreadCommonSteps() {
 
-        Then("^ThreadCommon: I switch to \"(Timeline|Categories|Contacts|Meet|Integrations|My To-Dos|Favorities|Mentions|User)\" from navigate$", (String navigate) -> {
+        Then("^ThreadCommon: I switch to \"(Timeline|Categories|Contacts|Meet|Integrations|My To-Dos|Favorities|Mentions|User|Priority)\" from navigate$", (String navigate) -> {
             log.info("^ThreadCommon: I switch to " + navigate + " from navigate$");
             ThreadNavigatePage threadNavigatePage = new ThreadNavigatePage();
 
-            WebDriverWaitUtils.waitUntilElementIsVisible(threadNavigatePage.getThreadIconLink().getLocator());
+//            WebDriverWaitUtils.waitUntilElementIsVisible(threadNavigatePage.getThreadIconLink().getLocator());
             switch (navigate) {
                 case "Timeline":
+                    WebDriverWaitUtils.waitUntilElementIsVisible(threadNavigatePage.getTimelineIconImage().getLocator());
                     threadNavigatePage.getTimelineIconImage().click();
                     break;
                 case "Categories":
@@ -47,6 +48,10 @@ public class ThreadCommonSteps implements En {
                     break;
                 case "User":
                     threadNavigatePage.getUserNegButton().click();
+                    break;
+                case "Priority":
+                    WebDriverWaitUtils.waitUntilElementIsVisible(threadNavigatePage.getStagingPriorityIconImage().getLocator());
+                    threadNavigatePage.getStagingPriorityIconImage().click();
                     break;
             }
         });

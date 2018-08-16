@@ -21,8 +21,8 @@ public class AITestInnerRunCukesClass {
 
     //logout
     @CucumberOptions(
-            features = ("src/test/resources/Features/mobile/AssistantAI.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            features = ("src/test/resources/Features/mobile/TactUserAccount.feature")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@logout"}
     )
     public class TactLogout extends AbstractTestNGCucumberTests {

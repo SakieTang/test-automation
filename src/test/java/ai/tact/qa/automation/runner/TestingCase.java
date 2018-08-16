@@ -57,7 +57,7 @@ public class TestingCase  {
                     "unicodeKeyboard:true","resetKeyboard:true",
                     "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
-                    ,"newCommandTimeout:360"
+                    ,"newCommandTimeout:300"
             }
     )
     //w/ data provider
@@ -71,7 +71,7 @@ public class TestingCase  {
 //        testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.OnboardingRunCukesFullyReset.class);
 //        testNGCucumberRunner.runCukes();
 
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactLeadsFeatureRunCukesNoReset.class);
         testNGCucumberRunner.runCukes();
 
 
@@ -89,12 +89,12 @@ public class TestingCase  {
     }
 
     @CucumberOptions(
-            features = ("src/test/resources/Features/mobile/Lead.feature")
+            features = ("src/test/resources/Features/mobile/Opportunities.feature")
             ,glue = ("ai.tact.qa.automation.steps")
-            ,tags={"" +
-                "@note"
+            ,tags={
+//                "@Log"
 //                +
-//                "@createLead"
+                "@createSimpleOpportunity"
             }
     )
     public class testCase extends AbstractTestNGCucumberTests {

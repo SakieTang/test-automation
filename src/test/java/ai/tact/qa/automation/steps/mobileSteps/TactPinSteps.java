@@ -92,17 +92,7 @@ public class TactPinSteps implements En {
             WebDriverWaitUtils.waitUntilElementIsVisible(tactNotePage.getNewNoteTitleLabel());
 
             //Sync or not Sync to SF
-            if ( (DriverUtils.isTextEmpty(isSyncToSF)
-                  && (tactNotePage.getSyncToSaleforceSwitch().getValue().equalsIgnoreCase("1") ||   //for iOS
-                      tactNotePage.getSyncToSaleforceSwitch().getValue().contains("ON")))                        //for Android
-                    ||
-                 (!DriverUtils.isTextEmpty(isSyncToSF)
-                  && (tactNotePage.getSyncToSaleforceSwitch().getValue().equalsIgnoreCase("0") ||
-                      tactNotePage.getSyncToSaleforceSwitch().getValue().contains("OFF")))
-               ){
-                System.out.println(DriverUtils.isTextEmpty(isSyncToSF) + " and value is " + tactNotePage.getSyncToSaleforceSwitch().getValue());
-                tactNotePage.getSyncToSaleforceSwitch().changeValue();
-            }
+            DriverUtils.switchButton(isSyncToSF, tactNotePage.getSyncToSaleforceSwitch());
 
             //Title (required)      //element  changed <<<<<<<<<<<<<<<<<<<<<<<
             noteTitle = DriverUtils.getNameWithStamp(titleText, true);
@@ -148,6 +138,7 @@ public class TactPinSteps implements En {
             log.info("^Tact-Pin: I create a new task with " + titleText + " title, " + description + " description, "
                     + name + " name, " + relatedTo + " related to and " + dueDate + " due Date$");
             TactTaskPage tactTaskPage = new TactTaskPage();
+            taskSubject = DriverUtils.getNameWithStamp(titleText, true);
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactTaskPage.getSyncToSaleforceTaskSwitch());
 
@@ -160,7 +151,7 @@ public class TactPinSteps implements En {
                     tactTaskPage.getSyncToSaleforceTaskSwitch().changeValue();
                 }
                 tactTaskPage.getTitleTextField().clearText();
-                tactTaskPage.getTitleTextField().sendKeys(titleText);
+                tactTaskPage.getTitleTextField().sendKeys(taskSubject);
             }
             //Description
             if (!DriverUtils.isTextEmpty(description))
@@ -323,6 +314,8 @@ public class TactPinSteps implements En {
             log.info("^Tact-Pin: I create a new log with " + subjectOption + " with " + subject + " subject, " + name + " name, " + relatedTo + " related to, " + dueDate + " due Date, " + comments + " comments, " + priorityOption + " priority and " + statusOption + " status$");
             TactLogPage tactLogPage = new TactLogPage();
 
+            logSubject = DriverUtils.getNameWithStamp(subject, true);
+
             //name(iOS) | Contact(Android)
             if (!DriverUtils.isTextEmpty(name))
             {
@@ -346,11 +339,19 @@ public class TactPinSteps implements En {
                 Grid.driver().findElementByXPath(subjectOptionLoc).click();
                 if (!DriverUtils.isTextEmpty(subject))
                 {
-                    tactLogPage.getSubjectTextField().sendKeys(" " + subject);
+                    logSubject = tactLogPage.getSubjectTextField().getValue() + " " + logSubject;
+                    tactLogPage.getSubjectTextField().setText(logSubject);
+
+                    logSubject = tactLogPage.getSubjectTextField().getValue();
+                    System.out.println(logSubject);
                 }
-                tactLogPage.getSubjectConfirmButton().tap();
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactLogPage.getNewLogTitleLabel());
+            } else {
+                tactLogPage.getSubjectTextField().setText(logSubject);
             }
+            //back to log edit page
+            tactLogPage.getSubjectConfirmButton().tap();
+            WebDriverWaitUtils.waitUntilElementIsVisible(tactLogPage.getNewLogTitleLabel());
+
             //dueDate
             if (!DriverUtils.isTextEmpty(dueDate))
             {

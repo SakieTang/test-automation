@@ -19,7 +19,7 @@ public class NotebookSteps implements En {
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
     public NotebookSteps() {
-        Then("^Notebook: I search this \"(note|task)\" from Notebook and select it$", (String activityOption) -> {
+        Then("^Notebook: I search this \"(note|log|task|event)\" from Notebook and select it$", (String activityOption) -> {
             log.info("^Notebook: I search this " + activityOption + " from Notebook and select it$");
             NotebookPage notebookPage = new NotebookPage();
 
@@ -28,46 +28,20 @@ public class NotebookSteps implements En {
                 case "note":
                     activityName = TactPinSteps.noteTitle;
                     break;
+                case "log":
+                    activityName = TactPinSteps.logSubject;
+                    break;
                 case "task":
                     activityName = TactPinSteps.taskSubject;
+                    break;
+                case "event":
+                    activityName = TactPinSteps.eventSubject;
                     break;
             }
 
             DriverUtils.clickOption(notebookPage.getTargetActivityNameLabel(), "activityName", activityName);
         });
-        And("^Notebook: I click back icon back to notebook page$", () -> {
-            log.info("^Notebook: I click back icon back to more page$");
-            TactNavigateTabBarPage tactNavigateTabBarPage = new TactNavigateTabBarPage();
-
-            String backLoc;
-
-            if (DriverUtils.isIOS()) {
-                backLoc = "//XCUIElementTypeNavigationBar/XCUIElementTypeButton[1]";
-            } else {
-                backLoc = "//android.widget.ImageButton[@content-desc='Navigate up']";
-            }
-
-            while (Grid.driver().findElementsByXPath(backLoc).size() != 0) {
-                System.out.println("inside the loop, and still can see the back button");
-                DriverUtils.sleep(0.5);
-                Grid.driver().findElementByXPath(backLoc).click();
-                if (Grid.driver().findElementsByXPath(tactNavigateTabBarPage.getNotebookButton().getLocator()).size() != 0){
-                    System.out.println("now I am in notebook page");
-                    break;
-                }
-            }
-//            if (DriverUtils.isAndroid()) {
-//                while (Grid.driver().findElementsByXPath(backLoc).size() != 0) {
-//                    System.out.println("inside the loop, and still can see the back button");
-//                    DriverUtils.sleep(0.5);
-//                    Grid.driver().findElementByXPath(backLoc).click();
-//                }
-//            } else {
-//                Grid.driver().findElementByXPath(backLoc).click();
-//            }
-//            DriverUtils.sleep(200);
-        });
-        Then("^Notebook: I veirfy deleted \"(note|task)\" from Notebook page$", (String activityOption) -> {
+        Then("^Notebook: I veirfy deleted \"(note|log|task|event)\" from Notebook page$", (String activityOption) -> {
             log.info("^Notebook: I veirfy deleted " + activityOption + " from Notebook page$");
             NotebookPage notebookPage = new NotebookPage();
             long beginTime = System.currentTimeMillis();
@@ -78,8 +52,14 @@ public class NotebookSteps implements En {
                 case "note":
                     activityName = TactPinSteps.noteTitle;
                     break;
+                case "log":
+                    activityName = TactPinSteps.logSubject;
+                    break;
                 case "task":
                     activityName = TactPinSteps.taskSubject;
+                    break;
+                case "event":
+                    activityName = TactPinSteps.eventSubject;
                     break;
             }
 

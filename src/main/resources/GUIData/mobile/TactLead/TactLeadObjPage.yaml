@@ -22,11 +22,21 @@ elements:
       US: "//XCUIElementTypeButton[@name='Edit']"
     android:
       US: ""
+  recentActivityLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='activityName']"
+    android:
+      US: "//android.widget.TextView[@text='activityName']"
   addTaskActionButton:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Add Task']"
     android:
       US: ""
+  taskActivityLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='activityName']"
+    android:
+      US: "//android.widget.TextView[@text='activityName']"
   linkedInButton:
     ios:
       US: "//XCUIElementTypeButton[@name='contact toolbar linkedin']"

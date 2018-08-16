@@ -5,7 +5,7 @@ Feature: Assistant - Cisco Spark
   @loginCiscoSpark
   Scenario: open browser and login Thread
     Given WebCommon: I launch browser and open "teams.webex.com/signin"
-    When WebCommon: I login with "Cisco Spark" user account and password
+    When WebCommon: I login with "Cisco Spark" user account "w/o" and password "w/o"
     Then SparkCommon: I switch to "Home" from navigate
     And SparkHome: I click "TactProdBot" option
 

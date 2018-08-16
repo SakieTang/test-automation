@@ -32,6 +32,21 @@ elements:
       US: "//XCUIElementTypeImage[@name='activityCreateOpportunity']"
     android:
       US: ""
+  activityViewPageMoreOptionsAndroidButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.ImageView[@content-desc='More options']"
+  activityViewPageEditButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.TextView[@text='Edit']"
+  activityViewPageDeleteButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.TextView[@text='Delete']"
 pageTitle:
   US: "page_object"
 pageValidators: [

@@ -13,16 +13,16 @@ public class SFAuthenticator {
 
     private final String url = "https://login.salesforce.com/services/oauth2/token";
     private final String grant_type = "password";
-//    private final String client_id = CustomPicoContainer.getInstance().getUser().getApiClientId(); //"3MVG9CEn_O3jvv0ydnh2Gwu9Kq.SoCleHJwlIjZg_Q2mjI8gSaaJ6qw0Df_qtTrb7L__rAfPKne7zILZfeE32";
-//    private final String client_secret = CustomPicoContainer.getInstance().getUser().getApiClientSecret(); //"6884892550614520415";
-//    private final String username = CustomPicoContainer.getInstance().getUser().getApiUserName(); //"automation.tactsf.s@gmail.com";    //sf account name
-//    private final String password = CustomPicoContainer.getInstance().getUser().getApiPassword(); //"Tact20189ilpMZITdoDz6ABvYGrn8xHS";
+    private final String client_id = CustomPicoContainer.getInstance().getUser().getApiClientId(); //"3MVG9CEn_O3jvv0ydnh2Gwu9Kq.SoCleHJwlIjZg_Q2mjI8gSaaJ6qw0Df_qtTrb7L__rAfPKne7zILZfeE32";
+    private final String client_secret = CustomPicoContainer.getInstance().getUser().getApiClientSecret(); //"6884892550614520415";
+    private final String username = CustomPicoContainer.getInstance().getUser().getApiUserName(); //"automation.tactsf.s@gmail.com";    //sf account name
+    private final String password = CustomPicoContainer.getInstance().getUser().getApiPassword(); //"Tact20189ilpMZITdoDz6ABvYGrn8xHS";
 
     //iOS
-    private final String client_id = "3MVG9CEn_O3jvv0ydnh2Gwu9Kq.SoCleHJwlIjZg_Q2mjI8gSaaJ6qw0Df_qtTrb7L__rAfPKne7zILZfeE32";
-    private final String client_secret = "6884892550614520415";
-    private final String username = "automation.tactsf.s@gmail.com";    //sf account name
-    private final String password = "Tact20189ilpMZITdoDz6ABvYGrn8xHS";
+//    private final String client_id = "3MVG9CEn_O3jvv0ydnh2Gwu9Kq.SoCleHJwlIjZg_Q2mjI8gSaaJ6qw0Df_qtTrb7L__rAfPKne7zILZfeE32";
+//    private final String client_secret = "6884892550614520415";
+//    private final String username = "automation.tactsf.s@gmail.com";    //sf account name
+//    private final String password = "Tact20189ilpMZITdoDz6ABvYGrn8xHS";
     //Android
 //    private final String client_id = "3MVG9CEn_O3jvv0yiRj2fbfaQUhUaoUKiB8Os5x9BcWqzjOABcnt2LmRpqLT17SnV1ANFktY3tegiN_E2QHzP";
 //    private final String client_secret = "6864499967095259178";

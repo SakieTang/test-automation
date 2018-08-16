@@ -1,11 +1,13 @@
 package ai.tact.qa.automation.steps.mobileSteps;
 
 import ai.tact.qa.automation.asserts.TactAIAsserts;
+import ai.tact.qa.automation.testcomponents.mobile.TactAlertsPopUpPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactCompany.TactAddNewCompanyPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactAddNewContactPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactObjPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactsMainPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactLead.TactAddNewLeadPage;
+import ai.tact.qa.automation.testcomponents.mobile.TactPinPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactSearch.TactSearchContactsPage;
 import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.DriverUtils;
@@ -13,7 +15,6 @@ import ai.tact.qa.automation.utils.DriverUtils;
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.mobile.elements.MobileButton;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
@@ -338,6 +339,48 @@ public class ContactsSteps implements En {
                 System.out.println("now the contacts is invisible");
                 DriverUtils.sleep(30);
             }
+        });
+        And("^Contacts: I search this \"(note|log|task)\" from \"(Lead|Contact)\" page and select it$", (String activityOption, String pageOption) -> {
+            log.info("^Contacts: I search this " + activityOption + " from " + pageOption + " page and select it$");
+            TactContactObjPage tactContactObjPage = new TactContactObjPage();
+            String activityName = null;
+
+            switch (activityOption) {
+                case "note":
+                    activityName = TactPinSteps.noteTitle;
+                    break;
+                case "log":
+                    activityName = TactPinSteps.logSubject;
+                    break;
+                case "task":
+                    activityName = TactPinSteps.taskSubject;
+                    break;
+            }
+
+            if (!DriverUtils.clickOption(tactContactObjPage.getRecentActivityLabel(), "activityName", activityName)) {
+                if (activityOption.equalsIgnoreCase("task") &&
+                        Grid.driver().findElementsByXPath(tactContactObjPage.getTaskActivitySeeAllButton().getLocator()).size()!=0 ) {
+                    tactContactObjPage.getTaskActivitySeeAllButton().tap();
+                    DriverUtils.clickOption(tactContactObjPage.getRecentActivityLabel(), "activityName", activityName);
+                } else if (Grid.driver().findElementsByXPath(tactContactObjPage.getRecentActivitySeeAllButton().getLocator()).size()!=0){
+                    tactContactObjPage.getRecentActivitySeeAllButton().tap();
+                    DriverUtils.clickOption(tactContactObjPage.getRecentActivityLabel(), "activityName", activityName);
+                }
+            }
+
+
+        });
+        And("^Contacts: I delete this Activity$", () -> {
+            log.info("^Contacts: I delete this Activity$");
+            TactPinPage tactPinPage = new TactPinPage();
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+
+            WebDriverWaitUtils.waitUntilElementIsVisible(tactPinPage.getActivityViewPageMoreOptionsAndroidButton());
+            tactPinPage.getActivityViewPageMoreOptionsAndroidButton().tap(tactPinPage.getActivityViewPageDeleteButton());
+            tactPinPage.getActivityViewPageDeleteButton().tap(tactAlertsPopUpPage.getAlertsOKButton());
+            tactAlertsPopUpPage.getAlertsOKButton().tap();
+
+            DriverUtils.sleep(50);
         });
     }
 }

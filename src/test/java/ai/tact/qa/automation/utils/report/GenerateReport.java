@@ -756,17 +756,16 @@ public class GenerateReport {
 //        //submit report
 //        System.out.println(System.getProperty("user.dir"));
 
-        generteHtml();
-        uploadReprot("report.html");
+//        generteHtml();
+//        uploadReprot("report.html");
 //
 //        generateAIHtml();
 //        uploadReprot("aiReport.html");
 
 //        generateAIHtml();
 //        uploadReprot("aiReport2.html");
-//
-//        uploadReprot("report.html");
-//        uploadReprot("aiReport.html");
 
+        uploadReprot("report.html");
+        uploadReprot("aiReport.html");
     }
 }

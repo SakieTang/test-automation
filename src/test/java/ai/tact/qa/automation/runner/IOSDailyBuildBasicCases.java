@@ -33,23 +33,8 @@ public class IOSDailyBuildBasicCases {
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
     private static final String DATA_PATH = "%s/%s";
     private static final UserTestingChannel testingChannel = UserTestingChannel.mobileIOS;
-    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Prototype1686.app";
-//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Beta1685.app";
-
-//    private User getUserDataFromYaml() {
-//        String fileDir = "src/main/resources/testData/ArrayOfUser.yaml";
-//        String arrayOfUsers = String.format(DATA_PATH, System.getProperty("user.dir"), fileDir);
-//
-//        FileSystemResource resource = new FileSystemResource(arrayOfUsers, User.class);
-//        SeLionDataProvider dataProvider =null;
-//        try {
-//            dataProvider=DataProviderFactory.getDataProvider(resource);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        Hashtable<String, Object> allUsers = dataProvider.getDataAsHashtable();
-//        return (User) allUsers.get(testingChannel.toString());
-//    }
+//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Prototype1688.app";
+    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Beta1688.app";
 
     @DataProvider(name="tactUserInfo")
     public Object[][] getYamlNewDataProvider() throws IOException {
@@ -61,13 +46,6 @@ public class IOSDailyBuildBasicCases {
         SeLionDataProvider dataProvider = DataProviderFactory.getDataProvider(resource);
         return dataProvider.getDataByKeys(new String[] {testingChannel.toString()});
     }
-
-//    @DataProvider(name="yamlDataProvider")
-//    public Object[][] getYamlDataProvider() throws IOException {
-//        FileSystemResource resource = new FileSystemResource("src/main/resources/testData/ListOfUser.yaml", UserInfor.class);
-//        SeLionDataProvider dataProvider = DataProviderFactory.getDataProvider(resource);
-//        return dataProvider.getAllData();
-//    }
 
     @BeforeClass(alwaysRun = true)
     public void setUpClass() throws Exception {

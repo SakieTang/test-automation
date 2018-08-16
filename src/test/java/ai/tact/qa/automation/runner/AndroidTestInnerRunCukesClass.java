@@ -102,7 +102,10 @@ public class AndroidTestInnerRunCukesClass {
             ,glue = ("ai.tact.qa.automation.steps")
             ,tags={"" +
                 "@createLead," +
-                "@P1"}
+                "@noteAndroid," +
+                "@logAndroid," +
+                "@P1"
+                }
             , format = {
             "pretty",
             "json:target/report/android/TactLeadFeatureRunCukesNoReset.json"}

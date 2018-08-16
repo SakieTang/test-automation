@@ -33,32 +33,37 @@ public class WebCommonSteps implements En {
             }
 
             switch (container) {
-                case "thread":
+                case "Thread":
                     container = "www.thread.id/service3/";
                     break;
-                case "cisco spark":
+                case "Cisco Spark":
                     container = "teams.webex.com/signin";
                     break;
-                case "amazon":
+                case "Amazon":
                     container = "developer.amazon.com/alexa";
                     break;
             }
             OpenHelper.OpenThread(container);
         });
 
-        When("^WebCommon: I login with \"([^\"]*)\" user account and password$", (String channelName) -> {
+        When("^WebCommon: I login with \"(Thread|Cisco Spark|Amazon)\" user account \"([^\"]*)\" and password \"([^\"]*)\"$", (String channelName, String account, String pwd) -> {
             log.info("^WebCommon: I login with " + channelName + " user account and password$");
             ThreadNavigatePage threadNavigatePage = new ThreadNavigatePage();
             ThreadLoginHomePage threadLoginHomePage = new ThreadLoginHomePage();
             SparkLoginHomePage sparkLoginHomePage = new SparkLoginHomePage();
             AlexaLoginHomePage alexaLoginHomePage = new AlexaLoginHomePage();
+            String accountName = account;
+            String accountPwd = pwd;
 
-            channelName = channelName.toLowerCase();
-            String accountName = CustomPicoContainer.getInstance().getUser().getAiChannelAccount();
-            String accountPwd = CustomPicoContainer.getInstance().getUser().getAiChannelAccountPwd();
+            if (DriverUtils.isTextEmpty(account)) {
+                accountName=CustomPicoContainer.getInstance().getUser().getAiChannelAccount();
+            }
+            if (DriverUtils.isTextEmpty(pwd)) {
+                accountPwd=CustomPicoContainer.getInstance().getUser().getAiChannelAccountPwd();
+            }
 
             switch (channelName) {
-                case "thread":
+                case "Thread":
 //                    accountName = CustomPicoContainer.getInstance().getWebUserInfor().getThreadAccount();    //"automation.thread@gmail.com"
 //                    accountPwd = CustomPicoContainer.getInstance().getWebUserInfor().getThreadAccountPwd();
                     log.info(channelName + " : " + accountName + "/" + accountPwd);
@@ -88,7 +93,7 @@ public class WebCommonSteps implements En {
                     threadLoginHomePage.getLogInButton().click();
 
                     break;
-                case "cisco spark":
+                case "Cisco Spark":
 //                    accountName = CustomPicoContainer.getInstance().getWebUserInfor().getCiscoSparkAccount();   //automation.ciscoSpark@gmail.com
 //                    accountPwd = CustomPicoContainer.getInstance().getWebUserInfor().getCiscoSparkAccountPwd(); //Tact0218
                     log.info(channelName + " : " + accountName + "/" + accountPwd);
@@ -113,7 +118,7 @@ public class WebCommonSteps implements En {
                     System.out.println("the spin is invisible");
 
                     break;
-                case "amazon":
+                case "Amazon":
 //                    accountName = CustomPicoContainer.getInstance().getWebUserInfor().getAlexaAccount();    //automation.amazonAlexa@gmail.com
 //                    accountPwd = CustomPicoContainer.getInstance().getWebUserInfor().getAlexaAccountPwd();  //Tact0218
                     log.info(channelName + " : " + accountName + "/" + accountPwd);

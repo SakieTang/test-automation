@@ -11,7 +11,7 @@ Feature: ContactsFeature
     Then AddContact: I input a user name "<contactName>" and "<isSave>"
     And Contact: I search this "Contact" from recent field and select it
     When Common: I am waiting for syncing done
-    Then API: I check Object "Contact" saved in salesforce
+    Then API: I check Object "Contact" is "saved" in salesforce
     And Common: I click back icon
     When API: I delete Object "Contact" from salesforce and wait for "60" sec
 
@@ -37,7 +37,7 @@ Feature: ContactsFeature
   @P1
   @MobileTest
   @note
-  Scenario Outline: Add Note to a contact w/ sync SF and verify in SF(API), then delete from SF(API)
+  Scenario Outline: Add Note to a contact w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "FirstN LastN" from recent field and select it
     Then Contacts: I search one user "FirstN LastN" from contacts list and select it
@@ -49,13 +49,85 @@ Feature: ContactsFeature
     When Common: I switch to "Notebook" page from tab bar
     Then Notebook: I search this "note" from Notebook and select it
     When Common: I am waiting for syncing done
-    Then API: I check activity "Note" saved in salesforce
-    And Notebook: I click back icon back to more page
+    Then API: I check activity "Note" is "saved" in salesforce
+    And Common: I click back icon
+    When API: I delete activity "Note" from salesforce
+    Then Notebook: I veirfy deleted "note" from Notebook page
+    And Common: I click back icon
 
     Examples:
       | isSync | titleText      | bodyText | isSave |
       | do     | contact_note   |          | yes    |
 
+  @P2
+  @android
+  @noteAndroid
+  Scenario Outline: Add Note to a contact w/  checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "FirstN LastN" from recent field and select it
+    Then Contacts: I search one user "FirstN LastN" from contacts list and select it
+    And Tact-Pin: I see a Tact pin icon display
+    When Tact-Pin: I click Tact pin icon and select "Note" option
+    Then Tact-Pin: I create a new note "<isSync>" sync to SF, "<titleText>" title and "<bodyText>" body
+    And Tact-Pin: I "<isSave>" save new created
+    And Contacts: I search this "note" from "Contact" page and select it
+    When Common: I am waiting for syncing done
+    Then API: I check activity "Note" is "saved" in salesforce
+    And Contacts: I delete this Activity
+    And API: I check activity "Note" is "deleted" in salesforce
+
+    Examples:
+      | isSync | titleText      | bodyText | isSave |
+      | do     | contact_note   |          | yes    |
+
+  @P1
+  @MobileTest
+  @Log
+  Scenario Outline: Add Log to a contact w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "LastN, FirstN" from recent field and select it
+    Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
+    And Tact-Pin: I see a Tact pin icon display
+    When Tact-Pin: I click Tact pin icon and select "Log" option
+    Then Tact-Pin: I create a new log with "<subjectOption>" with "<subject>" subject, "<Name>" name, "<relatedTo>" related to, "<dueDate>" due Date, "<Comments>" comments, "<priorityOption>" priority and "<statusOption>" status
+    And Tact-Pin: I "<isSave>" save new created
+    And Contacts: I click back icon after created Salesflow activities
+    When Common: I switch to "Notebook" page from tab bar
+    Then Notebook: I search this "log" from Notebook and select it
+    When Common: I am waiting for syncing done
+    Then API: I check activity "Log" is "saved" in salesforce
+    And Common: I click back icon
+    When API: I delete activity "Log" from salesforce
+    Then Notebook: I veirfy deleted "log" from Notebook page
+    And Common: I click back icon
+
+    Examples:
+       | subjectOption | subject       | Name      | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
+#       | w/o           | w/o           | w/o       | w/o       | no      | w/o      | w/o            | w/o          | w/o    |
+       | Send Quote    | contact_log   | test      | w/o       | no      | testing  | High           | Not Started  | yes    |
+
+  @P2
+  @android
+  @logAndroid
+  Scenario Outline: Add Log to a contact w/  checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "LastN, FirstN" from recent field and select it
+    Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
+    And Tact-Pin: I see a Tact pin icon display
+    When Tact-Pin: I click Tact pin icon and select "Log" option
+    Then Tact-Pin: I create a new log with "<subjectOption>" with "<subject>" subject, "<Name>" name, "<relatedTo>" related to, "<dueDate>" due Date, "<Comments>" comments, "<priorityOption>" priority and "<statusOption>" status
+    And Tact-Pin: I "<isSave>" save new created
+    And Contacts: I search this "log" from "Contact" page and select it
+    When Common: I am waiting for syncing done
+    Then API: I check activity "Log" is "saved" in salesforce
+    And Contacts: I delete this Activity
+    And API: I check activity "Log" is "deleted" in salesforce
+
+    Examples:
+       | subjectOption | subject       | Name      | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
+#       | w/o           | w/o           | w/o       | w/o       | no      | w/o      | w/o            | w/o          | w/o    |
+       | w/o           | contact_log   | w/o       | w/o       | no      | w/o      | w/o            | w/o          | yes    |
+    
   @P1
   @MobileTest
   @Task
@@ -96,24 +168,6 @@ Feature: ContactsFeature
 
   @P1
   @MobileTest
-  @Log
-  Scenario Outline: Add Log to a contact
-    When Common: I switch to "Contacts" page from tab bar
-    Then Contacts: I search one user "LastN, FirstN" from recent field and select it
-    Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
-    And Tact-Pin: I see a Tact pin icon display
-    When Tact-Pin: I click Tact pin icon and select "Log" option
-    Then Tact-Pin: I create a new log with "<subjectOption>" with "<subject>" subject, "<Name>" name, "<relatedTo>" related to, "<dueDate>" due Date, "<Comments>" comments, "<priorityOption>" priority and "<statusOption>" status
-    And Tact-Pin: I "<isSave>" save new created
-    And Contacts: I click back icon after created Salesflow activities
-
-    Examples:
-       | subjectOption | subject       | Name      | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
-#       | w/o           | w/o           | w/o       | w/o       | no      | w/o      | w/o            | w/o          | w/o    |
-       | Send Quote    | test          | test      | w/o       | no      | testing  | High           | Not Started  | yes    |
-
-  @P1
-  @MobileTest
   @Event
     Scenario Outline: Add Event to a contact
     When Common: I switch to "Contacts" page from tab bar
@@ -151,7 +205,7 @@ Feature: ContactsFeature
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "Auto.Andr Tact" from recent field and select it
     Then Contacts: I search one user "Auto.Andr Tact" from contacts list and select it
-  
+
 #  @Test
 #  Scenario: testing navigation in Android
 #    When Common: I switch to "Settings" page from tab bar

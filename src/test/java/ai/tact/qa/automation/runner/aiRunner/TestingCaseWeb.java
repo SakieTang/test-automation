@@ -143,7 +143,7 @@ public class TestingCaseWeb {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
         TestNGCucumberRunner testNGCucumberRunner;
-        //onboarding
+//        //onboarding
         testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.TactLogin.class);
         testNGCucumberRunner.runCukes();
 
