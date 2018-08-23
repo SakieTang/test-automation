@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite thread-count="1" verbose="1" name="AppiumMobileSuite" skipfailedinvocationcounts="false" junit="false"
+<suite thread-count="1" verbose="1" name="AppiumMobileSuite"
+       skipfailedinvocationcounts="false" junit="false"
        parallel="none" data-provider-thread-count="1" annotations="JDK">
 
     <parameter name="mobileNodeType" value="appium"/>
@@ -16,7 +17,7 @@
 
     <test verbose="1" name="appium-mobile-test" annotations="JDK">
         <classes>
-            <class name="ai.tact.qa.automation.runner.AndroidTactSanityTesting"/>
+            <class name="ai.tact.qa.automation.runner.AndroidProTactSanityCases"/>
         </classes>
     </test>
 </suite>

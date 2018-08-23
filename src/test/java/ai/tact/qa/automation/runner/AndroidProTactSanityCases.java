@@ -71,6 +71,7 @@ public class AndroidProTactSanityCases {
                     //for Alpha only, dev do not need this part
                     , appPackage
                     , appActivity
+                    , timeout
             }
     )
     //w/ data provider
@@ -109,34 +110,6 @@ public class AndroidProTactSanityCases {
         testNGCucumberRunner.runCukes();
     }
 
-    //ReAuth
-    @MobileTest(    //Android
-            locale = "US",
-            additionalCapabilities = {
-                    "unicodeKeyboard:true","resetKeyboard:true"
-                    ,"noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
-                    ,"fullReset:false"  //restart the iPhone/simulator and install the app
-                    //for Alpha only, dev do not need this part
-                    , appPackage
-                    , appActivity
-                    , timeout
-            }
-    )
-    //w/ data provider
-    @Test(groups = "Tact-Sanity", description = "TactDataSourcesTest", dataProvider = "tactUserInfo", dependsOnMethods = "TactOnboardingFeature")
-    void TactBeReauthExchangeFeature(User user) {
-        CustomPicoContainer.getInstance().setUser(user);
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //logout
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactLogoutRunCukesNoReset.class);
-        testNGCucumberRunner.runCukes();
-        //login
-        testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactLoginRunCukesNoReset.class);
-        testNGCucumberRunner.runCukes();
-    }
-
     //Calendar
     @MobileTest(    //iOS
             locale = "US",
@@ -147,7 +120,7 @@ public class AndroidProTactSanityCases {
                     //for Alpha only, dev do not need this part
                     , appPackage
                     , appActivity
-                    , timeout
+//                    , timeout
             }
     )
     @Test(groups = "Tact-Sanity", description = "Calendar Actions", dataProvider = "tactUserInfo", dependsOnMethods = "TactOnboardingFeature")
@@ -176,7 +149,7 @@ public class AndroidProTactSanityCases {
     )
     //w/ data provider
     @Test(groups = "Tact-Sanity", description = "TactDataSourcesTest", dataProvider = "tactUserInfo", dependsOnMethods = "TactOnboardingFeature")
-    void TactContactsFeatureRunCukesNoReset(User user) {
+    void TactContactsFeature(User user) {
         CustomPicoContainer.getInstance().setUser(user);
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
@@ -201,13 +174,87 @@ public class AndroidProTactSanityCases {
     )
     //w/ data provider
     @Test(groups = "Tact-Sanity", description = "TactDataSourcesTest", dataProvider = "tactUserInfo", dependsOnMethods = "TactOnboardingFeature")
-    void TactLeadFeatureRunCukesNoReset(User user) {
+    void TactLeadFeature(User user) {
         CustomPicoContainer.getInstance().setUser(user);
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
         //Contact
         TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactLeadFeatureRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
+
+    //AddEmail
+    @MobileTest(    //iOS
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+                    //for Alpha only, dev do not need this part
+                    , appPackage
+                    , appActivity
+//                    , timeout
+            }
+    )
+    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dataProvider = "tactUserInfo", alwaysRun = true, dependsOnMethods = "TactLeadFeature")//"")
+    void TactEmailAddedFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //AddEmailAccountFromTab
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.AddExchangeEmailFromTabFeatureRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+
+        DriverUtils.sleep(15);
+    }
+
+    //ViewEmail
+    @MobileTest(    //iOS
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+                    //for Alpha only, dev do not need this part
+                    , appPackage
+                    , appActivity
+//                    , timeout
+            }
+    )
+    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dataProvider = "tactUserInfo", alwaysRun = true, dependsOnMethods = "TactEmailAddedFeature")//"")
+    void TactVewEmailFieldFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //ViewEmailField
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.ViewEmailFieldFromTabFeatureRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
+
+    //ReAuth
+    @MobileTest(    //Android
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true"
+                    ,"noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    ,"fullReset:false"  //restart the iPhone/simulator and install the app
+                    //for Alpha only, dev do not need this part
+                    , appPackage
+                    , appActivity
+            }
+    )
+    //w/ data provider
+    @Test(groups = "Tact-Sanity", description = "Re_auth exchange", dataProvider = "tactUserInfo", dependsOnMethods = "TactEmailAddedFeature")
+    void TactBeReauthExchangeFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //reauth exchange account
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactReauthExchangeRunCukesNoReset.class);
         testNGCucumberRunner.runCukes();
     }
 
@@ -225,7 +272,7 @@ public class AndroidProTactSanityCases {
             }
     )
     //w/ data provider
-    @Test(groups = "Tact-Sanity", description = "Get Tact Version", dependsOnMethods = "TactOnboardingFeature")
+    @Test(groups = "Tact-Sanity", description = "Get Tact Version", alwaysRun = true, dependsOnMethods = "TactBeReauthExchangeFeature")
     void TactGetAppVersion() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
@@ -248,7 +295,7 @@ public class AndroidProTactSanityCases {
                     , timeout
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactGetAppVersion")
+    @Test(groups = "Tact-Sanity", description = "Calendar Actions", alwaysRun = true, dependsOnMethods = "TactBeReauthExchangeFeature")
     void TactEditOpptyFeature() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");

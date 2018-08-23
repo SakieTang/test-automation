@@ -36,25 +36,10 @@ public class AndroidDailyBuildBasicCases {
     private static final String DATA_PATH = "%s/%s";
     private static final UserTestingChannel testingChannel = UserTestingChannel.mobileAndroid;
 
-    private static final String appPackage = "appPackage:com.tactile.tact";
+    private static final String appPackage = "appPackage:com.tactile.tact.alpha";
     private static final String appActivity = "appActivity:com.tactile.tact.onboarding.SignInActivity";
-//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-alpha-debug1529.apk";
-    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-production-release1529.apk";
-
-//    private User getUserDataFromYaml() {
-//        String fileDir = "src/main/resources/testData/ArrayOfUser.yaml";
-//        String arrayOfUsers = String.format(DATA_PATH, System.getProperty("user.dir"), fileDir);
-//
-//        FileSystemResource resource = new FileSystemResource(arrayOfUsers, User.class);
-//        SeLionDataProvider dataProvider =null;
-//        try {
-//            dataProvider=DataProviderFactory.getDataProvider(resource);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        Hashtable<String, Object> allUsers = dataProvider.getDataAsHashtable();
-//        return (User) allUsers.get(testingChannel.toString());
-//    }
+    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-alpha-debug1601.apk";
+//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-production-release1531.apk";
 
     @DataProvider(name="tactUserInfo")
     public Object[][] getYamlNewDataProvider() throws IOException {
@@ -67,33 +52,6 @@ public class AndroidDailyBuildBasicCases {
         return dataProvider.getDataByKeys(new String[] {testingChannel.toString()});
     }
 
-//    @DataProvider(name="tactUserInfo")
-//    public Object[][] getYamlDataProvider() throws IOException {
-//        FileSystemResource resource = new FileSystemResource("src/main/resources/testData/ListOfUser.yaml", UserInfor.class);
-//        SeLionDataProvider dataProvider = DataProviderFactory.getDataProvider(resource);
-//        return dataProvider.getAllData();
-//    }
-
-//=======
-//import java.util.logging.Level;
-//import java.util.logging.Logger;
-//
-//public class AndroidDailyBuildBasicCases {
-//
-//    private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
-//    private static final String appPackage = "appPackage:com.tactile.tact";
-//    private static final String appActivity = "appActivity:com.tactile.tact.onboarding.SignInActivity";
-////    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-alpha-debug1529.apk";
-//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-production-release1529.apk";
-//
-//    @DataProvider(name="tactUserInfo")
-//    public Object[][] getYamlDataProvider() throws IOException {
-//        FileSystemResource resource = new FileSystemResource("src/main/resources/testData/ListOfUser.yaml", UserInfor.class);
-//        SeLionDataProvider dataProvider = DataProviderFactory.getDataProvider(resource);
-//        return dataProvider.getAllData();
-//    }
-//
-//>>>>>>> c4185b1... - Stop selenium server stops
     @BeforeClass(alwaysRun = true)
     public void setUpClass() throws Exception {
         log.info("TestRunner - BeforeClass - setUpClass");
@@ -149,8 +107,8 @@ public class AndroidDailyBuildBasicCases {
     )
     //w/ data provider
     @Test(groups = "Tact-Sanity", description = "TactDataSourcesTest", dataProvider = "tactUserInfo", dependsOnMethods = "TactOnboardingFeature")
-    void TactAddEmailFeature(UserInfor userInfor) throws InterruptedException {
-        CustomPicoContainer.getInstance().setUserInfor(userInfor);
+    void TactAddEmailFeature(User user) throws InterruptedException {
+        CustomPicoContainer.getInstance().setUser(user);
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 

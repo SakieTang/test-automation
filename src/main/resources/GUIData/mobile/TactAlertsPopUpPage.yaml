@@ -82,6 +82,11 @@ elements:
       US: "//XCUIElementTypeButton[@name='Resync']"
     android:
       US: ""
+  deleteTaskButton:
+    ios:
+      US: "//XCUIElementTypeButton[contains(@name, 'Delete')]"
+    android:
+      US: ""
 pageTitle:
   US: "page_object"
 pageValidators: [

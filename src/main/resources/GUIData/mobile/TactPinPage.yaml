@@ -44,7 +44,7 @@ elements:
       US: "//android.widget.TextView[@text='Edit']"
   activityViewPageDeleteButton:
     ios:
-      US: ""
+      US: "//XCUIElementTypeStaticText[contains(@name, 'Delete ')]"
     android:
       US: "//android.widget.TextView[@text='Delete']"
 pageTitle:

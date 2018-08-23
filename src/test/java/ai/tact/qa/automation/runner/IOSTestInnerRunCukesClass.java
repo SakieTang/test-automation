@@ -40,7 +40,7 @@ public class IOSTestInnerRunCukesClass {
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Email.feature")
             ,glue = ("ai/tact/qa/automation/steps")
-            ,tags={"@P0"}
+            ,tags={"@ConnectGmailTabBar,@ConnectExchangeTabBar"}
             , format = {
                     "pretty",
                     "json:target/report/ios/AddEmailFromTabFeatureRunCukesNoReset.json"}
@@ -106,7 +106,7 @@ public class IOSTestInnerRunCukesClass {
             ,tags={"@reauthExchange"}
             , format = {
             "pretty",
-            "json:target/report/ios/TactLogoutRunCukesNoReset.json"}
+            "json:target/report/ios/TactReauthExchangeAccountRunCukesNoReset.json"}
     )
     public class TactReauthExchangeRunCukesNoReset extends AbstractTestNGCucumberTests {
         @Test

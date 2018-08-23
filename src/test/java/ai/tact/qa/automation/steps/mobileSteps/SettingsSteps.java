@@ -163,18 +163,22 @@ public class SettingsSteps implements En {
             if (DriverUtils.isIOS()) {
                 noPolicyLoc = "//XCUIElementTypeStaticText[@name=\"There is no policy for this client.\"]";
             } else {
+                DriverUtils.sleep(10);
                 noPolicyLoc = "//android.widget.TextView[@text='There is no policy for this client.']";
             }
             if (Grid.driver().findElementsByXPath(noPolicyLoc).size() !=0) {
-                System.out.println("should see the no policy");
+                System.out.println("see the 'no policy'");
                 exchangePage.getSubmitButton().tap();
                 DriverUtils.sleep(2);
-                tactAlertsPopUpPage.getAlertsAllowButton().tap();
+                if (DriverUtils.isIOS()) {
+                    tactAlertsPopUpPage.getAlertsAllowButton().tap();
+                }
             } else {
-                System.out.println("should not see the no policy");
+                System.out.println("not see the 'no policy'");
             }
             System.out.println("finish Connect the exchange account");
-            DriverUtils.sleep(30);
+            DriverUtils.sleep(15);
+//            DriverUtils.sleep(15);
         });
         When("^Settings: I sign in the Gmail account$", () -> {
             log.info("^Settings: I sign in the Gmail account$");
@@ -204,7 +208,7 @@ public class SettingsSteps implements En {
 
             gmailOrPhoneTextField.type(gmailEmail);
             gmailNextButton.click();
-            DriverUtils.sleep(1);
+            DriverUtils.sleep(2);
 
             //Password and next button
             TextField pwdTextField = new TextField(gmailPage.getGmailPwdWebViewTextField().getLocator());

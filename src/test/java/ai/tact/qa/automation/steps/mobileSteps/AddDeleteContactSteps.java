@@ -50,6 +50,9 @@ public class AddDeleteContactSteps implements En {
             if (!fName.isEmpty()) {
                 tactAddNewContactPage.getFirstNameTextField().setText(fName);
             }
+            if (DriverUtils.isAndroid()) {
+                DriverUtils.slideUP();
+            }
             tactAddNewContactPage.getLastNameTextField().setText(lName);
 
             if (!DriverUtils.isTextEmpty(isSave)) {

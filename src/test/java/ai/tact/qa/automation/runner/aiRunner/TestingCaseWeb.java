@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static ai.tact.qa.automation.utils.report.GenerateReport.generateAIHtml;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -59,6 +60,9 @@ public class TestingCaseWeb {
     @BeforeClass(alwaysRun = true)
     public void setUpClass() throws Exception {
         log.info("TestRunner - BeforeClass - setUpClass");
+
+        //delete file
+        GenerateReport.deleteAIReport();
         /**
          run this cmd in terminal to restart the server
          java -jar selenium-server-standalone-3.9.1.jar -port 4723
@@ -124,27 +128,14 @@ public class TestingCaseWeb {
         Appium.startServer();
     }
 
-    @WebTest
-    @Test(description = "stop selenium, start appium", dependsOnGroups = "Web")
-    public void stopSeleniumStartAppium () {
-        Selenium.stopServer();
-
-        System.out.println("selenium stopped");
-        DriverUtils.sleep(10);
-
-        Appium.startServer();
-        System.out.println("start appium");
-        DriverUtils.sleep(10);
-    }
-
     //login Tact AI account
     @MobileTest(    //iOS
             locale="US",
 //            appPath="Applications/Tact Prototype.app",
             additionalCapabilities={
                     "unicodeKeyboard:true", "resetKeyboard:true"
-                    , "noReset:true"    //continue the UserInformation. false, reinstall the app; false, continue use the app
-                    , "fullReset:false"  //restart the iPhone/simulator and install the app
+                    , "noReset:false"    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    , "fullReset:true"  //restart the iPhone/simulator and install the app
             }
     )
     @Test(description="Runs Cucumber Feature - onboarding"
@@ -156,7 +147,7 @@ public class TestingCaseWeb {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
         TestNGCucumberRunner testNGCucumberRunner;
-//        //onboarding
+        //login
         testNGCucumberRunner=new TestNGCucumberRunner(AITestInnerRunCukesClass.TactLogin.class);
         testNGCucumberRunner.runCukes();
 
@@ -177,6 +168,10 @@ public class TestingCaseWeb {
 
         log.info("Finished running");
         log.info("testNGCucumberRunner.finish(); FINISHED");
+
+        GenerateReport.generateAIHtml();
+        GenerateReport.uploadReport("aiReport2.html", true);
+//        GenerateReport.uploadAIReport();
     }
 
     private User getUserDataFromYaml(UserTestingChannel testingChannel) {

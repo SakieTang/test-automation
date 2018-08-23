@@ -64,21 +64,13 @@ public class TestingCase  {
     @Test(description = "Runs Tact - login", dataProvider = "tactUserInfo")
     void TestingCase(User user) {
         CustomPicoContainer.getInstance().setUser(user);
+        TestNGCucumberRunner testNGCucumberRunner;
 
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
-//        testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.OnboardingRunCukesFullyReset.class);
-//        testNGCucumberRunner.runCukes();
-
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactLeadsFeatureRunCukesNoReset.class);
+        testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
         testNGCucumberRunner.runCukes();
-
-
-        //Capabilities [{noReset=true, mobileNodeType=appium,
-        // language=en, locale=US, deviceName=iPhone X,
-        // fullReset=false, platform=MAC, acceptSslCerts=true,
-        // newCommandTimeout=360, platformVersion=11.2, webStorageEnabled=false, browserName=, takesScreenshot=true, javascriptEnabled=true, unicodeKeyboard=true, platformName=iOS, udid=C536BF74-716A-4003-A917-A41D59DBD6A1, resetKeyboard=true, unexpectedAlertBehaviour=ignore, app=/Users/sakie/workspace/automation/test-automation/Applications/TactNew.app, networkConnectionEnabled=false, databaseEnabled=false, version=, locationContextEnabled=false, name=ai.tact.qa.automation.runner.TestingCase:TestingCase()[ai.tact.qa.automation.utils.dataobjects.User@5b04476e]}]
 
         //Grid.driver().getCapabilities() ==> Capabilities [{app=/Users/sakie/workspace/automation/test-automation/Applications/TactNew.app, networkConnectionEnabled=false, noReset=true, mobileNodeType=appium, language=en, databaseEnabled=false, locale=US, version=, deviceName=iPhone X, fullReset=false, platform=MAC, acceptSslCerts=true, platformVersion=11.2, webStorageEnabled=false, locationContextEnabled=false, name=ai.tact.qa.automation.runner.TestingCase:TestingCase()[ai.tact.qa.automation.utils.dataobjects.User@5b04476e], browserName=, takesScreenshot=true, javascriptEnabled=true, unicodeKeyboard=true, platformName=iOS, udid=C536BF74-716A-4003-A917-A41D59DBD6A1, resetKeyboard=true, unexpectedAlertBehaviour=ignore}]
     }
@@ -89,12 +81,12 @@ public class TestingCase  {
     }
 
     @CucumberOptions(
-            features = ("src/test/resources/Features/mobile/Opportunities.feature")
+            features = ("src/test/resources/Features/mobile/Contacts.feature")
             ,glue = ("ai.tact.qa.automation.steps")
             ,tags={
-//                "@Log"
+                "@addLinkedInSalesNavigator"
 //                +
-                "@createSimpleOpportunity"
+//                "@createSimpleOpportunity"
             }
     )
     public class testCase extends AbstractTestNGCucumberTests {

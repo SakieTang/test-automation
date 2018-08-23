@@ -711,6 +711,18 @@ public class GenerateReport {
         }
     }
 
+    public static void deleteAIReport()  {
+        File testDel = new File("target/aiTestingReport.txt");
+
+        if (testDel.exists())
+        {
+            testDel.delete();
+            System.out.println("deleted");
+        } else {
+            System.out.println("already deleted");
+        }
+    }
+
     protected static String loadFileFromResources(String resourceFileDir){
         StringBuilder contentBuilder = new StringBuilder();
         try (Stream<String> stream = Files.lines( Paths.get(resourceFileDir), StandardCharsets.UTF_8))
@@ -722,7 +734,7 @@ public class GenerateReport {
         return contentBuilder.toString();
     }
 
-    protected static void uploadReprot (String reportName){
+    public static void uploadReport (String reportName, boolean isUploadNow){
         String fileDir = String.format("%s/%s", System.getProperty("user.dir"),"target");
         String today = String.format("%s%s%s", DriverUtils.currentDateInfo("yyyy")
                 , DriverUtils.currentDateInfo("mm")
@@ -738,9 +750,31 @@ public class GenerateReport {
         if ((new File(fileDir)).isFile()){
             String cmd = String.format("aws s3 cp %s s3://tact-automation-reports/%s/%s"
                     , fileDir, today, reportName);
-
             log.info("cmd ==> " + cmd);
+
+            if (isUploadNow) {
+                log.info(DriverUtils.getRunCommandReturn(new String[]{"bash", "-c", cmd}));
+                System.out.println("upload is done");
+            }
 //            log.info(DriverUtils.getRunCommandReturn(cmd));
+        } else {
+            log.warning("Please check the file dir");
+        }
+    }
+
+    public static void uploadAIReport(){
+        String fileDir = String.format("%s/%s", System.getProperty("user.dir"),"target");
+        String today = String.format("%s%s%s", DriverUtils.currentDateInfo("yyyy")
+                , DriverUtils.currentDateInfo("mm")
+                , DriverUtils.currentDateInfo("dd"));
+        String hour = DriverUtils.currentDateInfo("24hh");
+
+        fileDir = String.format("%s/aiReport.html", fileDir);
+        log.info("fileDir : " + fileDir);
+        if ((new File(fileDir)).isFile()) {
+            String cmd = String.format("aws s3 cp %s s3://tact-automation-report/%s/aiReport-%s.html"
+                    , fileDir, today, hour);
+            log.info("cmd ==> " + cmd);
         } else {
             log.warning("Please check the file dir");
         }
@@ -756,15 +790,17 @@ public class GenerateReport {
 //        System.out.println(System.getProperty("user.dir"));
 
 //        generteHtml();
-//        uploadReprot("report.html");
-//
-//        generateAIHtml();
-//        uploadReprot("aiReport.html");
+//        uploadReport("report.html", false);
 
 //        generateAIHtml();
-//        uploadReprot("aiReport2.html");
+//        uploadReport("aiReport.html", false);
 
-        uploadReprot("report.html");
-        uploadReprot("aiReport.html");
+//        generateAIHtml();
+//        uploadReport("aiReport2.html", true);
+
+//        uploadReport("report.html");
+//        uploadReport("aiReport.html");
+
+//        uploadAIReport();
     }
 }

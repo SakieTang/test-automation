@@ -10,6 +10,7 @@ import ai.tact.qa.automation.utils.LogUtil;
 
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
+import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import org.testng.Assert;
 
@@ -122,16 +123,7 @@ public class EmailSteps implements En {
             String fromEmailType = getEmailType(sendEmailAddress);
 
             //To:
-            if (toEmail.equalsIgnoreCase("anotherPlatformExchangeEmail")) {
-                toEmail = CustomPicoContainer.getInstance().getUser().getExchangeEmailAddress();
-//                if (DriverUtils.isIOS()) {
-//                    toEmail = CustomPicoContainer.getInstance().getUserInfor().getExchangeAndroidEmailAddress();
-//                }
-//                else {
-//                    toEmail = CustomPicoContainer.getInstance().getUserInfor().getExchangeIOSEmailAddress();
-//                }
-            }
-            else if (toEmail.equalsIgnoreCase("samePlatformDiffEmail")) {
+            if (toEmail.equalsIgnoreCase("samePlatformDiffEmail")) {
                 if (fromEmailType.equalsIgnoreCase("gmail")) {
                     toEmail = CustomPicoContainer.getInstance().getUser().getExchangeEmailAddress();
                     //CustomPicoContainer.getInstance().getUserInfor().getExchangeIOSEmailAddress();
@@ -140,6 +132,8 @@ public class EmailSteps implements En {
                     toEmail = CustomPicoContainer.getInstance().getUser().getGmailEmailAddress();
                     //CustomPicoContainer.getInstance().getUserInfor().getGmailIOSEmailAddress();
                 }
+            } else {
+                toEmail = toEmail;
             }
             String toEmailType = getEmailType(toEmail);
             newMessagePage.getToNewMessageTextField().sendKeys(toEmail + "\n");
@@ -197,12 +191,12 @@ public class EmailSteps implements En {
         And("^Email: I verify the email$", () -> {
             log.info("^Email: I verify the send email$");
 
-            log.info("isSendEmail " + isSendEmail + "; isSaveDraftEmail " + isSaveDraftEmail + "\nloc " + getSubjectLoc());
+            log.info("isSendEmail " + isSendEmail + "; isSaveDraftEmail " + isSaveDraftEmail + "\nloc " + getEmailFieldLoc("emailSubject", sendEmailSubjectText));
 
             DriverUtils.scrollToTop();
 
-            System.out.println("before Assert.assertTrue(Grid.driver().findElementsByXPath(getSubjectLoc()).size() != 0, " + (Grid.driver().findElementsByXPath(getSubjectLoc()).size() != 0) );
-            Assert.assertTrue(Grid.driver().findElementsByXPath(getSubjectLoc()).size() != 0, "Did not find the expected email");
+            System.out.println("before Assert.assertTrue(Grid.driver().findElementsByXPath(getEmailFieldLoc(\"emailSubject\", sendEmailSubjectText)).size() != 0, " + (Grid.driver().findElementsByXPath(getEmailFieldLoc("emailSubject", sendEmailSubjectText)).size() != 0) );
+            Assert.assertTrue(Grid.driver().findElementsByXPath(getEmailFieldLoc("emailSubject", sendEmailSubjectText)).size() != 0, "Did not find the expected email");
             DriverUtils.sleep(5);
         });
         When("^Email: I connect with \"([^\"]*)\" email account inside Email tab bar$", (String emailOption) -> {
@@ -223,6 +217,13 @@ public class EmailSteps implements En {
                 tactMailBoxesPage.getExchangeGmailConnectButton().tap();
             }
         });
+        And("^Email: I verify the email field \"(emailFrom|emailDate|emailSubject|emailBody)\" with \"([^\"]*)\"$", (String emailField, String fieldValue) -> {
+            log.info("^Email: I verify the email field " + emailField + " with " + fieldValue + "$");
+
+            Assert.assertTrue(Grid.driver().findElementsByXPath(getEmailFieldLoc(emailField, fieldValue)).size() != 0, "Did not find the expected email");
+            DriverUtils.sleep(3);
+
+        });
     }
 
     public boolean isGmailType(String email){
@@ -235,7 +236,13 @@ public class EmailSteps implements En {
     }
 
     public String getSubjectLoc() {
-        String emailSubjectLoc = "//*[contains(@name, 'subjectText')]";
+        TactMailBoxesPage tactMailBoxesPage = new TactMailBoxesPage();
+        String emailSubjectLoc = null;
+        if (DriverUtils.isIOS()){
+            emailSubjectLoc = "//*[contains(@name, 'subjectText')]";
+        } else {
+            emailSubjectLoc = "//*[contains(@text, 'subjectText')]";
+        }
 
         //only show 38 chars
         if (sendEmailSubjectText.length() > 30) {
@@ -247,6 +254,39 @@ public class EmailSteps implements En {
         }
         log.info("emailSub Loc" + emailSubjectLoc);
         return emailSubjectLoc;
+    }
+
+    public String getEmailFieldLoc(String emailField, String fieldValue) {
+        TactMailBoxesPage tactMailBoxesPage = new TactMailBoxesPage();
+        String emailFieldLoc = null;
+
+        switch(emailField) {
+            case "emailFrom":
+                emailFieldLoc = tactMailBoxesPage.getEmailFromLabel().getLocator();
+                emailFieldLoc = emailFieldLoc.replaceAll("fromText", fieldValue);
+                break;
+            case "emailDate":
+                emailFieldLoc = tactMailBoxesPage.getEmailDateLabel().getLocator();
+                emailFieldLoc = emailFieldLoc.replaceAll("dateText", fieldValue);
+                break;
+            case "emailSubject":
+                emailFieldLoc = tactMailBoxesPage.getEmailSubjectLabel().getLocator();
+                emailFieldLoc = emailFieldLoc.replaceAll("subjectText", fieldValue);
+
+                //only show 38 chars
+                if (DriverUtils.isIOS() && fieldValue.length() > 30) {
+                    //38 chars + ...
+                    emailFieldLoc = emailFieldLoc.replaceAll(fieldValue,fieldValue.substring(0,30));
+                }
+
+                break;
+            case "emailBody":
+                emailFieldLoc = tactMailBoxesPage.getEmailTextBodyLabel().getLocator();
+                emailFieldLoc = emailFieldLoc.replaceAll("textBodyText", fieldValue);
+                break;
+        }
+
+        return emailFieldLoc;
     }
 
     public String getEmailType(String emailAddress) {

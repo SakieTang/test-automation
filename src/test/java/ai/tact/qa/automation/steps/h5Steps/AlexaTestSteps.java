@@ -112,10 +112,11 @@ public class AlexaTestSteps implements En {
                         expectedOutput=String.format("%s", ((AlexaResponseInfo) allUsers.get(cmd)).getOutputSpeechSSML()).replaceAll(":\\\\", ":");
 
                         if (alexaTestPage.getJSonOutputSpeechSSMLLabel().getElements().size() > 1) {
-                            //resize the screen
-                            if (DriverUtils.getCurrentBrowserScreenWidth() < DriverUtils.getCurrentMonitorScreenWidth()) {
-                                DriverUtils.resizeBrowserToMonitorSize();
-                            }
+//                            //resize the screen
+//                            if (DriverUtils.getCurrentBrowserScreenWidth() < DriverUtils.getCurrentMonitorScreenWidth()) {
+//                                DriverUtils.resizeBrowserToMax();
+//                                DriverUtils.sleep(2);
+//                            }
 
                             System.out.println("more than one element");
                             List<WebElement> jSonOutputSpeechSSMLS=alexaTestPage.getJSonOutputSpeechSSMLLabel().getElements();
@@ -228,7 +229,7 @@ public class AlexaTestSteps implements En {
             if (alexaTestPage.getJSonOutputSpeechSSMLLabel().getElements().size() > 1) {
                 //resize the screen
                 if (DriverUtils.getCurrentBrowserScreenWidth() < DriverUtils.getCurrentMonitorScreenWidth()) {
-                    DriverUtils.resizeBrowserToMonitorSize();
+                    DriverUtils.resizeBrowserToMax();
                 }
 
                 System.out.println("more than one element");
@@ -519,7 +520,7 @@ public class AlexaTestSteps implements En {
             String s=String.format("%s.animate({ scrollLeft: \"%dpx\" })", "$(\"div[id='right'] > div[class='ace_scroller']\")", -scrollToLeft+50);
             System.out.println(s);
             js.executeScript(s);
-            DriverUtils.sleep(5);
+            DriverUtils.sleep(3);
             System.out.println("after waiting, then scroll back");
             scrollToLeft = 0;
         }

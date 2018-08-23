@@ -67,7 +67,7 @@ public class AndroidTestInnerRunCukesClass {
             ,tags={"@reauthExchange"}
             , format = {
             "pretty",
-            "json:target/report/android/TactLogoutRunCukesNoReset.json"}
+            "json:target/report/android/TactReauthExchangeAccountRunCukesNoReset.json"}
     )
     public class TactReauthExchangeRunCukesNoReset extends AbstractTestNGCucumberTests {
         @Test
@@ -83,6 +83,8 @@ public class AndroidTestInnerRunCukesClass {
 //            ,tags={"@P1"}
             , tags={
                 "@createContact," +
+                "@noteAndroid," +
+                "@logAndroid," +
                 "@P1"
                 }
             , format = {
@@ -162,16 +164,31 @@ public class AndroidTestInnerRunCukesClass {
 
     }
 
-    //Email
+    //AddEmail
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Email.feature")
-            ,glue = ("ai/tact/qa/automation/steps/mobileSteps")
+            ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"@ConnectExchangeTabBar"}
             , format = {
             "pretty",
             "json:target/report/android/AddEmailFromTabFeatureRunCukesNoReset.json"}
     )
     public class AddExchangeEmailFromTabFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
+        @Test
+        private void test(){ System.out.println("@Test Contacts Feature RunCukesTest"); }
+
+    }
+
+    //ViewEmailFields
+    @CucumberOptions(
+            features = ("src/test/resources/Features/mobile/Email.feature")
+            ,glue = ("ai/tact/qa/automation/steps")
+            ,tags={"@ViewExchangeEmail"}
+            , format = {
+            "pretty",
+            "json:target/report/android/ViewEmailFromTabFeatureRunCukesNoReset.json"}
+    )
+    public class ViewEmailFieldFromTabFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
         @Test
         private void test(){ System.out.println("@Test Contacts Feature RunCukesTest"); }
 

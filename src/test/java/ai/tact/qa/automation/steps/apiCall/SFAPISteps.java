@@ -6,6 +6,7 @@ import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.dataobjects.User;
 import ai.tact.qa.automation.utils.dataobjects.UserTestingChannel;
+import com.paypal.selion.platform.asserts.SeLionAsserts;
 import com.paypal.selion.platform.dataprovider.DataProviderFactory;
 import com.paypal.selion.platform.dataprovider.SeLionDataProvider;
 import com.paypal.selion.platform.dataprovider.impl.FileSystemResource;
@@ -39,25 +40,17 @@ public class SFAPISteps implements En {
 
     public SFAPISteps() {
 
-        Given("^API: I get SF access information$", () -> {
-            log.info("^API: I get SF access information$");
-        });
-
-        When("^API: I check Object \"(Task|Event|Note|Contact|Account|Lead|Opportunity)\" with field \"([^\"]*)\" value \"([^\"]*)\"$", (SFOBJECT sfobject, String field, String value) -> {
-            log.info("^API: I check Object " + sfobject.toString() + " with field " + field + " value " + value + "$");
-
-            String lName = AddDeleteLeadSteps.leadName;
-            System.out.println("lastName : " + lName );
-//            boolean isRecordExisting = isRecordExisting(sfobject, field, value);
-//            System.out.println("is existing ? " + isRecordExisting);
-        });
-
         Then("^API: I check Object \"(Contact|Account|Lead|Opportunity)\" is \"(saved|deleted)\" in salesforce$", (String objName, String option) -> {
             log.info("^API: I check Object " + objName + " is " + option + " saved in salesforce$");
 
             //get name field value
             String nameValue;
             SFOBJECT sfObject;
+            long startTime = 0;
+            long endTime = 0;
+            long waitingTime = 0;
+            boolean isRecordExisting = false;
+
             switch (objName) {
                 case "Contact":
                     nameValue = AddDeleteContactSteps.contactName;
@@ -80,14 +73,46 @@ public class SFAPISteps implements En {
                     sfObject = SFOBJECT.Contact;
             }
 
-            boolean isRecordExisting = isRecordExisting(sfObject, "name", nameValue);
             //saved|deleted
             switch (option) {
                 case "saved":
+
+                    //waiting for 2 mins for Object upload to SF
+                    startTime = System.currentTimeMillis();
+                    isRecordExisting = false;
+                    while (!isRecordExisting && waitingTime < 120) {
+                        //before checking time
+                        endTime = System.currentTimeMillis();
+                        isRecordExisting = isRecordExisting(sfObject, "name", nameValue);
+
+                        waitingTime = (endTime - startTime)/1000;
+                        if (isRecordExisting || waitingTime > 120) {
+                            System.out.println("waiting time " + waitingTime);
+                            break;
+                        }
+                        DriverUtils.sleep(30);
+                    }
+
                     System.out.println("is existing? " + isRecordExisting);
                     break;
                 case "deleted":
-                    System.out.println("is existing? " + isRecordExisting);
+
+                    //waiting for 2 mins for Object deleted to SF
+                    startTime = System.currentTimeMillis();
+                    isRecordExisting = true;
+                    while (!isRecordExisting && waitingTime < 120) {
+                        //before checking time
+                        endTime = System.currentTimeMillis();
+                        isRecordExisting = isRecordExisting(sfObject, "name", nameValue);
+
+                        waitingTime = (endTime - startTime)/1000;
+                        if (!isRecordExisting || waitingTime > 120) {
+                            System.out.println("waiting time " + waitingTime);
+                            break;
+                        }
+                        DriverUtils.sleep(30);
+                    }
+                    System.out.println("is deleted? " + !isRecordExisting);
                     break;
             }
 
@@ -125,23 +150,20 @@ public class SFAPISteps implements En {
                     sfObject = SFOBJECT.Contact;
             }
             deleteRecord(sfObject, "name", nameValue);
-//            if (DriverUtils.isAndroid()) {
-//                DriverUtils.sleep(30);
-//                System.out.println("after 30 sec waiting");
-//                DriverUtils.sleep(20);
-//                System.out.println("after 20 sec waiting");
-//                DriverUtils.sleep(waitingTime - 30 - 20);
-//            }
 
             DriverUtils.sleep(waitingTime);
         });
-        Then("^API: I check activity \"(Note|Log|Task|Event)\" is \"(saved|deleted)\" in salesforce$", (String activityOption, String option) -> {
+        Then("^API: I verify activity \"(Note|Log|Task|Event)\" is \"(saved|deleted)\" in salesforce$", (String activityOption, String option) -> {
             log.info("^API: I check activity " + activityOption + " is " + option + " in salesforce$");
 
             //get name field value
             SFACTIVITY sfactivity;
             String fieldName;
             String fieldValue;
+            boolean isRecordExisting;
+            long startTime = 0;
+            long endTime = 0;
+            long waitingTime = 0;
             //    Task, Event, Log    //subject
             //    Note,               //title
             switch (activityOption) {
@@ -172,20 +194,53 @@ public class SFAPISteps implements En {
                     fieldValue = TactPinSteps.logSubject;
             }
 
-            boolean isRecordExisting = isRecordExisting(sfactivity, fieldName, fieldValue);
-
             //saved|deleted
             switch (option) {
                 case "saved":
+
+                    //waiting for 2 mins for Activity upload to SF
+                    startTime = System.currentTimeMillis();
+                    isRecordExisting = false;
+                    while (!isRecordExisting && waitingTime < 120) {
+                        //before checking time
+                        endTime = System.currentTimeMillis();
+                        isRecordExisting = isRecordExisting(sfactivity, fieldName, fieldValue);
+
+                        waitingTime = (endTime - startTime)/1000;
+                        if (isRecordExisting || waitingTime > 120) {
+                            System.out.println("waiting time " + waitingTime);
+                            break;
+                        }
+                        DriverUtils.sleep(30);
+                    }
+
                     System.out.println("is existing? " + isRecordExisting);
                     break;
                 case "deleted":
-                    System.out.println("is existing? " + isRecordExisting);
+
+                    //waiting for 2 mins for Activity deleted to SF
+                    startTime = System.currentTimeMillis();
+                    isRecordExisting = true;
+                    while (isRecordExisting && waitingTime < 120) {
+                        //before checking time
+                        endTime = System.currentTimeMillis();
+                        isRecordExisting = isRecordExisting(sfactivity, fieldName, fieldValue);
+
+                        waitingTime = (endTime - startTime)/1000;
+                        if ( !isRecordExisting || waitingTime > 120) {
+                            System.out.println("waiting time " + waitingTime);
+                            break;
+                        }
+                        DriverUtils.sleep(30);
+                    }
+
+                    System.out.println("is deleted? " + !isRecordExisting);
+                    SeLionAsserts.verifyFalse(isRecordExisting, "The record was deleted and not timeout(" + waitingTime + ").");
                     break;
             }
         });
         And("^API: I delete activity \"(Note|Log|Task|Event)\" from salesforce$", (String activityOption) -> {
-            log.info("^API: I delete Object " + activityOption + " from salesforce$");
+            log.info("^API: I delete activity " + activityOption + " from salesforce$");
 
             //get name field value
             SFACTIVITY sfactivity;
@@ -379,26 +434,16 @@ public class SFAPISteps implements En {
 
     public static void main(String[] args) {
 
-        String fieldValue = "Send Quote 14390814_test";
+        String fieldValue = "Send Letter/Quote 16590822_lead_event";
         String fieldName = "subject";
-//        //    Task, Event, Log        //subject
+//        //    Task, , Log        //subject
 //        //    Note,               //title
-//
-        System.out.println(isRecordExisting(SFACTIVITY.Task, fieldName, fieldValue));
-//        String noteId = getRecordID(SFACTIVITY.Note, fieldName, fieldValue);
-//        System.out.println("id " + noteId);
-//        deleteRecord(SFACTIVITY.Note, fieldName, fieldValue);
-//
-////        deleteRecord(SFOBJECT.Lead, "name", fieldValue);
-//        DriverUtils.sleep(30);
-//        System.out.println("after 30 sec wait");
-//        DriverUtils.sleep(15);
-//        System.out.println("after 45 sec wait");
-//        DriverUtils.sleep(5);
-//        System.out.println("after 50 sec wait");    //everything will be gone after 50-60 sec
-//        DriverUtils.sleep(10);
-//        System.out.println("after 60 sec wait");
 
+        //Event
+//
+        System.out.println(isRecordExisting(SFACTIVITY.Event, fieldName, fieldValue));
+        String noteId = getRecordID(SFACTIVITY.Event, fieldName, fieldValue);
+        System.out.println("id " + noteId);
     }
 
 

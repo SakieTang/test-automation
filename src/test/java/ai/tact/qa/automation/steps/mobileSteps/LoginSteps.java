@@ -217,7 +217,7 @@ public class LoginSteps implements En {
 
             if (DriverUtils.isIOS() && processOption.equalsIgnoreCase("login"))
             {
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactAccessSFPage.getTactSyncingDataToPhoneTitleLabel());
+                WebDriverWaitUtils.waitUntilElementIsInvisible(tactAccessSFPage.getTactSyncingDataToPhoneTitleLabel());
             }
             log.info("Tact Syncing is done");
 
@@ -232,9 +232,13 @@ public class LoginSteps implements En {
             else {
                 log.info("Tact Syncing Data to Phone is done");
             }
-            if (DriverUtils.isIOS() && processOption.equalsIgnoreCase("login"))
+            if (processOption.equalsIgnoreCase("login"))
             {
-                DriverUtils.sleep(5);
+                System.out.println("now in login process, and waiting for 15 sec for Android");
+                if(DriverUtils.isAndroid()){
+                    DriverUtils.sleep(15);
+                }
+                DriverUtils.sleep(15);
             }
             //exchangeSync
 //            if (DriverUtils.isIOS() &&
@@ -250,7 +254,7 @@ public class LoginSteps implements En {
                 exchangePage.getExchangePwdTextField().sendKeys(exchangePwdText);
                 exchangePage.getSubmitButton().tap();
                 log.info("\"exchange Reauth Sync\" finished");
-                DriverUtils.sleep(2);
+                DriverUtils.sleep(10);
 
 
                 //workaround for "no policy" error msg (bug5580)
@@ -261,16 +265,18 @@ public class LoginSteps implements En {
                     noPolicyLoc = "//android.widget.TextView[@text='There is no policy for this client.']";
                 }
                 if (Grid.driver().findElementsByXPath(noPolicyLoc).size() !=0) {
-                    System.out.println("should see the no policy");
+                    System.out.println("see the 'no policy'");
                     exchangePage.getSubmitButton().tap();
                     DriverUtils.sleep(2);
                     tactAlertsPopUpPage.getAlertsAllowButton().tap();
                 } else {
-                    System.out.println("should not see the no policy");
+                    System.out.println("not see the 'no policy'");
                 }
                 System.out.println("finish Connect the exchange account");
-                DriverUtils.sleep(30);
+                DriverUtils.sleep(15);
 
+            } else {
+                log.info("Tact no reauth for exchange email");
             }
 
             //Allow "Tact" would like to send you notification in iOS

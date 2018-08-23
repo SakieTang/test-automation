@@ -11,4 +11,5 @@ Feature: Thread
     Examples:
       | account                    | pwd          | num |
 #      | mchillakanti@gmail.com | testpassword | all |
-      | mukund.chillakanti@tact.ai | temppassword | all |
+#      | mukund.chillakanti@tact.ai | temppassword | all |
+      | chuck@tact.ai              | thanksakie   | all |

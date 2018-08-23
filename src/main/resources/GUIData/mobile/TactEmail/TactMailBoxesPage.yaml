@@ -102,6 +102,26 @@ elements:
       US: "//XCUIElementTypeButton[@name='Compose']"
     android:
       US: ""
+  emailFromLabel:
+    ios:
+      US: "//*[contains(@name, 'fromText')]"
+    android:
+      US: "//*[contains(@resource-id, 'emailFrom')][contains(@text, 'fromText')]"
+  emailDateLabel:
+    ios:
+      US: "//*[contains(@name, 'dateText')]"
+    android:
+      US: "//*[contains(@resource-id, 'emailDateTextView')][contains(@text, 'dateText')]"
+  emailSubjectLabel:
+    ios:
+      US: "//*[contains(@name, 'subjectText')]"
+    android:
+      US: "//*[contains(@resource-id, 'emailSubject')][contains(@text, 'subjectText')]"
+  emailTextBodyLabel:
+    ios:
+      US: "//*[contains(@name, 'textBodyText')]"
+    android:
+      US: "//*[contains(@resource-id, 'emailText')][contains(@text, 'textBodyText')]"
 pageTitle:
   US: "page_object"
 pageValidators: [

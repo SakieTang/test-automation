@@ -15,6 +15,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Capabilities;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -659,6 +660,7 @@ public class DriverUtils {
         System.out.println("stageLoc ==> " + stageLoc);
 
         if (Grid.driver().findElementsByXPath(stageLoc).size()==0){
+            System.out.println("Not find the element, so slide up");
             slideUP();
         }
         if (Grid.driver().findElementsByXPath(stageLoc).size()!=0) {
@@ -812,6 +814,11 @@ public class DriverUtils {
         String monitorSizeString = String.format("monitor size : %f x %f", monitorWidth, monitorHeight);
         System.out.println(monitorSizeString);
         DriverUtils.resizeBrowserSize((int)monitorWidth, (int)monitorHeight);
+    }
+
+    public static void resizeBrowserToMax() {
+        Grid.driver().manage().window().maximize();
+        DriverUtils.sleep(1);
     }
 
     /**

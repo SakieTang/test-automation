@@ -27,6 +27,26 @@ elements:
       US: "//XCUIElementTypeTextField"
     android:
       US: "//TextInputLayout[@text='Title (required)']"
+  subjectButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='checkBox']/following-sibling::XCUIElementTypeStaticText[contains(@value,'Follow')]"
+    android:
+      US: "//TextInputLayout[@text='Subject (required)']"
+  subjectOptionButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='subjectOption']"
+    android:
+      US: "//android.widget.TextView[@text='subjectOption']"
+  subjectTextField:
+    ios:
+      US: "//XCUIElementTypeTextField"
+    android:
+      US: "//android.widget.EditText"
+  subjectConfirmButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='New Task']"
+    android:
+      US: "//android.widget.TextView[@text='CONFIRM']"
   iosFollowUpButton:
     ios:
       US: "//XCUIElementTypeButton[@name='checkBox']"

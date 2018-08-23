@@ -1,6 +1,7 @@
 package ai.tact.qa.automation.steps.h5Steps;
 
 import ai.tact.qa.automation.testcomponents.h5.Alexa.AlexaNavigatePage;
+import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
@@ -21,6 +22,8 @@ public class AlexaCommonSteps implements En {
             AlexaNavigatePage alexaNavigatePage = new AlexaNavigatePage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(alexaNavigatePage.getNavAlexaConsolesLink().getLocator());
+            DriverUtils.resizeBrowserToMax();
+            DriverUtils.sleep(2);
 
             //mouse move to "Your Alexa Consoles"
             Actions mouse = new Actions(Grid.driver());

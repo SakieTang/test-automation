@@ -12,7 +12,7 @@ Feature: Assistant - Cisco Spark
   @P1
   @CiscoSparkAIBasicTesting
   Scenario Outline: Sent msg to AI, and verify the reply
-    When SparkHome: I send "<inputText>" to "Spark" Assistant and "<isVerify>" verify sent msg
+    When SparkHome: I send "<inputText>" to "Cisco-Webex" Assistant and "<isVerify>" verify sent msg
     Then SparkHome: I check bot "<responseText>"
 
     Examples:

@@ -37,7 +37,7 @@ public class SparkHomeSteps implements En {
             System.out.println("after 10 sec wait");
             DriverUtils.sleep(5);
         });
-        When("^SparkHome: I send \"([^\"]*)\" to \"(Spark|Spark dev1)\" Assistant and \"([^\"]*)\" verify sent msg$", (String inputText, String stage, String isVerify) -> {
+        When("^SparkHome: I send \"([^\"]*)\" to \"(Cisco-Webex|Cisco-Webex dev1)\" Assistant and \"([^\"]*)\" verify sent msg$", (String inputText, String stage, String isVerify) -> {
             log.info("^SparkHome: I send " + inputText + " to " + stage + " Assistant and " + isVerify + " verify sent msg$");
             SparkHomePage sparkHomePage = new SparkHomePage();
 

@@ -21,6 +21,7 @@ import ai.tact.qa.automation.utils.dataobjects.IOSTime;
 
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
+import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 
 import java.util.logging.Level;
@@ -144,6 +145,7 @@ public class TactPinSteps implements En {
 
             //Title
             if (!DriverUtils.isTextEmpty(titleText)) {
+                //Not create a SF task
                 if (tactTaskPage.getSyncToSaleforceTaskSwitch().getValue().equals("1") ||
                         tactTaskPage.getSyncToSaleforceTaskSwitch().getValue().contains("ON"))
                 {
@@ -222,20 +224,23 @@ public class TactPinSteps implements En {
             log.info("^Tact-Pin: I create a new task with " + titleText + " title, " + description + " description, "
                     + name + " name and " + relatedTo + " related to,  " + isFollowUp + " followup-iOS and " + isReminder + " reminder-iOS$");
             TactTaskPage tactTaskPage = new TactTaskPage();
+            taskSubject = DriverUtils.getNameWithStamp(titleText, true);
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactTaskPage.getSyncToSaleforceTaskSwitch());
+            //Sync to SF
+            DriverUtils.switchButton("Sync", tactTaskPage.getSyncToSaleforceTaskSwitch());
 
             //Title
             if (!DriverUtils.isTextEmpty(titleText))
             {
-                if (tactTaskPage.getSyncToSaleforceTaskSwitch().getValue().equals("1") ||
-                        tactTaskPage.getSyncToSaleforceTaskSwitch().getValue().contains("ON"))
-                {
-                    log.info("SF : " + tactTaskPage.getSyncToSaleforceTaskSwitch().getValue());
-                    tactTaskPage.getSyncToSaleforceTaskSwitch().changeValue();
-                }
-                tactTaskPage.getTitleTextField().clearText();
-                tactTaskPage.getTitleTextField().sendKeys(titleText);
+                tactTaskPage.getSubjectButton().tap(tactTaskPage.getSubjectTextField());
+                tactTaskPage.getSubjectTextField().setText(taskSubject);
+                System.out.println("taskSubject " + taskSubject);
+
+                //back to log edit page
+                tactTaskPage.getSubjectConfirmButton().tap();
+//                tactTaskPage.getSubjectConfirmButton().tap(tactTaskPage.getSyncToSaleforceTaskSwitch());
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactTaskPage.getSyncToSaleforceTaskSwitch());
             }
             //Description
             if (!DriverUtils.isTextEmpty(description))
@@ -402,105 +407,115 @@ public class TactPinSteps implements En {
         });
         And("^Tact-Pin: I \"([^\"]*)\" sync to Salesforce event with \"([^\"]*)\" name, \"([^\"]*)\" related to, \"([^\"]*)\" attendees and \"([^\"]*)\" assigned to$", (String isSyncToSF, String name, String relatedTo, String attendees, String assignedTo) -> {
             log.info("^Tact-Pin: I " + isSyncToSF + " sync to Salesforce event with " + name + " name, " + relatedTo + " related to, " + attendees + " attendees and " + assignedTo + " assigned to$");
-            TactEventPage tactEventPage = new TactEventPage();
-            TactSFDetailsEventPage tactSFDetailsEventPage = new TactSFDetailsEventPage();
-            TactSelectOptionPage tactSelectOptionPage = new TactSelectOptionPage();
-            TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
 
-            //Sync salesforce       //need to modify this part<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            //0 - Salesforce Task OFF, 1 - Salesforce Task ON (0:ios, off:Android)
-            if (DriverUtils.isIOS() && !DriverUtils.isTextEmpty(isSyncToSF))
-            {
-                if (tactEventPage.getIosSyncSFSwitch().getValue().equals("0"))
-                {
-                    tactEventPage.getIosSyncSFSwitch().changeValue();
-                }
+            if (DriverUtils.isIOS()) {
+                TactEventPage tactEventPage=new TactEventPage();
+                TactSFDetailsEventPage tactSFDetailsEventPage=new TactSFDetailsEventPage();
+                TactSelectOptionPage tactSelectOptionPage=new TactSelectOptionPage();
+                TactSearchContactsPage tactSearchContactsPage=new TactSearchContactsPage();
+
                 DriverUtils.slideDown();
-                tactEventPage.getIosSFEventDetailsButton().tap(tactEventPage.getIosSFDetailsTitleLabel());
-            }
-            //name
-            if (!DriverUtils.isTextEmpty(name))
-            {
-                log.info("Do not implement yet");
-            }
-            //relatedTo
-            if (!DriverUtils.isTextEmpty(relatedTo))
-            {
-                log.info("Do not implement yet");
-            }
-            //attendees
-            if (!DriverUtils.isTextEmpty(attendees))
-            {
-                tactSFDetailsEventPage.getSfAttendeesButton().tap(tactSelectOptionPage.getAttendeesTitleLabel());
 
-                if (DriverUtils.isAndroid())
-                {
-                    tactSearchContactsPage.getAndroidAttendeesSearchIconButton().tap(tactSearchContactsPage.getSearchAllContactsTextField());
+                //Sync salesforce       //need to modify this part<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                //0 - Salesforce Task OFF, 1 - Salesforce Task ON (0:ios, off:Android)
+                if (DriverUtils.isIOS() && !DriverUtils.isTextEmpty(isSyncToSF)) {
+                    if (tactEventPage.getIosSyncSFSwitch().getValue().equals("0")) {
+                        System.out.println("need to click");
+                        tactEventPage.getIosSyncSFSwitch().changeValue();
+                    } else {
+                        System.out.println("already on");
+                    }
+                    DriverUtils.slideDown();
+                    tactEventPage.getIosSFEventDetailsButton().tap(tactEventPage.getIosSFDetailsTitleLabel());
                 }
-
-                //search the name from search field     element id changed <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                tactSearchContactsPage.getSearchAllContactsTextField().setText(attendees);
-
-                //get the name location, and click it
-                if (attendees.contains(",") && !attendees.contains(", ")) { //Testing,fname
-                    attendees = attendees.split(",")[1] + " " + attendees.split(",")[0];
+                //name
+                if (!DriverUtils.isTextEmpty(name)) {
+                    log.info("Do not implement yet");
                 }
-                else if (attendees.contains(", ")) {
-                    attendees = attendees.split(", ")[1] + " " + attendees.split(", ")[0];
+                //relatedTo
+                if (!DriverUtils.isTextEmpty(relatedTo)) {
+                    log.info("Do not implement yet");
                 }
+                //attendees
+                if (!DriverUtils.isTextEmpty(attendees)) {
+                    tactSFDetailsEventPage.getSfAttendeesButton().tap(tactSelectOptionPage.getAttendeesTitleLabel());
 
-                log.info("attendees :" + attendees);
-                String nameLoc = tactSearchContactsPage.getNameEditButton().getLocator().replace("contactName", attendees);
-                log.info("loc is ==> " + nameLoc);
-                DriverUtils.sleep(1);
+                    if (DriverUtils.isAndroid()) {
+                        tactSearchContactsPage.getAndroidAttendeesSearchIconButton().tap(tactSearchContactsPage.getSearchAllContactsTextField());
+                    }
 
-                Grid.driver().findElementByXPath(nameLoc).click();
+                    //search the name from search field     element id changed <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                    tactSearchContactsPage.getSearchAllContactsTextField().setText(attendees);
 
-                //go back to SF details page
-                if (DriverUtils.isIOS()) {
-                    tactSelectOptionPage.getIosBackToSalesforceDetailsPageButton().tap(tactSFDetailsEventPage.getSfAndAndroidSubjectButton());
-                }
-                else {
-                    tactSelectOptionPage.getSfAndAndroidSubjectConfirmButton().tap(tactSelectOptionPage.getAttendeesTitleLabel());
-                    tactSelectOptionPage.getSfAndAndroidSubjectConfirmButton().tap();
-                    DriverUtils.sleep(10);
-                    //save button did not click
+                    //get the name location, and click it
+                    if (attendees.contains(",") && !attendees.contains(", ")) { //Testing,fname
+                        attendees=attendees.split(",")[1] + " " + attendees.split(",")[0];
+                    } else if (attendees.contains(", ")) {
+                        attendees=attendees.split(", ")[1] + " " + attendees.split(", ")[0];
+                    }
+
+                    log.info("attendees :" + attendees);
+                    String nameLoc=tactSearchContactsPage.getNameEditButton().getLocator().replace("contactName", attendees);
+                    log.info("loc is ==> " + nameLoc);
+                    DriverUtils.sleep(1);
+
+                    Grid.driver().findElementByXPath(nameLoc).click();
+
+                    //go back to SF details page
+                    if (DriverUtils.isIOS()) {
+                        tactSelectOptionPage.getIosBackToSalesforceDetailsPageButton().tap(tactSFDetailsEventPage.getSfAndAndroidSubjectButton());
+                    } else {
+                        tactSelectOptionPage.getSfAndAndroidSubjectConfirmButton().tap(tactSelectOptionPage.getAttendeesTitleLabel());
+                        tactSelectOptionPage.getSfAndAndroidSubjectConfirmButton().tap();
+                        DriverUtils.sleep(10);
+                        //save button did not click
 //                    WebDriverWaitUtils.waitUntilElementIsVisible(tactSFDetailsEventPage.getSfAndAndroidSubjectButton());
+                    }
                 }
-            }
-            //assignedTo
-            if (!DriverUtils.isTextEmpty(assignedTo))
-            {
-                log.info("Do not implement yet");
-            }
-            //from Sf details to new event page
-            if (DriverUtils.isIOS() && !DriverUtils.isTextEmpty(isSyncToSF))
-            {
-                tactEventPage.getIosBackToNewEventPageButton().tap();
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactEventPage.getNewEventTitleLabel());
+                //assignedTo
+                if (!DriverUtils.isTextEmpty(assignedTo)) {
+                    log.info("Do not implement yet");
+                }
+                //from Sf details to new event page
+                if (DriverUtils.isIOS() && !DriverUtils.isTextEmpty(isSyncToSF)) {
+                    tactEventPage.getIosBackToNewEventPageButton().tap();
+                    WebDriverWaitUtils.waitUntilElementIsVisible(tactEventPage.getNewEventTitleLabel());
+                }
             }
         });
         Then("^Tact-Pin: I create a new event with \"([^\"]*)\" with \"([^\"]*)\" subject, \"([^\"]*)\" all-day event with \"([^\"]*)\" starts date at \"([^\"]*)\" from time and \"([^\"]*)\" ends date at \"([^\"]*)\" to time, \"([^\"]*)\" location and \"([^\"]*)\" description$", (String subjectOption, String subject, String isAllDayEvent, String startDate, String fromTime, String endDate, String toTime, String location, String description) -> {
             log.info("^Tact-Pin: I create a new event with " + subjectOption + " with " + subject + " subject, " + isAllDayEvent + " all-day event with " + startDate + " starts date at " + fromTime + " from time and " + endDate + " ends date at " + toTime + " to time, " + location + " location and " + description + " description$");
             TactEventPage tactEventPage = new TactEventPage();
 
+            //Not create a SF task
+            if (DriverUtils.isIOS() && tactEventPage.getIosSyncSFSwitch().getValue().equals("1"))
+            {
+                log.info("SF : " + tactEventPage.getIosSyncSFSwitch().getValue());
+                tactEventPage.getIosSyncSFSwitch().changeValue();
+            }
+
             //subject
-            if (DriverUtils.isAndroid() && !DriverUtils.isTextEmpty(subjectOption))
+            if (!DriverUtils.isTextEmpty(subjectOption)){
+                eventSubject = String.format("%s %s", subjectOption, DriverUtils.getNameWithStamp(subject, true));
+            } else {
+                eventSubject = DriverUtils.getNameWithStamp(subject, true);
+            }
+
+            if (DriverUtils.isAndroid())
             {
                 tactEventPage.getSfAndAndroidSubjectButton().tap(tactEventPage.getSfAndAndroidSubjectTextField());
-                String subjectOptionLoc = tactEventPage.getSfAndAndroidSubjectOptionButton().getLocator().replaceAll("subjectOption", subjectOption);
-                Grid.driver().findElementByXPath(subjectOptionLoc).click();
-                if (!DriverUtils.isTextEmpty(subject))
-                {
-                    tactEventPage.getSfAndAndroidSubjectTextField().sendKeys(" " + subject);
-                }
-                tactEventPage.getSfAndAndroidSubjectConfirmButton().tap();
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactEventPage.getNewEventTitleLabel());
+                tactEventPage.getSfAndAndroidSubjectTextField().sendKeys(eventSubject);
+                //get the eventSubject
+                eventSubject=tactEventPage.getSfAndAndroidSubjectTextField().getValue();
+                System.out.println("eventSubject : " + eventSubject);
+
+                //back to log edit page
+                tactEventPage.getSfAndAndroidSubjectConfirmButton().tap(tactEventPage.getSfAndAndroidEventTitleLabel());
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactEventPage.getSfAndAndroidEventTitleLabel());
+            } else {
+                tactEventPage.getIosSubjectTextField().sendKeys(eventSubject);
             }
-            if (DriverUtils.isIOS() && !DriverUtils.isTextEmpty(subject))
-            {
-                tactEventPage.getIosSubjectTextField().sendKeys(subject);
-            }
+
             //isAllDayEvent     10/10/2018    Oct 2, 2018
             if (isAllDayEvent.equalsIgnoreCase("true") &&
                     (tactEventPage.getAllDaySwitch().getValue().equals("0") ||
@@ -590,6 +605,121 @@ public class TactPinSteps implements En {
                     DriverUtils.scrollToBottom();
                 }
                 tactEventPage.getDescriptionTextField().sendKeys(description);
+            }
+        });
+        Then("^Tact-Pin: I create a new local event \"([^\"]*)\" subject, \"([^\"]*)\" all-day event with \"([^\"]*)\" starts date at \"([^\"]*)\" from time and \"([^\"]*)\" ends date at \"([^\"]*)\" to time, \"([^\"]*)\" location and \"([^\"]*)\" description$", (String subject, String isAllDayEvent, String startDate, String fromTime, String endDate, String toTime, String location, String description) -> {
+            log.info("^Tact-Pin: I create a new local event " + subject + " subject, " + isAllDayEvent + " all-day event with " + startDate + " starts date at " + fromTime + " from time and " + endDate + " ends date at " + toTime + " to time, " + location + " location and " + description + " description$");
+            TactEventPage tactEventPage = new TactEventPage();
+
+            //Create a local event - iOS only
+            //Not create a SF task
+            if (DriverUtils.isIOS() && tactEventPage.getIosSyncSFSwitch().getValue().equals("1"))
+            {
+                log.info("SF : " + tactEventPage.getIosSyncSFSwitch().getValue());
+                tactEventPage.getIosSyncSFSwitch().changeValue();
+            }
+
+            //subject
+            eventSubject = DriverUtils.getNameWithStamp(subject, true);
+            tactEventPage.getIosSubjectTextField().sendKeys(eventSubject);
+
+            //isAllDayEvent     10/10/2018    Oct 2, 2018
+            if (isAllDayEvent.equalsIgnoreCase("true") &&
+                    (tactEventPage.getAllDaySwitch().getValue().equals("0") ||
+                            tactEventPage.getAllDaySwitch().getValue().equals("OFF"))) {
+                log.info("SF : " + tactEventPage.getAllDaySwitch().getValue());
+                tactEventPage.getAllDaySwitch().changeValue();
+
+                if (!DriverUtils.isTextEmpty(startDate)) {
+                    //10/10/2018    Oct 2, 2018
+                    tactEventPage.getStartsButton().tap();
+                    IOSTime.changeDate(startDate);
+                }
+
+                if (!DriverUtils.isTextEmpty(endDate)) {
+                    //10/10/2018    Oct 2, 2018
+                    tactEventPage.getEndsButton().tap();
+                    IOSTime.changeDate(endDate);
+                }
+
+                //
+                log.info("After change the time");
+            }
+
+            //startDate
+            if (!DriverUtils.isTextEmpty(startDate) && DriverUtils.isAndroid() && AndroidDate.isDateValid(startDate))
+            {
+                tactEventPage.getStartsButton().tap();
+                androidDate.changeDate(startDate);
+            }
+            //endDate
+            if (!DriverUtils.isTextEmpty(endDate) && DriverUtils.isAndroid() && AndroidDate.isDateValid(endDate))
+            {
+                tactEventPage.getEndsButton().tap();
+                androidDate.changeDate(endDate);
+            }
+            //location
+            if (!DriverUtils.isTextEmpty(location))
+            {
+                tactEventPage.getLocationTextField().sendKeys(location);
+            }
+            //description
+            if (!DriverUtils.isTextEmpty(description))
+            {
+                if (DriverUtils.isAndroid())
+                {
+                    DriverUtils.scrollToBottom();
+                }
+                tactEventPage.getDescriptionTextField().sendKeys(description);
+            }
+        });
+        Then("^Tact-Pin: I create a SF event with \"(none|Call|Email|Meeting|Send Letter/Quote|Other)\" with \"([^\"]*)\"$", (String subjectOption, String subject) -> {
+            log.info("^Tact-Pin: I create a SF event with " + subjectOption + " with " + subject + "$");
+            TactEventPage tactEventPage = new TactEventPage();
+
+            //Create a SF event - iOS only
+            //Not create a SF task
+            if (DriverUtils.isIOS())
+            {
+                DriverUtils.slideDown();
+                if (tactEventPage.getIosSyncSFSwitch().getValue().equals("0")) {
+                    log.info("SF : " + tactEventPage.getIosSyncSFSwitch().getValue());
+                    tactEventPage.getIosSyncSFSwitch().changeValue();
+                }
+                tactEventPage.getIosSFEventDetailsButton().tap(tactEventPage.getIosSFDetailsTitleLabel());
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactEventPage.getSfAndAndroidEventTitleLabel());
+            }
+
+            //subject
+            if (!DriverUtils.isTextEmpty(subjectOption))
+            {
+                tactEventPage.getSfAndAndroidSubjectButton().tap(tactEventPage.getSfAndAndroidSubjectTextField());
+                if (!DriverUtils.isTextEmpty(subject))
+                {
+                    eventSubject=String.format("%s %s", subjectOption, DriverUtils.getNameWithStamp(subject, true));
+                    tactEventPage.getSfAndAndroidSubjectTextField().sendKeys(eventSubject);
+                } else {
+                    String subjectOptionLoc = tactEventPage.getSfAndAndroidSubjectOptionButton().getLocator().replaceAll("subjectOption", subjectOption);
+                    Grid.driver().findElementByXPath(subjectOptionLoc).click();
+                }
+            } else {
+                tactEventPage.getSfAndAndroidSubjectTextField().sendKeys(subject);
+            }
+            eventSubject = tactEventPage.getSfAndAndroidSubjectTextField().getValue();
+            System.out.println("eventSubject : " + eventSubject);
+
+            //back to log edit page
+            tactEventPage.getSfAndAndroidSubjectConfirmButton().tap(tactEventPage.getSfAndAndroidEventTitleLabel());
+            WebDriverWaitUtils.waitUntilElementIsVisible(tactEventPage.getSfAndAndroidEventTitleLabel());
+        });
+        And("^Tact-Pin: I back to New Event from Salesforce Details$", () -> {
+            log.info("^Tact-Pin: I back to New Event from Salesforce Details$");
+            TactEventPage tactEventPage = new TactEventPage();
+
+            if (DriverUtils.isIOS())
+            {
+                tactEventPage.getIosBackToNewEventPageButton().tap();
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactEventPage.getNewEventTitleLabel());
             }
         });
     }

@@ -30,6 +30,11 @@ public class TestingCaseAndroid {
     static final String appPackage = "appPackage:com.tactile.tact";//0iu9yo0,9o6fvbnkcexzasecvcxr  asezdzadc.alpha";
     private static final String DATA_PATH = "%s/%s";
     private static final UserTestingChannel testingChannel = UserTestingChannel.mobileAndroid;
+    private static final String timeout = "newCommandTimeout:300";
+
+//    private static final String appPackage = "appPackage:com.tactile.tact.alpha";
+//    private static final String appActivity = "appActivity:com.tactile.tact.onboarding.SignInActivity";
+//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-alpha-debug1601.apk";
 
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
 
@@ -69,22 +74,26 @@ public class TestingCaseAndroid {
                     , "fullReset:false"
                     , appPackage
                     , appActivity
-//                    ,"newCommandTimeout:360"
+                    , timeout
             }
     )
     //w/ data provider
     @Test(groups = "Tact-login", description = "Runs Tact - login", dataProvider = "tactUserInfo", priority = 0)
     void TactSanityTest(User user) {
         CustomPicoContainer.getInstance().setUser(user);
+        TestNGCucumberRunner testNGCucumberRunner;
 
         System.out.println("TestRunner - Test - feature");
         System.out.println("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
         //contacts
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
+        testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
         testNGCucumberRunner.runCukes();
 
 
+
+//        testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.ViewEmailFieldFromTabFeatureRunCukesNoReset.class);
+//        testNGCucumberRunner.runCukes();
     }
 
     @AfterClass(alwaysRun = true)
@@ -104,12 +113,10 @@ public class TestingCaseAndroid {
     }
 
     @CucumberOptions(
-            features = ("src/test/resources/Features/mobile/Contacts.feature")
+            features = ("src/test/resources/Features/mobile/Lead.feature")
             ,glue = ("ai.tact.qa.automation.steps")
             ,tags={"" +
-                "@logAndroid"
-                    + "," +
-                "@noteAndroid"
+                "@SFEvent"
 
                 }
     )

@@ -8,8 +8,8 @@ Feature: EmailFeature
   Scenario: Connect Gmail in Tact Email tab bar
     Given Common: I switch to "Email" page from tab bar
     When Email: I connect with "Gmail" email account inside Email tab bar
-    When Common: I switch to "Webview" driver
-    Then Settings: I sign in the Gmail account
+    Then Common: I switch to "Webview" driver
+    And Settings: I sign in the Gmail account
 #    Then Settings: I switch to "Gmail" option in Sources settings page
 #    And Settings: I disconnect the "Gmail" account
 
@@ -20,9 +20,18 @@ Feature: EmailFeature
   Scenario: Connect Exchange in Tact Email tab bar
     Given Common: I switch to "Email" page from tab bar
     When Email: I connect with "Exchange" email account inside Email tab bar
-    When Settings: I sign in the Exchange account
+    Then Settings: I sign in the Exchange account
 #    Then Settings: I switch to "Exchange" option in Sources settings page
 #    And Settings: I disconnect the "Exchange" account
+
+  @P0
+  @ViewExchangeEmail
+  @android
+  Scenario: View Android email fields (From, Date, Subtitle, Body)
+    Given Common: I switch to "Email" page from tab bar
+    And Email: I verify the email field "emailFrom" with "Automation TactiOS"
+    And Email: I verify the email field "emailSubject" with "0821-iOS to Android"
+    And Email: I verify the email field "emailBody" with "Workbench is "
   
   @P1
   @MobileTest
@@ -39,7 +48,6 @@ Feature: EmailFeature
     When Common: I switch to "Email" page from tab bar
     Then Email: I switch to "Gmail" mailType, "Inbox" option and "w/o" create a new email
     And Email: I verify the email
-
 
   @P1
   @MobileTest

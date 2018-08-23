@@ -33,8 +33,9 @@ public class IOSDailyBuildBasicCases {
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
     private static final String DATA_PATH = "%s/%s";
     private static final UserTestingChannel testingChannel = UserTestingChannel.mobileIOS;
-//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Prototype1688.app";
-    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Beta1688.app";
+//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactNew.app";
+//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Prototype1689.app";
+    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Beta1690.app";
 
     @DataProvider(name="tactUserInfo")
     public Object[][] getYamlNewDataProvider() throws IOException {

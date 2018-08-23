@@ -29,8 +29,6 @@ public class CommonSteps implements En {
         And("^Common: I switch to \"([^\"]*)\" driver$", (String driverContext) -> {
             log.info("^Common: I switch to " + driverContext + " driver$");
 
-            DriverUtils.sleep(10);
-
             if (driverContext.equalsIgnoreCase("Webview") && DriverUtils.isIOS()) {
                 DriverUtils.sleep(10);
                 log.info("-> convert To Webview driver <-");
@@ -91,8 +89,7 @@ public class CommonSteps implements En {
                 log.info("No \"Syncing data to your phone.\"");
             }
             //exchangeSync
-            if (DriverUtils.isIOS() &&
-                    Grid.driver().findElementsByXPath(tactAlertsPopUpPage.getTactExchangeSyncErrorMsgTitleLabel().getLocator()).size() != 0) {
+            if (Grid.driver().findElementsByXPath(tactAlertsPopUpPage.getTactExchangeSyncErrorMsgTitleLabel().getLocator()).size() != 0) {
                 log.info("Start waiting for \"exchange Reauth Sync\"");
                 tactAlertsPopUpPage.getReauthorizeButton().tap(exchangePage.getExchangeTitleLabel());
 
@@ -152,7 +149,7 @@ public class CommonSteps implements En {
                     tactNavigateTabBarPage.getTactEmailButton().tap();
                     resyncPopUp();
 //                    WebDriverWaitUtils.waitUntilElementIsVisible(tactNavigateTabBarPage.getTactEmailButton());
-                    if (Grid.driver().findElementsByXPath(tactMailBoxesPage.getMailBoxesTitleLabel().getLocator()).size() == 0)
+                    if (DriverUtils.isIOS() && Grid.driver().findElementsByXPath(tactMailBoxesPage.getMailBoxesTitleLabel().getLocator()).size() == 0)
                     {
                         tactMailBoxesPage.getBackToMailBoxesButton().tap();
                         WebDriverWaitUtils.waitUntilElementIsVisible(tactMailBoxesPage.getMailBoxesTitleLabel());
@@ -257,16 +254,12 @@ public class CommonSteps implements En {
                 DriverUtils.scrollToBottom();
                 WebDriverWaitUtils.waitUntilElementIsInvisible(tactSyncPage.getPendingSyncToSFLabel().getLocator());
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactSyncPage.getSyncedWithSFLabel().getLocator());
-            } else {
-                System.out.println("in Android");
-                DriverUtils.sleep(25);
-                System.out.println("after wait for 30 sec");
             }
         });
         And("^Common: I am waiting for \"(\\d+)\" sec$", (Integer time) -> {
             log.info("^Common: I am waiting for " + time + " sec$");
 
-            DriverUtils.sleep(50);
+            DriverUtils.sleep(time);
 
         });
     }

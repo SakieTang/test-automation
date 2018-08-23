@@ -8,10 +8,17 @@
     <parameter name="chromeDriverPath" value="src/test/resources/chromedriver"/>
     <parameter name="seleniumhost" value="localhost" />
     <parameter name="seleniumport" value="4723"/>
+    <parameter name="mobileNodeType" value="appium"/>
+    <parameter name="appPath" value="Applications/TactNew.app"/>
+    <parameter name="mobileAppLanguage" value="en"/>
+    <parameter name="mobilePlatform" value="IOS"/>
+    <parameter name="mobileDevice" value="iphone:11.2"/>
+    <parameter name="mobileDeviceType" value="iPhone X"/>
+    <parameter name="newCommandTimeout" value="360"/>
 
     <test verbose="1" name="DemoWeb" annotations="JDK">
         <classes>
-            <class name="ai.tact.qa.automation.WebTestingCase"/>
+            <class name="ai.tact.qa.automation.runner.aiRunner.TestingCaseWeb"/>
         </classes>
     </test>
 </suite>

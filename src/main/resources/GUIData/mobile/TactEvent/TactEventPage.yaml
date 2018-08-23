@@ -22,6 +22,11 @@ elements:
       US: "//XCUIElementTypeStaticText[@name='Subject']"
     android:
       US: ""
+  sfAndAndroidEventTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Salesforce Details']"
+    android:
+      US: "//android.widget.TextView[@text='New Salesforce Event']"
   sfAndAndroidSubjectButton:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Subject']"
@@ -39,7 +44,7 @@ elements:
       US: "//android.widget.EditText"
   sfAndAndroidSubjectConfirmButton:
     ios:
-      US: "//XCUIElementTypeButton[@name='Log Activity']"
+      US: "//XCUIElementTypeButton[@name='Salesforce Details']"
     android:
       US: "//android.widget.TextView[@text='CONFIRM']"
   allDaySwitch:

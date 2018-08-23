@@ -14,12 +14,18 @@ import ai.tact.qa.automation.utils.DriverUtils;
 
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.mobile.elements.MobileButton;
+import com.paypal.selion.platform.mobile.elements.MobileElement;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
 import cucumber.api.java8.En;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileDriver;
+import io.appium.java_client.TouchAction;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.touch.TouchActions;
 
+import java.sql.Driver;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -98,32 +104,72 @@ public class ContactsSteps implements En {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactContactsMainPage.getTactContactsTitleLabel());
                 if (DriverUtils.isAndroid())
                 {
-                    DriverUtils.sleep(0.5);
-                    MobileButton androidContactsSearchIconButton = tactSearchContactsPage.getAndroidContactsTabSearchIconButton();
-                    WebDriverWaitUtils.waitUntilElementIsVisible(androidContactsSearchIconButton);
-                    androidContactsSearchIconButton.tap();
-                    if ( (Grid.driver().findElementsByXPath(androidContactsSearchIconButton.getLocator())).size() != 0 ) {
-                        System.out.println("did not click it, need to re-click");
-//                    DriverUtils.tapXY(1160,182);
-                        Grid.driver().findElementById("menu_search").submit();
-                        System.out.println("after submit");
-                        DriverUtils.sleep(10);
-                        Grid.driver().findElementById("menu_search").click();
-                        System.out.println("after click");
-                        DriverUtils.sleep(10);
 
-                        System.out.println("another way to click");
-                        AppiumDriver driver = (AppiumDriver) Grid.driver();
+                    //click
+                    DriverUtils.sleep(1);
+                    System.out.println("*** try the new way to click");
+                    AppiumDriver driver = (AppiumDriver) Grid.driver();
+                    driver.tap(1, 1160, 182, 50);
+                    System.out.println("*** try the new way to click done");
+                    DriverUtils.sleep(2);
 
-                        TouchActions action = new TouchActions(driver);
-                        action.singleTap((WebElement)tactSearchContactsPage.getAndroidContactsTabSearchIconButton());
-                        action.perform();
+//                        Grid.driver().findElementById("Search").submit();
+//                    System.out.println("after submit");
+//                    DriverUtils.sleep(10);
 
-                        DriverUtils.sleep(2);
-                        System.out.println("after action click ");
-                        DriverUtils.sleep(10);
+//                    WebElement androidSearchIconButton = (WebElement)tactSearchContactsPage.getAndroidContactsTabSearchIconButton();
+//                    int length = androidSearchIconButton.getSize().getWidth();
+//                    int height = androidSearchIconButton.getSize().getHeight();
+//
+//                    MobileButton searchIconButton = tactSearchContactsPage.getAndroidContactsTabSearchIconButton();
+//                    Point point = ((WebElement)searchIconButton).getLocation();
+//
+//                    //capturing the stating Y co-ordinate
+//                    int getY = point.getY();
+//
+//                    //moving to the middle fo the suggestion from the Y co-ordinate
+//                    int middleY = (int) (getY + height*1.5);
+//
+//                    TouchAction ta = new TouchAction((MobileDriver) Grid.driver());
+//                    DriverUtils.sleep(1);
+//
+//                    ta.tap(length/2, middleY).perform();
 
-                    }
+
+
+//                    DriverUtils.sleep(0.5);
+//                    MobileButton androidContactsSearchIconButton = tactSearchContactsPage.getAndroidContactsTabSearchIconButton();
+//                    WebDriverWaitUtils.waitUntilElementIsVisible(androidContactsSearchIconButton);
+//                    System.out.println("Did not click the search icon button");
+//                    androidContactsSearchIconButton.tap();
+//                    if ( (Grid.driver().findElementsByXPath(androidContactsSearchIconButton.getLocator())).size() != 0 ) {
+//                        System.out.println("did not click it, need to re-click");
+////                        DriverUtils.tapXY(1160,182);
+//                        //click
+//                        System.out.println("*** try the new way to click");
+//                        AppiumDriver driver = (AppiumDriver) Grid.driver();
+//                        driver.tap(1, 1160, 182, 100);
+//                        System.out.println("*** try the new way to click done");
+//
+////                        Grid.driver().findElementById("Search").submit();
+//                        System.out.println("after submit");
+//                        DriverUtils.sleep(10);
+////                        Grid.driver().findElementById("Search").click();
+////                        System.out.println("after click");
+////                        DriverUtils.sleep(10);
+//
+//                        System.out.println("another way to click");
+////                        AppiumDriver driver = (AppiumDriver) Grid.driver();
+//
+////                        TouchActions action = new TouchActions(driver);
+////                        action.singleTap((WebElement)tactSearchContactsPage.getAndroidContactsTabSearchIconButton());
+////                        action.perform();
+//
+//                        DriverUtils.sleep(2);
+//                        System.out.println("after action click ");
+//                        DriverUtils.sleep(10);
+//
+//                    }
                     WebDriverWaitUtils.waitUntilElementIsVisible(tactSearchContactsPage.getSearchAllContactsTextField());
                 }
                 //element id changed <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -340,7 +386,7 @@ public class ContactsSteps implements En {
                 DriverUtils.sleep(30);
             }
         });
-        And("^Contacts: I search this \"(note|log|task)\" from \"(Lead|Contact)\" page and select it$", (String activityOption, String pageOption) -> {
+        And("^Contacts: I search this \"(note|log|task|event)\" from \"(Lead|Contact)\" page and select it$", (String activityOption, String pageOption) -> {
             log.info("^Contacts: I search this " + activityOption + " from " + pageOption + " page and select it$");
             TactContactObjPage tactContactObjPage = new TactContactObjPage();
             String activityName = null;
@@ -355,7 +401,11 @@ public class ContactsSteps implements En {
                 case "task":
                     activityName = TactPinSteps.taskSubject;
                     break;
+                case "event":
+                    activityName = TactPinSteps.eventSubject;
+                    break;
             }
+            System.out.println("activityName : " + activityName);
 
             if (!DriverUtils.clickOption(tactContactObjPage.getRecentActivityLabel(), "activityName", activityName)) {
                 if (activityOption.equalsIgnoreCase("task") &&
@@ -375,12 +425,19 @@ public class ContactsSteps implements En {
             TactPinPage tactPinPage = new TactPinPage();
             TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
 
-            WebDriverWaitUtils.waitUntilElementIsVisible(tactPinPage.getActivityViewPageMoreOptionsAndroidButton());
-            tactPinPage.getActivityViewPageMoreOptionsAndroidButton().tap(tactPinPage.getActivityViewPageDeleteButton());
-            tactPinPage.getActivityViewPageDeleteButton().tap(tactAlertsPopUpPage.getAlertsOKButton());
-            tactAlertsPopUpPage.getAlertsOKButton().tap();
-
-            DriverUtils.sleep(50);
+            if (DriverUtils.isAndroid()) {
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactPinPage.getActivityViewPageMoreOptionsAndroidButton());
+                tactPinPage.getActivityViewPageMoreOptionsAndroidButton().tap(tactPinPage.getActivityViewPageDeleteButton());
+                tactPinPage.getActivityViewPageDeleteButton().tap(tactAlertsPopUpPage.getAlertsOKButton());
+                tactAlertsPopUpPage.getAlertsOKButton().tap();
+            } else {
+                if (Grid.driver().findElementsByXPath(tactPinPage.getActivityViewPageDeleteButton().getLocator()).size()==0){
+                    DriverUtils.scrollToBottom();
+                }
+                tactPinPage.getActivityViewPageDeleteButton().tap(tactAlertsPopUpPage.getDeleteTaskButton());
+                tactAlertsPopUpPage.getDeleteTaskButton().tap();
+            }
+            DriverUtils.sleep(0.5);
         });
     }
 }

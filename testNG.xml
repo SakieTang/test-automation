@@ -8,14 +8,14 @@
     <parameter name="runLocally" value="false"/>
     <parameter name="mobileAppLanguage" value="en"/>
     <parameter name="mobilePlatform" value="IOS"/>
-    <parameter name="appPath" value="Applications/Tact.app"/>
+    <parameter name="appPath" value="Applications/TactNew.app"/>
     <parameter name="mobileDevice" value="iphone:11.2"/>
     <parameter name="mobileDeviceType" value="iPhone X"/>
     <parameter name="newCommandTimeout" value="360"/>
 
     <test verbose="1" name="appium-mobile-test" annotations="JDK">
         <classes>
-            <class name="ai.tact.qa.automation.runner.IOSTactSanityTesting"/>
+            <class name="ai.tact.qa.automation.runner.IOSProTactSanityCases"/>
         </classes>
     </test>
 </suite>
