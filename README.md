@@ -25,8 +25,12 @@ Setting TestNG configuration in local : -DPropertyManager.file=</br>
 1. mvn install -DskipTests </br>
 2. mvn clean </br>
 3. mvn compile </br>
-4. iOS     : mvn test / mvn test -DsuiteXmlFile=testNG.xml </br>
-   Android : mvn test -DsuiteXmlFile=testNGAndroid.xml </br>
+4. **need to start selenium server and make sure the chromedriver.exe is in the same dir as selenium server </br>
+   java -jar selenium-server-standalone-3.9.1.jar -port 4723 </br>
+5. iOS        : mvn test / mvn test -DsuiteXmlFile=testNG.xml </br>
+   Android    : mvn test -DsuiteXmlFile=testNGAndroid.xml </br>
+   ai-Web,iOS : mvn test -DsuiteXmlFile=testNGWeb.xml </br>
 OR</br>
-   iOS     : mvn install -DsuiteXmlFile=testNG.xml </br>
-   Android : mvn install -DsuiteXmlFile=testNGAndroid.xml </br>
+   iOS        : mvn install -DsuiteXmlFile=testNG.xml </br>
+   Android    : mvn install -DsuiteXmlFile=testNGAndroid.xml </br>
+   ai-Web,iOS : mvn install -DsuiteXmlFile=testNGWeb.xml </br>
