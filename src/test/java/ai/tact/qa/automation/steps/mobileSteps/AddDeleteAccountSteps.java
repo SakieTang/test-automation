@@ -1,10 +1,12 @@
 package ai.tact.qa.automation.steps.mobileSteps;
 
+import ai.tact.qa.automation.testcomponents.mobile.TactAlertsPopUpPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactCompany.TactAddNewCompanyPage;
+import ai.tact.qa.automation.testcomponents.mobile.TactCompany.TactCompanyObjPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactsMainPage;
-import ai.tact.qa.automation.testcomponents.mobile.TactLead.TactAddNewLeadPage;
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
+import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
 import cucumber.api.java8.En;
 
 import java.util.logging.Level;
@@ -16,46 +18,41 @@ public class AddDeleteAccountSteps implements En {
     public static String accountName;
 
     public AddDeleteAccountSteps() {
-
-        And("^AddAccount: I create \"([^\"]*)\" time a \"([^\"]*)\" and \"([^\"]*)\" send to Salesforce, with username \"([^\"]*)\" and \"([^\"]*)\"$", (String time, String userType, String sendToSF, String accountName, String isSave) -> {
-            log.info("^AddAccount: I create " + time + " time a " +userType + " and " + sendToSF + " send to Salesforce, with username " + accountName + " and " + isSave + "$");
-            TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
+        And("^AddLead: I input a user name \"([^\"]*)\" and \"([^\"]*)\"$", (String accountNameText, String isSave) -> {
+            log.info("^AddLead: I input a user name " + accountNameText + " and " + isSave + "$");
             TactAddNewCompanyPage tactAddNewCompanyPage = new TactAddNewCompanyPage();
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+            TactCompanyObjPage tactCompanyObjPage = new TactCompanyObjPage();
+            TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
 
-            tactContactsMainPage.getContactsPlusIconButton().tap();
-            tactAddNewCompanyPage.getTactAddNewCompanyButton().tap(tactAddNewCompanyPage.getNewCompanyTitleLabel());
-        });
+            //set accountName Text
+            accountName = DriverUtils.getNameWithStamp(accountNameText, true);
 
-        And("^AddAccount: I input a user name \"([^\"]*)\", company name \"([^\"]*)\" and \"([^\"]*)\"$", (String leadName, String companyName, String isSave) -> {
-            log.info("^AddLead: I input a user name " + leadName + ", company name " + companyName + " and " + isSave + "$");
-            TactAddNewLeadPage tactAddNewLeadPage = new TactAddNewLeadPage();
+            tactAddNewCompanyPage.getNameTextField().sendKeys(accountName);
 
-            //set username Text
-            String fName = DriverUtils.get1stNFromFullName(leadName, true);
-            String lName = DriverUtils.getLastNFromFullName(leadName, false);
-            System.out.println(fName + " " + lName);
-
-            if (!fName.isEmpty()){
-                tactAddNewLeadPage.getFirstNameTextField().setText(fName);
-            }
-            tactAddNewLeadPage.getLastNameTextField().setText(lName);
-
-            //set company Text
-            tactAddNewLeadPage.getCompanyTextField().setText(companyName);
-
-            //save or not save Lead
+            //save or not save Account
             if (!DriverUtils.isTextEmpty(isSave)) {
-                tactAddNewLeadPage.getSaveNewLeadButton().tap();
-            } else {
-                tactAddNewLeadPage.getCancelAddNewLeadButton().tap();
-                if (DriverUtils.isAndroid()) {
+                tactAddNewCompanyPage.getSaveNewCompanyButton().tap();
 
+                if (DriverUtils.isAndroid())
+                {
+                    WebDriverWaitUtils.waitUntilElementIsVisible(tactCompanyObjPage.getGoBackToContactsMainPageButton());
+                    tactCompanyObjPage.getGoBackToContactsMainPageButton().tap();
+                }
+            }
+            else {
+                log.info("w/o save");
+
+                tactAddNewCompanyPage.getCancelAddNewCompanyButton().tap();
+                if (DriverUtils.isAndroid())
+                {
+                    tactAlertsPopUpPage.getAndroidPopUpSureConfirmOKButton().tap();
                 }
             }
 
-            System.out.println("finish");
-            DriverUtils.sleep(10);
-
+            WebDriverWaitUtils.waitUntilElementIsVisible(tactContactsMainPage.getTactContactsTitleLabel());
+            log.info("save ? " + isSave);
+//            DriverUtils.sleep(10);
         });
     }
 }

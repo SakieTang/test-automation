@@ -1,7 +1,6 @@
 package ai.tact.qa.automation.steps.h5Steps;
 
 import ai.tact.qa.automation.testcomponents.h5.Thread.ThreadNavigatePage;
-import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
 import cucumber.api.java8.En;

@@ -6,9 +6,7 @@ import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
-import org.openqa.selenium.WebDriver;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

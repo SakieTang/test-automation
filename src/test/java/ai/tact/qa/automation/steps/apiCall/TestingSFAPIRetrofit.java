@@ -1,12 +1,10 @@
 package ai.tact.qa.automation.steps.apiCall;
 
-import ai.tact.qa.automation.runner.response_model.SqlResponse;
+import ai.tact.qa.automation.utils.dataobjects.response_model.SqlResponse;
 import ai.tact.qa.automation.utils.dataobjects.User;
 import okhttp3.*;
-//import org.json.simple.JSONObject;
 import org.json.JSONException;
 import org.json.JSONObject;
-import sun.net.NetworkServer;
 
 import java.io.IOException;
 

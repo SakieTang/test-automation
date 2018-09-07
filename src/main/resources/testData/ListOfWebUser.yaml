@@ -1,6 +1,6 @@
 - !!ai.tact.qa.automation.utils.dataobjects.WebUserInfor
   tactAccount: automation.AI.tactsf.s@gmail.com
-  tactAccountPwd: Tact0218
+  tactAccountPwd: Tact2018
   tactSFAccount: automation.AI.tactsf.s@gmail.com
   tactSFAccountPwd: Tact0218
   tactGmailAccount: automation.tact@gmail.com

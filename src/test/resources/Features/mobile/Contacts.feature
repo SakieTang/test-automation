@@ -1,5 +1,5 @@
 Feature: ContactsFeature
-  This feature deals with the Contacts functionality of the applicaiton
+  This feature deals with the Contacts functionality of the application
 
   @P0
   @MobileTest

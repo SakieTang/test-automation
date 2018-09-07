@@ -1,14 +1,12 @@
 package ai.tact.qa.automation.steps.h5Steps;
 
 import ai.tact.qa.automation.asserts.TactAIAsserts;
-import ai.tact.qa.automation.testcomponents.h5.Thread.ThreadLoginHomePage;
 import ai.tact.qa.automation.testcomponents.h5.Thread.ThreadTimelinePage;
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.dataobjects.Status;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
 import cucumber.api.java8.En;
-import org.openqa.selenium.WebElement;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

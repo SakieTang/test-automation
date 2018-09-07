@@ -1,14 +1,8 @@
 package ai.tact.qa.automation.steps.mobileSteps;
 
-import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactObjPage;
-import ai.tact.qa.automation.testcomponents.mobile.TactNavigateTabBarPage;
-import ai.tact.qa.automation.testcomponents.mobile.TactSearch.TactSearchContactsPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactSetting.NotebookPage;
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
-import com.paypal.selion.platform.grid.Grid;
-import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 
 import java.util.logging.Level;

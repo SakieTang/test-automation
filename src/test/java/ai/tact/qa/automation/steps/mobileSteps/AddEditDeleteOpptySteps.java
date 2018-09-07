@@ -78,6 +78,7 @@ public class AddEditDeleteOpptySteps implements En {
                 DriverUtils.sleep(5);
             }
             tactAddNewOpptyPage.getStageButton().tap();
+            DriverUtils.sleep(0.5);
             if (DriverUtils.isIOS()) {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactAddNewOpptyPage.getStageTitleLabel());
             }

@@ -1,4 +1,8 @@
 # test-automation
+## Mac
+**Java VM 1.8+, and do not use 9.0 or 10.0
+**Java version 1.8+
+
 ## iOS
 **Xcode :** 9.2</br>
 **default simulator :** iPhone X - 11.2</br>
@@ -29,8 +33,8 @@ Setting TestNG configuration in local : -DPropertyManager.file=</br>
    java -jar selenium-server-standalone-3.9.1.jar -port 4723 </br>
 5. iOS        : mvn test / mvn test -DsuiteXmlFile=testNG.xml </br>
    Android    : mvn test -DsuiteXmlFile=testNGAndroid.xml </br>
-   ai-Web,iOS : mvn test -DsuiteXmlFile=testNGWeb.xml </br>
+   ai-Web,iOS : mvn test -DsuiteXmlFile=testNGAIWeb.xml </br>
 OR</br>
    iOS        : mvn install -DsuiteXmlFile=testNG.xml </br>
    Android    : mvn install -DsuiteXmlFile=testNGAndroid.xml </br>
-   ai-Web,iOS : mvn install -DsuiteXmlFile=testNGWeb.xml </br>
+   ai-Web,iOS : mvn install -DsuiteXmlFile=testNGAIWeb.xml </br>

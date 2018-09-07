@@ -57,7 +57,8 @@ public class IOSProTactSanityCases {
     public void setUpClass() {
         log.info("TestRunner - BeforeClass - setUpClass");
 //        Appium.startServer("0.0.0.0","1234","2345");
-        Appium.restartAppium();
+//        Appium.restartAppium();
+        Appium.startServer();
     }
 
     //onboarding
@@ -124,6 +125,27 @@ public class IOSProTactSanityCases {
 
         //Calendar
         TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactCalendarFeatureRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
+
+    //Account-Company
+    @MobileTest(    //iOS
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+                    , timeout
+            }
+    )
+    @Test(groups = "Tact-Sanity", description = "Contact object", dataProvider = "tactMobileIOSUserInfo", dependsOnMethods = "TactOnboardingFeature")
+    void TactCompanyFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //Account
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactAccountFeatureRunCukesNoReset.class);
         testNGCucumberRunner.runCukes();
     }
 

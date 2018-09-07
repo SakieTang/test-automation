@@ -2,7 +2,6 @@ package ai.tact.qa.automation.steps.h5Steps;
 
 import ai.tact.qa.automation.asserts.TactAIAsserts;
 import ai.tact.qa.automation.testcomponents.h5.Alexa.AlexaTestPage;
-import ai.tact.qa.automation.testcomponents.h5.CiscoSpark.SparkHomePage;
 import ai.tact.qa.automation.utils.CustomPicoContainer;
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
@@ -10,19 +9,12 @@ import ai.tact.qa.automation.utils.dataobjects.AlexaResponseInfo;
 import ai.tact.qa.automation.utils.dataobjects.Status;
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 
-import java.awt.*;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -112,12 +104,6 @@ public class AlexaTestSteps implements En {
                         expectedOutput=String.format("%s", ((AlexaResponseInfo) allUsers.get(cmd)).getOutputSpeechSSML()).replaceAll(":\\\\", ":");
 
                         if (alexaTestPage.getJSonOutputSpeechSSMLLabel().getElements().size() > 1) {
-//                            //resize the screen
-//                            if (DriverUtils.getCurrentBrowserScreenWidth() < DriverUtils.getCurrentMonitorScreenWidth()) {
-//                                DriverUtils.resizeBrowserToMax();
-//                                DriverUtils.sleep(2);
-//                            }
-
                             System.out.println("more than one element");
                             List<WebElement> jSonOutputSpeechSSMLS=alexaTestPage.getJSonOutputSpeechSSMLLabel().getElements();
                             jSonOutput=getListElemenetText(jSonOutputSpeechSSMLS, "\\\"");
@@ -173,9 +159,17 @@ public class AlexaTestSteps implements En {
                 isPassed = Status.failed;
                 if (jSonOutput.contains(expectedOutput)) {  //expectedOutput.contains(jSonOutput)
                     isPassed = Status.passed;
-                } else if ( outputType.equalsIgnoreCase("jSonOutputCardContent") && jSonOutput.replaceAll("\\n","\\n\\n").contains(expectedOutput)) {
+//                } else if ( outputType.equalsIgnoreCase("jSonOutputCardContent") && jSonOutput.replaceAll("\\n","\\n\\n").contains(expectedOutput)) {
+                } else if ( outputType.equalsIgnoreCase("jSonOutputCardContent") && expectedOutput.contains(jSonOutput.replace("\"", "").replaceAll("\\n","\\n\\n"))) {
                     isPassed=Status.passed;
                 } else {
+                    System.out.println("expected: " + expectedOutput);
+                    if (outputType.equalsIgnoreCase("jSonOutputCardContent")) {
+                        System.out.println("true    : " + jSonOutput.replace("\"", "").replaceAll("\\n","\\n\\n") );
+                    } else {
+                        System.out.println("true    : " + jSonOutput);
+                    }
+
                     isPassed = Status.failed;
                 }
 
@@ -458,7 +452,7 @@ public class AlexaTestSteps implements En {
                 log.info("start checking the sent msg");
                 System.out.println("inputText " + inputText);
                 System.out.println("userSentMsg " + userSentMsg);
-                DriverUtils.sleep(60);
+//                DriverUtils.sleep(60);
                 TactAIAsserts.assertEquals(userSentMsg, inputText.toLowerCase(), userSentMsg + " " + inputText + " should equal");
             }
         });
@@ -494,15 +488,18 @@ public class AlexaTestSteps implements En {
 
         String textString = "";
         JavascriptExecutor js = (JavascriptExecutor) Grid.driver();
-        int scrollToLeft = 0;
+        int scrollToLeft = 100;
         //connector : "\\\""  "\\n\\n"
+        System.out.println("elements.size() : " + elements.size());
 
         for (int i = 0; i < elements.size(); i++) {
             int scrollPix = 100;
             while (!elements.get(i).isDisplayed()) {
                 String s=String.format("%s.animate({ scrollLeft: \"%dpx\" })", "$(\"div[id='right'] > div[class='ace_scroller']\")", scrollPix);
                 js.executeScript(s);
-                scrollPix += 500;
+                scrollPix += 300;
+                DriverUtils.sleep(0.5);
+//                scrollPix += 300;
             }
             System.out.println(i+1 + "> " + elements.get(i).getText());
             if (i==0) {
@@ -510,23 +507,29 @@ public class AlexaTestSteps implements En {
             } else {
                 textString=textString + connector + elements.get(i).getText();
             }
-            scrollToLeft = scrollPix;
+            if (scrollToLeft < scrollPix) {
+                scrollToLeft = scrollPix-300;
+            }
         }
-        DriverUtils.sleep(5);
-        System.out.println("after finish the all scroll");
+        System.out.println("after finish the all scroll  " + scrollToLeft );
+        DriverUtils.sleep(1);
 
-        if (scrollToLeft > 50){
+//  Some of the information is not available because it was never entered. Here's what I found:\nAccount Name: University of Arizona\nWebsite: www.universityofarizona.com\n\n\n"
+//  Some of the information is not available because it was never entered. Here's what I found:\nAccount Name: University of Arizona\nWebsite: www.universityofarizona.com\n"
+//  Some of the information is not available because it was never entered. Here's what I found:\nAccount Name: University of Arizona\nWebsite: www.universityofarizona.com\n"
+
+
+        if (scrollToLeft > 100){
             System.out.println(scrollToLeft + "px after find all element");
-            String s=String.format("%s.animate({ scrollLeft: \"%dpx\" })", "$(\"div[id='right'] > div[class='ace_scroller']\")", -scrollToLeft+50);
+            String s=String.format("%s.animate({ scrollLeft: \"%dpx\" })", "$(\"div[id='right'] > div[class='ace_scroller']\")", -scrollToLeft);
             System.out.println(s);
             js.executeScript(s);
-            DriverUtils.sleep(3);
+            DriverUtils.sleep(1);
             System.out.println("after waiting, then scroll back");
             scrollToLeft = 0;
+        } else {
+            System.out.println("no need to scroll back");
         }
-
-// "<speak>Which Account are you interested in?<break time=\"500ms\"" +
-//         "/>1. United Oil and Gas, UK<break time=\"500ms\"/>2. United Oil and Gas Corp.<break time=\"500ms\"/>3. United Oil and Gas, Singapore</speak>"
 
         return textString;
     }

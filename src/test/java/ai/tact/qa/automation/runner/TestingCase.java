@@ -69,7 +69,12 @@ public class TestingCase  {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
-        testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
+//        testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
+//        testNGCucumberRunner.runCukes();
+
+
+        //AddEmailAccountFromTab
+        testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactCreateSimpleOpptyNoReset.class);
         testNGCucumberRunner.runCukes();
 
         //Grid.driver().getCapabilities() ==> Capabilities [{app=/Users/sakie/workspace/automation/test-automation/Applications/TactNew.app, networkConnectionEnabled=false, noReset=true, mobileNodeType=appium, language=en, databaseEnabled=false, locale=US, version=, deviceName=iPhone X, fullReset=false, platform=MAC, acceptSslCerts=true, platformVersion=11.2, webStorageEnabled=false, locationContextEnabled=false, name=ai.tact.qa.automation.runner.TestingCase:TestingCase()[ai.tact.qa.automation.utils.dataobjects.User@5b04476e], browserName=, takesScreenshot=true, javascriptEnabled=true, unicodeKeyboard=true, platformName=iOS, udid=C536BF74-716A-4003-A917-A41D59DBD6A1, resetKeyboard=true, unexpectedAlertBehaviour=ignore}]
@@ -81,10 +86,10 @@ public class TestingCase  {
     }
 
     @CucumberOptions(
-            features = ("src/test/resources/Features/mobile/Contacts.feature")
+            features = ("src/test/resources/Features/mobile/Account.feature")
             ,glue = ("ai.tact.qa.automation.steps")
             ,tags={
-                "@addLinkedInSalesNavigator"
+                "@createAccount"
 //                +
 //                "@createSimpleOpportunity"
             }

@@ -3,12 +3,12 @@
 <suite thread-count="1" verbose="1" name="Web demo" skipfailedinvocationcounts="false" junit="false"
        parallel="false" data-provider-thread-count="1" annotations="JDK">
 
-    <parameter name="browser" value="chrome"/>
-    <parameter name="runlocally" value="true"/>
-    <parameter name="chromeDriverPath" value="src/test/resources/chromedriver.exe"/>
-    <parameter name="seleniumhost" value="localhost" />
+    <parameter name="seleniumhost" value="0.0.0.0" />
     <parameter name="seleniumport" value="4723"/>
     <parameter name="mobileNodeType" value="appium"/>
+    <!--only works for local environment, not for Jenkins running-->
+    <!--<parameter name="appPath" value="/Users/sakie/Documents/TactNew.app"/>-->
+    <!--&lt;!&ndash;only works for Jenkins environment, not for local running&ndash;&gt;-->
     <parameter name="appPath" value="/Users/qa/Documents/TactNew.app"/>
     <parameter name="mobileAppLanguage" value="en"/>
     <parameter name="mobilePlatform" value="IOS"/>
@@ -18,7 +18,7 @@
 
     <test verbose="1" name="DemoWeb" annotations="JDK">
         <classes>
-            <class name="ai.tact.qa.automation.runner.aiRunner.TestingCaseWeb"/>
+            <class name="ai.tact.qa.automation.runner.aiRunner.TestingCaseAIMobile"/>
         </classes>
     </test>
 </suite>

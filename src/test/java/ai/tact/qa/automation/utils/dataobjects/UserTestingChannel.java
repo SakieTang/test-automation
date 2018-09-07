@@ -5,6 +5,6 @@ public enum UserTestingChannel {
     mobileAndroid,
     aiTactiOS,
     aiThread,
-    aiCiscoSpark,
+    aiCiscoWebex,
     aiAlexa
 }

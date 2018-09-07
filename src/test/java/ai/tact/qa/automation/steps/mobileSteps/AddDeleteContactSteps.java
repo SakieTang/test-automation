@@ -7,9 +7,7 @@ import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactsMainP
 import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.DriverUtils;
 
-import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 
 import java.util.logging.Level;

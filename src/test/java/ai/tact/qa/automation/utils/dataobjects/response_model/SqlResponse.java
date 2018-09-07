@@ -1,4 +1,4 @@
-package ai.tact.qa.automation.runner.response_model;
+package ai.tact.qa.automation.utils.dataobjects.response_model;
 
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;

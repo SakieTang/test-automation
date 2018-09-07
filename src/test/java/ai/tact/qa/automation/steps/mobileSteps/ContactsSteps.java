@@ -14,18 +14,12 @@ import ai.tact.qa.automation.utils.DriverUtils;
 
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.mobile.elements.MobileButton;
-import com.paypal.selion.platform.mobile.elements.MobileElement;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
 import cucumber.api.java8.En;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileDriver;
-import io.appium.java_client.TouchAction;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.touch.TouchActions;
 
-import java.sql.Driver;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,7 +29,7 @@ public class ContactsSteps implements En {
 
     public ContactsSteps() {
 
-        Then("^Contacts: I go to create a new \"([^\"]*)\" page$", (String userType) -> {
+        Then("^Contacts: I go to create a new \"(Contact|Lead|Account)\" page$", (String userType) -> {
             log.info("^Contacts: I go to create a new " + userType + " page$");
             TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
             TactAddNewContactPage tactAddNewContactPage = new TactAddNewContactPage();
@@ -52,7 +46,7 @@ public class ContactsSteps implements En {
                     tactContactsMainPage.getContactsPlusIconButton().tap(tactAddNewLeadPage.getTactAddNewLeadButton());
                     tactAddNewLeadPage.getTactAddNewLeadButton().tap(tactAddNewLeadPage.getNewLeadTitleLabel());
                     break;
-                case "Company":
+                case "Account":
                     tactContactsMainPage.getContactsPlusIconButton().tap(tactAddNewCompanyPage.getTactAddNewCompanyButton());
                     tactAddNewCompanyPage.getTactAddNewCompanyButton().tap(tactAddNewCompanyPage.getNewCompanyTitleLabel());
                     break;
@@ -79,8 +73,10 @@ public class ContactsSteps implements En {
                 }
                 if (DriverUtils.isAndroid() && Grid.driver().findElementsByXPath(stageLoc).size()!=0){
 //                if (Grid.driver().findElementsByXPath(tactContactsMainPage.getTactRecentTitleLabel().getLocator()).size() != 0){
+                    System.out.println("in Android");
                     DriverUtils.clickOption(tactSearchContactsPage.getNameEditButton(), "contactName", formattedName);
                 } else if (DriverUtils.isIOS() && Grid.driver().findElementsByXPath(stageLoc).size() > 1) {
+                    System.out.println("in iOS");
                     DriverUtils.clickOption(tactSearchContactsPage.getNameEditButton(), "contactName", formattedName);
                 }
                 else {
@@ -89,90 +85,32 @@ public class ContactsSteps implements En {
             } else {
                 log.info("already find the name from searching");
             }
+
         });
         When("^Contacts: I search one user \"([^\"]*)\" from contacts list and select it$", (String name) -> {
             log.info("^Contacts: I search one user " + name + " from contacts list and select it$");
             TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
             TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
 
-            System.out.println("waiting for the title");
-            DriverUtils.sleep(2);
-            if (Grid.driver().findElementsByXPath(tactContactsMainPage.getTactContactsTitleLabel().getLocator()).size() != 0) {
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactContactsMainPage.getTactContactsTitleLabel());
-
-                //search the name from search field
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactContactsMainPage.getTactContactsTitleLabel());
-                if (DriverUtils.isAndroid())
-                {
-
+            if ( (DriverUtils.isIOS() && Grid.driver().findElementsByXPath(tactContactsMainPage.getMapsIconButton().getLocator()).size() != 0) ||
+                    (DriverUtils.isAndroid() && Grid.driver().findElementsByXPath(tactContactsMainPage.getTactContactsTitleLabel().getLocator()).size() != 0))
+            {
+                if (DriverUtils.isAndroid()){
                     //click
                     DriverUtils.sleep(1);
                     System.out.println("*** try the new way to click");
                     AppiumDriver driver = (AppiumDriver) Grid.driver();
-                    driver.tap(1, 1160, 182, 50);
+                    driver.tap(1, 1160, 182, 30);
                     System.out.println("*** try the new way to click done");
                     DriverUtils.sleep(2);
 
-//                        Grid.driver().findElementById("Search").submit();
-//                    System.out.println("after submit");
-//                    DriverUtils.sleep(10);
-
-//                    WebElement androidSearchIconButton = (WebElement)tactSearchContactsPage.getAndroidContactsTabSearchIconButton();
-//                    int length = androidSearchIconButton.getSize().getWidth();
-//                    int height = androidSearchIconButton.getSize().getHeight();
-//
-//                    MobileButton searchIconButton = tactSearchContactsPage.getAndroidContactsTabSearchIconButton();
-//                    Point point = ((WebElement)searchIconButton).getLocation();
-//
-//                    //capturing the stating Y co-ordinate
-//                    int getY = point.getY();
-//
-//                    //moving to the middle fo the suggestion from the Y co-ordinate
-//                    int middleY = (int) (getY + height*1.5);
-//
-//                    TouchAction ta = new TouchAction((MobileDriver) Grid.driver());
-//                    DriverUtils.sleep(1);
-//
-//                    ta.tap(length/2, middleY).perform();
-
-
-
-//                    DriverUtils.sleep(0.5);
-//                    MobileButton androidContactsSearchIconButton = tactSearchContactsPage.getAndroidContactsTabSearchIconButton();
-//                    WebDriverWaitUtils.waitUntilElementIsVisible(androidContactsSearchIconButton);
-//                    System.out.println("Did not click the search icon button");
-//                    androidContactsSearchIconButton.tap();
-//                    if ( (Grid.driver().findElementsByXPath(androidContactsSearchIconButton.getLocator())).size() != 0 ) {
-//                        System.out.println("did not click it, need to re-click");
-////                        DriverUtils.tapXY(1160,182);
-//                        //click
-//                        System.out.println("*** try the new way to click");
-//                        AppiumDriver driver = (AppiumDriver) Grid.driver();
-//                        driver.tap(1, 1160, 182, 100);
-//                        System.out.println("*** try the new way to click done");
-//
-////                        Grid.driver().findElementById("Search").submit();
-//                        System.out.println("after submit");
-//                        DriverUtils.sleep(10);
-////                        Grid.driver().findElementById("Search").click();
-////                        System.out.println("after click");
-////                        DriverUtils.sleep(10);
-//
-//                        System.out.println("another way to click");
-////                        AppiumDriver driver = (AppiumDriver) Grid.driver();
-//
-////                        TouchActions action = new TouchActions(driver);
-////                        action.singleTap((WebElement)tactSearchContactsPage.getAndroidContactsTabSearchIconButton());
-////                        action.perform();
-//
-//                        DriverUtils.sleep(2);
-//                        System.out.println("after action click ");
-//                        DriverUtils.sleep(10);
-//
-//                    }
-                    WebDriverWaitUtils.waitUntilElementIsVisible(tactSearchContactsPage.getSearchAllContactsTextField());
+                    if (Grid.driver().findElementsByXPath(tactContactsMainPage.getTactContactsTitleLabel().getLocator()).size() != 0){
+                        System.out.println("retry");
+                        driver.tap(1, 1160, 182, 10);
+                        System.out.println("less time to click it");
+                    }
                 }
-                //element id changed <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
                 System.out.println("name : " + name);
                 DriverUtils.slideDown();
                 tactSearchContactsPage.getSearchAllContactsTextField().setText(name);
@@ -246,7 +184,7 @@ public class ContactsSteps implements En {
                             "(Contact|Lead|Company)");
             }
         });
-        And("^Contact: I search this \"(Contact|Lead|Account)\" from recent field and select it$", (String objName) -> {
+        And("^Contact: I search this \"(Contact|Lead|Account|[^\"]*)\" from recent field and select it$", (String objName) -> {
             log.info("^Contact: I search this " + objName + " from recent field and select it$");
             TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
             TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
@@ -266,8 +204,9 @@ public class ContactsSteps implements En {
                     searchName = AddDeleteAccountSteps.accountName;
                     break;
                 default:
-                    searchName = AddDeleteContactSteps.contactName;
+                    searchName = objName;
             }
+
             String stageLoc = tactSearchContactsPage.getNameEditButton().getLocator().replace("contactName", searchName);
             System.out.println("stageLoc ==> " + stageLoc);
 
@@ -434,7 +373,7 @@ public class ContactsSteps implements En {
                 if (Grid.driver().findElementsByXPath(tactPinPage.getActivityViewPageDeleteButton().getLocator()).size()==0){
                     DriverUtils.scrollToBottom();
                 }
-                tactPinPage.getActivityViewPageDeleteButton().tap(tactAlertsPopUpPage.getDeleteTaskButton());
+                tactPinPage.getActivityViewPageDeleteButton().tap();//tactAlertsPopUpPage.getDeleteTaskButton());
                 tactAlertsPopUpPage.getDeleteTaskButton().tap();
             }
             DriverUtils.sleep(0.5);

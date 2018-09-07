@@ -7,6 +7,11 @@ elements:
       US: "//XCUIElementTypeOther[@name='Contacts']"
     android:
       US: "//android.widget.TextView[@text='Contacts']"
+  mapsIconButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='maps icon']"
+    android:
+      US: ""
   tactAndroidAllButton:
     ios:
       US: ""

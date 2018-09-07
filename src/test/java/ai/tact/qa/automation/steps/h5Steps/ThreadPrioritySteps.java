@@ -5,13 +5,10 @@ import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.internal.Coordinates;
-import org.openqa.selenium.internal.Locatable;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,6 +48,8 @@ public class ThreadPrioritySteps implements En {
             number = threadPriorityPage.getDismissButton().getElements().size();
             size = number;
             System.out.println("number : "  + number);
+
+            //testing
 
 
             long startTime = System.currentTimeMillis();

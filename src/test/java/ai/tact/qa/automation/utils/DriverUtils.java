@@ -662,13 +662,11 @@ public class DriverUtils {
         if (Grid.driver().findElementsByXPath(stageLoc).size()==0){
             System.out.println("Not find the element, so slide up");
             slideUP();
-        }
-        if (Grid.driver().findElementsByXPath(stageLoc).size()!=0) {
+            return false;
+        } else {
             Grid.driver().findElementByXPath(stageLoc).click();
             sleep(0.5);
             return true;
-        } else {
-            return false;
         }
     }
 

@@ -6,10 +6,11 @@ Feature: Assistant - Tact proto 2
   @login
   Scenario: Login existing app with single-user username and password
     Given Login: I click connect with SF button
-    And Common: I switch to "Webview" driver
-    And Login-Webview: I "do not" send usage to google chrome and "do not" sign in Chrome
-    And Login-Webview: I enter the user email address with dataTable
-       | automation.AI.tactsf.s@gmail.com | Tact0218 |
+    When Common: I switch to "Webview" driver
+    Then Login-Webview: I "do not" send usage to google chrome and "do not" sign in Chrome
+    And Login-Webview: I enter the user email address
+#    And Login-Webview: I enter the user email address with dataTable
+#       | automation.AI.tactsf.s@gmail.com | Tact2018 |
     And Login-Webview: I "do not" check remember me
     And Login-Webview: I click login button in "login" process
     When Common: I switch to "Native_APP" driver
@@ -25,8 +26,9 @@ Feature: Assistant - Tact proto 2
     Then Assistant: I check bot "<responseText>"
 
     Examples:
-         | inputText                              | isVerify | responseText                                                                        |
-       | What is the latest on xyz deals?       | without  |                                                                                       |
+       | inputText                              | isVerify | responseText                                                                        |
+#       | What is the latest on xyz deals?       | without  |                                                                                       |
+       | Hi                                     | with     | Howdy.; Hi there! How can I help?; Hello! Glad to help.; Welcome.; Hi.; Hi there!     |
        | What is the latest on GenePoint deals? | without  |                                                                                       |
        | Bye                                    | with     | Goodbye.; Bye; See you later!                                                         |
        | Hi                                     | with     | Howdy.; Hi there! How can I help?; Hello! Glad to help.; Welcome.; Hi.; Hi there!     |

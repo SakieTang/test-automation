@@ -184,6 +184,31 @@ public class AndroidProTactSanityCases {
         testNGCucumberRunner.runCukes();
     }
 
+    //Account-Company　
+    @MobileTest(    //Android
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+                    //for Alpha only, dev do not need this part
+                    , appPackage
+                    , appActivity
+                    , timeout
+            }
+    )
+    //w/ data provider
+    @Test(groups = "Tact-Sanity", description = "TactDataSourcesTest", dataProvider = "tactUserInfo", dependsOnMethods = "TactOnboardingFeature")
+    void TactCompanyFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //Account
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactAccountFeatureRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
+
     //AddEmail
     @MobileTest(    //iOS
             locale = "US",

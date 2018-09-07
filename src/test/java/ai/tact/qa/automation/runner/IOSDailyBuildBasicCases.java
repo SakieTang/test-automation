@@ -34,8 +34,8 @@ public class IOSDailyBuildBasicCases {
     private static final String DATA_PATH = "%s/%s";
     private static final UserTestingChannel testingChannel = UserTestingChannel.mobileIOS;
 //    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactNew.app";
-//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Prototype1689.app";
-    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Beta1690.app";
+    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Prototype1698.app";
+//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Beta1690.app";
 
     @DataProvider(name="tactUserInfo")
     public Object[][] getYamlNewDataProvider() throws IOException {
@@ -187,6 +187,7 @@ public class IOSDailyBuildBasicCases {
         //report
         log.info("Finished running");
         GenerateReport.getReport(WebDriverPlatform.IOS);
+        GenerateReport.generteHtml();
 //        GenerateReport.deleteAllJsonReport();
 
         log.info("testNGCucumberRunner.finish(); FINISHED");

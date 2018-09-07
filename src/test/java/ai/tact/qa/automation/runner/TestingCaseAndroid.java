@@ -86,14 +86,13 @@ public class TestingCaseAndroid {
         System.out.println("TestRunner - Test - feature");
         System.out.println("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
-        //contacts
-        testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
+//        testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
+//        testNGCucumberRunner.runCukes();
+
+        //Account
+        testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactCreateSimpleOpptyNoReset.class);
         testNGCucumberRunner.runCukes();
 
-
-
-//        testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.ViewEmailFieldFromTabFeatureRunCukesNoReset.class);
-//        testNGCucumberRunner.runCukes();
     }
 
     @AfterClass(alwaysRun = true)
@@ -113,10 +112,10 @@ public class TestingCaseAndroid {
     }
 
     @CucumberOptions(
-            features = ("src/test/resources/Features/mobile/Lead.feature")
+            features = ("src/test/resources/Features/mobile/Account.feature")
             ,glue = ("ai.tact.qa.automation.steps")
             ,tags={"" +
-                "@SFEvent"
+                "@createAccount"
 
                 }
     )

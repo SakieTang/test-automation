@@ -56,10 +56,10 @@ public class Appium {
                 DriverUtils.sleep(5);
             }
             process.waitFor();
-        }
-        catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.getMessage();
         }
+
         if (!Appium.checkIfServerIsRunnning(port))
         {
             System.out.println("------------------- Appium stoped ----------------------");

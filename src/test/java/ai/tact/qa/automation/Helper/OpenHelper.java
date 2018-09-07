@@ -5,13 +5,13 @@ import com.paypal.selion.reports.runtime.SeLionReporter;
 
 public class OpenHelper {
 
-    public static void  OpenThread(String container) {
+    public static void  OpenWebsite(String container) {
 
         String url = String.format("%s/#", "https://" + container );
 
         System.out.println("url " + url);
 
-        Grid.open(url);
+        Grid.driver().get(url); //Both work
 
         System.out.println("platform == " + Grid.getWebTestSession().getPlatform());
         System.out.println("platform == " + Grid.getWebTestSession().getBrowser());

@@ -6,7 +6,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='New Company']"
     android:
-      US: "add_company_button"
+      US: "fab_create_company"
   newCompanyTitleLabel:
     ios:
       US: "//XCUIElementTypeOther[@name='New Company']"
@@ -22,16 +22,16 @@ elements:
       US: "//XCUIElementTypeButton[@name='Save']"
     android:
       US: "//android.widget.TextView[@text='SAVE']"
-  saveToIPhoneSwitch:
-    ios:
-      US: "//XCUIElementTypeSwitch[@name='Save to iPhone']"
-    android:
-      US: "//*[contains(@text, 'Save to device')]"
   sendToSaleforceSwitch:
     ios:
       US: "//XCUIElementTypeSwitch[@name='Send to Salesforce']"
     android:
       US: "//*[contains(@text, 'Send to Salesforce')]"
+  nameTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Name']/following-sibling::XCUIElementTypeTextField"
+    android:
+      US: "//*[contains(@text, 'Account Name')]"
 pageTitle:
   US: "page_object"
 pageValidators: [

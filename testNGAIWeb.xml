@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite thread-count="1" verbose="1" name="Web demo"
+       skipfailedinvocationcounts="false" junit="false" parallel="false"
+       data-provider-thread-count="1" annotations="JDK">
+
+    <parameter name="browser" value="*chrome"/>
+    <parameter name="chromeDriverPath" value="src/test/resources/chromedriver"/>
+    <parameter name="runLocally" value="true"/>
+    <parameter name="seleniumhost" value="0.0.0.0" />
+    <parameter name="seleniumport" value="4723"/>
+
+    <test name="AI Testing">
+        <classes>
+            <class name="ai.tact.qa.automation.runner.aiRunner.TestingCaseAIWeb"/>
+        </classes>
+    </test>
+</suite>

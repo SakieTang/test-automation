@@ -16,7 +16,7 @@
 
     <test verbose="1" name="appium-mobile-test" annotations="JDK">
         <classes>
-            <class name="ai.tact.qa.automation.runner.AndroidTactSanityTesting"/>
+            <class name="ai.tact.qa.automation.runner.AndroidProTactSanityCases"/>
         </classes>
     </test>
 </suite>

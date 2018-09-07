@@ -82,10 +82,11 @@ public class AndroidTestInnerRunCukesClass {
             ,glue = ("ai/tact/qa/automation/steps")
 //            ,tags={"@P1"}
             , tags={
-                "@createContact," +
-                "@noteAndroid," +
-                "@logAndroid," +
-                "@P1"
+                "@createContact,"
+                        +
+                "@note,        @Log,        @SFTask, @SFEvent"  //delete from SF
+//                "@noteAndroid, @logAndroid, @Task,   @Event"    //delete from client
+//                "@noteAndroid, @logAndroid, @P1"                //run all Activity
                 }
             , format = {
             "pretty",
@@ -103,10 +104,11 @@ public class AndroidTestInnerRunCukesClass {
             features = ("src/test/resources/Features/mobile/Lead.feature")
             ,glue = ("ai.tact.qa.automation.steps")
             ,tags={"" +
-                "@createLead," +
-                "@noteAndroid," +
-                "@logAndroid," +
-                "@P1"
+                "@createLead,"
+                      +
+//                "@note,        @Log,        @SFTask, @SFEvent"  //delete from SF
+                "@noteAndroid, @logAndroid, @Task,   @Event"    //delete from client
+//                "@noteAndroid, @logAndroid, @P1"                //run all Activity
                 }
             , format = {
             "pretty",
@@ -116,6 +118,28 @@ public class AndroidTestInnerRunCukesClass {
         @Test
         private void test(){ System.out.println("@Test Contacts Feature RunCukesTest"); }
 
+    }
+
+    //account
+    @CucumberOptions(
+            features = ("src/test/resources/Features/mobile/Account.feature")
+            ,glue = ("ai/tact/qa/automation/steps")
+            ,tags={
+            "@createAccount,"
+                    +
+//            "@note, @Log,   @SFTask, @SFEvent"  //delete from SF
+            "@Task, @Event"                     //delete from client
+//            "@P1"                               //run all Activity
+    }
+            , format = {
+            "pretty",
+            "json:target/report/android/TactAccountFeatureRunCukesNoReset.json"}
+    )
+    public class TactAccountFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
+        @Test
+        private void test(){
+            System.out.println("@Test Account Feature RunCukesTest");
+        }
     }
 
     //CreateSimpleOpportunities

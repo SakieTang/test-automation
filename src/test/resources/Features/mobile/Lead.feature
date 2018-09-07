@@ -1,5 +1,5 @@
 Feature: LeadsFeature
-  This feature deals with the Lead functionality of the applicaiton
+  This feature deals with the Lead functionality of the application
 
   @P0
   @createLead
@@ -16,8 +16,6 @@ Feature: LeadsFeature
 
     Examples:
       | leadName              | companyName | isSave |
-#      | LeadLName, LeadFName  | Tactile     | w/o    |
-#      | leadName2             | United Oil  | yes    |
       | LastNLead, FirstNLead | Tactile     | yes    |
 
   @P1
@@ -86,9 +84,8 @@ Feature: LeadsFeature
     And Common: I click back icon
 
     Examples:
-       | subjectOption | subject       | Name      | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
-#       | w/o           | w/o           | w/o       | w/o       | no      | w/o      | w/o            | w/o          | w/o    |
-       | Send Quote    | lead_log      | test      | w/o       | no      | testing  | High           | Not Started  | yes    |
+       | subjectOption | subject  | Name | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
+       | Send Quote    | lead_log | test | w/o       | no      | testing  | High           | Not Started  | yes    |
 
   @P2
   @android
@@ -108,9 +105,8 @@ Feature: LeadsFeature
     And API: I verify activity "Log" is "deleted" in salesforce
 
     Examples:
-       | subjectOption | subject       | Name      | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
-#       | w/o           | w/o           | w/o       | w/o       | no      | w/o      | w/o            | w/o          | w/o    |
-       | w/o           | lead_log      | w/o       | w/o       | no      | w/o      | w/o            | w/o          | yes    |
+       | subjectOption | subject  | Name | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
+       | w/o           | lead_log | w/o   | w/o      | no      | w/o      | w/o            | w/o          | yes    |
 
   @P1
   @Task
@@ -128,9 +124,8 @@ Feature: LeadsFeature
     And Contacts: I click back icon after created Salesflow activities
 
     Examples:
-       | titleText     | description         | Name        | relatedTo | dueDate     | isFollowUp | isReminder | reminderDate | reminderTime | isSave |
-#       | w/o           | w/o                 | w/o         | w/o       | Oct 3, 2018 | w/o        | w/o        | Oct 2, 2018  | 7:55 am      | w/o    |
-       | lead_task     | description         | test        | w/o       | 10/2/2018   | no         | yes        | Oct 2, 2018  | 7:55 am      | yes    |
+       | titleText | description | Name | relatedTo | dueDate   | isFollowUp | isReminder | reminderDate | reminderTime | isSave |
+       | lead_task | description | test | w/o       | 10/2/2018 | no         | yes        | Oct 2, 2018  | 7:55 am      | yes    |
 
   @P1
   @SFTask
@@ -150,9 +145,8 @@ Feature: LeadsFeature
     And Common: I click back icon
 
     Examples:
-       | titleText     | description | Name | relatedTo | isFollowUp | isReminder | isSave | Comments | assignedTo | priorityOption | statusOption |
-#       | w/o           | w/o         | w/o  | w/o       | w/o        | w/o        | w/o    | w/o      | w/o        | w/o            | w/o          |
-       | lead_SF_task  | w/o         | w/o  | w/o       | no         | w/o        | yes    | w/o      | w/o        | w/o            | w/o          |
+       | titleText    | description | Name | relatedTo | isFollowUp | isReminder | isSave |
+       | lead_SF_task | w/o         | w/o  | w/o       | no         | w/o        | yes    |
 
 
   @P1
@@ -171,7 +165,6 @@ Feature: LeadsFeature
 
     Examples:
        | subjectOption     | subject    | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSave |
-#       | w/o               | true          | 10/10/2018   | w/o      | Jan 1, 2019  | w/o     | w/o                                        | w/o         | w/o    |
        | Send Letter/Quote | lead_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
 
   @P1
@@ -195,23 +188,6 @@ Feature: LeadsFeature
     And Contacts: I click back icon after created Salesflow activities
 
     Examples:
-       | subjectOption      | subject    | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSyncToSF | name | relatedToName | attendeesName | assignedToName | isSave |
-#       | w/o                | w/o           | true          | 10/10/2018   | w/o      | Jan 1, 2019  | w/o     | w/o                                        | w/o         | w/o        | w/o  | w/o           | w/o           | w/o            | w/o    |
-       | Send Letter/Quote  | lead_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes        |w/o   | w/o           | w/o           | w/o            | yes    |
+       | subjectOption     | subject    | isSyncToSF | isSave |
+       | Send Letter/Quote | lead_event | yes        | yes    |
 
-  @P2
-  @linkedIn
-  Scenario: login linkedIn inside a lead
-    When Common: I switch to "Contacts" page from tab bar
-    Then Contacts: I search one user "Tim Barr" from recent field and select it
-    Then Contacts: I search one user "Tim Barr" from contacts list and select it
-    And Contacts: I click "Connect LinkedIn" action in contact obj page
-    When Settings: I sign in the LinkedIn account
-    Then Settings: I back to Settings page from Sources page
-    Then Contacts: I back to Contacts Main page from "Contact" page
-#    getGoBackToContactsMainPageButton
-
-
-  @Test
-  Scenario: testing navigation in Android
-    When Common: I switch to "Settings" page from tab bar

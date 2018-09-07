@@ -1,6 +1,5 @@
 package ai.tact.qa.automation.steps.h5Steps;
 
-import ai.tact.qa.automation.testcomponents.h5.CiscoSpark.SparkLoginHomePage;
 import ai.tact.qa.automation.testcomponents.h5.CiscoSpark.SparkNavigatePage;
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;

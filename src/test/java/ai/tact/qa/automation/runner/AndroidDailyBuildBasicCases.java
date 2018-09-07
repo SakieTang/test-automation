@@ -37,8 +37,10 @@ public class AndroidDailyBuildBasicCases {
     private static final UserTestingChannel testingChannel = UserTestingChannel.mobileAndroid;
 
     private static final String appPackage = "appPackage:com.tactile.tact.alpha";
+//    private static final String appPackage = "appPackage:com.tactile.tact.dev";
     private static final String appActivity = "appActivity:com.tactile.tact.onboarding.SignInActivity";
-    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-alpha-debug1601.apk";
+    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-alpha-debug1604.apk";
+//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-dev-debug1603.apk";
 //    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-production-release1531.apk";
 
     @DataProvider(name="tactUserInfo")

@@ -3,15 +3,14 @@ package ai.tact.qa.automation.steps.h5Steps;
 import ai.tact.qa.automation.Helper.OpenHelper;
 import ai.tact.qa.automation.testcomponents.h5.Alexa.AlexaLoginHomePage;
 import ai.tact.qa.automation.testcomponents.h5.CiscoSpark.SparkLoginHomePage;
-import ai.tact.qa.automation.testcomponents.h5.CiscoSpark.SparkNavigatePage;
 import ai.tact.qa.automation.testcomponents.h5.Thread.ThreadLoginHomePage;
 import ai.tact.qa.automation.testcomponents.h5.Thread.ThreadNavigatePage;
 import ai.tact.qa.automation.utils.CustomPicoContainer;
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
 import com.paypal.selion.platform.grid.Grid;
-import com.paypal.selion.platform.html.WebPage;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
+import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 
 import java.util.logging.Level;
@@ -23,14 +22,17 @@ public class WebCommonSteps implements En {
 
     public WebCommonSteps() {
 
-        Given("^WebCommon: I launch browser and open \"([^\"]*)\"$", (String container) -> {
+        Given("^WebCommon: I launch browser and open \"(Thread|Cisco Spark|Amazon|[^\"]*)\"$", (String container) -> {
             log.info("^WebCommon: I launch browser and open " + container + "$");
+            int i = 0;
+            System.out.println("**************" + i++);
 
             if (container.contains(".") || container.contains("|"))
             { }
             else {
                 container = container.toLowerCase();
             }
+            System.out.println("**************" + i++);
 
             switch (container) {
                 case "Thread":
@@ -43,7 +45,11 @@ public class WebCommonSteps implements En {
                     container = "developer.amazon.com/alexa";
                     break;
             }
-            OpenHelper.OpenThread(container);
+
+//            System.out.println("#########web : " + "https://teams.webex.com/signin/#");
+////            Grid.driver().get("https://teams.webex.com/signin/#");
+//            Grid.open("https://teams.webex.com/signin/#");
+            OpenHelper.OpenWebsite(container);
         });
 
         When("^WebCommon: I login with \"(Thread|Cisco Spark|Amazon)\" user account \"([^\"]*)\" and password \"([^\"]*)\"$", (String channelName, String account, String pwd) -> {
@@ -64,8 +70,6 @@ public class WebCommonSteps implements En {
 
             switch (channelName) {
                 case "Thread":
-//                    accountName = CustomPicoContainer.getInstance().getWebUserInfor().getThreadAccount();    //"automation.thread@gmail.com"
-//                    accountPwd = CustomPicoContainer.getInstance().getWebUserInfor().getThreadAccountPwd();
                     log.info(channelName + " : " + accountName + "/" + accountPwd);
 
 //                    //user already login
@@ -94,8 +98,6 @@ public class WebCommonSteps implements En {
 
                     break;
                 case "Cisco Spark":
-//                    accountName = CustomPicoContainer.getInstance().getWebUserInfor().getCiscoSparkAccount();   //automation.ciscoSpark@gmail.com
-//                    accountPwd = CustomPicoContainer.getInstance().getWebUserInfor().getCiscoSparkAccountPwd(); //Tact0218
                     log.info(channelName + " : " + accountName + "/" + accountPwd);
 
                     //login homePage
@@ -119,8 +121,6 @@ public class WebCommonSteps implements En {
 
                     break;
                 case "Amazon":
-//                    accountName = CustomPicoContainer.getInstance().getWebUserInfor().getAlexaAccount();    //automation.amazonAlexa@gmail.com
-//                    accountPwd = CustomPicoContainer.getInstance().getWebUserInfor().getAlexaAccountPwd();  //Tact0218
                     log.info(channelName + " : " + accountName + "/" + accountPwd);
 
                     //amazon homePage to login page
@@ -134,6 +134,15 @@ public class WebCommonSteps implements En {
 
                     break;
             }
+        });
+        And("^WebCommon: I close driver$", () -> {
+            log.info("^WebCommon: I close driver$");
+
+            Grid.driver().close();
+        });
+        Given("^WebCommon: I testing this msg$", () -> {
+            System.out.println("^WebCommon: I testing this msg$");
+            log.info("^WebCommon: I testing this msg$");
         });
     }
 }

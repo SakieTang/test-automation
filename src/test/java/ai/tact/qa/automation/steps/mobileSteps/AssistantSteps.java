@@ -6,12 +6,9 @@ import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.dataobjects.Status;
 import com.paypal.selion.platform.grid.Grid;
-import com.paypal.selion.platform.mobile.elements.MobileButton;
 import com.paypal.selion.platform.mobile.elements.MobileElement;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.logging.Level;

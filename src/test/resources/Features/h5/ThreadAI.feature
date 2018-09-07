@@ -18,7 +18,8 @@ Feature: Assistant - Thread
 
     Examples:
        | inputText                              | isVerify | responseText                                                                      |
-       | What is the latest on xyz deals?       | without  |                                                                                   |
+#       | What is the latest on xyz deals?       | without  |                                                                                   |
+       | Hi                                     | with     | Howdy.; Hi there! How can I help?; Hello! Glad to help.; Welcome.; Hi.; Hi there! |
        | What is the latest on GenePoint deals? | with     |                                                                                   |
        | Bye                                    | with     | Goodbye.; Bye; See you later!                                                     |
        | Hi                                     | with     | Howdy.; Hi there! How can I help?; Hello! Glad to help.; Welcome.; Hi.; Hi there! |

@@ -2,7 +2,6 @@ package ai.tact.qa.automation.steps.h5Steps;
 
 import ai.tact.qa.automation.asserts.TactAIAsserts;
 import ai.tact.qa.automation.testcomponents.h5.CiscoSpark.SparkHomePage;
-import ai.tact.qa.automation.testcomponents.h5.Thread.ThreadTimelinePage;
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.dataobjects.Status;

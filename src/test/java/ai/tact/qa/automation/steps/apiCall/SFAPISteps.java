@@ -1,17 +1,11 @@
 package ai.tact.qa.automation.steps.apiCall;
 
-import ai.tact.qa.automation.runner.response_model.SqlResponse;
+import ai.tact.qa.automation.utils.dataobjects.response_model.SqlResponse;
 import ai.tact.qa.automation.steps.mobileSteps.*;
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
-import ai.tact.qa.automation.utils.dataobjects.User;
-import ai.tact.qa.automation.utils.dataobjects.UserTestingChannel;
 import com.paypal.selion.platform.asserts.SeLionAsserts;
-import com.paypal.selion.platform.dataprovider.DataProviderFactory;
-import com.paypal.selion.platform.dataprovider.SeLionDataProvider;
-import com.paypal.selion.platform.dataprovider.impl.FileSystemResource;
 import com.paypal.selion.platform.grid.Grid;
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 
 import java.io.IOException;

@@ -38,7 +38,7 @@ mobileAndroid: !!ai.tact.qa.automation.utils.dataobjects.User
   aiChannelAccountPwd:
 aiTactiOS: !!ai.tact.qa.automation.utils.dataobjects.User
   salesforceAccount: automation.AI.tactsf.s@gmail.com
-  salesforceAccountPwd: Tact0218
+  salesforceAccountPwd: Tact2018
   salesforceEmailAddress: automation.tact@gmail.com
   salesforceEmailPwd: Tact2018
   exchangeEmailAddress:
@@ -57,7 +57,7 @@ aiTactiOS: !!ai.tact.qa.automation.utils.dataobjects.User
   aiChannelAccountPwd:
 aiThread: !!ai.tact.qa.automation.utils.dataobjects.User
   salesforceAccount: automation.AI.threadsf.s@gmail.com
-  salesforceAccountPwd: Tact0218
+  salesforceAccountPwd: Tact2018
   salesforceEmailAddress: automation.thread@gmail.com
   salesforceEmailPwd: Tact2018
   exchangeEmailAddress:
@@ -74,9 +74,9 @@ aiThread: !!ai.tact.qa.automation.utils.dataobjects.User
   aiWebsiteUrl: https://thread.id/service3/
   aiChannelAccount: automation.thread@gmail.com
   aiChannelAccountPwd: Tact0218
-aiCiscoSpark: !!ai.tact.qa.automation.utils.dataobjects.User
+aiCiscoWebex: !!ai.tact.qa.automation.utils.dataobjects.User
   salesforceAccount: automation.AI.ciscoSparksf.s@gmail.com
-  salesforceAccountPwd: Tact0218
+  salesforceAccountPwd: Tact2018
   salesforceEmailAddress: automation.ciscoSpark@gmail.com
   salesforceEmailPwd: Tact2018
   exchangeEmailAddress:
@@ -95,7 +95,7 @@ aiCiscoSpark: !!ai.tact.qa.automation.utils.dataobjects.User
   aiChannelAccountPwd: Tact0218
 aiAlexa: !!ai.tact.qa.automation.utils.dataobjects.User
   salesforceAccount: automation.AI.amazonAlexaSF.s@gmail.com
-  salesforceAccountPwd: Tact0218
+  salesforceAccountPwd: Tact2018
   salesforceEmailAddress: automation.AmazonAlexa@gmail.com
   salesforceEmailPwd: Tact2018
   exchangeEmailAddress:

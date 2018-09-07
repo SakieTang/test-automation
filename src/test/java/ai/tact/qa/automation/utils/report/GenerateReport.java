@@ -293,9 +293,9 @@ public class GenerateReport {
                 String cmdResultLine = scanner.nextLine();
 
                 String cmd = cmdResultLine.split(" \\| ")[1];
-                if (cmd.equalsIgnoreCase("What is the latest on xyz deals?")){
-                    continue;
-                }
+//                if (cmd.equalsIgnoreCase("What is the latest on xyz deals?")){
+//                    continue;
+//                }
 
                 String line = "<tr>";
                 line += "<td class='channel-name'>" + cmdResultLine.split("\\|")[0] + "</td>";
@@ -394,7 +394,11 @@ public class GenerateReport {
             String line="<tr>";
             // line += "<td>" + iosCase.getPriority() + "</td>";
             line+="<td class='feature-name'>" + iosFeature.getFeatureName() + "</td>";
-            line+="<td class='case-name'>" + iosCase.getCaseName() + "</td>";
+            if (iosCase.getCaseName().equalsIgnoreCase("View Android email fields (From, Date, Subtitle, Body)")){
+                line+="<td class='case-name'><b>" + iosCase.getCaseName() + "</b></td>";
+            } else {
+                line+="<td class='case-name'>" + iosCase.getCaseName() + "</td>";
+            }
 
             if (iosCase.getResult() != null) {
                 if (iosCase.getResult().getStatus().equals(Status.passed)) {
@@ -432,7 +436,11 @@ public class GenerateReport {
             String line="<tr>";
             // line += "<td>" + iosCase.getPriority() + "</td>";
             line+="<td class='feature-name'>" + iosFeature.getFeatureName() + "</td>";
-            line+="<td class='case-name'>" + entry.getKey() + "</td>";
+            if (entry.getKey().equalsIgnoreCase("View Android email fields (From, Date, Subtitle, Body)")) {
+                line+="<td class='case-name'><b>" + entry.getKey() + "</b></td>";
+            } else {
+                line+="<td class='case-name'>" + entry.getKey() + "</td>";
+            }
             line+="<td class='na'>n/a</td>";
 
             if (entry.getValue().getStatus().equals(Status.passed)) {
@@ -762,7 +770,7 @@ public class GenerateReport {
         }
     }
 
-    public static void uploadAIReport(){
+    public static void uploadAIReport(boolean isUploadNow){
         String fileDir = String.format("%s/%s", System.getProperty("user.dir"),"target");
         String today = String.format("%s%s%s", DriverUtils.currentDateInfo("yyyy")
                 , DriverUtils.currentDateInfo("mm")
@@ -775,6 +783,11 @@ public class GenerateReport {
             String cmd = String.format("aws s3 cp %s s3://tact-automation-report/%s/aiReport-%s.html"
                     , fileDir, today, hour);
             log.info("cmd ==> " + cmd);
+
+            if (isUploadNow){
+
+            }
+
         } else {
             log.warning("Please check the file dir");
         }
@@ -791,16 +804,16 @@ public class GenerateReport {
 
 //        generteHtml();
 //        uploadReport("report.html", false);
-
 //        generateAIHtml();
+//        uploadReport("aiReport.html", false);
+
+//        uploadReport("report.html", false);
 //        uploadReport("aiReport.html", false);
 
 //        generateAIHtml();
 //        uploadReport("aiReport2.html", true);
 
-//        uploadReport("report.html");
-//        uploadReport("aiReport.html");
-
 //        uploadAIReport();
+
     }
 }
