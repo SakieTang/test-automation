@@ -1,7 +1,5 @@
 package ai.tact.qa.automation.runner;
 
-
-import ai.tact.qa.automation.runner.aiRunner.AITestInnerRunCukesClass;
 import ai.tact.qa.automation.utils.Appium;
 import ai.tact.qa.automation.utils.CustomPicoContainer;
 import ai.tact.qa.automation.utils.DriverUtils;
@@ -9,7 +7,6 @@ import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.dataobjects.User;
 import ai.tact.qa.automation.utils.dataobjects.UserInfor;
 import ai.tact.qa.automation.utils.dataobjects.UserTestingChannel;
-import ai.tact.qa.automation.utils.dataobjects.WebUserInfor;
 import ai.tact.qa.automation.utils.report.GenerateReport;
 
 import com.paypal.selion.annotations.MobileTest;
@@ -23,15 +20,8 @@ import cucumber.api.testng.TestNGCucumberRunner;
 import org.testng.annotations.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
 
 public class IOSProTactSanityCases {
 

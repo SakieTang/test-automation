@@ -25,7 +25,7 @@ Feature: Assistant - Alexa
       | true     | askTact     | true     | true                    | true                     | true                      | true                           |
       | false    | latestDeals | true     | true                    | true                     | true                      | true                           |
       | false    | optionTwo   | true     | true                    | true                     | true                      | true                           |
-      | false    | optionSix   | true     | true                    | true                     | true                      | true                           |
+      | false    | choiceSix   | true     | true                    | true                     | true                      | true                           |
       | false    | website     | true     | true                    | true                     | true                      | true                           |
       | false    | contactHelp | true     | true                    | true                     | true                      | true                           |
       | false    | reportBug   | true     | true                    | true                     | true                      | true                           |

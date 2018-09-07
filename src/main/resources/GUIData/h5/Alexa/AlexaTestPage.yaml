@@ -36,12 +36,21 @@ elements:
     jSonOutputSpeechSSMLLabel:
       locators:
         US: "css=div[id='right'] > div[class='ace_scroller'] > div > div[class*='ace_text-layer'] > div:nth-child(7) > span[class='ace_string']"
+    jSonOutputSpeechSeparatorLabel:
+      locators:
+        US: "css=div[id='right'] > div[class='ace_scroller'] > div > div[class*='ace_text-layer'] > div:nth-child(7) > span[class='ace_constant ace_language ace_escape']"
     jSonOutputCardContentLabel:
       locators:
         US: "css=div[id='right'] > div[class='ace_scroller'] > div > div[class*='ace_text-layer'] > div:nth-child(12) > span[class='ace_string']"
+    jSonOutputCardSeparatorLabel:
+      locators:
+        US: "css=div[id='right'] > div[class='ace_scroller'] > div > div[class*='ace_text-layer'] > div:nth-child(12) > span[class='ace_constant ace_language ace_escape']"
     jSonOutputRepromptSSMLLabel:
       locators:
         US: "css=div[id='right'] > div[class='ace_scroller'] > div > div[class*='ace_text-layer'] > div:nth-child(17) > span[class='ace_string']"
+    jSonOutputRepromptSeparatorLabel:
+      locators:
+        US: "css=div[id='right'] > div[class='ace_scroller'] > div > div[class*='ace_text-layer'] > div:nth-child(17) > span[class='ace_constant ace_language ace_escape']"
     jSonOutputShouldEndSessionLabel:
       locators:
         US: "css=div[id='right'] > div[class='ace_scroller'] > div > div[class*='ace_text-layer'] > div:nth-child(20) > span[class*='ace_constant']"

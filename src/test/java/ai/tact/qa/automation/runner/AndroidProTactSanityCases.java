@@ -23,12 +23,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
 
 public class AndroidProTactSanityCases {
 

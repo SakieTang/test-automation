@@ -119,7 +119,7 @@ public class LoginSteps implements En {
                 sfLoginWebviewPage.getPwdTextField().sendKeys(sfPWD);
             }
 
-            log.info("salesforce UserName : " + sfAccountName);
+            log.info("salesforce UserName : " + sfAccountName + "/" + sfPWD);
         });
         And("^Login-Webview: I \"([^\"]*)\" check remember me$", (String isCheck) -> {
             log.info("^Login-Webview: I " + isCheck + " check remember me$");

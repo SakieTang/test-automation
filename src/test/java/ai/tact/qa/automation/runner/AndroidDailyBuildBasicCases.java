@@ -23,12 +23,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
 
 public class AndroidDailyBuildBasicCases {
 
@@ -39,7 +35,7 @@ public class AndroidDailyBuildBasicCases {
     private static final String appPackage = "appPackage:com.tactile.tact.alpha";
 //    private static final String appPackage = "appPackage:com.tactile.tact.dev";
     private static final String appActivity = "appActivity:com.tactile.tact.onboarding.SignInActivity";
-    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-alpha-debug1604.apk";
+    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-alpha-debug1701.apk";
 //    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-dev-debug1603.apk";
 //    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-production-release1531.apk";
 

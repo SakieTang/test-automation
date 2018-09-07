@@ -110,34 +110,34 @@ public class TestingCaseAIWeb {
         Selenium.stopServer();
     }
 
-    @Test(description =  "start appium", alwaysRun = true, dependsOnMethods = "stopSelenium")
-    public void startAppium() {
-        //start Appium Server
-        Appium.startServer();
-    }
+//    @Test(description =  "start appium", alwaysRun = true, dependsOnMethods = "stopSelenium")
+//    public void startAppium() {
+//        //start Appium Server
+//        Appium.startServer();
+//    }
 
-    @Test(description = "start running Tact Assistant from iOS", alwaysRun = true, dependsOnMethods = "startAppium")
-    public void TactAIFeature() {
-        System.out.println(System.getProperty("user.dir"));
-        String currentDir = String.format("%s/%s", System.getProperty("user.dir"), "testNGAIMobile.xml");
-        String command = String.format("mvn test -DsuiteXmlFile=%s", currentDir);
-        System.out.println("currentDir " + currentDir + "'\n command " + command);
+//    @Test(description = "start running Tact Assistant from iOS", alwaysRun = true, dependsOnMethods = "startAppium")
+//    public void TactAIFeature() {
+//        System.out.println(System.getProperty("user.dir"));
+//        String currentDir = String.format("%s/%s", System.getProperty("user.dir"), "testNGAIMobile.xml");
+//        String command = String.format("mvn test -DsuiteXmlFile=%s", currentDir);
+//        System.out.println("currentDir " + currentDir + "'\n command " + command);
+//
+//        DriverUtils.runCommand(new String[]{"bash", "-c", command});
+//    }
 
-        DriverUtils.runCommand(new String[]{"bash", "-c", command});
-    }
-
-    @AfterClass(alwaysRun = true)
-    public void tearDownClass() throws Exception {
-        log.info("TestRunner - AfterClass - tearDownClass");
-
-        Appium.stopServer();
-
-        log.info("Finished running");
-        log.info("testNGCucumberRunner.finish(); FINISHED");
-
-        GenerateReport.generateAIHtml();
-        GenerateReport.uploadAIReport(false);
-    }
+//    @AfterClass(alwaysRun = true)
+//    public void tearDownClass() throws Exception {
+//        log.info("TestRunner - AfterClass - tearDownClass");
+//
+//        Appium.stopServer();
+//
+//        log.info("Finished running");
+//        log.info("testNGCucumberRunner.finish(); FINISHED");
+//
+//        GenerateReport.generateAIHtml();
+//        GenerateReport.uploadAIReport(false);
+//    }
 
     private User getUserDataFromYaml(UserTestingChannel testingChannel) {
         String fileDir = "src/main/resources/testData/ArrayOfUser.yaml";

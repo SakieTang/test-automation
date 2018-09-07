@@ -47,7 +47,6 @@ public class AlexaTestSteps implements En {
                 activeTact();
                 endTactSession();
             }
-//            activeTact();
 
         });
         Then("^AlexaTest: I send \"([^\"]*)\" to \"(Alexa|Alexa dev1)\" Assistant and \"([^\"]*)\" verify send msg$", (String cmd, String stage, String isVerify) -> {
@@ -59,11 +58,6 @@ public class AlexaTestSteps implements En {
             //get input String
             Hashtable<String, Object> allCmdInfo = CustomPicoContainer.getInstance().getAlexaResponseInfos();
             input = String.format("%s", ((AlexaResponseInfo) allCmdInfo.get(cmd)).getInput());
-
-//            //save sent cmd to report.txt
-//            dataRecord = String.format("%s  | %s | ", stage, input);
-//            System.out.println(">>>>>dataRecord : " + dataRecord + "<<<<<<<,");
-//            DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
 
             WebDriverWaitUtils.waitUntilElementIsVisible(alexaTestPage.getSendMsgTextAreaTextField().getLocator());
             String inputTextString = String.format("%s\n",input);
@@ -101,46 +95,48 @@ public class AlexaTestSteps implements En {
             if (isCheck.equalsIgnoreCase("true")) {
                 switch (outputType) {
                     case "jSonOutputSpeechSSML":
-                        expectedOutput=String.format("%s", ((AlexaResponseInfo) allUsers.get(cmd)).getOutputSpeechSSML()).replaceAll(":\\\\", ":");
+                        expectedOutput=String.format("\"%s\"", ((AlexaResponseInfo) allUsers.get(cmd)).getOutputSpeechSSML());
 
                         if (alexaTestPage.getJSonOutputSpeechSSMLLabel().getElements().size() > 1) {
                             System.out.println("more than one element");
                             List<WebElement> jSonOutputSpeechSSMLS=alexaTestPage.getJSonOutputSpeechSSMLLabel().getElements();
-                            jSonOutput=getListElemenetText(jSonOutputSpeechSSMLS, "\\\"");
+                            List<WebElement> jSonOutputSpeechSeparators = alexaTestPage.getJSonOutputSpeechSeparatorLabel().getElements();
+                            jSonOutput = getCombineTwoListElemenetText(jSonOutputSpeechSSMLS, jSonOutputSpeechSeparators);
                         } else {
                             System.out.println("only one element");
                             jSonOutput=alexaTestPage.getJSonOutputSpeechSSMLLabel().getText();
                         }
-                        System.out.println("expectedOutput : " + expectedOutput + "\njSonOutputSpeechSSML : " + jSonOutput);
+                        System.out.println("expectedOutput :       " + expectedOutput + "\njSonOutputSpeechSSML : " + jSonOutput);
                         break;
                     case "jSonOutputCardContent":
-                        expectedOutput=String.format("%s", ((AlexaResponseInfo) allUsers.get(cmd)).getCardContent()).replaceAll(":\\\\", ":");
+                        expectedOutput=String.format("\"%s\"", ((AlexaResponseInfo) allUsers.get(cmd)).getCardContent());
 
                         if (alexaTestPage.getJSonOutputCardContentLabel().getElements().size() > 1) {
                             System.out.println("more than one element");
                             List<WebElement> jSonOutputCardContentS=alexaTestPage.getJSonOutputCardContentLabel().getElements();
-                            jSonOutput=getListElemenetText(jSonOutputCardContentS, "\\n");
+                            List<WebElement> jSonOutputCardSeparators = alexaTestPage.getJSonOutputCardSeparatorLabel().getElements();
+                            jSonOutput = getCombineTwoListElemenetText(jSonOutputCardContentS, jSonOutputCardSeparators);
                         } else {
                             System.out.println("only one element");
                             jSonOutput=alexaTestPage.getJSonOutputCardContentLabel().getText();
                         }
-                        System.out.println("\njSonOutputCardContent : " + jSonOutput);
+                        System.out.println("expectedOutput :       " + expectedOutput + "\njSonOutputSpeechSSML : " + jSonOutput);
                         break;
                     case "jSonOutputRepromptSSML":
                         System.out.println("before if jSonOutputRepromptSSML check");
                         if (!cmd.equalsIgnoreCase("endSession")) {
-                            expectedOutput=String.format("%s", ((AlexaResponseInfo) allUsers.get(cmd)).getRepromptSSML()).replaceAll(":\\\\", ":");
+                            expectedOutput=String.format("\"%s\"", ((AlexaResponseInfo) allUsers.get(cmd)).getRepromptSSML());
                             if (alexaTestPage.getJSonOutputRepromptSSMLLabel().getElements().size() > 1) {
                                 System.out.println("more than one element");
                                 List<WebElement> jSonOutputRepromptSSMLS=alexaTestPage.getJSonOutputRepromptSSMLLabel().getElements();
-                                jSonOutput=getListElemenetText(jSonOutputRepromptSSMLS, "\\\"");
+                                List<WebElement> jSonOutputRepromptSeparators = alexaTestPage.getJSonOutputRepromptSeparatorLabel().getElements();
+                                jSonOutput = getCombineTwoListElemenetText(jSonOutputRepromptSSMLS, jSonOutputRepromptSeparators);
                             } else {
                                 System.out.println("only one element");
                                 jSonOutput=alexaTestPage.getJSonOutputRepromptSSMLLabel().getText();
                             }
-                            System.out.println("\njSonOutputRepromptSSML : " + jSonOutput);
                         }
-                        System.out.println("after if jSonOutputRepromptSSML check");
+                        System.out.println("expectedOutput :       " + expectedOutput + "\njSonOutputSpeechSSML : " + jSonOutput);
                         break;
                     case "jSonOutputShouldEndSession":
                         expectedOutput=String.valueOf(((AlexaResponseInfo) allUsers.get(cmd)).getShouldEndSession());
@@ -157,20 +153,13 @@ public class AlexaTestSteps implements En {
                         break;
                 }
                 isPassed = Status.failed;
-                if (jSonOutput.contains(expectedOutput)) {  //expectedOutput.contains(jSonOutput)
-                    isPassed = Status.passed;
-//                } else if ( outputType.equalsIgnoreCase("jSonOutputCardContent") && jSonOutput.replaceAll("\\n","\\n\\n").contains(expectedOutput)) {
-                } else if ( outputType.equalsIgnoreCase("jSonOutputCardContent") && expectedOutput.contains(jSonOutput.replace("\"", "").replaceAll("\\n","\\n\\n"))) {
-                    isPassed=Status.passed;
-                } else {
-                    System.out.println("expected: " + expectedOutput);
-                    if (outputType.equalsIgnoreCase("jSonOutputCardContent")) {
-                        System.out.println("true    : " + jSonOutput.replace("\"", "").replaceAll("\\n","\\n\\n") );
-                    } else {
-                        System.out.println("true    : " + jSonOutput);
-                    }
 
-                    isPassed = Status.failed;
+                if (jSonOutput.contains("Anything else I can help you with?")){
+                    jSonOutput = jSonOutput.replace("Anything else I can help you with?", "Is there anything else I can help you with?");
+                    System.out.println("after replace :       " + jSonOutput);
+                }
+                if (jSonOutput.equalsIgnoreCase(expectedOutput)){
+                    isPassed = Status.passed;
                 }
 
                 //record cmd info
@@ -278,7 +267,6 @@ public class AlexaTestSteps implements En {
              String jSonOutputShouldEndSession;
              Status isPassed = Status.failed;
              */
-
 
             //check jSonOutputSpeechSSML value
             isPassed = Status.failed;
@@ -452,7 +440,6 @@ public class AlexaTestSteps implements En {
                 log.info("start checking the sent msg");
                 System.out.println("inputText " + inputText);
                 System.out.println("userSentMsg " + userSentMsg);
-//                DriverUtils.sleep(60);
                 TactAIAsserts.assertEquals(userSentMsg, inputText.toLowerCase(), userSentMsg + " " + inputText + " should equal");
             }
         });
@@ -499,7 +486,6 @@ public class AlexaTestSteps implements En {
                 js.executeScript(s);
                 scrollPix += 300;
                 DriverUtils.sleep(0.5);
-//                scrollPix += 300;
             }
             System.out.println(i+1 + "> " + elements.get(i).getText());
             if (i==0) {
@@ -514,10 +500,58 @@ public class AlexaTestSteps implements En {
         System.out.println("after finish the all scroll  " + scrollToLeft );
         DriverUtils.sleep(1);
 
-//  Some of the information is not available because it was never entered. Here's what I found:\nAccount Name: University of Arizona\nWebsite: www.universityofarizona.com\n\n\n"
-//  Some of the information is not available because it was never entered. Here's what I found:\nAccount Name: University of Arizona\nWebsite: www.universityofarizona.com\n"
-//  Some of the information is not available because it was never entered. Here's what I found:\nAccount Name: University of Arizona\nWebsite: www.universityofarizona.com\n"
+        if (scrollToLeft > 100){
+            System.out.println(scrollToLeft + "px after find all element");
+            String s=String.format("%s.animate({ scrollLeft: \"%dpx\" })", "$(\"div[id='right'] > div[class='ace_scroller']\")", -scrollToLeft);
+            System.out.println(s);
+            js.executeScript(s);
+            DriverUtils.sleep(1);
+            System.out.println("after waiting, then scroll back");
+            scrollToLeft = 0;
+        } else {
+            System.out.println("no need to scroll back");
+        }
 
+        return textString;
+    }
+
+    private String getCombineTwoListElemenetText(List<WebElement> elements, List<WebElement> separators) {
+
+        String textString = "";
+        String connector = "";
+        JavascriptExecutor js = (JavascriptExecutor) Grid.driver();
+        int scrollToLeft = 100;
+        //connector : "\\\""  "\\n\\n"
+        System.out.println("elements.size() : " + elements.size());
+
+        for (int i = 0; i < elements.size(); i++) {
+            int scrollPix = 100;
+            while (!elements.get(i).isDisplayed()) {
+                String s=String.format("%s.animate({ scrollLeft: \"%dpx\" })", "$(\"div[id='right'] > div[class='ace_scroller']\")", scrollPix);
+                js.executeScript(s);
+                scrollPix += 300;
+                DriverUtils.sleep(0.5);
+            }
+            System.out.println(i+1 + "> " + elements.get(i).getText());
+            textString = textString + elements.get(i).getText();
+
+            if (i < elements.size()-1 ) {
+                while (!separators.get(i).isDisplayed()) {
+                    String s=String.format("%s.animate({ scrollLeft: \"%dpx\" })", "$(\"div[id='right'] > div[class='ace_scroller']\")", scrollPix);
+                    js.executeScript(s);
+                    scrollPix += 300;
+                    DriverUtils.sleep(0.5);
+                }
+                System.out.println(i+1 + "> " + separators.get(i).getText());
+                connector = separators.get(i).getText();
+                textString = textString + connector;
+            }
+            if (scrollToLeft < scrollPix) {
+                scrollToLeft = scrollPix-300;
+            }
+        }
+        System.out.println("after finish the all scroll  " + scrollToLeft );
+        DriverUtils.sleep(1);
 
         if (scrollToLeft > 100){
             System.out.println(scrollToLeft + "px after find all element");

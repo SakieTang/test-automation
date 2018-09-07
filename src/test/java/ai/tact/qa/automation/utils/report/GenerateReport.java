@@ -11,12 +11,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -54,10 +56,10 @@ public class GenerateReport {
             filesDir = "target/report/android";
         }
         try {
-            File file = new File("target/" + fileName + ".json");
+            File file = new File("target/report/" + fileName + ".json");
             fileWriter = new FileWriter(file);
 
-            File txtFile = new File("target/" + fileName + ".txt");
+            File txtFile = new File("target/report/" + fileName + ".txt");
             fileWriterTxt = new FileWriter(txtFile);
         }
         catch (IOException e) {
@@ -179,9 +181,9 @@ public class GenerateReport {
     //Mobile generate html
     public static void generteHtml(){
 
-        String iosFileDir     = "target/iosReport.json";
+        String iosFileDir     = "target/report/iosReport.json";
 //        String androidFileDir = "target/androidReport.json";
-        String androidFileDir = "target/androidReport.json";
+        String androidFileDir = "target/report/androidReport.json";
         String tempFileDir = "src/test/java/ai/tact/qa/automation/utils/report/tempReport.json";
 
         //check whether the file exists or not, if not replace with temp.json file
@@ -705,6 +707,7 @@ public class GenerateReport {
             platformFolder = "android";
         }
 
+        //delete test case report
         File testDel = new File(String.format("target/report/%s/",platformFolder));
 
         if (testDel.exists()) {
@@ -780,12 +783,22 @@ public class GenerateReport {
         fileDir = String.format("%s/aiReport.html", fileDir);
         log.info("fileDir : " + fileDir);
         if ((new File(fileDir)).isFile()) {
-            String cmd = String.format("aws s3 cp %s s3://tact-automation-report/%s/aiReport-%s.html"
+            String cmd = String.format("aws s3 cp %s s3://tact-automation-reports/%s/aiReport-%s.html"
                     , fileDir, today, hour);
             log.info("cmd ==> " + cmd);
 
             if (isUploadNow){
-
+//                /Users/Shared/Jenkins/home/workspace/qa-automation-ai or /Users/Shared/Jenkins/home/workspace/qa-automation-ios
+                if (System.getProperty("user.dir").contains("sakie")){
+                    System.out.println("now in local");
+                    log.info(DriverUtils.getRunCommandReturn(new String[]{"bash", "-c", cmd}));
+                } else {
+//                    /Users/qa/Library/Python/2.7/bin//aws
+                    cmd = String.format("%s%s", "/Users/qa/Library/Python/2.7/bin//", cmd);
+                    System.out.println("now in Jenkins slave Mac mini cmd : " + cmd);
+                    log.info(DriverUtils.getRunCommandReturn(cmd));
+                }
+                System.out.println("upload is done");
             }
 
         } else {
@@ -806,7 +819,7 @@ public class GenerateReport {
 //        uploadReport("report.html", false);
 //        generateAIHtml();
 //        uploadReport("aiReport.html", false);
-
+//
 //        uploadReport("report.html", false);
 //        uploadReport("aiReport.html", false);
 
@@ -814,6 +827,23 @@ public class GenerateReport {
 //        uploadReport("aiReport2.html", true);
 
 //        uploadAIReport();
+
+
+//        String fromFile = "https://rink.hockeyapp.net/api/2/apps/63a92edb44f544f6809959332a92d56f/app_versions/85?format=apk&avtoken=478a9e794ef326d91fd367e401b902dfb2c92f76";
+//        String toFile = String.format("%s/Applications/TactApplicationTesting.apk", System.getProperty("user.dir"));    //"/Users/sakie/workspace/automation/test-automation"
+//
+//        DriverUtils.deleteFile(toFile);
+//
+//        File testDel = new File(toFile);
+//        if (!testDel.exists()){
+//            System.out.println("the file already deleted");
+//            try {
+//                FileUtils.copyURLToFile(new URL(fromFile), new File(toFile), 10000, 10000);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
 
     }
 }

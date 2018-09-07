@@ -3,7 +3,6 @@ package ai.tact.qa.automation.runner;
 
 import ai.tact.qa.automation.utils.Appium;
 import ai.tact.qa.automation.utils.CustomPicoContainer;
-import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.dataobjects.User;
 import ai.tact.qa.automation.utils.dataobjects.UserInfor;
@@ -24,7 +23,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,8 +32,8 @@ public class IOSDailyBuildBasicCases {
     private static final String DATA_PATH = "%s/%s";
     private static final UserTestingChannel testingChannel = UserTestingChannel.mobileIOS;
 //    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactNew.app";
-    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Prototype1698.app";
-//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Beta1690.app";
+    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Prototype1699.app";
+//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/Tact Beta1699.app";
 
     @DataProvider(name="tactUserInfo")
     public Object[][] getYamlNewDataProvider() throws IOException {

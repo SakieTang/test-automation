@@ -3,9 +3,12 @@ package ai.tact.qa.automation.runner.aiRunner;
 import ai.tact.qa.automation.utils.*;
 import ai.tact.qa.automation.utils.dataobjects.User;
 import ai.tact.qa.automation.utils.dataobjects.UserTestingChannel;
+import ai.tact.qa.automation.utils.report.GenerateReport;
 import com.paypal.selion.annotations.MobileTest;
 import com.paypal.selion.platform.grid.Grid;
 import cucumber.api.testng.TestNGCucumberRunner;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.paypal.selion.platform.dataprovider.DataProviderFactory;
@@ -23,6 +26,14 @@ public class TestingCaseAIMobile {
     private static final Logger log = LogUtil.setLoggerHandler(Level.ALL);
     private static final String DATA_PATH = "%s/%s";
 
+
+    @BeforeClass(alwaysRun = true)
+    public void setUpClass() throws Exception {
+        log.info("TestRunner - BeforeClass - setUpClass");
+
+        Appium.startServer();
+    }
+
     //Tact AI Feature
     @MobileTest(    //iOS
 //            mobileNodeType = "appium",
@@ -37,7 +48,7 @@ public class TestingCaseAIMobile {
     )
     @Test(description="Runs Cucumber Feature - onboarding"
             , alwaysRun = true
-//            , dependsOnMethods = "stopSelenium"
+//            , dependsOnMethods = "startAppium"
     )
     private void TactAIFeature() throws InterruptedException {
         CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.aiTactiOS));
@@ -55,6 +66,21 @@ public class TestingCaseAIMobile {
         //logout
         testNGCucumberRunner = new TestNGCucumberRunner(AITestInnerRunCukesClass.TactLogout.class);
         testNGCucumberRunner.runCukes();
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void tearDownClass() throws Exception {
+        log.info("TestRunner - AfterClass - tearDownClass");
+
+        Appium.stopServer();
+
+        log.info("Finished running");
+        log.info("testNGCucumberRunner.finish(); FINISHED");
+
+        GenerateReport.generateAIHtml();
+        DriverUtils.sleep(5);
+        GenerateReport.uploadAIReport(true);
+
     }
 
     private User getUserDataFromYaml(UserTestingChannel testingChannel) {
