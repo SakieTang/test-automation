@@ -39,13 +39,13 @@ Feature: AccountsFeature
     And Common: I click back icon
 
     Examples:
-      | isSync | titleText | bodyText | isSave |
+      | isSync | titleText    | bodyText | isSave |
       | do     | company_note |          | yes    |
 
   @P2
   @android
   @noteAndroid
-  Scenario Outline: Add Note to a account w/ checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and verify it's deleted from SF (API)
+  Scenario Outline: Android only - Add Note to a account w/ checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and verify it's deleted from SF (API)
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "CompanyN" from recent field and select it
     And Contacts: I search one user "CompanyN" from contacts list and select it
@@ -60,8 +60,8 @@ Feature: AccountsFeature
     And API: I verify activity "Note" is "deleted" in salesforce
 
     Examples:
-      | isSync | titleText | bodyText | isSave |
-      | do     | company_note |          | yes    |
+      | isSync | titleText           | bodyText | isSave |
+      | do     | company_noteAndroid |          | yes    |
 
   @P1
   @Log
@@ -90,7 +90,7 @@ Feature: AccountsFeature
   @P2
   @android
   @logAndroid
-  Scenario Outline: Add Log to a account w/ checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
+  Scenario Outline: Android only - Add Log to a account w/ checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "CompanyN" from recent field and select it
     And Contacts: I search one user "CompanyN" from contacts list and select it
@@ -105,8 +105,8 @@ Feature: AccountsFeature
     And API: I verify activity "Log" is "deleted" in salesforce
 
     Examples:
-       | subjectOption | subject     | Name | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
-       | w/o           | company_log | w/o  | w/o       | no      | w/o      | w/o            | w/o          | yes    |
+       | subjectOption | subject            | Name | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
+       | w/o           | company_logAndroid | w/o  | w/o       | no      | w/o      | w/o            | w/o          | yes    |
 
   @P1
   @Task
@@ -187,5 +187,5 @@ Feature: AccountsFeature
     And Contacts: I click back icon after created Salesflow activities
 
     Examples:
-       | subjectOption     | subject       | isSyncToSF | isSave |
-       | Send Letter/Quote | company_event | yes        | yes    |
+       | subjectOption     | subject          | isSyncToSF | isSave |
+       | Send Letter/Quote | company_SF_event | yes        | yes    |

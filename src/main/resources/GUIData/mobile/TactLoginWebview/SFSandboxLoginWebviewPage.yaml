@@ -1,0 +1,69 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  useCustomDomainButton:
+    ios:
+      US: "//*[@id=\"mydomainLink\"]"
+    android:
+      US: "//android.view.View[@content-desc='Use Custom Domain']"
+  myDomainContinueButton:
+    ios:
+      US: "//*[@id=\"mydomainContinue\"]"
+    android:
+      US: "//android.widget.Button[@content-desc='Continue']"
+  domainLoginDifferentAccountFromAzureSSOButton:
+    ios:
+      US: "//*[@id=\"cancel_idp_hint_div\"]"
+    android:
+      US: ""
+  sandboxCustomDomainTextField:
+    ios:
+      US: "//*[@id=\"mydomain\"]"
+    android:
+      US: "mydomain"
+  sandboxCustomDomainContinueButton:
+    ios:
+      US: "//*[@id=\"mydomainContinue\"]"
+    android:
+      US: "//android.widget.Button[@content-desc='Continue']"
+  azureSSOButton:
+    ios:
+      US: "//*[@class='button mb24 secondary wide']"
+    android:
+      US: "//android.widget.Button[@content-desc='AzureSSO']"
+  sandboxAzureSSOButton:
+    ios:
+      US: "//div[@id='idp_hint']/button"
+    android:
+      US: "//android.widget.Button[@content-desc='AzureSSO']"
+  sandboxLoginAccountTextField:
+    ios:
+      US: "//*[contains(@name, 'loginfmt')]"
+    android:
+      US: "//android.widget.EditText"
+  sandboxLoginAccountNextButton:
+    ios:
+      US: "//*[contains(@class, 'btn btn-block btn-primary')]"
+    android:
+      US: "//android.widget.Button[@content-desc='Next']"
+  sandboxPasswordTextField:
+    ios:
+      US: "//*[contains(@name, 'passwd')]"
+    android:
+      US: "//android.widget.EditText"
+  sandboxSignInButton:
+    ios:
+      US: "//*[contains(@value, 'Sign in')]"
+    android:
+      US: "//android.widget.Button[@content-desc='Sign in']"
+  sandboxStaySignedInYesButton:
+    ios:
+      US: "//*[@class='btn btn-block btn-primary']"
+    android:
+      US: "//android.widget.Button[@content-desc='Yes Do this to reduce the number of times you are asked to sign in.']"
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  useCustomDomainButton
+]

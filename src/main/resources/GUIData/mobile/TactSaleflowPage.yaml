@@ -1,0 +1,39 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  emailSentLabel:
+    ios:
+      US: "//*[contains(@name, 'Email Sent')]"
+    android:
+      US: "//*[contains(@text, 'Email Sent')]"
+  logAddedLabel:
+    ios:
+      US: "//*[contains(@name, 'Log Added')]"
+    android:
+      US: "//*[contains(@text, 'Log Added')]"
+  callFinishedLabel:
+    ios:
+      US: "//*[contains(@name, 'Call Finished')]"
+    android:
+      US: "//*[contains(@text, 'Call Finished')]"
+  saleflowLogButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Log']"
+    android:
+      US: "//android.widget.Button[@text='LOG']"
+  saleflowTaskButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Task']"
+    android:
+      US: "//android.widget.Button[@text='TASK']"
+  saleflowNoteButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Note']"
+    android:
+      US: "//android.widget.Button[@text='NOTE']"
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  saleflowLogButton
+]

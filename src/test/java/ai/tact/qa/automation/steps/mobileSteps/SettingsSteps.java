@@ -252,7 +252,7 @@ public class SettingsSteps implements En {
 //            System.out.println("after click");
 //            DriverUtils.sleep(30);
 
-            DriverUtils.tapXY(51,346);
+            DriverUtils.tapXY(51,346, 200,2);
             System.out.println("after click sign in");
             DriverUtils.sleep(10);
 
@@ -270,7 +270,7 @@ public class SettingsSteps implements En {
             }
 
             //refresh (350, 66)
-            DriverUtils.tapXY(350,66);
+            DriverUtils.tapXY(350,66, 200,2);
             System.out.println("after refresh");
             DriverUtils.sleep(20);
 
@@ -312,9 +312,9 @@ public class SettingsSteps implements En {
         And("^Settings: I match the user \"([^\"]*)\"$", (String userName) -> {
             log.info("^Settings: I match the user " + userName + "$");
 
-            DriverUtils.tapXY(188,336);
+            DriverUtils.tapXY(188,336, 200,2);
             DriverUtils.sleep(10);
-            DriverUtils.tapXY(33,66);
+            DriverUtils.tapXY(33,66, 200,2);
             
         });
     }

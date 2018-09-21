@@ -32,10 +32,10 @@ public class AndroidDailyBuildBasicCases {
     private static final String DATA_PATH = "%s/%s";
     private static final UserTestingChannel testingChannel = UserTestingChannel.mobileAndroid;
 
-    private static final String appPackage = "appPackage:com.tactile.tact.alpha";
+//    private static final String appPackage = "appPackage:com.tactile.tact.alpha";
 //    private static final String appPackage = "appPackage:com.tactile.tact.dev";
     private static final String appActivity = "appActivity:com.tactile.tact.onboarding.SignInActivity";
-    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-alpha-debug1701.apk";
+//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-alpha-debug1701.apk";
 //    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-dev-debug1603.apk";
 //    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-production-release1531.apk";
 
@@ -64,14 +64,14 @@ public class AndroidDailyBuildBasicCases {
 
     //onboarding
     @MobileTest(  //Android
-            appPath = appPath,
+//            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
                     "noReset:true",
                     "fullReset:false"
                     //for Alpha only, dev do not need this part
-                    , appPackage
+//                    , appPackage
                     , appActivity
             }
     )
@@ -91,7 +91,7 @@ public class AndroidDailyBuildBasicCases {
 
     //AddEmail
     @MobileTest(    //Android
-            appPath = appPath,
+//            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true"
@@ -99,7 +99,7 @@ public class AndroidDailyBuildBasicCases {
                     //Android reset the app to true, will need to re-connect with SF
                     ,"fullReset:false"  //restart the iPhone/simulator and install the app
                     //for Alpha only, dev do not need this part
-                    , appPackage
+//                    , appPackage
                     , appActivity
             }
     )
@@ -117,7 +117,7 @@ public class AndroidDailyBuildBasicCases {
 
     //ReAuth
     @MobileTest(    //Android
-            appPath = appPath,
+//            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true"
@@ -125,7 +125,7 @@ public class AndroidDailyBuildBasicCases {
                     //Android reset the app to true, will need to re-connect with SF
                     ,"fullReset:false"  //restart the iPhone/simulator and install the app
                     //for Alpha only, dev do not need this part
-                    , appPackage
+//                    , appPackage
                     , appActivity
             }
     )
@@ -150,7 +150,7 @@ public class AndroidDailyBuildBasicCases {
 
     //getAppVersion
     @MobileTest(  //iOS
-            appPath = appPath,
+//            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true"
@@ -158,7 +158,7 @@ public class AndroidDailyBuildBasicCases {
                     //Android reset the app to true, will need to re-connect with SF
                     ,"fullReset:false"  //restart the iPhone/simulator and install the app
                     //for Alpha only, dev do not need this part
-                    , appPackage
+//                    , appPackage
                     , appActivity
             }
     )
@@ -175,14 +175,14 @@ public class AndroidDailyBuildBasicCases {
 
     //Delete
     @MobileTest(    //Android
-            appPath = appPath,
+//            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
                     "noReset:true",    //continue the testing. false, reinstall the app; false, continue use the app
                     "fullReset:false"  //restart the iPhone/simulator and install the app
                     //for Alpha only, dev do not need this part
-                    , appPackage
+//                    , appPackage
                     , appActivity
             }
     )

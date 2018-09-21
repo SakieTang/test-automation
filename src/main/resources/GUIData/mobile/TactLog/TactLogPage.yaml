@@ -34,7 +34,7 @@ elements:
       US: "//android.widget.EditText"
   subjectConfirmButton:
     ios:
-      US: "//XCUIElementTypeButton[@name='Log Activity']"
+      US: "//XCUIElementTypeNavigationBar[@name='Subject']/XCUIElementTypeButton"
     android:
       US: "//android.widget.TextView[@text='CONFIRM']"
   LogSFNameContactButton:

@@ -28,7 +28,7 @@ public class SFAuthenticator {
 //    private final String client_id = "3MVG9CEn_O3jvv0yiRj2fbfaQUhUaoUKiB8Os5x9BcWqzjOABcnt2LmRpqLT17SnV1ANFktY3tegiN_E2QHzP";
 //    private final String client_secret = "6864499967095259178";
 //    private final String username = "automation.tactAndrSF.s@gmail.com";    //sf account name
-//    private final String password = "Tact2018wPe9wOwxW0zz80uvdsaVwvw2z";
+//    private final String password = "tact2018lPt4DznhMZxZkrR94uOflHBac";
 
     private static String salesforceToken;
     private static String salesforceTokenType;

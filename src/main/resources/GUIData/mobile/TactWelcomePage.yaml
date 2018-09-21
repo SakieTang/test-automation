@@ -6,7 +6,12 @@ elements:
     ios:
       US: "//XCUIElementTypeImage[@name='tactlogo']"
     android:
-      US: ""
+      US: "sign_in_tact_icon_image_view"
+  tactIconButton:
+    ios:
+      US: "//XCUIElementTypeImage[@name='tactlogo']"
+    android:
+      US: "sign_in_tact_icon_image_view"
   welcomeTactLabel:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Welcome to Tact, Your Sales Assistant']"
@@ -17,11 +22,26 @@ elements:
       US: "//XCUIElementTypeButton[@name='Connect with Salesforce']"
     android:
       US: "sign_in_sign_in_button"
+  connectWithSandboxButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Connect With Sandbox']"
+    android:
+      US: "sign_in_sign_in_button"
   learnMoreButton:
     ios:
       US: "//XCUIElementTypeButton[@name='Learn More']"
     android:
-      US: ""
+      US: "sign_in_learn_more_button"
+  learnMoreTitleLabel:
+    ios:
+      US: "//h1"
+    android:
+      US: "//android.view.View[@content-desc='Introducing Salesforce Log In for Tact']"
+  learnMoreP1Label:
+    ios:
+      US: "(//p)[1]"
+    android:
+      US: "(//android.widget.Image/following-sibling::android.view.View)[2]"
 pageTitle:
   US: "page_object"
 pageValidators: [

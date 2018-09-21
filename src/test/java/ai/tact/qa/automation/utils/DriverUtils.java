@@ -11,6 +11,7 @@ import com.paypal.selion.platform.mobile.elements.MobileSwitch;
 import com.paypal.selion.platform.mobile.elements.MobileTextField;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
 import io.appium.java_client.AppiumDriver;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Capabilities;
@@ -18,6 +19,7 @@ import org.openqa.selenium.Capabilities;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -315,10 +317,10 @@ public class DriverUtils {
      * @param y
      * @return
      */
-    public static void tapXY ( int x, int y ) {
+    public static void tapXY ( int x, int y, int duration, int waitTime ) {
         AppiumDriver driver = (AppiumDriver) Grid.driver();
-        driver.tap(1, x, y, 200);
-        sleep(2);
+        driver.tap(1, x, y, duration);
+        sleep(waitTime);
     }
 
     //××××××××××//
@@ -915,6 +917,27 @@ public class DriverUtils {
              ){
             System.out.println(DriverUtils.isTextEmpty(isSwitch) + " and value is " + mobileSwitch.getValue());
             mobileSwitch.changeValue();
+        }
+    }
+
+    public static void downloadFileFromUrl(String fromFile, String toFile){
+        //        String fromFile = "https://rink.hockeyapp.net/api/2/apps/63a92edb44f544f6809959332a92d56f/app_versions/85?format=apk&avtoken=478a9e794ef326d91fd367e401b902dfb2c92f76";
+//        String toFile = String.format("%s/Applications/TactApplicationTesting.apk", System.getProperty("user.dir"));    //"/Users/sakie/workspace/automation/test-automation"
+//
+//        DriverUtils.deleteFile(toFile);
+//
+        File testDel = new File(toFile);
+        if (!testDel.exists()){
+            System.out.println("the file already deleted");
+            try {
+                FileUtils.copyURLToFile(new URL(fromFile), new File(toFile), 10000, 10000);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (testDel.exists()){
+            System.out.println("download done");
         }
     }
 }

@@ -17,6 +17,7 @@ import com.paypal.selion.internal.platform.grid.WebDriverPlatform;
 import com.paypal.selion.platform.grid.Grid;
 
 import cucumber.api.testng.TestNGCucumberRunner;
+import io.appium.java_client.AppiumDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -84,7 +85,7 @@ public class AndroidProTactSanityCases {
         testNGCucumberRunner.runCukes();
     }
 
-    //CreateSimpleOpportunity
+    //Opportunity
     @MobileTest(    //Android
             locale = "US",
             additionalCapabilities = {
@@ -97,14 +98,36 @@ public class AndroidProTactSanityCases {
             }
     )
     @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
-    void TactACreateSimpleOpptyFeature() {
+    void TactOpptyFeature() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
-        //Create Simple Opportunity
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactCreateSimpleOpptyNoReset.class);
+        //Create Simple Opportunity, edit, delete opportunity. Add activities
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactOpptyNoReset.class);
         testNGCucumberRunner.runCukes();
     }
+
+//    //CreateSimpleOpportunity
+//    @MobileTest(    //Android
+//            locale = "US",
+//            additionalCapabilities = {
+//                    "unicodeKeyboard:true","resetKeyboard:true",
+//                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+//                    "fullReset:false"  //restart the iPhone/simulator and install the app
+//                    //for Alpha only, dev do not need this part
+//                    , appPackage
+//                    , appActivity
+//            }
+//    )
+//    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
+//    void TactACreateSimpleOpptyFeature() {
+//        log.info("TestRunner - Test - feature");
+//        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+//
+//        //Create Simple Opportunity
+//        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactCreateSimpleOpptyNoReset.class);
+//        testNGCucumberRunner.runCukes();
+//    }
 
     //Calendar
     @MobileTest(    //iOS
@@ -303,28 +326,28 @@ public class AndroidProTactSanityCases {
         testNGCucumberRunner.runCukes();
     }
 
-    //EditOpportunity
-    @MobileTest(    //Android
-            locale = "US",
-            additionalCapabilities = {
-                    "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
-                    "fullReset:false"  //restart the iPhone/simulator and install the app
-                    //for Alpha only, dev do not need this part
-                    , appPackage
-                    , appActivity
-                    , timeout
-            }
-    )
-    @Test(groups = "Tact-Sanity", description = "Calendar Actions", alwaysRun = true, dependsOnMethods = "TactBeReauthExchangeFeature")
-    void TactEditOpptyFeature() {
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //Edit Opportunity
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactEditOpptyFeatureNoReset.class);
-        testNGCucumberRunner.runCukes();
-    }
+//    //EditOpportunity
+//    @MobileTest(    //Android
+//            locale = "US",
+//            additionalCapabilities = {
+//                    "unicodeKeyboard:true","resetKeyboard:true",
+//                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+//                    "fullReset:false"  //restart the iPhone/simulator and install the app
+//                    //for Alpha only, dev do not need this part
+//                    , appPackage
+//                    , appActivity
+//                    , timeout
+//            }
+//    )
+//    @Test(groups = "Tact-Sanity", description = "Calendar Actions", alwaysRun = true, dependsOnMethods = "TactBeReauthExchangeFeature")
+//    void TactEditOpptyFeature() {
+//        log.info("TestRunner - Test - feature");
+//        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+//
+//        //Edit Opportunity
+//        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactEditAndDeleteOpptyFeatureNoReset.class);
+//        testNGCucumberRunner.runCukes();
+//    }
 
     //Delete
     @MobileTest(    //Android
@@ -339,7 +362,7 @@ public class AndroidProTactSanityCases {
             }
     )
     //w/ data provider
-    @Test(groups = "Tact", description = "TactDataSourcesTest", alwaysRun = true, dependsOnGroups = "Tact-Sanity")
+    @Test(groups = "Tact", description = "Delete account", alwaysRun = true, dependsOnGroups = "Tact-Sanity")
     void TactDeleteAccount() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
@@ -349,9 +372,59 @@ public class AndroidProTactSanityCases {
         testNGCucumberRunner.runCukes();
     }
 
+    //LearnMore
+    @MobileTest(    //Android
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+                    //for Alpha only, dev do not need this part
+                    , appPackage
+                    , appActivity
+            }
+    )
+    //w/ data provider
+    @Test(groups = "Sandbox", description = "Learn More Link",  alwaysRun = true, dependsOnGroups = "Tact")
+    void TactLearnMore() {
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //delete account
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactLearnMoreLinkFeatureRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
+
+    //Sandbox
+    @MobileTest(    //Android
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+                    //for Alpha only, dev do not need this part
+                    , appPackage
+                    , appActivity
+            }
+    )
+    //w/ data provider
+    @Test(groups = "Sandbox", description = "TactDataSourcesTest",  dataProvider = "tactUserInfo", alwaysRun = true, dependsOnGroups = "Tact")
+    void TactSandboxAccount(User user) {
+        CustomPicoContainer.getInstance().setUser(user);
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //delete account
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactSandboxFeatureRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
+
     @AfterClass(alwaysRun = true)
     public void tearDownClass() throws Exception {
         log.info("TestRunner - AfterClass - tearDownClass");
+
+        String appPackageBundleId = appPackage.split(":")[1];
+        ((AppiumDriver)Grid.driver()).removeApp(appPackageBundleId);
 
         Appium.stopServer();
         if (!Appium.checkIfServerIsRunnning("4723")) {

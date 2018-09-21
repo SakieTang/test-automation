@@ -92,7 +92,7 @@ public class AssistantSteps implements En {
             if  (diff == 0 || !isBotReply(getEleXCoordinate(tactAssistantPage.getDisplayTextListLabel(), labelCount(tactAssistantPage.getDisplayTextListLabel()) -1 )) ) {
                 log.warning("There is sth wrong w/ your app, the msg does not sent out.");
             }
-            DriverUtils.tapXY(188,406);
+            DriverUtils.tapXY(188,406, 200,2);
         });
          Then("^Assistant: I check bot \"([^\"]*)\"$", (String responseText) -> {
             log.info("^Assistant: I check bot " + responseText + "$");

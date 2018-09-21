@@ -45,7 +45,7 @@ Feature: LeadsFeature
   @P2
   @android
   @noteAndroid
-  Scenario Outline: Add Note to a lead w/ checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and verify it's deleted from SF (API)
+  Scenario Outline: Android only - Add Note to a lead w/ checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and verify it's deleted from SF (API)
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastNLead, FirstNLead" from recent field and select it
     And Contacts: I search one user "LastNLead, FirstNLead" from contacts list and select it
@@ -60,8 +60,8 @@ Feature: LeadsFeature
     And API: I verify activity "Note" is "deleted" in salesforce
 
     Examples:
-      | isSync | titleText | bodyText | isSave |
-      | do     | lead_note |          | yes    |
+      | isSync | titleText        | bodyText | isSave |
+      | do     | lead_noteAndroid |          | yes    |
 
   @P1
   @Log
@@ -90,7 +90,7 @@ Feature: LeadsFeature
   @P2
   @android
   @logAndroid
-  Scenario Outline: Add Log to a lead w/ checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
+  Scenario Outline: Android only - Add Log to a lead w/ checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastNLead, FirstNLead" from recent field and select it
     And Contacts: I search one user "LastNLead, FirstNLead" from contacts list and select it
@@ -105,8 +105,8 @@ Feature: LeadsFeature
     And API: I verify activity "Log" is "deleted" in salesforce
 
     Examples:
-       | subjectOption | subject  | Name | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
-       | w/o           | lead_log | w/o   | w/o      | no      | w/o      | w/o            | w/o          | yes    |
+       | subjectOption | subject         | Name | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
+       | w/o           | lead_logAndroid | w/o   | w/o      | no      | w/o      | w/o            | w/o          | yes    |
 
   @P1
   @Task
@@ -189,5 +189,5 @@ Feature: LeadsFeature
 
     Examples:
        | subjectOption     | subject    | isSyncToSF | isSave |
-       | Send Letter/Quote | lead_event | yes        | yes    |
+       | Send Letter/Quote | lead_SF_event | yes        | yes    |
 

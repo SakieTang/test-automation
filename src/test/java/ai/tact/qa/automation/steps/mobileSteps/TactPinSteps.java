@@ -19,6 +19,7 @@ import ai.tact.qa.automation.utils.dataobjects.IOSTime;
 
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
+import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 
 import java.util.logging.Level;
@@ -316,8 +317,6 @@ public class TactPinSteps implements En {
             log.info("^Tact-Pin: I create a new log with " + subjectOption + " with " + subject + " subject, " + name + " name, " + relatedTo + " related to, " + dueDate + " due Date, " + comments + " comments, " + priorityOption + " priority and " + statusOption + " status$");
             TactLogPage tactLogPage = new TactLogPage();
 
-            logSubject = DriverUtils.getNameWithStamp(subject, true);
-
             //name(iOS) | Contact(Android)
             if (!DriverUtils.isTextEmpty(name))
             {
@@ -336,6 +335,8 @@ public class TactPinSteps implements En {
             //subject
             if (!DriverUtils.isTextEmpty(subjectOption))
             {
+                logSubject = DriverUtils.getNameWithStamp(subject, true);
+
                 tactLogPage.getSubjectButton().tap(tactLogPage.getSubjectTextField());
                 String subjectOptionLoc = tactLogPage.getSubjectOptionButton().getLocator().replaceAll("subjectOption", subjectOption);
                 Grid.driver().findElementByXPath(subjectOptionLoc).click();
@@ -347,12 +348,21 @@ public class TactPinSteps implements En {
                     logSubject = tactLogPage.getSubjectTextField().getValue();
                     System.out.println(logSubject);
                 }
-            } else {
+
+                //back to log edit page
+                tactLogPage.getSubjectConfirmButton().tap();
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactLogPage.getNewLogTitleLabel());
+
+            } else if (!DriverUtils.isTextEmpty(subject)){
+                logSubject = DriverUtils.getNameWithStamp(subject, true);
+
+                System.out.println("subject : " + logSubject);
                 tactLogPage.getSubjectTextField().setText(logSubject);
+
+                //back to log edit page
+                tactLogPage.getSubjectConfirmButton().tap();
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactLogPage.getNewLogTitleLabel());
             }
-            //back to log edit page
-            tactLogPage.getSubjectConfirmButton().tap();
-            WebDriverWaitUtils.waitUntilElementIsVisible(tactLogPage.getNewLogTitleLabel());
 
             //dueDate
             if (!DriverUtils.isTextEmpty(dueDate))
@@ -363,7 +373,7 @@ public class TactPinSteps implements En {
             if (!DriverUtils.isTextEmpty(priorityOption))
             {
                 selectPriorityAndStatus(priorityOption);
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactLogPage.getNewLogTitleLabel());
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactLogPage.getLogCommentsTextField());
             }
             //Status
             if (!DriverUtils.isTextEmpty(statusOption))
@@ -717,6 +727,63 @@ public class TactPinSteps implements En {
             {
                 tactEventPage.getIosBackToNewEventPageButton().tap();
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactEventPage.getNewEventTitleLabel());
+            }
+        });
+        Then("^Tact-Pin: I edit \"([^\"]*)\" subject in \"(Log|SFTask|Task|Note)\"$", (String name, String activity) -> {
+            log.info("^Tact-Pin: I edit " + name + " subject$");
+            TactLogPage tactLogPage = new TactLogPage();
+            TactTaskPage tactTaskPage = new TactTaskPage();
+
+            switch (activity) {
+                case "Log":
+                    //Subject
+                    if (!DriverUtils.isTextEmpty(name)) {
+                        logSubject = DriverUtils.getNameWithStamp(name, true);
+                        tactLogPage.getSubjectButton().tap(tactLogPage.getSubjectTextField());
+
+                        logSubject=tactLogPage.getSubjectTextField().getValue() + " " + logSubject;
+                        tactLogPage.getSubjectTextField().setText(logSubject);
+
+                        logSubject=tactLogPage.getSubjectTextField().getValue();
+                        System.out.println(logSubject);
+
+                        //back to log edit page
+                        tactLogPage.getSubjectConfirmButton().tap();
+                    }
+                    break;
+                case "SFTask":
+                    //Sync to SF
+                    WebDriverWaitUtils.waitUntilElementIsVisible(tactTaskPage.getSyncToSaleforceTaskSwitch());
+                    DriverUtils.switchButton("Sync", tactTaskPage.getSyncToSaleforceTaskSwitch());
+
+                    //Title
+                    if (!DriverUtils.isTextEmpty(name))
+                    {
+                        taskSubject = DriverUtils.getNameWithStamp(name, true);
+                        tactTaskPage.getSubjectButton().tap(tactTaskPage.getSubjectTextField());
+                        tactTaskPage.getSubjectTextField().setText(taskSubject);
+                        System.out.println("taskSubject " + taskSubject);
+
+                        //back to log edit page
+                        tactTaskPage.getSubjectConfirmButton().tap();
+//                tactTaskPage.getSubjectConfirmButton().tap(tactTaskPage.getSyncToSaleforceTaskSwitch());
+                        WebDriverWaitUtils.waitUntilElementIsVisible(tactTaskPage.getSyncToSaleforceTaskSwitch());
+                    }
+                    break;
+                case "Task":
+                    //Not Sync to SF
+                    if (tactTaskPage.getSyncToSaleforceTaskSwitch().getValue().equals("1") ||
+                            tactTaskPage.getSyncToSaleforceTaskSwitch().getValue().contains("ON"))
+                    {
+                        log.info("SF : " + tactTaskPage.getSyncToSaleforceTaskSwitch().getValue());
+                        tactTaskPage.getSyncToSaleforceTaskSwitch().changeValue();
+                    }
+                    tactTaskPage.getTitleTextField().clearText();
+                    taskSubject = DriverUtils.getNameWithStamp(name, true);
+                    tactTaskPage.getTitleTextField().sendKeys(taskSubject);
+                    break;
+                case "Note":
+                    break;
             }
         });
     }

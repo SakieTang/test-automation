@@ -25,19 +25,18 @@ public class OpptySteps implements En {
             DriverUtils.sleep(5);
         });
 
-        When("^Oppty: I search one oppty (oppty_created_Tact) from opportunities list and select it$", (String opptyName) -> {
+        When("^Oppty: I search one oppty \"([^\"]*)\" from opportunities list and select it$", (String opptyName) -> {
             log.info("^Oppty: I search one oppty " + opptyName + " from opportunities list and select it$");
             TactOpptiesMainPage tactOpptiesMainPage = new TactOpptiesMainPage();
             TactSearchOpptyPage tactSearchOpptyPage = new TactSearchOpptyPage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactOpptiesMainPage.getTactOpportunitiesDropDownButton());
-            //element id changed <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-//            if (DriverUtils.isIOS()) {
-//                opptyName=opptyName + "_" + DriverUtils.currentDateInfo("mm") + "_" + DriverUtils.currentDateInfo("dd");
-//                System.out.println("name : " + opptyName);
-//            }
-            opptyName = AddEditDeleteOpptySteps.opportunityName;
-            System.out.println("oppty name " +  opptyName);
+
+            if (opptyName.equalsIgnoreCase("oppty_edited_Tact") ||
+                    opptyName.equalsIgnoreCase("oppty_created_Tact")) {
+                opptyName=AddEditDeleteOpptySteps.opportunityName;
+                System.out.println("oppty name " + opptyName);
+            }
             DriverUtils.slideDown();
 
             //
@@ -50,7 +49,7 @@ public class OpptySteps implements En {
                 DriverUtils.sleep(2);
                 if ((Grid.driver().findElementsByXPath(tactSearchOpptyPage.getAndroidOpptyTabSearchIconButton().getLocator())).size() != 0) {
                     System.out.println("did not click it, need to re-click");
-                    DriverUtils.tapXY(1160,182);
+                    DriverUtils.tapXY(1356,182, 200,2);
                     DriverUtils.sleep(5);
                 }
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactSearchOpptyPage.getSearchTextField());

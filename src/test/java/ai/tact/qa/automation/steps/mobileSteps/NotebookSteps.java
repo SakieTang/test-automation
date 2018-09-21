@@ -67,7 +67,7 @@ public class NotebookSteps implements En {
 //            System.out.println("sync time " + time );
 
             System.out.println("activity is gone");
-            DriverUtils.sleep(30);
+            DriverUtils.sleep(5);
         });
     }
 }

@@ -77,7 +77,7 @@ public class IOSProTactSanityCases {
 
     }
 
-    //CreateSimpleOpportunity
+    //Opportunity
     @MobileTest(    //iOS
             locale = "US",
             additionalCapabilities = {
@@ -88,14 +88,34 @@ public class IOSProTactSanityCases {
             }
     )
     @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
-    void TactACreateSimpleOpptyFeature() {
+    void TactOpptyFeature() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
         //Create Simple Opportunity
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactCreateSimpleOpptyNoReset.class);
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactOpptyNoReset.class);
         testNGCucumberRunner.runCukes();
     }
+
+//    //CreateSimpleOpportunity
+//    @MobileTest(    //iOS
+//            locale = "US",
+//            additionalCapabilities = {
+//                    "unicodeKeyboard:true","resetKeyboard:true",
+//                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+//                    "fullReset:false"  //restart the iPhone/simulator and install the app
+//                    , timeout
+//            }
+//    )
+//    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
+//    void TactACreateSimpleOpptyFeature() {
+//        log.info("TestRunner - Test - feature");
+//        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+//
+//        //Create Simple Opportunity
+//        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactCreateSimpleOpptyNoReset.class);
+//        testNGCucumberRunner.runCukes();
+//    }
 
     //Calendar
     @MobileTest(    //iOS
@@ -285,24 +305,24 @@ public class IOSProTactSanityCases {
         testNGCucumberRunner.runCukes();
     }
 
-    //EditOpportunity
-    @MobileTest(  //iOS
-            locale = "US",
-            additionalCapabilities = {
-                    "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
-                    "fullReset:false"  //restart the iPhone/simulator and install the app
-            }
-    )
-    @Test(groups = "Tact-Sanity", description = "Calendar Actions", alwaysRun = true, dependsOnMethods = "TactEmailSendFeature")
-    void TactEditOpptyFeature() {
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //Edit Opportunity
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactEditOpptyFeatureNoReset.class);
-        testNGCucumberRunner.runCukes();
-    }
+//    //EditOpportunity
+//    @MobileTest(  //iOS
+//            locale = "US",
+//            additionalCapabilities = {
+//                    "unicodeKeyboard:true","resetKeyboard:true",
+//                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+//                    "fullReset:false"  //restart the iPhone/simulator and install the app
+//            }
+//    )
+//    @Test(groups = "Tact-Sanity", description = "Calendar Actions", alwaysRun = true, dependsOnMethods = "TactEmailSendFeature")
+//    void TactEditOpptyFeature() {
+//        log.info("TestRunner - Test - feature");
+//        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+//
+//        //Edit Opportunity
+//        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactEditAndDeleteOpptyFeatureNoReset.class);
+//        testNGCucumberRunner.runCukes();
+//    }
 
     //deleteAccout
     @MobileTest(  //iOS
@@ -320,6 +340,48 @@ public class IOSProTactSanityCases {
 
         //delete account
         TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactDeleteAccountRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+
+    }
+
+    //LearnMore
+    @MobileTest(  //iOS
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+            }
+    )
+    @Test(groups = "Sandbox", description = "Learn More Link", alwaysRun = true, dependsOnGroups = "Tact")
+    void TactLearnMore() {
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //delete account
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactLearnMoreLinkFeatureRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+        DriverUtils.sleep(20);
+    }
+
+    //Sandbox
+    @MobileTest(  //iOS
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+            }
+    )
+    @Test(groups = "Sandbox", description = "Runs Tact - Sandbox Account", dataProvider = "tactMobileIOSUserInfo", alwaysRun = true, dependsOnGroups = "Tact")
+    void TactSandboxAccount(User user) {
+        CustomPicoContainer.getInstance().setUser(user);
+
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //delete account
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactSandboxFeatureRunCukesNoReset.class);
         testNGCucumberRunner.runCukes();
 
     }

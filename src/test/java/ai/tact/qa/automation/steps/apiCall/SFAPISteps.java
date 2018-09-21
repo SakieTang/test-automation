@@ -428,16 +428,18 @@ public class SFAPISteps implements En {
 
     public static void main(String[] args) {
 
-        String fieldValue = "Send Letter/Quote 16590822_lead_event";
+        String fieldValue = "11400919oppty_edit_Tact";
         String fieldName = "subject";
 //        //    Task, , Log        //subject
 //        //    Note,               //title
 
         //Event
+        boolean s = isRecordExisting(SFOBJECT.Opportunity, "name", fieldValue);
+        System.out.println(s);
 //
-        System.out.println(isRecordExisting(SFACTIVITY.Event, fieldName, fieldValue));
-        String noteId = getRecordID(SFACTIVITY.Event, fieldName, fieldValue);
-        System.out.println("id " + noteId);
+//        System.out.println(isRecordExisting(SFACTIVITY.Event, fieldName, fieldValue));
+//        String noteId = getRecordID(SFACTIVITY.Event, fieldName, fieldValue);
+//        System.out.println("id " + noteId);
     }
 
 

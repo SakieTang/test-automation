@@ -56,13 +56,13 @@ Feature: ContactsFeature
     And Common: I click back icon
 
     Examples:
-      | isSync | titleText      | bodyText | isSave |
-      | do     | contact_note   |          | yes    |
+      | isSync | titleText         | bodyText | isSave |
+      | do     | contact_note |          | yes    |
 
   @P2
   @android
   @noteAndroid
-  Scenario Outline: Add Note to a contact w/  checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
+  Scenario Outline: Android only - Add Note to a contact w/  checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "FirstN LastN" from recent field and select it
     Then Contacts: I search one user "FirstN LastN" from contacts list and select it
@@ -77,8 +77,33 @@ Feature: ContactsFeature
     And API: I verify activity "Note" is "deleted" in salesforce
 
     Examples:
-      | isSync | titleText      | bodyText | isSave |
-      | do     | contact_note   |          | yes    |
+      | isSync | titleText           | bodyText | isSave |
+      | do     | contact_noteAndroid |          | yes    |
+
+  @P2
+  @MobileTest
+  @noteCall
+  Scenario Outline: Add Note to a contact calling w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "LastN, FirstN" from recent field and select it
+    Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
+    And Contacts: I click "phone" icon
+    When Saleflow: I click "Note" activity option
+    Then Tact-Pin: I create a new note "<isSync>" sync to SF, "<titleText>" title and "<bodyText>" body
+    And Tact-Pin: I "<isSave>" save new created
+    And Contacts: I click back icon after created Salesflow activities
+    When Common: I switch to "Notebook" page from tab bar
+    Then Notebook: I search this "note" from Notebook and select it
+    When Common: I am waiting for syncing done
+    Then API: I verify activity "Note" is "saved" in salesforce
+    And Common: I click back icon
+    When API: I delete activity "Note" from salesforce
+    Then Notebook: I veirfy deleted "note" from Notebook page
+    And Common: I click back icon
+
+    Examples:
+      | isSync | titleText         | bodyText | isSave |
+      | do     | contact_call_note |          | yes    |
 
   @P1
   @MobileTest
@@ -102,14 +127,14 @@ Feature: ContactsFeature
     And Common: I click back icon
 
     Examples:
-       | subjectOption | subject       | Name      | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
+       | subjectOption | subject     | Name      | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
 #       | w/o           | w/o           | w/o       | w/o       | no      | w/o      | w/o            | w/o          | w/o    |
-       | Send Quote    | contact_log   | test      | w/o       | no      | testing  | High           | Not Started  | yes    |
+       | Send Quote    | contact_log | test      | w/o       | no      | testing  | High           | w/o          | yes    |
 
   @P2
   @android
   @logAndroid
-  Scenario Outline: Add Log to a contact w/  checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
+  Scenario Outline: Android only - Add Log to a contact w/  checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastN, FirstN" from recent field and select it
     Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
@@ -124,10 +149,37 @@ Feature: ContactsFeature
     And API: I verify activity "Log" is "deleted" in salesforce
 
     Examples:
-       | subjectOption | subject       | Name      | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
+       | subjectOption | subject            | Name      | relatedTo | dueDate | Comments | priorityOption | statusOption | isSave |
 #       | w/o           | w/o           | w/o       | w/o       | no      | w/o      | w/o            | w/o          | w/o    |
-       | w/o           | contact_log   | w/o       | w/o       | no      | w/o      | w/o            | w/o          | yes    |
-    
+       | w/o           | contact_logAndroid | w/o       | w/o       | no      | w/o      | w/o            | w/o          | yes    |
+
+  @P1
+  @MobileTest
+  @logCallSFTask
+  Scenario Outline: Add Log to a contact calling, then add SFTask. Verify them in SF(API), then delete from SF(API) w/o checking from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "LastN, FirstN" from recent field and select it
+    Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
+    And Contacts: I click "phone" icon
+    When Saleflow: I click "Log" activity option
+    Then Tact-Pin: I edit "<logSubjectName>" subject in "Log"
+    And Tact-Pin: I "<logIsSave>" save new created
+    When Saleflow: I click "Task" activity option
+    Then Tact-Pin: I edit "<sfTaskTitle>" subject in "SFTask"
+    And Tact-Pin: I "<sfTaskIsSave>" save new created
+    And Contacts: I search this "task" from "Contact" page and select it
+    When Common: I am waiting for syncing done
+    Then API: I verify activity "Task" is "saved" in salesforce
+    And Common: I click back icon
+    When API: I delete activity "Task" from salesforce
+    Then API: I verify activity "Log" is "saved" in salesforce
+    When API: I delete activity "Log" from salesforce
+    And Common: I click back icon
+
+    Examples:
+       | logSubjectName   | logIsSave | sfTaskTitle          | sfTaskIsSave |
+       | contact_call_log | yes       | contact_call_SF_task | yes        |
+
   @P1
   @MobileTest
   @Task
@@ -145,9 +197,9 @@ Feature: ContactsFeature
     And Contacts: I click back icon after created Salesflow activities
 
     Examples:
-       | titleText     | description         | Name        | relatedTo | dueDate     | isFollowUp | isReminder | reminderDate | reminderTime | isSave |
+       | titleText    | description         | Name        | relatedTo | dueDate     | isFollowUp | isReminder | reminderDate | reminderTime | isSave |
 #       | w/o           | w/o                 | w/o         | w/o       | Oct 3, 2018 | w/o        | w/o        | Oct 2, 2018  | 7:55 am      | w/o    |
-       | contact_task  | description         | test        | w/o       | 10/2/2018   | no         | yes        | Oct 2, 2018  | 7:55 am      | yes    |
+       | contact_task | description         | test        | w/o       | 10/2/2018   | no         | yes        | Oct 2, 2018  | 7:55 am      | yes    |
 
   @P1
   @MobileTest
@@ -174,6 +226,25 @@ Feature: ContactsFeature
        | contact_SF_task | w/o         | w/o  | w/o       | no         | w/o        | yes    | w/o      | w/o        | w/o            | w/o          |
 
   @P1
+  @MobileTest
+  @TaskCall
+  Scenario Outline: Add a local Task to a contact and delete from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "LastN, FirstN" from recent field and select it
+    Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
+    And Contacts: I click "phone" icon
+    When Saleflow: I click "Task" activity option
+    Then Tact-Pin: I edit "<taskTitle>" subject in "Task"
+    And Tact-Pin: I "<isSave>" save new created
+    And Contacts: I search this "task" from "Contact" page and select it
+    And Contacts: I delete this Activity
+    And Contacts: I click back icon after created Salesflow activities
+
+    Examples:
+       | taskTitle         | isSave |
+       | contact_call_task | yes    |
+
+  @P1
   @Event
     Scenario Outline: Add a local Event to a contact and delete from client
     When Common: I switch to "Contacts" page from tab bar
@@ -188,7 +259,7 @@ Feature: ContactsFeature
     And Contacts: I click back icon after created Salesflow activities
 
     Examples:
-       | subjectOption     | subject    | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSave |
+       | subjectOption     | subject       | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSave |
 #       | w/o               | true          | 10/10/2018   | w/o      | Jan 1, 2019  | w/o     | w/o                                        | w/o         | w/o    |
        | Send Letter/Quote | contact_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
 
@@ -214,9 +285,9 @@ Feature: ContactsFeature
     And Contacts: I click back icon after created Salesflow activities
 
     Examples:
-       | subjectOption      | subject    | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSyncToSF | name | relatedToName | attendeesName | assignedToName | isSave |
+       | subjectOption      | subject          | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSyncToSF | name | relatedToName | attendeesName | assignedToName | isSave |
 #       | w/o                | w/o           | true          | 10/10/2018   | w/o      | Jan 1, 2019  | w/o     | w/o                                        | w/o         | w/o        | w/o  | w/o           | w/o           | w/o            | w/o    |
-       | Send Letter/Quote  | contact_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes        |w/o   | w/o           | w/o           | w/o            | yes    |
+       | Send Letter/Quote  | contact_SF_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes        |w/o   | w/o           | w/o           | w/o            | yes    |
 
   @P0
   @MobileTest
@@ -225,7 +296,7 @@ Feature: ContactsFeature
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "Umi Singh" from recent field and select it
     Then Contacts: I search one user "Umi Singh" from contacts list and select it
-    And Contacts: I click "Connect LinkedIn" action in contact obj page
+    And Contacts: I click "linkedIn" icon
     When Common: I switch to "Webview" driver
     Then Settings: I sign in the LinkedIn account
     And Settings: I match the user "Umi Singh"
@@ -238,6 +309,9 @@ Feature: ContactsFeature
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "Auto.Andr Tact" from recent field and select it
     Then Contacts: I search one user "Auto.Andr Tact" from contacts list and select it
+
+
+
 
 #  @Test
 #  Scenario: testing navigation in Android

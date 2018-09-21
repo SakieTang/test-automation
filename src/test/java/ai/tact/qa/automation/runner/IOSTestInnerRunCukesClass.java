@@ -106,9 +106,10 @@ public class IOSTestInnerRunCukesClass {
             ,tags={
             "@createContact,"
                 +
-            "@note, @Log,   @SFTask, @SFEvent"  //delete from SF
-//            "@Task, @Event"                     //delete from client
-//            "@P1"                               //run all Activity
+            "@noteCall, @logCallSFTask, "//@TaskCall, "             //Calling Activity
+                +
+            "@Task,     @Event"                     //delete from client
+//            "@note,     @Log,   @SFTask,    @SFEvent" //delete from SF
             }
             , format = {
                 "pretty",
@@ -128,9 +129,8 @@ public class IOSTestInnerRunCukesClass {
             ,tags={"" +
             "@createLead,"
                 +
-//            "@note, @Log,   @SFTask, @SFEvent"  //delete from SF
-            "@Task, @Event"                     //delete from client
-//            "@P1"                               //run all Activity
+            "@Task,     @Event"                     //delete from client
+//            "@note,     @Log,   @SFTask, @SFEvent"  //delete from SF
             }
             , format = {
             "pretty",
@@ -151,9 +151,8 @@ public class IOSTestInnerRunCukesClass {
             ,tags={
             "@createAccount,"
                     +
-//            "@note, @Log,   @SFTask, @SFEvent"  //delete from SF
-            "@Task, @Event"                     //delete from client
-//            "@P1"                               //run all Activity
+            "@note, @Log,   @SFTask, @SFEvent"  //delete from SF
+//            "@Task, @Event"                     //delete from client
     }
             , format = {
             "pretty",
@@ -164,6 +163,31 @@ public class IOSTestInnerRunCukesClass {
         private void test(){
             System.out.println("@Test Account Feature RunCukesTest");
         }
+    }
+
+    //Opportunity
+    @CucumberOptions(
+            features = ("src/test/resources/Features/mobile/Opportunities.feature")
+            ,glue = ("ai/tact/qa/automation/steps")
+            , tags={
+                    "@createSimpleOpportunity,"
+                        +
+                    "@editExistingOppty, @deleteExistingOppty,"
+                        +
+                    "@note, @Log,   @SFTask, @SFEvent"  //delete from SF
+//                  "@Task, @Event"                     //delete from client
+
+    }
+            , format = {
+            "pretty",
+            "json:target/report/ios/TactOpptyFeatureRunCukesNoReset.json"}
+    )
+    public class TactOpptyNoReset extends AbstractTestNGCucumberTests {
+        @Test
+        private void test(){
+            System.out.println("@Test Opportunities Feature RunCukesTest");
+        }
+
     }
 
     //CreateSimpleOpportunities
@@ -187,12 +211,12 @@ public class IOSTestInnerRunCukesClass {
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Opportunities.feature")
             ,glue = ("ai/tact/qa/automation/steps")
-            , tags={"@editExistingOppty"}
+            , tags={"@editExistingOppty, @deleteExistingOppty"}
             , format = {
             "pretty",
             "json:target/report/ios/TactOpptyFeatureRunCukesNoReset.json"}
     )
-    public class TactEditOpptyFeatureNoReset extends AbstractTestNGCucumberTests {
+    public class TactEditAndDeleteOpptyFeatureNoReset extends AbstractTestNGCucumberTests {
         @Test
         private void test(){
             System.out.println("@Test Opportunities Feature RunCukesTest");
@@ -229,6 +253,36 @@ public class IOSTestInnerRunCukesClass {
     public class TactCalendarFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
         @Test
         private void test(){ System.out.println("@Tact Calendar Feature RunCukesNoReset"); }
+
+    }
+
+    //LearnMore account
+    @CucumberOptions(
+            features = ("src/test/resources/Features/mobile/TactUserAccount.feature")
+            ,glue = ("ai/tact/qa/automation/steps")
+            ,tags = {"@LearnMore"}
+            , format = {
+            "pretty",
+            "json:target/report/ios/TactLearnMoreLinkFeatureRunCukesNoReset.json"}
+    )
+    public class TactLearnMoreLinkFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
+        @Test
+        private void test(){ System.out.println("@Tact LearnMore Feature RunCukesNoReset"); }
+
+    }
+
+    //Sandbox account
+    @CucumberOptions(
+            features = ("src/test/resources/Features/mobile/TactUserAccount.feature")
+            ,glue = ("ai/tact/qa/automation/steps")
+            ,tags = {"@login-Sandbox, @logout"}
+            , format = {
+            "pretty",
+            "json:target/report/ios/TactSandboxFeatureRunCukesNoReset.json"}
+    )
+    public class TactSandboxFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
+        @Test
+        private void test(){ System.out.println("@Tact Sandbox Feature RunCukesNoReset"); }
 
     }
 

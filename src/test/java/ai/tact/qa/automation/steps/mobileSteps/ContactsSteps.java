@@ -15,6 +15,7 @@ import ai.tact.qa.automation.utils.DriverUtils;
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.mobile.elements.MobileButton;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
+import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
@@ -127,20 +128,13 @@ public class ContactsSteps implements En {
                 System.out.println("already find the name from recent list");
             }
         });
-        And("^Contacts: I click \"([^\"]*)\" action in contact obj page$", (String actionOption) -> {
-            log.info("^Contacts: I click " + actionOption + " action in contact obj page$");
+        And("^Contacts: I add \"(Task|Opportunity)\" action in contact obj page$", (String actionOption) -> {
+            log.info("^Contacts: I add " + actionOption + " action in contact obj page$");
             TactContactObjPage tactContactObjPage = new TactContactObjPage();
 
             switch (actionOption) {
                 case "Add Task":
                     tactContactObjPage.getAddTaskActionButton().tap();
-                    break;
-                case "Connect LinkedIn":
-//                    if (Grid.driver().findElementsByXPath(tactContactObjPage.getConnectLinkedInActionButton().getLocator()).size()!=0) {
-//                        tactContactObjPage.getConnectLinkedInActionButton().tap();
-//                    }
-                    tactContactObjPage.getLinkedInButton().tap();
-                    DriverUtils.sleep(20);
                     break;
                 case "Add Opportunity":
                     if (Grid.driver().findElementsByXPath(tactContactObjPage.getAddOpportunityActionButton().getLocator()).size() !=0) {
@@ -148,22 +142,43 @@ public class ContactsSteps implements En {
                     }
                     tactContactObjPage.getAddOpportunityActionButton().tap();
                     break;
-                case "emailIcon":
-                    tactContactObjPage.getProfileEmailActionButton().tap();
-                    break;
-                case "phoneIcon":
-                    tactContactObjPage.getProfilePhoneActionButton().tap();
-                    break;
-                case "mapIcon":
-                    tactContactObjPage.getMapIconActionButton().tap();
-                    break;
-                case "commentIcon":
-                    tactContactObjPage.getCommentProfileActionButton().tap();
-                    break;
                 default:
                     TactAIAsserts.verifyFalse(true,"Please give a correct String " +
                             "(Add Task|Connect LinkedIn|Add Opportunity|emailIcon|phoneIcon|mapIcon|commentIcon)");
             }
+        });
+        And("^Contacts: I click \"(email|phone|location|message|linkedIn)\" icon$", (String iconOption) -> {
+            log.info("^Contacts: I click " + iconOption + " icon$");
+            TactContactObjPage tactContactObjPage = new TactContactObjPage();
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+
+            switch (iconOption) {
+                case "email":
+                    tactContactObjPage.getToolbarEmailButton().tap();
+                    break;
+                case "phone":
+                    if (DriverUtils.isAndroid() &&
+                            Grid.driver().findElementsById(tactAlertsPopUpPage.getAlertsAllowButton().getLocator()).size() != 0) {
+                        tactAlertsPopUpPage.getAlertsAllowButton().tap();
+                    }
+                    tactContactObjPage.getToolbarPhoneButton().tap();
+                    if (DriverUtils.isAndroid() &
+                            Grid.driver().findElementsByXPath("//android.widget.ImageButton[@content-desc='End call']").size() != 0){
+                        DriverUtils.tapAndroidHardwareBackBtn();
+                    }
+                    break;
+                case "location":
+                    tactContactObjPage.getToolbarLocationButton().tap();
+                    break;
+                case "message":
+                    tactContactObjPage.getToolbarMessageButton().tap();
+                    break;
+                case "linkedIn":
+                    tactContactObjPage.getToolbarLinkedInButton().tap();
+                    break;
+            }
+
+
         });
         Then("^Contacts: I back to Contacts Main page from \"([^\"]*)\" page$", (String page) -> {
             log.info("^Contacts: I back to Contacts Main page from " + page + " page$");
@@ -217,7 +232,11 @@ public class ContactsSteps implements En {
                 DriverUtils.sleep(0.5);
             }
             DriverUtils.sleep(1);
-            Grid.driver().findElementByXPath(stageLoc).click();
+            if (Grid.driver().findElementsByXPath(stageLoc).size() == 0){
+                System.out.println("Cannot find the " + stageLoc + ", wait for extral 5 sec");
+                DriverUtils.sleep(5);
+            }
+            Grid.driver().findElementByXPath(stageLoc).click();     //failed here 9/12, 9/16(create account, account event)
         });
         And("^Contacts: I click back icon after created Salesflow activities$", () -> {
             log.info("^^Contacts: I click back icon after created Salesflow activities$");
@@ -339,6 +358,11 @@ public class ContactsSteps implements En {
                     break;
                 case "task":
                     activityName = TactPinSteps.taskSubject;
+                    if (DriverUtils.isIOS() && activityName.contains("oppty")){
+                        String clickButtonLoc = "//XCUIElementTypeStaticText[@name=\"oppty_TactName\"]";
+                        Grid.driver().findElementByXPath(clickButtonLoc).click();
+                        DriverUtils.sleep(0.5);
+                    }
                     break;
                 case "event":
                     activityName = TactPinSteps.eventSubject;
@@ -353,10 +377,12 @@ public class ContactsSteps implements En {
                     DriverUtils.clickOption(tactContactObjPage.getRecentActivityLabel(), "activityName", activityName);
                 } else if (Grid.driver().findElementsByXPath(tactContactObjPage.getRecentActivitySeeAllButton().getLocator()).size()!=0){
                     tactContactObjPage.getRecentActivitySeeAllButton().tap();
-                    DriverUtils.clickOption(tactContactObjPage.getRecentActivityLabel(), "activityName", activityName);
+                    DriverUtils.clickOption(tactContactObjPage.getRecentActivityLabel(), "activityName", activityName);         //9/16 lead-event
                 }
             }
 
+            System.out.println("after search");
+            DriverUtils.sleep(5);
 
         });
         And("^Contacts: I delete this Activity$", () -> {
@@ -366,17 +392,18 @@ public class ContactsSteps implements En {
 
             if (DriverUtils.isAndroid()) {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactPinPage.getActivityViewPageMoreOptionsAndroidButton());
-                tactPinPage.getActivityViewPageMoreOptionsAndroidButton().tap(tactPinPage.getActivityViewPageDeleteButton());
+                tactPinPage.getActivityViewPageMoreOptionsAndroidButton().tap(tactPinPage.getActivityViewPageDeleteButton());   //0917 failed company-task
                 tactPinPage.getActivityViewPageDeleteButton().tap(tactAlertsPopUpPage.getAlertsOKButton());
                 tactAlertsPopUpPage.getAlertsOKButton().tap();
             } else {
                 if (Grid.driver().findElementsByXPath(tactPinPage.getActivityViewPageDeleteButton().getLocator()).size()==0){
                     DriverUtils.scrollToBottom();
                 }
-                tactPinPage.getActivityViewPageDeleteButton().tap();//tactAlertsPopUpPage.getDeleteTaskButton());
+                tactPinPage.getActivityViewPageDeleteButton().tap();//tactAlertsPopUpPage.getDeleteTaskButton());   //0913-failed lead-@P1 @Task  0916 Lead-Task
                 tactAlertsPopUpPage.getDeleteTaskButton().tap();
             }
             DriverUtils.sleep(0.5);
         });
+
     }
 }

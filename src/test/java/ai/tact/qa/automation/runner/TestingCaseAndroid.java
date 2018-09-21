@@ -86,12 +86,18 @@ public class TestingCaseAndroid {
         System.out.println("TestRunner - Test - feature");
         System.out.println("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
-//        testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
-//        testNGCucumberRunner.runCukes();
 
-        //Account
-        testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactCreateSimpleOpptyNoReset.class);
+//        testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactCreateSimpleOpptyNoReset.class);
+//        testNGCucumberRunner.runCukes();
+//
+//        testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactEditAndDeleteOpptyFeatureNoReset.class);
+//        testNGCucumberRunner.runCukes();
+//
+//        DriverUtils.sleep(20);
+
+        testNGCucumberRunner = new TestNGCucumberRunner(testCase.class);
         testNGCucumberRunner.runCukes();
+
 
     }
 
@@ -112,10 +118,9 @@ public class TestingCaseAndroid {
     }
 
     @CucumberOptions(
-            features = ("src/test/resources/Features/mobile/Account.feature")
+            features = ("src/test/resources/Features/mobile/Contacts.feature")
             ,glue = ("ai.tact.qa.automation.steps")
-            ,tags={"" +
-                "@createAccount"
+            ,tags={"@TaskCall"
 
                 }
     )

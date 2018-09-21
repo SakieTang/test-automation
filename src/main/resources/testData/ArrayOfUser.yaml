@@ -4,7 +4,7 @@ mobileIOS: !!ai.tact.qa.automation.utils.dataobjects.User
   salesforceEmailAddress: autoation.tact.s@gmail.com
   salesforceEmailPwd: Tact2018
   exchangeEmailAddress: automation.TactiOS@tact.ai
-  exchangeEmailPwd: Tact2018
+  exchangeEmailPwd: e8WHr7EUvasgJm3G
   exchangeServer: outlook.office365.com
   gmailEmailAddress: automation.tact.s@gmail.com
   gmailEmailPwd: Tact2018
@@ -19,11 +19,11 @@ mobileIOS: !!ai.tact.qa.automation.utils.dataobjects.User
   aiChannelAccountPwd:
 mobileAndroid: !!ai.tact.qa.automation.utils.dataobjects.User
   salesforceAccount: automation.tactAndrSF.s@gmail.com
-  salesforceAccountPwd: Tact2018
+  salesforceAccountPwd: tact2018
   salesforceEmailAddress: automation.tactAndr.s@gmail.com
   salesforceEmailPwd: Tact2018
   exchangeEmailAddress: automation.TactAndroid@tact.ai
-  exchangeEmailPwd: Tact2018
+  exchangeEmailPwd: JYGvi2JXAr6RH4kP
   exchangeServer: outlook.office365.com
   gmailEmailAddress: automation.tactAndr.s@gmail.com
   gmailEmailPwd: Tact2018
@@ -32,7 +32,7 @@ mobileAndroid: !!ai.tact.qa.automation.utils.dataobjects.User
   apiClientId: 3MVG9CEn_O3jvv0yiRj2fbfaQUhUaoUKiB8Os5x9BcWqzjOABcnt2LmRpqLT17SnV1ANFktY3tegiN_E2QHzP
   apiClientSecret: 6864499967095259178
   apiUserName: automation.tactAndrSF.s@gmail.com
-  apiPassword: Tact2018wPe9wOwxW0zz80uvdsaVwvw2z
+  apiPassword: tact2018lPt4DznhMZxZkrR94uOflHBac
   aiWebsiteUrl:
   aiChannelAccount:
   aiChannelAccountPwd:

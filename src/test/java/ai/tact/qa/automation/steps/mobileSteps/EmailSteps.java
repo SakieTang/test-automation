@@ -156,7 +156,7 @@ public class EmailSteps implements En {
             log.info("subject text : " + sendEmailSubjectText);
             newMessagePage.getSubjectNewMessageTextField().sendKeys(sendEmailSubjectText);
 
-            DriverUtils.tapXY(188, 388);
+            DriverUtils.tapXY(188, 388, 200,2);
             newMessagePage.getBodyTextField().sendKeys(body);
 
         });

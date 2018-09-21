@@ -2,19 +2,24 @@ package ai.tact.qa.automation.steps.mobileSteps;
 
 import ai.tact.qa.automation.testcomponents.mobile.*;
 import ai.tact.qa.automation.testcomponents.mobile.TactCalendar.TactCalendarMainPage;
+import ai.tact.qa.automation.testcomponents.mobile.TactLoginWebview.SFLoginWebviewPage;
+import ai.tact.qa.automation.testcomponents.mobile.TactLoginWebview.SFSandboxLoginWebviewPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactSetting.ExchangePage;
 import ai.tact.qa.automation.utils.CustomPicoContainer;
 import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
 
 import com.paypal.selion.platform.grid.Grid;
-import com.paypal.selion.platform.html.Button;
-import com.paypal.selion.platform.html.CheckBox;
-import com.paypal.selion.platform.html.TextField;
+import com.paypal.selion.platform.html.*;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
+import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import cucumber.api.DataTable;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.internal.MouseAction;
+import org.testng.Assert;
 
+import java.sql.SQLSyntaxErrorException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +35,7 @@ public class LoginSteps implements En {
             TactWelcomePage tactWelcomePage = new TactWelcomePage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactWelcomePage.getConnectWithSFButton());
+//            DriverUtils.sleep(5);
             tactWelcomePage.getConnectWithSFButton().tap();
         });
         And("^Login-Webview: I \"([^\"]*)\" send usage to google chrome and \"([^\"]*)\" sign in Chrome$", (String isSend, String isSignIn) -> {
@@ -86,6 +92,7 @@ public class LoginSteps implements En {
 
             log.info("salesforce UserName : " + sfAccountName);
         });
+
         And("^Login-Webview: I enter the user email address$", () -> {
             log.info("^Login: I enter the user email address$");
             SFLoginWebviewPage sfLoginWebviewPage = new SFLoginWebviewPage();
@@ -369,6 +376,130 @@ public class LoginSteps implements En {
                 else {
                     log.info("do not need to do workaround");
                 }
+            }
+        });
+        Given("^Login: I switch to connect with \"(Sandbox|Salesforce|SF)\" channel", (String connectChannelOption) -> {
+            log.info("^Login: I switch to connect with " + connectChannelOption + " channel$");
+
+            TactWelcomePage tactWelcomePage = new TactWelcomePage();
+
+            DriverUtils.clearChromeData();
+
+            WebDriverWaitUtils.waitUntilElementIsVisible(tactWelcomePage.getConnectWithSFButton());
+
+            if (DriverUtils.isIOS()) {
+                DriverUtils.tapXY(188, 210, 50, 0);
+                DriverUtils.tapXY(188, 210, 50, 0);
+                DriverUtils.tapXY(188, 210, 50, 0);
+            } else {
+                DriverUtils.tapXY(720, 597,50,0);
+                DriverUtils.tapXY(720, 597,50,0);
+            }
+
+            WebDriverWaitUtils.waitUntilElementIsVisible(tactWelcomePage.getConnectWithSandboxButton());
+
+            tactWelcomePage.getConnectWithSandboxButton().tap();
+        });
+        And("^Login-Webview: I setup the sandbox domain$", () -> {
+            log.info("^Login-Webview: I setup the sandbox domain$");
+
+            SFSandboxLoginWebviewPage sfSandboxLoginWebviewPage = new SFSandboxLoginWebviewPage();
+
+            WebDriverWaitUtils.waitUntilElementIsVisible(sfSandboxLoginWebviewPage.getUseCustomDomainButton().getLocator());
+            sfSandboxLoginWebviewPage.getUseCustomDomainButton().tap(sfSandboxLoginWebviewPage.getSandboxCustomDomainTextField());
+
+            //click "Use Custom Domain"
+            Button useCustomDomainButton = new Button( sfSandboxLoginWebviewPage.getUseCustomDomainButton().getLocator() );
+            useCustomDomainButton.click();
+
+            //entry the custom domain and use AzureSSO
+            WebDriverWaitUtils.waitUntilElementIsVisible(sfSandboxLoginWebviewPage.getSandboxCustomDomainTextField().getLocator());
+            sfSandboxLoginWebviewPage.getSandboxCustomDomainTextField().sendKeys("tactile--qa.cs91.my.salesforce.com");
+
+            //click "continue"
+            Button continueButton=new Button(sfSandboxLoginWebviewPage.getMyDomainContinueButton().getLocator());
+            continueButton.click();
+            DriverUtils.sleep(1);
+
+            //click "AzureS
+            if (Grid.driver().findElementsByXPath( sfSandboxLoginWebviewPage.getAzureSSOButton().getLocator() ).size() == 2) {
+                Grid.driver().findElementByXPath(sfSandboxLoginWebviewPage.getSandboxAzureSSOButton().getLocator()).click();
+            } else {
+                Grid.driver().findElementByXPath( sfSandboxLoginWebviewPage.getAzureSSOButton().getLocator() ).click();
+            }
+
+        });
+        And("^Login-Webview: I enter the sandbox user email address and password$", () -> {
+            log.info("^Login-Webview: I enter the sandbox user email address and password$");
+
+            SFSandboxLoginWebviewPage sfSandboxLoginWebviewPage = new SFSandboxLoginWebviewPage();
+            Button sandboxLoginAccountNextButton = new Button( sfSandboxLoginWebviewPage.getSandboxLoginAccountNextButton().getLocator() );
+            Button sandboxSignInButton = new Button( sfSandboxLoginWebviewPage.getSandboxSignInButton().getLocator() );
+//            Button sandboxStaySignedInYesButton = new Button( sfSandboxLoginWebviewPage.getSandboxStaySignedInYesButton().getLocator() );
+
+            String sandboxUser = CustomPicoContainer.getInstance().getUser().getExchangeEmailAddress();
+            String sandboxPwd = CustomPicoContainer.getInstance().getUser().getExchangeEmailPwd();
+            System.out.println("User: " + sandboxUser + "\n" +
+                               "Pwd : " + sandboxPwd);
+
+            WebDriverWaitUtils.waitUntilElementIsVisible(sfSandboxLoginWebviewPage.getSandboxLoginAccountTextField().getLocator());
+
+            //enter sandbox User and click next button
+            sfSandboxLoginWebviewPage.getSandboxLoginAccountTextField().sendKeys(sandboxUser);
+            sandboxLoginAccountNextButton.click();
+            DriverUtils.sleep(1);
+
+            //enter sandbox pwd
+            WebDriverWaitUtils.waitUntilElementIsVisible(sfSandboxLoginWebviewPage.getSandboxPasswordTextField().getLocator());
+            sfSandboxLoginWebviewPage.getSandboxPasswordTextField().sendKeys(sandboxPwd);
+            sandboxSignInButton.click();
+            DriverUtils.sleep(1);
+
+            Grid.driver().findElementByXPath(sfSandboxLoginWebviewPage.getSandboxStaySignedInYesButton().getLocator()).click();
+
+        });
+        Given("^Login: I click Learn More from login page$", () -> {
+            log.info("^Login: I click Learn More from login page$");
+            TactWelcomePage tactWelcomePage = new TactWelcomePage();
+
+            WebDriverWaitUtils.waitUntilElementIsVisible(tactWelcomePage.getTactLogoImage());
+
+            tactWelcomePage.getLearnMoreButton().tap();
+            DriverUtils.sleep(1);
+        });
+        Then("^Login-Webview: I check the learn more page title and back to welcome page$", () -> {
+            log.info("^Login-Webview: I check the learn more page title and back to welcome page$");
+
+            TactWelcomePage tactWelcomePage = new TactWelcomePage();
+
+            //Title
+            WebElement titleWebElement = Grid.driver().findElementByXPath(tactWelcomePage.getLearnMoreTitleLabel().getLocator());
+            String titleString;
+            if (DriverUtils.isIOS()) {
+                titleString = titleWebElement.getText();
+            } else {
+                titleString = titleWebElement.getAttribute("name");
+            }
+            System.out.println(titleString);
+            Assert.assertEquals(titleString,"Introducing Salesforce Log In for Tact", "Same");
+
+            //1st paragrapha
+            String pString;
+            WebElement pWebElement = Grid.driver().findElementByXPath(tactWelcomePage.getLearnMoreP1Label().getLocator());
+            if (DriverUtils.isIOS()) {
+                pString = pWebElement.getText();
+            } else {
+                pString = pWebElement.getAttribute("name");
+            }
+            System.out.println(pString);
+
+            String text = "We've upgraded the Tact login experience. Going forward you will simply log in to Tact with your Salesforce credentials, cutting down on the number of passwords you need to keep track of and simplifying your Tact login experience.";
+            Assert.assertEquals(pString, text, "Same");
+
+            if (DriverUtils.isIOS()){
+                DriverUtils.tapXY(27, 66,200,1);
+            } else {
+                DriverUtils.tapAndroidHardwareBackBtn();
             }
         });
     }

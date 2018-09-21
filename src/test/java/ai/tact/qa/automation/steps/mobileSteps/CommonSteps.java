@@ -24,7 +24,7 @@ public class CommonSteps implements En {
 
     public CommonSteps() {
 
-        And("^Common: I switch to \"([^\"]*)\" driver$", (String driverContext) -> {
+        And("^Common: I switch to \"(Webview|Native_APP)\" driver$", (String driverContext) -> {
             log.info("^Common: I switch to " + driverContext + " driver$");
 
             if (driverContext.equalsIgnoreCase("Webview") && DriverUtils.isIOS()) {
@@ -251,6 +251,7 @@ public class CommonSteps implements En {
             if (DriverUtils.isIOS()) {
                 DriverUtils.scrollToBottom();
                 WebDriverWaitUtils.waitUntilElementIsInvisible(tactSyncPage.getPendingSyncToSFLabel().getLocator());
+                DriverUtils.scrollToBottom();
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactSyncPage.getSyncedWithSFLabel().getLocator());
             }
         });

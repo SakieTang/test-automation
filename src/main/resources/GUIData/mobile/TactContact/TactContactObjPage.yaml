@@ -42,7 +42,27 @@ elements:
       US: "//XCUIElementTypeCell[9]"
     android:
       US: "//*[contains(@resource-id,'tasks_label_view_more')]"
-  linkedInButton:
+  toolbarEmailButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='contact toolbar email']"
+    android:
+      US: "get_in_touch_action_mail"
+  toolbarPhoneButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='contact toolbar phone']"
+    android:
+      US: "get_in_touch_action_phone"
+  toolbarLocationButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='contact toolbar location']"
+    android:
+      US: "get_in_touch_action_map"
+  toolbarMessageButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='contact toolbar message']"
+    android:
+      US: "get_in_touch_action_message"
+  toolbarLinkedInButton:
     ios:
       US: "//XCUIElementTypeButton[@name='contact toolbar linkedin']"
     android:

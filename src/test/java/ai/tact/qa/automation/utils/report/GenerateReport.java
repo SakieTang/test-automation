@@ -813,10 +813,10 @@ public class GenerateReport {
 //        GenerateReport.deleteAllJsonReport("ios");
 
 //        //submit report
-//        System.out.println(System.getProperty("user.dir"));
+//        System.out.println(Systemqs.getProperty("user.dir"));
 
-//        generteHtml();
-//        uploadReport("report.html", false);
+        generteHtml();
+        uploadReport("report.html", false);
 //        generateAIHtml();
 //        uploadReport("aiReport.html", false);
 //
@@ -827,7 +827,6 @@ public class GenerateReport {
 //        uploadReport("aiReport2.html", true);
 
 //        uploadAIReport();
-
 
 //        String fromFile = "https://rink.hockeyapp.net/api/2/apps/63a92edb44f544f6809959332a92d56f/app_versions/85?format=apk&avtoken=478a9e794ef326d91fd367e401b902dfb2c92f76";
 //        String toFile = String.format("%s/Applications/TactApplicationTesting.apk", System.getProperty("user.dir"));    //"/Users/sakie/workspace/automation/test-automation"
@@ -843,7 +842,6 @@ public class GenerateReport {
 //                e.printStackTrace();
 //            }
 //        }
-
 
     }
 }

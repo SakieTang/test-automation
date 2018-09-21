@@ -35,7 +35,7 @@ public class AddEditDeleteOpptySteps implements En {
 
             if (action.equalsIgnoreCase("edit")){
                 isEdit = true;
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactAddNewOpptyPage.getEditOpptyTitleLabel());
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactAddNewOpptyPage.getEditOpptyTitleLabel()); //09/17  edit oppty
             } else {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactAddNewOpptyPage.getNewOpptyTitleLabel());
             }
@@ -124,6 +124,7 @@ public class AddEditDeleteOpptySteps implements En {
             */
             if (!DriverUtils.isTextEmpty(accountType)) {
                 tactAddNewOpptyPage.getTypeButton().tap();
+                DriverUtils.sleep(1);
                 if (DriverUtils.isIOS()) {
                     WebDriverWaitUtils.waitUntilElementIsVisible(tactAddNewOpptyPage.getTypeTitleLabel());
                 }
@@ -135,9 +136,9 @@ public class AddEditDeleteOpptySteps implements En {
             * Web                  * Phone Inquiry         * Partner Referral
             * Purchased List       * Other
             */
-
             if (!DriverUtils.isTextEmpty(leadSource)) {
-                tactAddNewOpptyPage.getLeadSourceButton().tap();
+                tactAddNewOpptyPage.getLeadSourceButton().tap();        //Android 09/16 edit oppty
+                DriverUtils.sleep(1);
                 if (DriverUtils.isIOS()) {
                     WebDriverWaitUtils.waitUntilElementIsVisible(tactAddNewOpptyPage.getLeadSourceTitleLabel());
                 }
@@ -181,21 +182,18 @@ public class AddEditDeleteOpptySteps implements En {
             // mainCompetitor - Text(100)
             DriverUtils.inputTextField(isEdit, tactAddNewOpptyPage.getAddInfoMainCompetitorTextField(), FieldDataType.randomAscii, 100, mainCompetitor, true);
 
-//            if (DriverUtils.isIOS()) {
-                DriverUtils.workaroundHideKeyboard();
-                DriverUtils.sleep(30);
-//            }
+            DriverUtils.workaroundHideKeyboard();
+            DriverUtils.sleep(5);
 
             // currentGenerator -Text(100)
             DriverUtils.inputTextField(isEdit, tactAddNewOpptyPage.getAddInfoCurrentGeneratorTextField(), FieldDataType.randomAscii, 100, currentGenerator, true);
-
-
 
             // deliveryInstallationStatus
             /**
              * In progress      * Yet to begin      * Completed
              */
             tactAddNewOpptyPage.getAddInfoDeliveryInstallationStatusButton().tap();
+            DriverUtils.sleep(1);
             if (DriverUtils.isIOS()) {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactAddNewOpptyPage.getDeliveryInstallationStatusTitleLabel());
             }
@@ -275,14 +273,20 @@ public class AddEditDeleteOpptySteps implements En {
                 TactAIAsserts.assertEquals(tactOpptiesMainPage.getTactOpportunitiesDropDownButton(), tactOpptiesMainPage.getTactOpportunitiesDropDownButton(), "Should go back to Opportunities main page");
 //                TactAIAsserts.assertNotEquals(tactAddNewOpptyPage.getNewOpptyTitleLabel(), tactAddNewOpptyPage.getNewOpptyTitleLabel(), "There is an error in your oppty");
             }
-            System.out.println("finish eidt");
-            DriverUtils.sleep(2);
+//            if (!opportunityName.contains("created")) {
+//                System.out.println("finish eidt");
+//                DriverUtils.sleep(30);
+//            }
 
             if (DriverUtils.isAndroid()) {
+                DriverUtils.sleep(2);
                 System.out.println("in Android");
                 String backLoc = "//android.widget.ImageButton[@content-desc='Navigate up']";
                 Grid.driver().findElementByXPath(backLoc).click();
             }
+//
+//            System.out.println("is it saved?");
+//            DriverUtils.sleep(20);
         });
         Then("^AddOppty: I check the oppty value$", () -> {
             log.info("^AddOppty: I check the oppty value$");
