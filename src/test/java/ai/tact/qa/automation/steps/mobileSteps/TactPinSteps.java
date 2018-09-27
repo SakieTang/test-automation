@@ -733,6 +733,7 @@ public class TactPinSteps implements En {
             log.info("^Tact-Pin: I edit " + name + " subject$");
             TactLogPage tactLogPage = new TactLogPage();
             TactTaskPage tactTaskPage = new TactTaskPage();
+            TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
 
             switch (activity) {
                 case "Log":

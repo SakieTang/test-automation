@@ -19,7 +19,7 @@ Feature: LeadsFeature
       | LastNLead, FirstNLead | Tactile     | yes    |
 
   @P1
-  @note
+  @SFNote
   Scenario Outline: Add Note to a lead w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastNLead, FirstNLead" from recent field and select it
@@ -40,11 +40,11 @@ Feature: LeadsFeature
 
     Examples:
       | isSync | titleText | bodyText | isSave |
-      | do     | lead_note |          | yes    |
+      | do     | lead_SF_note |          | yes    |
 
   @P2
   @android
-  @noteAndroid
+  @SFNoteAndroid
   Scenario Outline: Android only - Add Note to a lead w/ checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and verify it's deleted from SF (API)
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastNLead, FirstNLead" from recent field and select it
@@ -61,7 +61,47 @@ Feature: LeadsFeature
 
     Examples:
       | isSync | titleText        | bodyText | isSave |
-      | do     | lead_noteAndroid |          | yes    |
+      | do     | lead_SF_noteAndroid |          | yes    |
+
+  @P1
+  @LocNote
+  Scenario Outline: Add Loc Note to a lead
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "LastNLead, FirstNLead" from recent field and select it
+    And Contacts: I search one user "LastNLead, FirstNLead" from contacts list and select it
+    And Tact-Pin: I see a Tact pin icon display
+    When Tact-Pin: I click Tact pin icon and select "Note" option
+    Then Tact-Pin: I create a new note "<isSync>" sync to SF, "<titleText>" title and "<bodyText>" body
+    And Tact-Pin: I "<isSave>" save new created
+
+    Examples:
+      | isSync | titleText     | bodyText | isSave |
+      | do not | lead_loc_note |          | yes    |
+
+  @P2
+  @MobileTest
+  @SFNoteCall
+  Scenario Outline: Add SF Note to a lead calling w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "LastNLead, FirstNLead" from recent field and select it
+    And Contacts: I search one user "LastNLead, FirstNLead" from contacts list and select it
+    And Contacts: I click "phone" icon
+    When Saleflow: I click "Note" activity option
+    Then Tact-Pin: I create a new note "<isSync>" sync to SF, "<titleText>" title and "<bodyText>" body
+    And Tact-Pin: I "<isSave>" save new created
+    And Contacts: I click back icon after created Salesflow activities
+    When Common: I switch to "Notebook" page from tab bar
+    Then Notebook: I search this "note" from Notebook and select it
+    When Common: I am waiting for syncing done
+    Then API: I verify activity "Note" is "saved" in salesforce
+    And Common: I click back icon
+    When API: I delete activity "Note" from salesforce
+    Then Notebook: I veirfy deleted "note" from Notebook page
+    And Common: I click back icon
+
+    Examples:
+      | isSync | titleText         | bodyText | isSave |
+      | do     | lead_call_SF_note |          | yes    |
 
   @P1
   @Log
@@ -109,7 +149,34 @@ Feature: LeadsFeature
        | w/o           | lead_logAndroid | w/o   | w/o      | no      | w/o      | w/o            | w/o          | yes    |
 
   @P1
-  @Task
+  @MobileTest
+  @logCallSFTask
+  Scenario Outline: Add Log to a lead calling, then add SFTask. Verify them in SF(API), then delete from SF(API) w/o checking from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "LastNLead, FirstNLead" from recent field and select it
+    And Contacts: I search one user "LastNLead, FirstNLead" from contacts list and select it
+    And Contacts: I click "phone" icon
+    When Saleflow: I click "Log" activity option
+    Then Tact-Pin: I edit "<logSubjectName>" subject in "Log"
+    And Tact-Pin: I "<logIsSave>" save new created
+    When Saleflow: I click "Task" activity option
+    Then Tact-Pin: I edit "<sfTaskTitle>" subject in "SFTask"
+    And Tact-Pin: I "<sfTaskIsSave>" save new created
+    And Contacts: I search this "task" from "Contact" page and select it
+    When Common: I am waiting for syncing done
+    Then API: I verify activity "Task" is "saved" in salesforce
+    And Common: I click back icon
+    When API: I delete activity "Task" from salesforce
+    Then API: I verify activity "Log" is "saved" in salesforce
+    When API: I delete activity "Log" from salesforce
+    And Common: I click back icon
+
+    Examples:
+      | logSubjectName | logIsSave | sfTaskTitle       | sfTaskIsSave |
+      | lead_call_log  | yes       | lead_call_SF_task | yes        |
+
+  @P1
+  @LocTask
   Scenario Outline: Add a local Task to a lead and delete from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastNLead, FirstNLead" from recent field and select it
@@ -148,9 +215,27 @@ Feature: LeadsFeature
        | titleText    | description | Name | relatedTo | isFollowUp | isReminder | isSave |
        | lead_SF_task | w/o         | w/o  | w/o       | no         | w/o        | yes    |
 
+  @P1
+  @MobileTest
+  @LocTaskCall
+  Scenario Outline: Add a local Task to a lead and delete from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "LastNLead, FirstNLead" from recent field and select it
+    Then Contacts: I search one user "LastNLead, FirstNLead" from contacts list and select it
+    And Contacts: I click "phone" icon
+    When Saleflow: I click "Task" activity option
+    Then Tact-Pin: I edit "<taskTitle>" subject in "Task"
+    And Tact-Pin: I "<isSave>" save new created
+    And Contacts: I search this "task" from "Contact" page and select it
+    And Contacts: I delete this Activity
+    And Contacts: I click back icon after created Salesflow activities
+
+    Examples:
+      | taskTitle      | isSave |
+      | lead_call_loc_task | yes    |
 
   @P1
-  @Event
+  @LocEvent
     Scenario Outline: Add a local Event to a lead and delete from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "FirstNLead LastNLead" from recent field and select it
@@ -165,7 +250,7 @@ Feature: LeadsFeature
 
     Examples:
        | subjectOption     | subject    | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSave |
-       | Send Letter/Quote | lead_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
+       | Send Letter/Quote | lead_Loc_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
 
   @P1
   @SFEvent

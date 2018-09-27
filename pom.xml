@@ -11,6 +11,10 @@
     <properties>
         <selion.version>1.2.0</selion.version>
         <suiteXmlFile>testNGAIWeb.xml</suiteXmlFile>
+        <mobilePlatform></mobilePlatform>
+        <appPath></appPath>
+        <mobileDevice></mobileDevice>
+        <mobileDeviceType></mobileDeviceType>
     </properties>
 
     <dependencyManagement>
@@ -341,6 +345,14 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
+
+                    <systemPropertyVariables>
+                        <mobilePlatform>${mobilePlatform}</mobilePlatform>
+                        <appPath>${appPath}</appPath>
+                        <mobileDevice>${mobileDevice}</mobileDevice>
+                        <mobileDeviceType>${mobileDeviceType}</mobileDeviceType>
+                    </systemPropertyVariables>
+
                 </configuration>
             </plugin>
         </plugins>

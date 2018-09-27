@@ -62,7 +62,7 @@ Feature: TactUserAccountFeature
   Scenario: Check "Learn More" link
     Given Login: I click Learn More from login page
     When Common: I switch to "Webview" driver
-    And Login-Webview: I "do not" send usage to google chrome and "do not" sign in Chrome
+    And Login-Webview: I "do not" send usage to google chrome and "do" sign in Chrome
     Then Login-Webview: I check the learn more page title and back to welcome page
     When Common: I switch to "Native_APP" driver
 

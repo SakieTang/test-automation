@@ -7,7 +7,9 @@ import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactsMainP
 import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.DriverUtils;
 
+import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
+import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 
 import java.util.logging.Level;
@@ -29,13 +31,11 @@ public class AddDeleteContactSteps implements En {
             //send or not send to Salesforce
             DriverUtils.switchButton(sendToSF, tactAddNewContactPage.getSendToSaleforceSwitch());
         });
-        When("^AddContact: I input a user name \"([^\"]*)\" and \"([^\"]*)\"$", (String contactName, String isSave) -> {
+        When("^AddContact: I input a user name \"([^\"]*)\"$", (String contactName) -> {
             log.info("^AddContact: I input user name " + contactName);
             TactAddNewContactPage tactAddNewContactPage = new TactAddNewContactPage();
-            TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
-            TactContactObjPage tactContactObjPage = new TactContactObjPage();
-            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
 
+            //entry name
             String fName = DriverUtils.get1stNFromFullName(contactName, false);
             String lName = DriverUtils.getLastNFromFullName(contactName, true);
             if (fName.isEmpty()) {
@@ -52,7 +52,48 @@ public class AddDeleteContactSteps implements En {
                 DriverUtils.slideUP();
             }
             tactAddNewContactPage.getLastNameTextField().setText(lName);
+        });
 
+        When("^AddContact: I input phone \"([^\"]*)\", email \"([^\"]*)\"$", (String phoneNumber, String emailValue) -> {
+            log.info("^AddContact: I input phone "+ phoneNumber + ", email " + emailValue + "$");
+            TactAddNewContactPage tactAddNewContactPage = new TactAddNewContactPage();
+            TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
+            TactContactObjPage tactContactObjPage = new TactContactObjPage();
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+
+            //phone
+            if (!DriverUtils.isTextEmpty(phoneNumber)){
+                if (Grid.driver().findElementsByXPath(tactAddNewContactPage.getAddPhoneNumberButton().getLocator()).size()==0) {
+                    DriverUtils.slideUP();
+                    tactAddNewContactPage.getSfPhoneTextField().setText(phoneNumber);
+                } else {
+                    tactAddNewContactPage.getAddPhoneNumberButton().tap();
+                    tactAddNewContactPage.getWorkPhoneTextField().setText(phoneNumber);
+                }
+            }
+
+            //email
+            if (!DriverUtils.isTextEmpty(emailValue)) {
+                emailValue = String.format("%s.%s%s", this.contactName.split(" ")[0], this.contactName.split(" ")[1], emailValue );
+                System.out.println("emailValue " + emailValue);
+                if (Grid.driver().findElementsByXPath(tactAddNewContactPage.getAddEmailButton().getLocator()).size()==0) {
+                    tactAddNewContactPage.getSfEmailTextField().setText(emailValue);
+                } else {
+                    tactAddNewContactPage.getAddEmailButton().tap();
+                    tactAddNewContactPage.getAddEmailButton().tap();
+                    tactAddNewContactPage.getHomeEmailTextField().setText(emailValue);
+                }
+            }
+        });
+
+        When("^AddContact: I save \"([^\"]*)\"$", (String isSave) -> {
+            log.info("^AddContact: I save " + isSave + "$");
+            TactAddNewContactPage tactAddNewContactPage = new TactAddNewContactPage();
+            TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
+            TactContactObjPage tactContactObjPage = new TactContactObjPage();
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+
+            //save or not save
             if (!DriverUtils.isTextEmpty(isSave)) {
                 tactAddNewContactPage.getSaveNewContactButton().tap();
 
@@ -69,16 +110,11 @@ public class AddDeleteContactSteps implements En {
                 {
                     tactAlertsPopUpPage.getAndroidPopUpSureConfirmOKButton().tap();
                 }
-//                if (Grid.driver().findElementsById(tactAlertsPopUpPage.getAndroidPopUpSureConfirmOKButton().getLocator()).size() !=0){
-//                    tactAlertsPopUpPage.getAndroidPopUpSureConfirmOKButton().tap();
-//                }
             }
-
-
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactContactsMainPage.getTactContactsTitleLabel());
             log.info("save ? " + isSave);
-            DriverUtils.sleep(10);
+            DriverUtils.sleep(2);
         });
 
         And("^AddContact: I create \"([^\"]*)\" time a \"([^\"]*)\" and \"([^\"]*)\" save to Phone and \"([^\"]*)\" send to Salesforce, with username \"([^\"]*)\" and \"([^\"]*)\"$", (String time, String userType, String saveToPhone, String sendToSF, String contactName, String isSave) -> {
@@ -117,6 +153,55 @@ public class AddDeleteContactSteps implements En {
                 //save
                 tactAddNewContactPage.getSaveNewContactButton().tap();
             }
+        });
+        Then("^AddContact: I input a user name \"([^\"]*)\" and \"([^\"]*)\"$", (String contactName, String isSave) -> {
+            log.info("^AddContact: I input a user name " + contactName + " and " + isSave + "$");
+            log.info("^AddContact: I input user name " + contactName);
+            TactAddNewContactPage tactAddNewContactPage = new TactAddNewContactPage();
+            TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
+            TactContactObjPage tactContactObjPage = new TactContactObjPage();
+            TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+
+            //entry name
+            String fName = DriverUtils.get1stNFromFullName(contactName, false);
+            String lName = DriverUtils.getLastNFromFullName(contactName, true);
+            if (fName.isEmpty()) {
+                this.contactName = lName;
+            } else {
+                this.contactName=String.format("%s %s", fName, lName);
+                System.out.println(AddDeleteContactSteps.contactName);
+            }
+
+            if (!fName.isEmpty()) {
+                tactAddNewContactPage.getFirstNameTextField().setText(fName);
+            }
+            if (DriverUtils.isAndroid()) {
+                DriverUtils.slideUP();
+            }
+            tactAddNewContactPage.getLastNameTextField().setText(lName);
+
+            //save or not save
+            if (!DriverUtils.isTextEmpty(isSave)) {
+                tactAddNewContactPage.getSaveNewContactButton().tap();
+
+                if (DriverUtils.isAndroid())
+                {
+                    tactContactObjPage.getGoBackToContactsMainPageButton().tap();
+                }
+            }
+            else {
+                log.info("w/o save");
+
+                tactAddNewContactPage.getCancelAddNewContactButton().tap();
+                if (DriverUtils.isAndroid())
+                {
+                    tactAlertsPopUpPage.getAndroidPopUpSureConfirmOKButton().tap();
+                }
+            }
+
+            WebDriverWaitUtils.waitUntilElementIsVisible(tactContactsMainPage.getTactContactsTitleLabel());
+            log.info("save ? " + isSave);
+            DriverUtils.sleep(10);
         });
     }
 }

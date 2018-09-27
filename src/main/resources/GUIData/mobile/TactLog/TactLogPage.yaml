@@ -42,6 +42,11 @@ elements:
       US: "//XCUIElementTypeStaticText[@name='Name']"
     android:
       US: "//TextInputLayout[@text='Contact']"
+  logSFNameContactLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Name']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: ""
   relatedToButton:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Related To']"

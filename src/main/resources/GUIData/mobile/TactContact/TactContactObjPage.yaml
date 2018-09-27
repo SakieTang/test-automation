@@ -12,6 +12,11 @@ elements:
       US: "//XCUIElementTypeButton[@name='Contacts']"
     android:
       US: "//android.widget.ImageButton[@content-desc='Navigate up']"
+  goBackToCallPageButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Call']"
+    android:
+      US: "//android.widget.ImageButton[@content-desc='Navigate up']"
   editContactObjButton:
     ios:
       US: "//XCUIElementTypeButton[@name='Edit']"

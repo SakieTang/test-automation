@@ -12,9 +12,9 @@ public class AndroidGetDailyBuildCase {
 
     @Test
     public void runAndroidDailyBuild() {
-        String fromFile = "https://rink.hockeyapp.net/api/2/apps/63a92edb44f544f6809959332a92d56f/app_versions/92?format=apk&avtoken=95b5e47e4c085f1059e9d7cb6da81a7e435f10e3";
+        String fromFile = "https://rink.hockeyapp.net/api/2/apps/63a92edb44f544f6809959332a92d56f/app_versions/96?format=apk&avtoken=4351eb5e6b7606332c2ca4b81d80ed8bfb4ecd5d&download_origin=hockeyapp";
         String appName = "Applications/TactApplication-alpha-debug.apk";
-        String buildVersion = "1704";
+        String buildVersion = "1705";
 
         String toFile = String.format("%s/%s", System.getProperty("user.dir"), appName);
         toFile = String.format("%s%s.%s", toFile.split("\\.")[0], buildVersion, toFile.split("\\.")[1] );

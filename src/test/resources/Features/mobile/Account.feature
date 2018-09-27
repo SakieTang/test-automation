@@ -19,8 +19,8 @@ Feature: AccountsFeature
       | TactAccount | yes    |
 
   @P1
-  @note
-  Scenario Outline: Add Note to a account w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
+  @SFNote
+  Scenario Outline: Add SF Note to an account w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "CompanyN" from recent field and select it
     And Contacts: I search one user "CompanyN" from contacts list and select it
@@ -40,12 +40,12 @@ Feature: AccountsFeature
 
     Examples:
       | isSync | titleText    | bodyText | isSave |
-      | do     | company_note |          | yes    |
+      | do     | company_SF_note |          | yes    |
 
   @P2
   @android
-  @noteAndroid
-  Scenario Outline: Android only - Add Note to a account w/ checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and verify it's deleted from SF (API)
+  @SFNoteAndroid
+  Scenario Outline: Android only - Add SF Note to an account w/ checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and verify it's deleted from SF (API)
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "CompanyN" from recent field and select it
     And Contacts: I search one user "CompanyN" from contacts list and select it
@@ -60,12 +60,52 @@ Feature: AccountsFeature
     And API: I verify activity "Note" is "deleted" in salesforce
 
     Examples:
-      | isSync | titleText           | bodyText | isSave |
-      | do     | company_noteAndroid |          | yes    |
+      | isSync | titleText              | bodyText | isSave |
+      | do     | company_SF_noteAndroid |          | yes    |
+
+  @P1
+  @LocNote
+  Scenario Outline: Add Loc Note to a account
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "CompanyN" from recent field and select it
+    And Contacts: I search one user "CompanyN" from contacts list and select it
+    And Tact-Pin: I see a Tact pin icon display
+    When Tact-Pin: I click Tact pin icon and select "Note" option
+    Then Tact-Pin: I create a new note "<isSync>" sync to SF, "<titleText>" title and "<bodyText>" body
+    And Tact-Pin: I "<isSave>" save new created
+
+    Examples:
+      | isSync | titleText        | bodyText | isSave |
+      | do not | company_loc_note |          | yes    |
+
+  @P2
+  @MobileTest
+  @SFNoteCall
+  Scenario Outline: Add SF Note to an account calling w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "CompanyN" from recent field and select it
+    Then Contacts: I search one user "CompanyN" from contacts list and select it
+    And Contacts: I click "phone" icon
+    When Saleflow: I click "Note" activity option
+    Then Tact-Pin: I create a new note "<isSync>" sync to SF, "<titleText>" title and "<bodyText>" body
+    And Tact-Pin: I "<isSave>" save new created
+    And Contacts: I click back icon after created Salesflow activities
+    When Common: I switch to "Notebook" page from tab bar
+    Then Notebook: I search this "note" from Notebook and select it
+    When Common: I am waiting for syncing done
+    Then API: I verify activity "Note" is "saved" in salesforce
+    And Common: I click back icon
+    When API: I delete activity "Note" from salesforce
+    Then Notebook: I veirfy deleted "note" from Notebook page
+    And Common: I click back icon
+
+    Examples:
+      | isSync | titleText         | bodyText | isSave |
+      | do     | account_call_SF_note |          | yes    |
 
   @P1
   @Log
-  Scenario Outline: Add Log to a account w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
+  Scenario Outline: Add Log to an account w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "CompanyN" from recent field and select it
     Then Contacts: I search one user "CompanyN" from contacts list and select it
@@ -90,7 +130,7 @@ Feature: AccountsFeature
   @P2
   @android
   @logAndroid
-  Scenario Outline: Android only - Add Log to a account w/ checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
+  Scenario Outline: Android only - Add Log to an account w/ checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "CompanyN" from recent field and select it
     And Contacts: I search one user "CompanyN" from contacts list and select it
@@ -109,8 +149,35 @@ Feature: AccountsFeature
        | w/o           | company_logAndroid | w/o  | w/o       | no      | w/o      | w/o            | w/o          | yes    |
 
   @P1
-  @Task
-  Scenario Outline: Add a local Task to a account and delete from client
+  @MobileTest
+  @logCallSFTask
+  Scenario Outline: Add Log to an account calling, then add SFTask. Verify them in SF(API), then delete from SF(API) w/o checking from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "CompanyN" from recent field and select it
+    Then Contacts: I search one user "CompanyN" from contacts list and select it
+    And Contacts: I click "phone" icon
+    When Saleflow: I click "Log" activity option
+    Then Tact-Pin: I edit "<logSubjectName>" subject in "Log"
+    And Tact-Pin: I "<logIsSave>" save new created
+    When Saleflow: I click "Task" activity option
+    Then Tact-Pin: I edit "<sfTaskTitle>" subject in "SFTask"
+    And Tact-Pin: I "<sfTaskIsSave>" save new created
+    And Contacts: I search this "task" from "Contact" page and select it
+    When Common: I am waiting for syncing done
+    Then API: I verify activity "Task" is "saved" in salesforce
+    And Common: I click back icon
+    When API: I delete activity "Task" from salesforce
+    Then API: I verify activity "Log" is "saved" in salesforce
+    When API: I delete activity "Log" from salesforce
+    And Common: I click back icon
+
+    Examples:
+      | logSubjectName   | logIsSave | sfTaskTitle          | sfTaskIsSave |
+      | account_call_log | yes       | contact_call_SF_task | yes          |
+
+  @P1
+  @LocTask
+  Scenario Outline: Add a local Task to an account and delete from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "CompanyN" from recent field and select it
     Then Contacts: I search one user "CompanyN" from contacts list and select it
@@ -125,11 +192,11 @@ Feature: AccountsFeature
 
     Examples:
        | titleText    | description | Name | relatedTo | dueDate   | isFollowUp | isReminder | reminderDate | reminderTime | isSave |
-       | company_task | description | test | w/o       | 10/2/2018 | no         | yes        | Oct 2, 2018  | 7:55 am      | yes    |
+       | company_Loc_task | description | test | w/o       | 10/2/2018 | no         | yes        | Oct 2, 2018  | 7:55 am      | yes    |
 
   @P1
   @SFTask
-  Scenario Outline: Add SFTask to a account w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
+  Scenario Outline: Add SFTask to an account w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "CompanyN" from recent field and select it
     Then Contacts: I search one user "CompanyN" from contacts list and select it
@@ -149,8 +216,27 @@ Feature: AccountsFeature
        | company_SF_task | w/o         | w/o  | w/o       | no         | w/o        | yes    |
 
   @P1
-  @Event
-    Scenario Outline: Add a local Event to a account and delete from client
+  @MobileTest
+  @LocTaskCall
+  Scenario Outline: After call, add a local Task to an account and delete from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "CompanyN" from recent field and select it
+    Then Contacts: I search one user "CompanyN" from contacts list and select it
+    And Contacts: I click "phone" icon
+    When Saleflow: I click "Task" activity option
+    Then Tact-Pin: I edit "<taskTitle>" subject in "Task"
+    And Tact-Pin: I "<isSave>" save new created
+    And Contacts: I search this "task" from "Contact" page and select it
+    And Contacts: I delete this Activity
+    And Contacts: I click back icon after created Salesflow activities
+
+    Examples:
+      | taskTitle         | isSave |
+      | account_call_loc_task | yes    |
+
+  @P1
+  @LocEvent
+    Scenario Outline: Add a local Event to an account and delete from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "CompanyN" from recent field and select it
     Then Contacts: I search one user "CompanyN" from contacts list and select it
@@ -164,14 +250,14 @@ Feature: AccountsFeature
 
     Examples:
        | subjectOption     | subject       | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSave |
-       | Send Letter/Quote | company_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
+       | Send Letter/Quote | company_Loc_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
 
   @P1
   @SFEvent
-    Scenario Outline: Add SFEvent to a account w/ checking sync to SF and verify it in SF(API), then delete from SF(API) w/o checking from client
+    Scenario Outline: Add SFEvent to an account w/ checking sync to SF and verify it in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "CompanyN" from recent field and select it
-    And Contacts: I search one user "CompanyNtim" from contacts list and select it
+    And Contacts: I search one user "CompanyN" from contacts list and select it
     When Tact-Pin: I see a Tact pin icon display
     Then Tact-Pin: I click Tact pin icon and select "Event" option
     When Tact-Pin: I create a new event with "<subjectOption>" with "<subject>" subject, "" all-day event with "" starts date at "" from time and "" ends date at "" to time, "" location and "" description

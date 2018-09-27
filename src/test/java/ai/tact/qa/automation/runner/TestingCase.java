@@ -88,10 +88,10 @@ public class TestingCase  {
     }
 
     @CucumberOptions(
-            features = ("src/test/resources/Features/mobile/Contacts.feature")
+            features = ("src/test/resources/Features/mobile/NewContacts.feature")
             ,glue = ("ai.tact.qa.automation.steps")
             ,tags={
-                "@TaskCall"
+                "@createLocContact, @logCallSFTask"
 ////                +
 //                "@login-Sandbox, @logout"
             }

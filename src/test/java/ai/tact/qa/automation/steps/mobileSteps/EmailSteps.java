@@ -10,7 +10,11 @@ import ai.tact.qa.automation.utils.LogUtil;
 
 import com.paypal.selion.platform.grid.Grid;
 import com.paypal.selion.platform.utilities.WebDriverWaitUtils;
+import cucumber.api.PendingException;
 import cucumber.api.java8.En;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import java.util.logging.Level;
@@ -223,6 +227,44 @@ public class EmailSteps implements En {
             DriverUtils.sleep(3);
 
         });
+        Then("^Email: I send an empty subject email$", () -> {
+            log.info("^Email: I send an empty subject email$");
+
+            NewMessagePage newMessagePage = new NewMessagePage();
+
+            newMessagePage.getSendNewMessageButton().tap(newMessagePage.getEmptySubjectLabel());
+            newMessagePage.getSendEmptySubjectNewMsgButton().tap();
+
+        });
+        When("^Email: I \"([^\"]*)\" swipe the email with \"([^\"]*)\" subject$", (String swipe, String emailSubjectValue) -> {
+            log.info("^Email: I " + swipe + " swipe the email with " + emailSubjectValue + " subject$");
+
+            /**
+             import java.time.Duration;
+             import static io.appium.java_client.touch.offset.PointOption.point;
+             import static io.appium.java_client.touch.WaitOptions.waitOptions;
+
+             public void swipe(int x_start, int y_start, int x_stop, int y_stop, int duration) {
+             new TouchAction(driver).press(point(x_start, y_start)) .waitAction(waitOptions(ofSeconds(duration))).moveTo(point(x_stop, y_stop)) .release() .perform();
+
+
+
+             String elementXpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]//XCUIElementTypeTable[1]/XCUIElementTypeCell[1]";
+             WebElement rowToSlide = driver.findElement(By.xpath(elementXpath));
+             TouchAction swipe = new TouchAction(driver).press(rowToSlide, 250 , 147) .waitAction(-200).moveTo(rowToSlide, 200, 147).release();
+             swipe.perform();
+             }
+             */
+
+            String element = "//XCUIElementTypeStaticText[@name=\"Signature\"]/parent::*";
+            WebElement rowToSlide = Grid.driver().findElementByXPath(element);
+            TouchAction swipeRight = new TouchAction((AppiumDriver)Grid.driver()).press(rowToSlide, 48,190).waitAction(-200).moveTo(rowToSlide, 188,190).release();
+            swipeRight.perform();
+
+
+
+        });
+
     }
 
     public boolean isGmailType(String email){

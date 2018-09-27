@@ -26,7 +26,7 @@ public class ThreadTimelineSteps implements En {
             ThreadTimelinePage threadTimelinePage = new ThreadTimelinePage();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(threadTimelinePage.getTactProBotImage().getLocator());
-            threadTimelinePage.getTactProBotImage().click();
+            threadTimelinePage.getTactProBotImage().click(threadTimelinePage.getSendMsgTextAreaTextField().getLocator());
         });
         When("^ThreadTimeline: I send \"([^\"]*)\" to \"(Thread|Thread dev1)\" Assistant and \"([^\"]*)\" verify sent msg$", (String inputText, String stage, String isVerify) -> {
             log.info("^ThreadTimeline: I send " + inputText + " to Assistant and " + isVerify + " verify sent msg$");

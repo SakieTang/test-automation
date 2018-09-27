@@ -49,11 +49,8 @@ public class LoginSteps implements En {
                     sfLoginWebviewPage.getChromeSendReportCheckboxButton().tap();
                 }
                 sfLoginWebviewPage.getChromeAcceptContinueButton().tap(sfLoginWebviewPage.getChromeSignInNoThanksButton());
-
-                if (!isSignIn.equalsIgnoreCase("do"))
-                {
-                    sfLoginWebviewPage.getChromeSignInNoThanksButton().tap(sfLoginWebviewPage.getSfLogoImage());
-                }
+                sfLoginWebviewPage.getChromeSignInNoThanksButton().tap();
+                DriverUtils.sleep(1);
             }
         });
         And("^Login-Webview: I enter the user email address with dataTable$", (DataTable userData) -> {
@@ -461,6 +458,7 @@ public class LoginSteps implements En {
         Given("^Login: I click Learn More from login page$", () -> {
             log.info("^Login: I click Learn More from login page$");
             TactWelcomePage tactWelcomePage = new TactWelcomePage();
+            DriverUtils.clearChromeData();
 
             WebDriverWaitUtils.waitUntilElementIsVisible(tactWelcomePage.getTactLogoImage());
 

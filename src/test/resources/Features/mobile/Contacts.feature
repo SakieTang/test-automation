@@ -36,8 +36,8 @@ Feature: ContactsFeature
 
   @P1
   @MobileTest
-  @note
-  Scenario Outline: Add Note to a contact w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
+  @SFNote
+  Scenario Outline: Add SF Note to a contact w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "FirstN LastN" from recent field and select it
     Then Contacts: I search one user "FirstN LastN" from contacts list and select it
@@ -57,12 +57,12 @@ Feature: ContactsFeature
 
     Examples:
       | isSync | titleText         | bodyText | isSave |
-      | do     | contact_note |          | yes    |
+      | do     | contact_SF_note |          | yes    |
 
   @P2
   @android
-  @noteAndroid
-  Scenario Outline: Android only - Add Note to a contact w/  checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
+  @SFNoteAndroid
+  Scenario Outline: Android only - Add SF Note to a contact w/  checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "FirstN LastN" from recent field and select it
     Then Contacts: I search one user "FirstN LastN" from contacts list and select it
@@ -78,12 +78,27 @@ Feature: ContactsFeature
 
     Examples:
       | isSync | titleText           | bodyText | isSave |
-      | do     | contact_noteAndroid |          | yes    |
+      | do     | contact_SF_noteAndroid |          | yes    |
+
+  @P1
+  @LocNote
+  Scenario Outline: Add Loc Note to a contact
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "FirstN LastN" from recent field and select it
+    And Contacts: I search one user "FirstN LastN" from contacts list and select it
+    And Tact-Pin: I see a Tact pin icon display
+    When Tact-Pin: I click Tact pin icon and select "Note" option
+    Then Tact-Pin: I create a new note "<isSync>" sync to SF, "<titleText>" title and "<bodyText>" body
+    And Tact-Pin: I "<isSave>" save new created
+
+    Examples:
+      | isSync | titleText        | bodyText | isSave |
+      | do not | contact_loc_note |          | yes    |
 
   @P2
   @MobileTest
-  @noteCall
-  Scenario Outline: Add Note to a contact calling w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
+  @SFNoteCall
+  Scenario Outline: Add SF Note to a contact calling w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastN, FirstN" from recent field and select it
     Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
@@ -103,7 +118,24 @@ Feature: ContactsFeature
 
     Examples:
       | isSync | titleText         | bodyText | isSave |
-      | do     | contact_call_note |          | yes    |
+      | do     | contact_call_SF_note |          | yes    |
+
+  @P2
+  @MobileTest
+  @LocNoteEmail
+  Scenario Outline: Add local Note to a contact email w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "LastN, FirstN" from recent field and select it
+    Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
+    And Contacts: I click "email" icon
+    And Email: I send an empty subject email
+    When Saleflow: I click "Note" activity option
+    Then Tact-Pin: I create a new note "<isSync>" sync to SF, "<titleText>" title and "<bodyText>" body
+    And Tact-Pin: I "<isSave>" save new created
+
+    Examples:
+      | isSync | titleText              | bodyText | isSave |
+      | do not | contact_email_loc_note |          | yes    |
 
   @P1
   @MobileTest
@@ -167,6 +199,10 @@ Feature: ContactsFeature
     When Saleflow: I click "Task" activity option
     Then Tact-Pin: I edit "<sfTaskTitle>" subject in "SFTask"
     And Tact-Pin: I "<sfTaskIsSave>" save new created
+    And Contacts: I search this "Call" from "Contact" page and select it
+    And Contacts: I make sure this "log" in Call Page
+    And Contacts: I search this "Call" from "Contact" page and select it
+    And Contacts: I make sure this "task" in Call Page
     And Contacts: I search this "task" from "Contact" page and select it
     When Common: I am waiting for syncing done
     Then API: I verify activity "Task" is "saved" in salesforce
@@ -177,12 +213,43 @@ Feature: ContactsFeature
     And Common: I click back icon
 
     Examples:
-       | logSubjectName   | logIsSave | sfTaskTitle          | sfTaskIsSave |
-       | contact_call_log | yes       | contact_call_SF_task | yes        |
+       | logSubjectName   | logIsSave | sfTaskTitle                | sfTaskIsSave |
+       | contact_call_log | yes       | contact_call_SF_TaskAftLog | yes          |
 
   @P1
   @MobileTest
-  @Task
+  @iOS
+  @logEmailSFTask
+  Scenario Outline: Add Log to a contact email, then add SFTask. Verify them in SF(API), then delete from SF(API) w/o checking from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "LastN, FirstN" from recent field and select it
+    Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
+    And Contacts: I click "email" icon
+    And Email: I send an empty subject email
+    When Saleflow: I click "Log" activity option
+    Then Tact-Pin: I edit "<logSubjectName>" subject in "Log"
+    And Contacts: I search one "Contacts" with "<nameValue>" and select it in name
+    And Tact-Pin: I "<logIsSave>" save new created
+    When Saleflow: I click "Task" activity option
+    Then Tact-Pin: I edit "<sfTaskTitle>" subject in "SFTask"
+    And Contacts: I search one "Contacts" with "<nameValue>" and select it in name
+    And Tact-Pin: I "<sfTaskIsSave>" save new created
+    And Contacts: I search this "task" from "Contact" page and select it
+    When Common: I am waiting for syncing done
+    Then API: I verify activity "Task" is "saved" in salesforce
+    And Common: I click back icon
+    When API: I delete activity "Task" from salesforce
+    Then API: I verify activity "Log" is "saved" in salesforce
+    When API: I delete activity "Log" from salesforce
+    And Common: I click back icon
+
+    Examples:
+      | logSubjectName    | logIsSave | sfTaskTitle           | nameValue     |sfTaskIsSave |
+      | contact_email_log | yes       | contact_email_SF_task | FirstN LastN  | yes          |
+
+  @P1
+  @MobileTest
+  @LocTask
   Scenario Outline: Add a local Task to a contact and delete from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "FirstN LastN" from recent field and select it
@@ -227,8 +294,8 @@ Feature: ContactsFeature
 
   @P1
   @MobileTest
-  @TaskCall
-  Scenario Outline: Add a local Task to a contact and delete from client
+  @LocTaskCall
+  Scenario Outline: After call, add a local Task to a contact and delete from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastN, FirstN" from recent field and select it
     Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
@@ -242,10 +309,31 @@ Feature: ContactsFeature
 
     Examples:
        | taskTitle         | isSave |
-       | contact_call_task | yes    |
+       | contact_call_loc_task | yes    |
 
   @P1
-  @Event
+  @MobileTest
+  @LocTaskEmail
+  Scenario Outline: After email, add a local Task to a contact and delete from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "LastN, FirstN" from recent field and select it
+    Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
+    And Contacts: I click "email" icon
+    And Email: I send an empty subject email
+    When Saleflow: I click "Task" activity option
+    Then Tact-Pin: I edit "<taskTitle>" subject in "Task"
+    And Tact-Pin: I "<isSave>" save new created
+#    bug https://github.com/tactile/bugs/issues/5712
+    And Contacts: I search this "task" from "Contact" page and select it
+    And Contacts: I delete this Activity
+    And Contacts: I click back icon after created Salesflow activities
+
+    Examples:
+      | taskTitle         | isSave |
+      | contact_email_loc_task | yes    |
+
+  @P1
+  @LocEvent
     Scenario Outline: Add a local Event to a contact and delete from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastN, FirstN" from recent field and select it
@@ -261,7 +349,7 @@ Feature: ContactsFeature
     Examples:
        | subjectOption     | subject       | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSave |
 #       | w/o               | true          | 10/10/2018   | w/o      | Jan 1, 2019  | w/o     | w/o                                        | w/o         | w/o    |
-       | Send Letter/Quote | contact_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
+       | Send Letter/Quote | contact_Loc_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
 
   @P1
   @SFEvent

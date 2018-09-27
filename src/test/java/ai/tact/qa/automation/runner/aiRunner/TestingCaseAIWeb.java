@@ -69,39 +69,39 @@ public class TestingCaseAIWeb {
         DriverUtils.sleep(2);
     }
 
-//    @WebTest
-//    @Test(groups = "Web", description = "Runs Web AI UserInformation")//, dataProvider = "yamlWebUserInforDataProvider")//, dependsOnMethods = "testTactRun")
-//    public void testAAThreadRun (){//WebUserInfor webUserInfor) {
-//        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.aiThread));
-//        System.out.println(CustomPicoContainer.getInstance().getUser().getSalesforceAccount());
-//
-//        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AITestInnerRunCukesClass.testThreadAI.class);
-//        testNGCucumberRunner.runCukes();
-//
-//        DriverUtils.sleep(2);
-//    }
-//
-//    @WebTest
-//    @Test(groups = "Web", description = "Runs Web AI UserInformation")//, dataProvider = "yamlAlexaResponseDataProvider")
-//    public void testAlexaAIRun() throws IOException {
-//        //Get web User infor
-//        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.aiAlexa));
-//        //Get Alexa Response data
-//        String alexaResponseFile = "src/main/resources/testData/ListOfAlexaResponse.yaml";
-//        FileSystemResource resource = new FileSystemResource(alexaResponseFile, AlexaResponseInfo.class);
-//        SeLionDataProvider dataProvider = DataProviderFactory.getDataProvider(resource);
-//
-//        Hashtable<String, Object> allAlexaResponse = dataProvider.getDataAsHashtable();
-//        CustomPicoContainer.getInstance().setAlexaResponseInfos(allAlexaResponse);
-//
-//        TestNGCucumberRunner testAlexaLogin = new TestNGCucumberRunner(AITestInnerRunCukesClass.testAlexaAILogin.class);
-//        testAlexaLogin.runCukes();
-//
-//        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AITestInnerRunCukesClass.testAlexaAI.class);
-//        testNGCucumberRunner.runCukes();
-//
-//        DriverUtils.sleep(2);
-//    }
+    @WebTest
+    @Test(groups = "Web", description = "Runs Web AI UserInformation")//, dataProvider = "yamlWebUserInforDataProvider")//, dependsOnMethods = "testTactRun")
+    public void testAAThreadRun (){//WebUserInfor webUserInfor) {
+        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.aiThread));
+        System.out.println(CustomPicoContainer.getInstance().getUser().getSalesforceAccount());
+
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AITestInnerRunCukesClass.testThreadAI.class);
+        testNGCucumberRunner.runCukes();
+
+        DriverUtils.sleep(2);
+    }
+
+    @WebTest
+    @Test(groups = "Web", description = "Runs Web AI UserInformation")//, dataProvider = "yamlAlexaResponseDataProvider")
+    public void testAlexaAIRun() throws IOException {
+        //Get web User infor
+        CustomPicoContainer.getInstance().setUser(getUserDataFromYaml(UserTestingChannel.aiAlexa));
+        //Get Alexa Response data
+        String alexaResponseFile = "src/main/resources/testData/ListOfAlexaResponse.yaml";
+        FileSystemResource resource = new FileSystemResource(alexaResponseFile, AlexaResponseInfo.class);
+        SeLionDataProvider dataProvider = DataProviderFactory.getDataProvider(resource);
+
+        Hashtable<String, Object> allAlexaResponse = dataProvider.getDataAsHashtable();
+        CustomPicoContainer.getInstance().setAlexaResponseInfos(allAlexaResponse);
+
+        TestNGCucumberRunner testAlexaLogin = new TestNGCucumberRunner(AITestInnerRunCukesClass.testAlexaAILogin.class);
+        testAlexaLogin.runCukes();
+
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AITestInnerRunCukesClass.testAlexaAI.class);
+        testNGCucumberRunner.runCukes();
+
+        DriverUtils.sleep(2);
+    }
 
     @WebTest
     @Test(description = "stop selenium, start appium", alwaysRun = true, dependsOnGroups = "Web")

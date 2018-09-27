@@ -29,8 +29,11 @@ public class CommonSteps implements En {
 
             if (driverContext.equalsIgnoreCase("Webview") && DriverUtils.isIOS()) {
                 DriverUtils.sleep(10);
-                log.info("-> convert To Webview driver <-");
-                DriverUtils.convertToWebviewDriver();
+
+                if(DriverUtils.isIOS()){
+                    log.info("-> convert To Webview driver <-");
+                    DriverUtils.convertToWebviewDriver();
+                }
             }
             else if (driverContext.equalsIgnoreCase("Native_APP") && DriverUtils.isIOS()) {
                 log.info("-> convert To NativeAPP driver <-");

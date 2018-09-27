@@ -85,50 +85,6 @@ public class AndroidProTactSanityCases {
         testNGCucumberRunner.runCukes();
     }
 
-    //Opportunity
-    @MobileTest(    //Android
-            locale = "US",
-            additionalCapabilities = {
-                    "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
-                    "fullReset:false"  //restart the iPhone/simulator and install the app
-                    //for Alpha only, dev do not need this part
-                    , appPackage
-                    , appActivity
-            }
-    )
-    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
-    void TactOpptyFeature() {
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //Create Simple Opportunity, edit, delete opportunity. Add activities
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactOpptyNoReset.class);
-        testNGCucumberRunner.runCukes();
-    }
-
-//    //CreateSimpleOpportunity
-//    @MobileTest(    //Android
-//            locale = "US",
-//            additionalCapabilities = {
-//                    "unicodeKeyboard:true","resetKeyboard:true",
-//                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
-//                    "fullReset:false"  //restart the iPhone/simulator and install the app
-//                    //for Alpha only, dev do not need this part
-//                    , appPackage
-//                    , appActivity
-//            }
-//    )
-//    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
-//    void TactACreateSimpleOpptyFeature() {
-//        log.info("TestRunner - Test - feature");
-//        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-//
-//        //Create Simple Opportunity
-//        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactCreateSimpleOpptyNoReset.class);
-//        testNGCucumberRunner.runCukes();
-//    }
-
     //Calendar
     @MobileTest(    //iOS
             locale = "US",
@@ -228,6 +184,28 @@ public class AndroidProTactSanityCases {
         testNGCucumberRunner.runCukes();
     }
 
+    //Opportunity
+    @MobileTest(    //Android
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+                    //for Alpha only, dev do not need this part
+                    , appPackage
+                    , appActivity
+            }
+    )
+    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
+    void TactOpptyFeature() {
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //Create Simple Opportunity, edit, delete opportunity. Add activities
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactOpptyNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
+
     //AddEmail
     @MobileTest(    //iOS
             locale = "US",
@@ -241,7 +219,7 @@ public class AndroidProTactSanityCases {
 //                    , timeout
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dataProvider = "tactUserInfo", alwaysRun = true, dependsOnMethods = "TactLeadFeature")//"")
+    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dataProvider = "tactUserInfo", alwaysRun = true, dependsOnMethods = "TactOnboardingFeature")//TactLeadFeature")//"")
     void TactEmailAddedFeature(User user) {
         CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");
@@ -325,29 +303,6 @@ public class AndroidProTactSanityCases {
         TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactVersionFeatureCukesNoReset.class);
         testNGCucumberRunner.runCukes();
     }
-
-//    //EditOpportunity
-//    @MobileTest(    //Android
-//            locale = "US",
-//            additionalCapabilities = {
-//                    "unicodeKeyboard:true","resetKeyboard:true",
-//                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
-//                    "fullReset:false"  //restart the iPhone/simulator and install the app
-//                    //for Alpha only, dev do not need this part
-//                    , appPackage
-//                    , appActivity
-//                    , timeout
-//            }
-//    )
-//    @Test(groups = "Tact-Sanity", description = "Calendar Actions", alwaysRun = true, dependsOnMethods = "TactBeReauthExchangeFeature")
-//    void TactEditOpptyFeature() {
-//        log.info("TestRunner - Test - feature");
-//        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-//
-//        //Edit Opportunity
-//        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactEditAndDeleteOpptyFeatureNoReset.class);
-//        testNGCucumberRunner.runCukes();
-//    }
 
     //Delete
     @MobileTest(    //Android

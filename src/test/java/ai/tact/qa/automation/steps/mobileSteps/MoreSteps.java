@@ -80,6 +80,9 @@ public class MoreSteps implements En {
                 WebDriverWaitUtils.waitUntilElementIsVisible(tactWelcomePage.getWelcomeTactLabel());
             } else {
                 DriverUtils.sleep(5);
+                if (Grid.driver().findElementsByXPath("//android.widget.Button[@text='LOG OUT']").size() != 0) {
+                    Grid.driver().findElementByXPath("//android.widget.Button[@text='LOG OUT']").click();
+                }
             }
         });
         Then("^More: I get App Version and \"([^\"]*)\" save in file$", (String isSave) -> {

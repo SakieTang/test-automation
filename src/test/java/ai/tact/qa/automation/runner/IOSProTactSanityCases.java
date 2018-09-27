@@ -97,26 +97,6 @@ public class IOSProTactSanityCases {
         testNGCucumberRunner.runCukes();
     }
 
-//    //CreateSimpleOpportunity
-//    @MobileTest(    //iOS
-//            locale = "US",
-//            additionalCapabilities = {
-//                    "unicodeKeyboard:true","resetKeyboard:true",
-//                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
-//                    "fullReset:false"  //restart the iPhone/simulator and install the app
-//                    , timeout
-//            }
-//    )
-//    @Test(groups = "Tact-Sanity", description = "Calendar Actions", dependsOnMethods = "TactOnboardingFeature")
-//    void TactACreateSimpleOpptyFeature() {
-//        log.info("TestRunner - Test - feature");
-//        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-//
-//        //Create Simple Opportunity
-//        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactCreateSimpleOpptyNoReset.class);
-//        testNGCucumberRunner.runCukes();
-//    }
-
     //Calendar
     @MobileTest(    //iOS
             locale = "US",
@@ -304,25 +284,6 @@ public class IOSProTactSanityCases {
         TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactVersionFeatureCukesNoReset.class);
         testNGCucumberRunner.runCukes();
     }
-
-//    //EditOpportunity
-//    @MobileTest(  //iOS
-//            locale = "US",
-//            additionalCapabilities = {
-//                    "unicodeKeyboard:true","resetKeyboard:true",
-//                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
-//                    "fullReset:false"  //restart the iPhone/simulator and install the app
-//            }
-//    )
-//    @Test(groups = "Tact-Sanity", description = "Calendar Actions", alwaysRun = true, dependsOnMethods = "TactEmailSendFeature")
-//    void TactEditOpptyFeature() {
-//        log.info("TestRunner - Test - feature");
-//        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-//
-//        //Edit Opportunity
-//        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactEditAndDeleteOpptyFeatureNoReset.class);
-//        testNGCucumberRunner.runCukes();
-//    }
 
     //deleteAccout
     @MobileTest(  //iOS

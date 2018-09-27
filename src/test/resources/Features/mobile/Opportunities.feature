@@ -29,7 +29,7 @@ Feature: OpportunitiesFeature
     Then Oppty: I go to create a new Oppty page
     When AddEditOppty: I do action "add" required oppty information with "<opptyName>" opptyName, "<closeDate>" closeDate, "<stage>" stage and "<probability>" probability
     And AddEditOppty: I do action "add" more oppty information with "<isPrivate>" isPrivate, "<AccountType>" accountType, "<LeadSource>" leadSource, "<Amount>" amount and "<nextStep>" next step
-    And Contacts: I search one account "<accountName>" and select it
+    And Contacts: I search one account "<accountName>" and select it in opportunity
     And AddEditOppty: I do action "add" Additional Information with "<orderNumber>" orderNumber, "<mainCompetitor>" mainCompetitor, "<currentGenerator>" currentGenerator, "<deliveryInstallationStatus>" deliveryInstallationStatus and "<trackingNum>" tracking number
     And AddEditOppty: I do action "add" DescriptionInfo with "<description>" description
 #    And AddOppty: I add products
@@ -57,7 +57,7 @@ Feature: OpportunitiesFeature
     When EditOppty: I start to edit
     Then AddEditOppty: I do action "edit" required oppty information with "<editOpptyName>" opptyName, "<editCloseDate>" closeDate, "<editStage>" stage and "<editProbability>" probability
     And AddEditOppty: I do action "edit" more oppty information with "<isPrivate>" isPrivate, "<AccountType>" accountType, "<LeadSource>" leadSource, "<Amount>" amount and "<nextStep>" next step
-    And Contacts: I search one account "<accountName>" and select it
+    And Contacts: I search one account "<accountName>" and select it in opportunity
     And AddEditOppty: I do action "edit" DescriptionInfo with "<description>" description
     And AddEditOppty: I do action "edit" Additional Information with "<orderNumber>" orderNumber, "<mainCompetitor>" mainCompetitor, "<currentGenerator>" currentGenerator, "<deliveryInstallationStatus>" deliveryInstallationStatus and "<trackingNum>" tracking number
     And AddOppty: I "<isSave>" save the new opportunity
@@ -76,7 +76,7 @@ Feature: OpportunitiesFeature
   @deleteExistingOppty
   Scenario: delete the existing opportunity from SF
     When Common: I switch to "Opportunities" page from tab bar
-    Then Oppty: I search one oppty "oppty_edited_Tact" from opportunities list and select it
+    Then Oppty: I search one oppty "oppty_created_Tact" from opportunities list and select it
     When Common: I am waiting for syncing done
     Then API: I check Object "Opportunity" is "saved" in salesforce
     And Common: I click back icon
@@ -86,7 +86,7 @@ Feature: OpportunitiesFeature
 #Activities
   @P1
   @MobileTest
-  @note
+  @SFNote
   Scenario Outline: Add Note to an opportunity w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Opportunities" page from tab bar
     Then Oppty: I search one oppty "oppty_TactName" from opportunities list and select it
@@ -106,11 +106,11 @@ Feature: OpportunitiesFeature
 
     Examples:
       | isSync | titleText        | bodyText | isSave |
-      | do     | opportunity_note |          | yes    |
+      | do     | opportunity_SF_note |          | yes    |
 
   @P2
   @android
-  @noteAndroid
+  @SFNoteAndroid
   Scenario Outline: Android only - Add Note to an opportunity w/  checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
     When Common: I switch to "Opportunities" page from tab bar
     Then Oppty: I search one oppty "oppty_TactName" from opportunities list and select it
@@ -126,7 +126,21 @@ Feature: OpportunitiesFeature
 
     Examples:
       | isSync | titleText               | bodyText | isSave |
-      | do     | opportunity_noteAndroid |          | yes    |
+      | do     | opportunity_SF_noteAndroid |          | yes    |
+
+  @P1
+  @LocNote
+  Scenario Outline: Add Loc Note to an opportunity
+    When Common: I switch to "Opportunities" page from tab bar
+    Then Oppty: I search one oppty "oppty_TactName" from opportunities list and select it
+    And Tact-Pin: I see a Tact pin icon display
+    When Tact-Pin: I click Tact pin icon and select "Note" option
+    Then Tact-Pin: I create a new note "<isSync>" sync to SF, "<titleText>" title and "<bodyText>" body
+    And Tact-Pin: I "<isSave>" save new created
+
+    Examples:
+      | isSync | titleText      | bodyText | isSave |
+      | do not | oppty_loc_note |          | yes    |
 
   @P1
   @MobileTest
@@ -176,7 +190,7 @@ Feature: OpportunitiesFeature
 
   @P1
   @MobileTest
-  @Task
+  @LocTask
   Scenario Outline: Add a local Task to an opportunity and delete from client
     When Common: I switch to "Opportunities" page from tab bar
     Then Oppty: I search one oppty "oppty_TactName" from opportunities list and select it
@@ -218,7 +232,7 @@ Feature: OpportunitiesFeature
        | opportunity_SF_task | w/o         | w/o  | w/o       | no         | w/o        | yes    | w/o      | w/o        | w/o            | w/o          |
 
   @P1
-  @Event
+  @LocEvent
   Scenario Outline: Add a local Event to an opportunity and delete from client
     When Common: I switch to "Opportunities" page from tab bar
     Then Oppty: I search one oppty "oppty_TactName" from opportunities list and select it
@@ -232,7 +246,7 @@ Feature: OpportunitiesFeature
 
     Examples:
       | subjectOption     | subject           | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSave |
-      | Send Letter/Quote | opportunity_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
+      | Send Letter/Quote | opportunity_Loc_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
 
   @P1
   @SFEvent

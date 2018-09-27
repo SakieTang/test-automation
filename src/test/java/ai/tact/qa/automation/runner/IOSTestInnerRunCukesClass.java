@@ -106,10 +106,13 @@ public class IOSTestInnerRunCukesClass {
             ,tags={
             "@createContact,"
                 +
-            "@noteCall, @logCallSFTask, "//@TaskCall, "             //Calling Activity
+            "@SFNoteCall，"                                 //Calling Activity - @SFNoteCall， @logCallSFTask, @LocTaskCall,
                 +
-            "@Task,     @Event"                     //delete from client
-//            "@note,     @Log,   @SFTask,    @SFEvent" //delete from SF
+            "@LocNoteEmail, @logEmailSFTask"                //email Activity - @LocNoteEmail, @
+                +
+            "@Log,       @SFEvent"   //delete from SF
+//            "@SFNote,   @Log,       @SFTask,    @SFEvent"   //delete from SF
+//            "@LocNote,  @LocTask,   @LocEvent"            //delete from client
             }
             , format = {
                 "pretty",
@@ -129,8 +132,10 @@ public class IOSTestInnerRunCukesClass {
             ,tags={"" +
             "@createLead,"
                 +
-            "@Task,     @Event"                     //delete from client
-//            "@note,     @Log,   @SFTask, @SFEvent"  //delete from SF
+            "@logCallSFTask，"             //Calling Activity - @SFNoteCall,    @logCallSFTask, @LocTaskCall,
+                +
+            "@LocNote,  @LocTask,   @LocEvent"                     //delete from client
+//            "@SFNote,   @Log,       @SFTask, @SFEvent"  //delete from SF
             }
             , format = {
             "pretty",
@@ -151,8 +156,11 @@ public class IOSTestInnerRunCukesClass {
             ,tags={
             "@createAccount,"
                     +
-            "@note, @Log,   @SFTask, @SFEvent"  //delete from SF
-//            "@Task, @Event"                     //delete from client
+            "@LocTaskCall, "                            //Calling Activity - @SFNoteCall,    @logCallSFTask, @LocTaskCall,
+                    +
+            "@LocNote,  @LocEvent"            //delete from client
+//            "@LocNote,  @LocTask, @LocEvent"            //delete from client
+//            "@SFNote,   @Log,     @SFTask, @SFEvent"  //delete from SF
     }
             , format = {
             "pretty",
@@ -174,8 +182,8 @@ public class IOSTestInnerRunCukesClass {
                         +
                     "@editExistingOppty, @deleteExistingOppty,"
                         +
-                    "@note, @Log,   @SFTask, @SFEvent"  //delete from SF
-//                  "@Task, @Event"                     //delete from client
+                    "@SFNote, @Log,   @SFTask, @SFEvent"  //delete from SF
+//                  "@LocNote,  @LocTask, @LocEvent"                     //delete from client
 
     }
             , format = {

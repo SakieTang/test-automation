@@ -87,6 +87,11 @@ elements:
       US: "//XCUIElementTypeStaticText[@name='Add Email']"
     android:
       US: "//TextInputLayout[@text='Opportunity Name (required)']/android.widget.FrameLayout/android.widget.EditText"
+  homeEmailTextField:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Home']/following-sibling::XCUIElementTypeTextField"
+    android:
+      US: ""
 pageTitle:
   US: "page_object"
 pageValidators: [

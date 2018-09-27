@@ -1,0 +1,79 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  nameButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name=\"Name\"]"
+    android:
+      US: ""
+  nameFieldLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Name']/following-sibling::XCUIElementTypeStaticText"
+    android:
+      US: ""
+  namePageTitleLabel:
+    ios:
+      US: "//XCUIElementTypeOther[@name='Name']"
+    android:
+      US: ""
+  backToNewTaskButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name=\"New Task\"]"
+    android:
+      US: ""
+  newButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name=\"New\"]"
+    android:
+      US: ""
+  contactsTabButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Contacts']"
+    android:
+      US: ""
+  leadsTabButton:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Leads']"
+    android:
+      US: ""
+  searchAllContactsTextField:
+    ios:
+      US: "//XCUIElementTypeSearchField[@name='Search all contacts']"
+    android:
+      US: ""
+  searchAllLeadsTextField:
+    ios:
+      US: "//XCUIElementTypeSearchField[@name='Search all leads']"
+    android:
+      US: ""
+  nameEditTextField:
+    ios:
+        US: "//*[contains(@name, 'nameValue')]"
+    android:
+        US: "//android.widget.TextView[@text='nameValue']"
+  clearTextFromSearchAllContactsButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Clear text']"
+    android:
+      US: "android:id/search_close_btn"
+  searchOnSalesforceButton:
+    ios:
+      US: "(//XCUIElementTypeStaticText[@name='Search on Salesforce'])[1]"
+    android:
+      US: ""
+  noContactsFoundLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='No Accounts Found']"
+    android:
+      US: ""
+  noAdditionalContactsFoundLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='No additional accounts found']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  exchangeTitleLabel
+]

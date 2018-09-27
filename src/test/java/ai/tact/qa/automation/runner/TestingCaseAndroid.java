@@ -118,9 +118,9 @@ public class TestingCaseAndroid {
     }
 
     @CucumberOptions(
-            features = ("src/test/resources/Features/mobile/Contacts.feature")
+            features = ("src/test/resources/Features/mobile/Opportunities.feature")
             ,glue = ("ai.tact.qa.automation.steps")
-            ,tags={"@TaskCall"
+            ,tags={"@LocNoteAndroid"
 
                 }
     )

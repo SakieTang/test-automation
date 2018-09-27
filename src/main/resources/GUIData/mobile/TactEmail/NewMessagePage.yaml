@@ -32,6 +32,16 @@ elements:
       US: "//XCUIElementTypeButton[@name='Send']"
     android:
       US: ""
+  emptySubjectLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[@name='Your email has no subject. Do you want to send it anyway?']"
+    android:
+      US: ""
+  sendEmptySubjectNewMsgButton:
+    ios:
+      US: "//XCUIElementTypeAlert//XCUIElementTypeButton[@name='Send']"
+    android:
+      US: ""
   toNewMessageTextField:
     ios:
       US: "//XCUIElementTypeStaticText[@name='To:']"

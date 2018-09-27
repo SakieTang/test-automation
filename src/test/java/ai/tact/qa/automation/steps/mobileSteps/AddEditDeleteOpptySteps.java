@@ -235,7 +235,7 @@ public class AddEditDeleteOpptySteps implements En {
             System.out.println("finish texting");
             DriverUtils.sleep(10);
         });
-        And("^Contacts: I search one account \"([^\"]*)\" and select it$", (String accountName) -> {
+        And("^Contacts: I search one account \"([^\"]*)\" and select it in opportunity$", (String accountName) -> {
             log.info("^Contacts: I search one account " + accountName + " and select it$");
             TactAddNewOpptyPage tactAddNewOpptyPage = new TactAddNewOpptyPage();
             TactSearchAccountPage tactSearchAccountPage = new TactSearchAccountPage();

@@ -6,9 +6,11 @@ import ai.tact.qa.automation.testcomponents.mobile.TactCompany.TactAddNewCompany
 import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactAddNewContactPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactObjPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactContact.TactContactsMainPage;
+import ai.tact.qa.automation.testcomponents.mobile.TactEmail.TactMailBoxesPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactLead.TactAddNewLeadPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactPinPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactSearch.TactSearchContactsPage;
+import ai.tact.qa.automation.testcomponents.mobile.TactSearch.TactSearchNamePage;
 import ai.tact.qa.automation.utils.LogUtil;
 import ai.tact.qa.automation.utils.DriverUtils;
 
@@ -60,8 +62,26 @@ public class ContactsSteps implements En {
             log.info("^Contacts: I search one user " + name + " from recent field and select it$");
             TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
             TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
+            String formattedName = null;
 
-            String formattedName = DriverUtils.convertToFormatName(name);
+            //get format name
+            switch(name) {
+                case "contact":
+                    formattedName = AddDeleteContactSteps.contactName;
+                    break;
+                case "lead":
+                    formattedName = AddDeleteLeadSteps.leadName;
+                    break;
+                case "company":
+                    formattedName = AddDeleteAccountSteps.accountName;
+                    break;
+                case "account":
+                    formattedName = AddDeleteAccountSteps.accountName;
+                    break;
+                default:
+                    formattedName = DriverUtils.convertToFormatName(name);
+
+            }
 
             String stageLoc = tactSearchContactsPage.getNameEditButton().getLocator().replace("contactName", formattedName);
             System.out.println("stageLoc ==> " + stageLoc);
@@ -93,6 +113,8 @@ public class ContactsSteps implements En {
             TactContactsMainPage tactContactsMainPage = new TactContactsMainPage();
             TactSearchContactsPage tactSearchContactsPage = new TactSearchContactsPage();
 
+            String formattedName = null;
+
             if ( (DriverUtils.isIOS() && Grid.driver().findElementsByXPath(tactContactsMainPage.getMapsIconButton().getLocator()).size() != 0) ||
                     (DriverUtils.isAndroid() && Grid.driver().findElementsByXPath(tactContactsMainPage.getTactContactsTitleLabel().getLocator()).size() != 0))
             {
@@ -107,17 +129,32 @@ public class ContactsSteps implements En {
 
                     if (Grid.driver().findElementsByXPath(tactContactsMainPage.getTactContactsTitleLabel().getLocator()).size() != 0){
                         System.out.println("retry");
-                        driver.tap(1, 1160, 182, 10);
+                        DriverUtils.tapXY(1160, 182, 5, 0);
                         System.out.println("less time to click it");
                     }
                 }
 
-                System.out.println("name : " + name);
-                DriverUtils.slideDown();
-                tactSearchContactsPage.getSearchAllContactsTextField().setText(name);
-
                 //get format name
-                String formattedName = DriverUtils.convertToFormatName(name);
+                switch(name) {
+                    case "contact":
+                        formattedName = AddDeleteContactSteps.contactName;
+                        break;
+                    case "lead":
+                        formattedName = AddDeleteLeadSteps.leadName;
+                        break;
+                    case "company":
+                        formattedName = AddDeleteAccountSteps.accountName;
+                        break;
+                    case "account":
+                        formattedName = AddDeleteAccountSteps.accountName;
+                        break;
+                    default:
+                        formattedName = DriverUtils.convertToFormatName(name);
+
+                }
+                System.out.println("formattedName : " + formattedName);
+                DriverUtils.slideDown();
+                tactSearchContactsPage.getSearchAllContactsTextField().setText(formattedName);
 
                 //get the name location, and click it
                 System.out.println("modify the text method");
@@ -151,17 +188,21 @@ public class ContactsSteps implements En {
             log.info("^Contacts: I click " + iconOption + " icon$");
             TactContactObjPage tactContactObjPage = new TactContactObjPage();
             TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
+            TactMailBoxesPage tactMailBoxesPage = new TactMailBoxesPage();
 
             switch (iconOption) {
                 case "email":
                     tactContactObjPage.getToolbarEmailButton().tap();
+//                    WebDriverWaitUtils.waitUntilElementIsVisible(tactMailBoxesPage.getComposeButton());
                     break;
                 case "phone":
+                    tactContactObjPage.getToolbarPhoneButton().tap();
                     if (DriverUtils.isAndroid() &&
                             Grid.driver().findElementsById(tactAlertsPopUpPage.getAlertsAllowButton().getLocator()).size() != 0) {
                         tactAlertsPopUpPage.getAlertsAllowButton().tap();
                     }
-                    tactContactObjPage.getToolbarPhoneButton().tap();
+                    DriverUtils.sleep(3);
+
                     if (DriverUtils.isAndroid() &
                             Grid.driver().findElementsByXPath("//android.widget.ImageButton[@content-desc='End call']").size() != 0){
                         DriverUtils.tapAndroidHardwareBackBtn();
@@ -236,7 +277,7 @@ public class ContactsSteps implements En {
                 System.out.println("Cannot find the " + stageLoc + ", wait for extral 5 sec");
                 DriverUtils.sleep(5);
             }
-            Grid.driver().findElementByXPath(stageLoc).click();     //failed here 9/12, 9/16(create account, account event)
+            Grid.driver().findElementByXPath(stageLoc).click();     //failed here 9/12, 9/16(create account, account event)  9/20 (account SFEvent)
         });
         And("^Contacts: I click back icon after created Salesflow activities$", () -> {
             log.info("^^Contacts: I click back icon after created Salesflow activities$");
@@ -344,7 +385,7 @@ public class ContactsSteps implements En {
                 DriverUtils.sleep(30);
             }
         });
-        And("^Contacts: I search this \"(note|log|task|event)\" from \"(Lead|Contact)\" page and select it$", (String activityOption, String pageOption) -> {
+        And("^Contacts: I search this \"(note|log|task|event|Call)\" from \"(Lead|Contact)\" page and select it$", (String activityOption, String pageOption) -> {
             log.info("^Contacts: I search this " + activityOption + " from " + pageOption + " page and select it$");
             TactContactObjPage tactContactObjPage = new TactContactObjPage();
             String activityName = null;
@@ -366,6 +407,9 @@ public class ContactsSteps implements En {
                     break;
                 case "event":
                     activityName = TactPinSteps.eventSubject;
+                    break;
+                case "Call":
+                    activityName = "Call";
                     break;
             }
             System.out.println("activityName : " + activityName);
@@ -403,6 +447,50 @@ public class ContactsSteps implements En {
                 tactAlertsPopUpPage.getDeleteTaskButton().tap();
             }
             DriverUtils.sleep(0.5);
+        });
+        And("^Contacts: I search one \"(Contacts|Leads|New)\" with \"([^\"]*)\" and select it in name$", (String nameType, String nameValue) -> {
+            log.info("^Contacts: I search one " + nameType + " with " + nameValue + " and select it in name$");
+            TactSearchNamePage tactSearchNamePage = new TactSearchNamePage();
+
+            if (tactSearchNamePage.getNameFieldLabel().getValue().equals("None")) {
+                tactSearchNamePage.getNameButton().tap(tactSearchNamePage.getNamePageTitleLabel());
+
+                switch (nameType) {
+                    case "Contacts":
+                        tactSearchNamePage.getContactsTabButton().tap(tactSearchNamePage.getSearchAllContactsTextField());
+                        tactSearchNamePage.getSearchAllContactsTextField().setText(nameValue);
+                        break;
+                    case "Leads":
+                        tactSearchNamePage.getLeadsTabButton().tap(tactSearchNamePage.getSearchAllLeadsTextField());
+                        tactSearchNamePage.getSearchAllLeadsTextField().setText(nameValue);
+                        break;
+                }
+
+                //replace the element value, then click it
+                DriverUtils.clickOption(tactSearchNamePage.getNameEditTextField(), "nameValue", nameValue);
+            }
+        });
+        And("^Contacts: I make sure this \"(log|task|note)\" in Call Page$", (String activityType) -> {
+            log.info("^Contacts: I make sure this " + activityType + " in Call Page$");
+            String activityName = null;
+            TactContactObjPage tactContactObjPage = new TactContactObjPage();
+
+            switch (activityType) {
+                case "log":
+                    activityName = TactPinSteps.logSubject;
+                    break;
+                case "task":
+                    activityName = TactPinSteps.taskSubject;
+                    break;
+                case "note":
+                    activityName = TactPinSteps.noteTitle;
+                    break;
+            }
+            System.out.println("activityName : " + activityName);
+
+            DriverUtils.clickOption(tactContactObjPage.getRecentActivityLabel(), "activityName", activityName);
+            tactContactObjPage.getGoBackToCallPageButton().tap(tactContactObjPage.getGoBackToContactsMainPageButton());
+            tactContactObjPage.getGoBackToContactsMainPageButton().tap();
         });
 
     }
