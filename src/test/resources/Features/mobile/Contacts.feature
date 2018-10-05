@@ -33,7 +33,6 @@ Feature: ContactsFeature
       | time | optionUser | saveToIphone | sendToSF | contactName   | isSave |
       | 1    | Contact    | don't        | do       | Dupluser, Tom | yes    |
 
-
   @P1
   @MobileTest
   @SFNote
@@ -122,8 +121,9 @@ Feature: ContactsFeature
 
   @P2
   @MobileTest
+  @iOS
   @LocNoteEmail
-  Scenario Outline: Add local Note to a contact email w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
+  Scenario Outline:iOS only - Add local Note to a contact email w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastN, FirstN" from recent field and select it
     Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
@@ -220,7 +220,7 @@ Feature: ContactsFeature
   @MobileTest
   @iOS
   @logEmailSFTask
-  Scenario Outline: Add Log to a contact email, then add SFTask. Verify them in SF(API), then delete from SF(API) w/o checking from client
+  Scenario Outline: iOS only - Add Log to a contact email, then add SFTask. Verify them in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastN, FirstN" from recent field and select it
     Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
@@ -379,8 +379,9 @@ Feature: ContactsFeature
 
   @P0
   @MobileTest
+  @iOS
   @addLinkedInSalesNavigator
-  Scenario: login linkedIn - sales navigator inside a contact
+  Scenario: iOS - login linkedIn - sales navigator inside a contact
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "Umi Singh" from recent field and select it
     Then Contacts: I search one user "Umi Singh" from contacts list and select it
@@ -389,11 +390,11 @@ Feature: ContactsFeature
     Then Settings: I sign in the LinkedIn account
     And Settings: I match the user "Umi Singh"
 
-
   @P2
   @MobileTest
+  @iOS
   @checkLinkedIn
-  Scenario: check the contact information in linkedin
+  Scenario: iOS - check the contact information in linkedin
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "Auto.Andr Tact" from recent field and select it
     Then Contacts: I search one user "Auto.Andr Tact" from contacts list and select it

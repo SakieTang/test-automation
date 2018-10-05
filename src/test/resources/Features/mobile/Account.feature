@@ -100,8 +100,26 @@ Feature: AccountsFeature
     And Common: I click back icon
 
     Examples:
-      | isSync | titleText         | bodyText | isSave |
+      | isSync | titleText            | bodyText | isSave |
       | do     | account_call_SF_note |          | yes    |
+
+  @P2
+  @MobileTest
+  @iOS
+  @LocNoteEmail
+  Scenario Outline: Add local Note to an account email w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "CompanyN" from recent field and select it
+    Then Contacts: I search one user "CompanyN" from contacts list and select it
+    And Contacts: I click "email" icon
+    And Email: I send an empty subject email
+    When Saleflow: I click "Note" activity option
+    Then Tact-Pin: I create a new note "<isSync>" sync to SF, "<titleText>" title and "<bodyText>" body
+    And Tact-Pin: I "<isSave>" save new created
+
+    Examples:
+      | isSync | titleText              | bodyText | isSave |
+      | do not | account_email_loc_note |          | yes    |
 
   @P1
   @Log
@@ -174,6 +192,37 @@ Feature: AccountsFeature
     Examples:
       | logSubjectName   | logIsSave | sfTaskTitle          | sfTaskIsSave |
       | account_call_log | yes       | contact_call_SF_task | yes          |
+
+  @P1
+  @MobileTest
+  @iOS
+  @logEmailSFTask
+  Scenario Outline: Add Log to an account email, then add SFTask. Verify them in SF(API), then delete from SF(API) w/o checking from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "CompanyN" from recent field and select it
+    Then Contacts: I search one user "CompanyN" from contacts list and select it
+    And Contacts: I click "email" icon
+    And Email: I send an empty subject email
+    When Saleflow: I click "Log" activity option
+    Then Tact-Pin: I edit "<logSubjectName>" subject in "Log"
+#    And Contacts: I search one "Contacts" with "<nameValue>" and select it in name
+    And Tact-Pin: I "<logIsSave>" save new created
+    When Saleflow: I click "Task" activity option
+    Then Tact-Pin: I edit "<sfTaskTitle>" subject in "SFTask"
+#    And Contacts: I search one "Contacts" with "<nameValue>" and select it in name
+    And Tact-Pin: I "<sfTaskIsSave>" save new created
+    And Contacts: I search this "task" from "Contact" page and select it
+    When Common: I am waiting for syncing done
+    Then API: I verify activity "Task" is "saved" in salesforce
+    And Common: I click back icon
+    When API: I delete activity "Task" from salesforce
+    Then API: I verify activity "Log" is "saved" in salesforce
+    When API: I delete activity "Log" from salesforce
+    And Common: I click back icon
+
+    Examples:
+      | logSubjectName    | logIsSave | sfTaskTitle        | nameValue     |sfTaskIsSave |
+      | account_email_log | yes    | account_email_SF_task | FirstN LastN  | yes          |
 
   @P1
   @LocTask

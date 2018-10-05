@@ -104,15 +104,17 @@ public class IOSTestInnerRunCukesClass {
             features = ("src/test/resources/Features/mobile/Contacts.feature")
             ,glue = ("ai/tact/qa/automation/steps")
             ,tags={
-            "@createContact,"
-                +
-            "@SFNoteCall，"                                 //Calling Activity - @SFNoteCall， @logCallSFTask, @LocTaskCall,
-                +
-            "@LocNoteEmail, @logEmailSFTask"                //email Activity - @LocNoteEmail, @
-                +
-            "@Log,       @SFEvent"   //delete from SF
-//            "@SFNote,   @Log,       @SFTask,    @SFEvent"   //delete from SF
-//            "@LocNote,  @LocTask,   @LocEvent"            //delete from client
+//            "@createContact,"
+//                +
+//            "@SFNoteCall, "                                 //Calling Activity - @SFNoteCall, @logCallSFTask, @LocTaskCall,
+//                +
+//            "@logEmailSFTask, "                //email Activity - @LocNoteEmail, @logEmailSFTask,
+//                +
+//            "@Log,       @SFEvent"   //delete from SF
+////            "@SFNote,   @Log,       @SFTask,    @SFEvent"   //delete from SF
+////            "@LocNote,  @LocTask,   @LocEvent"            //delete from client
+            "@createContact, @SFNoteCall, @logCallSFTask, @LocTaskCall, @LocNoteEmail, " +
+                    "@logEmailSFTask, @SFNote,   @Log,       @SFTask,    @SFEvent, @LocNote,  @LocTask,   @LocEvent"
             }
             , format = {
                 "pretty",
@@ -125,17 +127,41 @@ public class IOSTestInnerRunCukesClass {
         }
     }
 
+    //LocContacts
+    @CucumberOptions(
+            features = ("src/test/resources/Features/mobile/NewLocContacts.feature")
+            ,glue = ("ai/tact/qa/automation/steps")
+            ,tags={
+            "@createLocContact, @logCallSFTask, @createLocContact, @SFNoteCall"
+            //@createLocContact, @logCallSFTask
+            //@createLocContact, @SFNoteCall
+    }
+            , format = {
+            "pretty",
+            "json:target/report/ios/TactLocContactsFeatureRunCukesNoReset.json"}
+    )
+    public class TactLocContactsFeatureRunCukesNoReset extends AbstractTestNGCucumberTests {
+        @Test
+        private void test(){
+            System.out.println("@Test Loc Contacts Feature RunCukesTest");
+        }
+    }
+
     //Lead
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Lead.feature")
             ,glue = ("ai/tact/qa/automation/steps")
             ,tags={"" +
-            "@createLead,"
-                +
-            "@logCallSFTask，"             //Calling Activity - @SFNoteCall,    @logCallSFTask, @LocTaskCall,
-                +
-            "@LocNote,  @LocTask,   @LocEvent"                     //delete from client
-//            "@SFNote,   @Log,       @SFTask, @SFEvent"  //delete from SF
+//            "@createLead,"
+//                +
+//            "@logCallSFTask, "             //Calling Activity - @SFNoteCall,    @logCallSFTask, @LocTaskCall,
+//                +
+//            "@LocNoteEmail, "        //email Activity - @LocNoteEmail, @logEmailSFTask,
+//                +
+//            "@LocNote,  @LocTask,   @LocEvent"                     //delete from client
+////            "@SFNote,   @Log,       @SFTask, @SFEvent"  //delete from SF
+            "@createLead, @SFNoteCall,    @logCallSFTask, @LocTaskCall, @LocNoteEmail, @logEmailSFTask, " +
+                    "@LocNote,  @LocTask,   @LocEvent, @SFNote,   @Log,       @SFTask, @SFEvent"
             }
             , format = {
             "pretty",
@@ -154,13 +180,15 @@ public class IOSTestInnerRunCukesClass {
             features = ("src/test/resources/Features/mobile/Account.feature")
             ,glue = ("ai/tact/qa/automation/steps")
             ,tags={
-            "@createAccount,"
-                    +
-            "@LocTaskCall, "                            //Calling Activity - @SFNoteCall,    @logCallSFTask, @LocTaskCall,
-                    +
-            "@LocNote,  @LocEvent"            //delete from client
-//            "@LocNote,  @LocTask, @LocEvent"            //delete from client
-//            "@SFNote,   @Log,     @SFTask, @SFEvent"  //delete from SF
+//            "@createAccount,"
+//                    +
+//            "@LocTaskCall, "                            //Calling Activity - @SFNoteCall,    @logCallSFTask, @LocTaskCall,
+//                    +
+//            "@LocNote,  @LocEvent"            //delete from client
+////            "@LocNote,  @LocTask, @LocEvent"            //delete from client
+////            "@SFNote,   @Log,     @SFTask, @SFEvent"  //delete from SF
+            "@createAccount, @SFNoteCall,    @logCallSFTask, @LocTaskCall, " +
+                    "@LocNote,  @LocTask, @LocEvent, @SFNote,   @Log,     @SFTask, @SFEvent"
     }
             , format = {
             "pretty",
@@ -178,13 +206,15 @@ public class IOSTestInnerRunCukesClass {
             features = ("src/test/resources/Features/mobile/Opportunities.feature")
             ,glue = ("ai/tact/qa/automation/steps")
             , tags={
-                    "@createSimpleOpportunity,"
-                        +
-                    "@editExistingOppty, @deleteExistingOppty,"
-                        +
-                    "@SFNote, @Log,   @SFTask, @SFEvent"  //delete from SF
-//                  "@LocNote,  @LocTask, @LocEvent"                     //delete from client
-
+//                    "@createSimpleOpportunity,"
+//                        +
+//                    "@editExistingOppty, @deleteExistingOppty,"
+//                        +
+//                    "@SFNote, @Log,   @SFTask, @SFEvent"  //delete from SF
+////                  "@LocNote,  @LocTask, @LocEvent"                     //delete from client
+            "@createSimpleOpportunity, @editExistingOppty, @deleteExistingOppty,@SFNote, " +
+                    "@Log,   @SFTask, @SFEvent, @LocNote,  @LocTask, @LocEvent"
+,
     }
             , format = {
             "pretty",

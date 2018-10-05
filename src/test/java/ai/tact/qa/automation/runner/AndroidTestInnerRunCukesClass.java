@@ -84,9 +84,9 @@ public class AndroidTestInnerRunCukesClass {
             , tags={
                 "@createContact,"
                         +
-                "@SFNoteAndroid, "            //Android only - @SFNoteAndroid, @logAndroid，
+                "@SFNoteAndroid, "            //Android only - @SFNoteAndroid, @logAndroid,
                         +
-                "@SFNoteCall，"                               //Calling Activity   -@SFNoteCall， @logCallSFTask, @LocTaskCall,
+                "@SFNoteCall,"                               //Calling Activity   -@SFNoteCall, @logCallSFTask, @LocTaskCall,
                         +
                 "@Log,    @SFEvent"  //delete from SF
 //                "@SFNote,   @Log,       @SFTask,    @SFEvent"  //delete from SF
@@ -110,9 +110,9 @@ public class AndroidTestInnerRunCukesClass {
             ,tags={"" +
                 "@createLead,"
                     +
-                "@logAndroid，"            //Android only - @SFNoteAndroid, @logAndroid，
+                "@logAndroid,"            //Android only - @SFNoteAndroid, @logAndroid,
                     +
-                "@logCallSFTask，"                        //Calling Activity - @SFNoteCall,    @logCallSFTask, @LocTaskCall,
+                "@logCallSFTask,"                        //Calling Activity - @SFNoteCall,    @logCallSFTask, @LocTaskCall,
                       +
                 "@LocNote,  @LocTask,     @LocEvent"    //delete from client
 //                "@SFNote,   @Log,   @SFTask,    @SFEvent"  //delete from SF
@@ -134,7 +134,7 @@ public class AndroidTestInnerRunCukesClass {
             ,tags={
             "@createAccount,"
                     +
-            "@SFNoteAndroid，"            //Android only - @SFNoteAndroid, @logAndroid，
+            "@SFNoteAndroid,"            //Android only - @SFNoteAndroid, @logAndroid,
                     +
             "@LocTaskCall, "                           //Calling Activity - @SFNoteCall,    @logCallSFTask, @LocTaskCall,
                     +
@@ -162,7 +162,7 @@ public class AndroidTestInnerRunCukesClass {
                             +
                     "@editExistingOppty, @deleteExistingOppty,"
                             +
-                    "@logAndroid，"            //Android only - @SFNoteAndroid, @logAndroid，
+                    "@logAndroid,"            //Android only - @SFNoteAndroid, @logAndroid,
                             +
                     "@SFNote,   @Log,       @SFTask,    @SFEvent"  //delete from SF
 //                    "@LocNote,  @LocTask,   @LocEvent"                     //delete from client

@@ -9,7 +9,7 @@ elements:
       US: ""
   goBackToContactsMainPageButton:
     ios:
-      US: "//XCUIElementTypeButton[@name='Contacts']"
+      US: "//XCUIElementTypeButton[@name='Contact']"
     android:
       US: "//android.widget.ImageButton[@content-desc='Navigate up']"
   goBackToCallPageButton:

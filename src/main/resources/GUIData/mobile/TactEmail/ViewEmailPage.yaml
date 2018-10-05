@@ -1,0 +1,56 @@
+baseClass: "com.paypal.selion.testcomponents.BasicPageImpl"
+defaultLocale: "US"
+platform: "mobile"
+elements:
+  backToMailListPageButton:
+    ios:
+      US: "//XCUIElementTypeNavigationBar[@name='Mailboxes']/XCUIElementTypeButton[1]"
+    android:
+      US: ""
+  pinButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='pin outline']"
+    android:
+      US: ""
+  newMessageTitleLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[2]"
+    android:
+      US: ""
+  viewTimeLabel:
+    ios:
+      US: "//XCUIElementTypeStaticText[2]"
+    android:
+      US: ""
+  emailFlagButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='email toolbar flag']"
+    android:
+      US: ""
+  organizeButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Organize']"
+    android:
+      US: ""
+  emailTrashButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='email toolbar trash']"
+    android:
+      US: ""
+  emailReplyButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='email toolbar reply']"
+    android:
+      US: ""
+  composeButton:
+    ios:
+      US: "//XCUIElementTypeButton[@name='Compose']"
+    android:
+      US: ""
+pageTitle:
+  US: "page_object"
+pageValidators: [
+  newEventTitleLabel
+]
+
+

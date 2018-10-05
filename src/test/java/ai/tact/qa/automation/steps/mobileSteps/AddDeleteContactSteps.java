@@ -63,6 +63,9 @@ public class AddDeleteContactSteps implements En {
 
             //phone
             if (!DriverUtils.isTextEmpty(phoneNumber)){
+                if (phoneNumber.equals("randomNumber")) {
+                    phoneNumber = getRandomPhoneNumber();
+                }
                 if (Grid.driver().findElementsByXPath(tactAddNewContactPage.getAddPhoneNumberButton().getLocator()).size()==0) {
                     DriverUtils.slideUP();
                     tactAddNewContactPage.getSfPhoneTextField().setText(phoneNumber);
@@ -203,5 +206,13 @@ public class AddDeleteContactSteps implements En {
             log.info("save ? " + isSave);
             DriverUtils.sleep(10);
         });
+    }
+
+    private String getRandomPhoneNumber(){
+        String randomNum = null;
+
+        randomNum = String.format("65%s", AddDeleteContactSteps.contactName.split(" ")[1].substring(0,8));
+
+        return randomNum;
     }
 }

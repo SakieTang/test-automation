@@ -488,9 +488,34 @@ public class ContactsSteps implements En {
             }
             System.out.println("activityName : " + activityName);
 
-            DriverUtils.clickOption(tactContactObjPage.getRecentActivityLabel(), "activityName", activityName);
-            tactContactObjPage.getGoBackToCallPageButton().tap(tactContactObjPage.getGoBackToContactsMainPageButton());
-            tactContactObjPage.getGoBackToContactsMainPageButton().tap();
+            String stageLoc = tactContactObjPage.getRecentActivityLabel().getLocator().replace("activityName", activityName);
+            if (Grid.driver().findElementsByXPath(stageLoc).size()!=0){
+                System.out.println("find the element");
+            } else {
+                System.out.println("not find it");
+            }
+
+//            WebDriverWaitUtils.waitUntilElementIsVisible(tactContactObjPage.getGoBackToContactsMainPageButton());
+//            if ( DriverUtils.clickOption(tactContactObjPage.getRecentActivityLabel(), "activityName", activityName) ){
+//                System.out.println("click it");
+//            } else {
+//                System.out.println("not click it");
+//            }
+//            DriverUtils.sleep(3000);
+//
+//            WebDriverWaitUtils.waitUntilElementIsVisible(tactContactObjPage.getGoBackToCallPageButton());
+//            tactContactObjPage.getGoBackToCallPageButton().tap(tactContactObjPage.getGoBackToContactsMainPageButton());
+
+//            System.out.println("failed here");
+//            DriverUtils.sleep(10);
+            if (Grid.driver().findElementsByXPath(tactContactObjPage.getGoBackToContactsMainPageButton().getLocator()).size()!=0) {
+                tactContactObjPage.getGoBackToContactsMainPageButton().tap();
+                System.out.println("//XCUIElementTypeButton[@name='Contact']");
+            } else {
+                //XCUIElementTypeButton[@name='Contacts']
+                Grid.driver().findElementByXPath("//XCUIElementTypeButton[@name='Contacts']").click();
+                System.out.println("//XCUIElementTypeButton[@name='Contacts']");
+            }
         });
 
     }

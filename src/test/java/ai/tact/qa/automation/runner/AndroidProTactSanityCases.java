@@ -379,7 +379,7 @@ public class AndroidProTactSanityCases {
         log.info("TestRunner - AfterClass - tearDownClass");
 
         String appPackageBundleId = appPackage.split(":")[1];
-        ((AppiumDriver)Grid.driver()).removeApp(appPackageBundleId);
+//        ((AppiumDriver)Grid.driver()).removeApp(appPackageBundleId);
 
         Appium.stopServer();
         if (!Appium.checkIfServerIsRunnning("4723")) {

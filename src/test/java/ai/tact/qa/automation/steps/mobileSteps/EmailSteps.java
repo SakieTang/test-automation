@@ -3,6 +3,7 @@ package ai.tact.qa.automation.steps.mobileSteps;
 import ai.tact.qa.automation.asserts.TactAIAsserts;
 import ai.tact.qa.automation.testcomponents.mobile.TactEmail.NewMessagePage;
 import ai.tact.qa.automation.testcomponents.mobile.TactEmail.TactMailBoxesPage;
+import ai.tact.qa.automation.testcomponents.mobile.TactEmail.ViewEmailPage;
 import ai.tact.qa.automation.testcomponents.mobile.TactNavigateTabBarPage;
 import ai.tact.qa.automation.utils.CustomPicoContainer;
 import ai.tact.qa.automation.utils.DriverUtils;
@@ -262,6 +263,25 @@ public class EmailSteps implements En {
             swipeRight.perform();
 
 
+
+        });
+        Then("^Email: I check the email shows in two weeks$", () -> {
+            log.info("^Email: I check the email shows in two weeks$");
+
+            TactMailBoxesPage tactMailBoxesPage = new TactMailBoxesPage();
+            ViewEmailPage viewEmailPage = new ViewEmailPage();
+
+            DriverUtils.scrollToBottom();
+            DriverUtils.scrollToBottom();
+            int size = Grid.driver().findElementsByXPath(tactMailBoxesPage.getEmailTableElement().getLocator()).size();
+            System.out.println("size : " + size);
+            Grid.driver().findElementsByXPath(tactMailBoxesPage.getEmailTableElement().getLocator()).get(size-1).click();
+            WebDriverWaitUtils.waitUntilElementIsVisible(viewEmailPage.getPinButton());
+
+            String s = viewEmailPage.getViewTimeLabel().getValue();
+            System.out.println("time : " + s);
+            viewEmailPage.getBackToMailListPageButton().tap();
+            DriverUtils.sleep(15);
 
         });
 

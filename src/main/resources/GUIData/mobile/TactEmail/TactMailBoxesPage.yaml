@@ -122,6 +122,11 @@ elements:
       US: "//*[contains(@name, 'textBodyText')]"
     android:
       US: "//*[contains(@resource-id, 'emailText')][contains(@text, 'textBodyText')]"
+  emailTableElement:
+    ios:
+      US: "//XCUIElementTypeCell"
+    android:
+      US: ""
 pageTitle:
   US: "page_object"
 pageValidators: [

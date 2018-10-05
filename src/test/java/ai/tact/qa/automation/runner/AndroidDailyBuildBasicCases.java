@@ -35,7 +35,7 @@ public class AndroidDailyBuildBasicCases {
 //    private static final String appPackage = "appPackage:com.tactile.tact.alpha";
 //    private static final String appPackage = "appPackage:com.tactile.tact.dev";
     private static final String appActivity = "appActivity:com.tactile.tact.onboarding.SignInActivity";
-//    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-alpha-debug1705.apk";
+    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-alpha-debug1709.apk";
 //    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-dev-debug1603.apk";
 //    private static final String appPath = "/Users/sakie/workspace/automation/test-automation/Applications/TactApplication-production-release1531.apk";
 
@@ -64,7 +64,7 @@ public class AndroidDailyBuildBasicCases {
 
     //onboarding
     @MobileTest(  //Android
-//            appPath = appPath,
+            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",
@@ -91,7 +91,7 @@ public class AndroidDailyBuildBasicCases {
 
     //AddEmail
     @MobileTest(    //Android
-//            appPath = appPath,
+            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true"
@@ -117,7 +117,7 @@ public class AndroidDailyBuildBasicCases {
 
     //ReAuth
     @MobileTest(    //Android
-//            appPath = appPath,
+            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true"
@@ -130,27 +130,23 @@ public class AndroidDailyBuildBasicCases {
             }
     )
     //w/ data provider
-    @Test(groups = "Tact-Sanity", description = "TactDataSourcesTest", dataProvider = "tactUserInfo", dependsOnMethods = "TactOnboardingFeature")
+    @Test(groups = "Tact-Sanity", description = "TactDataSourcesTest", dataProvider = "tactUserInfo", dependsOnMethods = "TactAddEmailFeature")
     void TactBeReauthExchangeFeature(User user) {
         CustomPicoContainer.getInstance().setUser(user);
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
 
-        //logout
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactLogoutRunCukesNoReset.class);
-        testNGCucumberRunner.runCukes();
-
         //clear chrome date
         DriverUtils.clearChromeData();
 
-        //login
-        testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactLoginRunCukesNoReset.class);
+        //reauth exchange account
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(AndroidTestInnerRunCukesClass.TactReauthExchangeRunCukesNoReset.class);
         testNGCucumberRunner.runCukes();
     }
 
     //getAppVersion
     @MobileTest(  //iOS
-//            appPath = appPath,
+            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true"
@@ -163,7 +159,7 @@ public class AndroidDailyBuildBasicCases {
             }
     )
     //w/ data provider
-    @Test(groups = "Tact-Sanity", description = "Get Tact Version", dependsOnMethods = "TactOnboardingFeature")
+    @Test(groups = "Tact-Sanity", description = "Get Tact Version", dependsOnMethods = "TactBeReauthExchangeFeature")
     void TactGetAppVersion() {
         log.info("TestRunner - Test - feature");
         log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
@@ -175,7 +171,7 @@ public class AndroidDailyBuildBasicCases {
 
     //Delete
     @MobileTest(    //Android
-//            appPath = appPath,
+            appPath = appPath,
             locale = "US",
             additionalCapabilities = {
                     "unicodeKeyboard:true","resetKeyboard:true",

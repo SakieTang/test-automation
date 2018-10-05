@@ -139,27 +139,6 @@ public class IOSProTactSanityCases {
         testNGCucumberRunner.runCukes();
     }
 
-    //Contact
-    @MobileTest(    //iOS
-            locale = "US",
-            additionalCapabilities = {
-                    "unicodeKeyboard:true","resetKeyboard:true",
-                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
-                    "fullReset:false"  //restart the iPhone/simulator and install the app
-                    , timeout
-            }
-    )
-    @Test(groups = "Tact-Sanity", description = "Contact object", dataProvider = "tactMobileIOSUserInfo", dependsOnMethods = "TactOnboardingFeature")
-    void TactContactsFeature(User user) {
-        CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
-        log.info("TestRunner - Test - feature");
-        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
-
-        //Contact
-        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactContactsFeatureRunCukesNoReset.class);
-        testNGCucumberRunner.runCukes();
-    }
-
     //Contact - LinkedIn
     @MobileTest(    //iOS
             locale = "US",
@@ -191,7 +170,7 @@ public class IOSProTactSanityCases {
                     , timeout
             }
     )
-    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dataProvider = "tactMobileIOSUserInfo", alwaysRun = true, dependsOnMethods = "TactContactLinkedInFeature")
+    @Test(groups = "Tact-Sanity", description = "Add emails in Tacts", dataProvider = "tactMobileIOSUserInfo", alwaysRun = true, dependsOnMethods = "TactOnboardingFeature")
     void TactEmailAddedFeature(User user) {
         CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
         log.info("TestRunner - Test - feature");
@@ -222,6 +201,48 @@ public class IOSProTactSanityCases {
 
         //reauth exchange account
         TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactReauthExchangeRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
+
+    //LocContact
+    @MobileTest(    //iOS
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+                    , timeout
+            }
+    )
+    @Test(groups = "Tact-Sanity", description = "Contact object", dataProvider = "tactMobileIOSUserInfo", dependsOnMethods = "TactEmailReauthExchangeFeature")
+    void TactLocContactsFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //Contact
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactLocContactsFeatureRunCukesNoReset.class);
+        testNGCucumberRunner.runCukes();
+    }
+
+    //Contact
+    @MobileTest(    //iOS
+            locale = "US",
+            additionalCapabilities = {
+                    "unicodeKeyboard:true","resetKeyboard:true",
+                    "noReset:true",    //continue the UserInformation. false, reinstall the app; false, continue use the app
+                    "fullReset:false"  //restart the iPhone/simulator and install the app
+                    , timeout
+            }
+    )
+    @Test(groups = "Tact-Sanity", description = "Contact object", dataProvider = "tactMobileIOSUserInfo", dependsOnMethods = "TactEmailReauthExchangeFeature")
+    void TactContactsFeature(User user) {
+        CustomPicoContainer.getInstance().setUser(user);//userInfor = userInfor;
+        log.info("TestRunner - Test - feature");
+        log.info("Grid.driver().getCapabilities() ==> " + Grid.driver().getCapabilities() + "\n");
+
+        //Contact
+        TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(IOSTestInnerRunCukesClass.TactContactsFeatureRunCukesNoReset.class);
         testNGCucumberRunner.runCukes();
     }
 
