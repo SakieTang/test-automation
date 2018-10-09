@@ -346,6 +346,10 @@ public class TactPinSteps implements En {
                     tactLogPage.getSubjectTextField().setText(logSubject);
 
                     logSubject = tactLogPage.getSubjectTextField().getValue();
+                    if (Grid.driver().findElementsByXPath(tactLogPage.getSubjectTextField().getLocator()).size()!=0){
+                        System.out.println("not click the confirm button");
+                        DriverUtils.sleep(5);
+                    }
                     System.out.println(logSubject);
                 }
 
@@ -772,6 +776,7 @@ public class TactPinSteps implements En {
                     }
                     break;
                 case "Task":
+                    WebDriverWaitUtils.waitUntilElementIsVisible(tactTaskPage.getSyncToSaleforceTaskSwitch());
                     //Not Sync to SF
                     if (tactTaskPage.getSyncToSaleforceTaskSwitch().getValue().equals("1") ||
                             tactTaskPage.getSyncToSaleforceTaskSwitch().getValue().contains("ON"))

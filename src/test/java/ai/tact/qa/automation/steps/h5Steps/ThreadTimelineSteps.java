@@ -33,9 +33,10 @@ public class ThreadTimelineSteps implements En {
             ThreadTimelinePage threadTimelinePage = new ThreadTimelinePage();
 
             //save sent cmd to report.txt
+            dataRecord = null;
             dataRecord = String.format("%s | %s | ", stage, inputText);
-            System.out.println(">>>>>dataRecord : " + dataRecord + "<<<<<<<,");
-            DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
+//            System.out.println(">>>>>dataRecord : " + dataRecord + "<<<<<<<,");
+//            DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
 
             WebDriverWaitUtils.waitUntilElementIsVisible(threadTimelinePage.getThreadTimelineActiveLabel().getLocator());
             String inputTextString = String.format("%s\n",inputText);
@@ -45,7 +46,7 @@ public class ThreadTimelineSteps implements En {
             int sizeNum = threadTimelinePage.getTactBotMsgsLabel().getElements().size();
             threadTimelinePage.getSendMsgTextAreaTextField().type(inputTextString);
             long beginTime = System.currentTimeMillis();
-            dataRecord = DriverUtils.getDateTimeDetailsStamp();
+            dataRecord += DriverUtils.getDateTimeDetailsStamp();
             long checkTime = beginTime;
             System.out.println(sizeNum + "<== beginTime ==> " + beginTime);
             while (threadTimelinePage.getTactBotMsgsLabel().getElements().size() == sizeNum){
@@ -109,8 +110,12 @@ public class ThreadTimelineSteps implements En {
 
             //record cmd info
             dataRecord = String.format("%s | %s | %sms\n", dataRecord, isPassed, botRespTime);
-            System.out.println(">>>>>dataRecord : " + dataRecord + "<<<<<<<,");
-            DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
+            if (dataRecord.split("\\|").length == 5) {
+                System.out.println(">>>>>dataRecord : " + dataRecord + "<<<<<<<,");
+                DriverUtils.writeToFile("target/aiTestingReport.txt", dataRecord, true);
+            } else {
+                System.out.println(">>>>>wrong dataRecord : " + dataRecord + "<<<<<<<,");
+            }
 
         });
     }

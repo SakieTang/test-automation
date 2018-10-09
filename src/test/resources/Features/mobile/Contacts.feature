@@ -61,7 +61,7 @@ Feature: ContactsFeature
   @P2
   @android
   @SFNoteAndroid
-  Scenario Outline: Android only - Add SF Note to a contact w/  checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
+  Scenario Outline: Android only - Add SF Note to a contact w/ checking sync to SF from "Recent Activity" and verify in SF(API), then delete from client and checking from SF (API)
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "FirstN LastN" from recent field and select it
     Then Contacts: I search one user "FirstN LastN" from contacts list and select it
@@ -122,7 +122,7 @@ Feature: ContactsFeature
   @P2
   @MobileTest
   @iOS
-  @LocNoteEmail
+  @LocNoteEmailIOS
   Scenario Outline:iOS only - Add local Note to a contact email w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastN, FirstN" from recent field and select it
@@ -219,7 +219,7 @@ Feature: ContactsFeature
   @P1
   @MobileTest
   @iOS
-  @logEmailSFTask
+  @logEmailSFTaskIOS
   Scenario Outline: iOS only - Add Log to a contact email, then add SFTask. Verify them in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastN, FirstN" from recent field and select it
@@ -266,7 +266,7 @@ Feature: ContactsFeature
     Examples:
        | titleText    | description         | Name        | relatedTo | dueDate     | isFollowUp | isReminder | reminderDate | reminderTime | isSave |
 #       | w/o           | w/o                 | w/o         | w/o       | Oct 3, 2018 | w/o        | w/o        | Oct 2, 2018  | 7:55 am      | w/o    |
-       | contact_task | description         | test        | w/o       | 10/2/2018   | no         | yes        | Oct 2, 2018  | 7:55 am      | yes    |
+       | contact_task | description         | test        | w/o       | 10/2/2019   | no         | yes        | Oct 2, 2018  | 7:55 am      | yes    |
 
   @P1
   @MobileTest
@@ -313,7 +313,8 @@ Feature: ContactsFeature
 
   @P1
   @MobileTest
-  @LocTaskEmail
+  @iOS
+  @LocTaskEmailIOS
   Scenario Outline: After email, add a local Task to a contact and delete from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastN, FirstN" from recent field and select it
@@ -347,9 +348,9 @@ Feature: ContactsFeature
     And Contacts: I click back icon after created Salesflow activities
 
     Examples:
-       | subjectOption     | subject       | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSave |
+       | subjectOption     | subject           | isAllDayEvent | startDate | fromTime | endDate    | toTime  | location                                   | description | isSave |
 #       | w/o               | true          | 10/10/2018   | w/o      | Jan 1, 2019  | w/o     | w/o                                        | w/o         | w/o    |
-       | Send Letter/Quote | contact_Loc_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
+       | Send Letter/Quote | contact_Loc_event | false         | today     | 7:58 am  | 10/12/2019 | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
 
   @P1
   @SFEvent
@@ -398,6 +399,24 @@ Feature: ContactsFeature
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "Auto.Andr Tact" from recent field and select it
     Then Contacts: I search one user "Auto.Andr Tact" from contacts list and select it
+
+  @P1
+  @LocEventTesting
+    Scenario Outline: Add a local Event to a contact and delete from client
+    When Common: I switch to "Contacts" page from tab bar
+    Then Contacts: I search one user "LastN, FirstN" from recent field and select it
+    Then Contacts: I search one user "LastN, FirstN" from contacts list and select it
+    And Tact-Pin: I see a Tact pin icon display
+    When Tact-Pin: I click Tact pin icon and select "Event" option
+    Then Tact-Pin: I create a new event with "<subjectOption>" with "<subject>" subject, "<isAllDayEvent>" all-day event with "<startDate>" starts date at "<fromTime>" from time and "<endDate>" ends date at "<toTime>" to time, "<location>" location and "<description>" description
+    And Tact-Pin: I "<isSave>" save new created
+    And Contacts: I search this "event" from "Contact" page and select it
+    And Contacts: I delete this Activity
+    And Contacts: I click back icon after created Salesflow activities
+
+    Examples:
+       | subjectOption     | subject             | isAllDayEvent | startDate | fromTime | endDate | toTime  | location | description | isSave |
+       | Send Letter/Quote | contact_Loc_meeting | false         | today     |          | today   |         |          |             | yes    |
 
 
 

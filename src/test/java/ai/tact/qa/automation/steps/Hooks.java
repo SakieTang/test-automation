@@ -1,5 +1,6 @@
 package ai.tact.qa.automation.steps;
 
+import ai.tact.qa.automation.utils.DriverUtils;
 import ai.tact.qa.automation.utils.LogUtil;
 import io.appium.java_client.AppiumDriver;
 import com.paypal.selion.platform.grid.Grid;
@@ -30,6 +31,11 @@ public class Hooks {
 
         log.info("Grid.driver().getCapabilities() ==> " +
                 Grid.driver().getCapabilities() + "\n");
+
+        if (DriverUtils.isAndroid()) {
+            System.out.println("hide the Android keyboard");
+            DriverUtils.hideAndroidKeyboard();
+        }
     }
 
     @Before("@TactAIBasicTesting")

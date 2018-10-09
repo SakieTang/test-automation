@@ -7,9 +7,9 @@
     <parameter name="seleniumport" value="4723"/>
     <parameter name="mobileNodeType" value="appium"/>
     <!--only works for local environment, not for Jenkins running-->
-    <!--<parameter name="appPath" value="/Users/sakie/Documents/TactNew.app"/>-->
+    <parameter name="appPath" value="/Users/sakie/Documents/TactNew.app"/>
     <!--&lt;!&ndash;only works for Jenkins environment, not for local running&ndash;&gt;-->
-    <parameter name="appPath" value="/Users/qa/Documents/TactNew.app"/>
+    <!--<parameter name="appPath" value="/Users/qa/Documents/TactNew.app"/>-->
     <parameter name="mobileAppLanguage" value="en"/>
     <parameter name="mobilePlatform" value="IOS"/>
     <parameter name="mobileDevice" value="iphone:11.2"/>

@@ -12,6 +12,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.xmlbeans.impl.schema.StscChecker;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -842,6 +843,86 @@ public class GenerateReport {
 //                e.printStackTrace();
 //            }
 //        }
+
+//        Date date = DriverUtils.currentDate();
+//        System.out.println(date.toString());    //Thu Oct 04 16:58:03 PDT 2018
+//        String stamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(date);    //2018-10-04 16:58:03.703
+//        System.out.println(stamp);
+
+        //iOS  - September 19, 2018 at 8:31 PM
+        //Andr - 9/20/18 05:49 PM
+
+//        System.out.println( DriverUtils.currentDate() );
+////        long DAY_IN_MS = 1000 * 60 * 60 * 24;
+////        Date date = DriverUtils.currentDate();
+//////        System.out.println( new Date(date.getTime() - (7 * DAY_IN_MS)) );
+////        System.out.println( new Date(date.getTime() - (14 * DAY_IN_MS)) );
+//
+//        System.out.println(DriverUtils.dateDiff(-14));
+//        System.out.println(DriverUtils.dateDiff(14));
+//
+//        String date = "9/20/18 05:49 PM";
+//        String date1 = "September 19, 2018 at 8:31 PM";
+//        String date2 = String.format("%s-%s-%s", date1.split(" ")[1].substring(0,2), date1.split(" ")[0].substring(0,3), date1.split(" ")[2]);
+//        try {
+//            //31/12/1998
+//            Date dateD  = new SimpleDateFormat("dd/MM/yyyy").parse(date.split(" ")[0]);
+//            System.out.println("9/20/18 05:49 PM  ==> " + dateD);
+//            //31-Dec-1998
+//            Date dateD1 = new SimpleDateFormat("dd-MMM-yyyy").parse(date2);
+//            System.out.println("September 19, 2018 at 8:31 PM ==> " + dateD1);
+//
+//
+//            //iOS  - September 19, 2018 at 8:31 PM
+//            //Andr - 9/20/18 05:49 PM
+//            date = "9/20/18 05:49 PM";
+//            dateD = new SimpleDateFormat("dd/MM/yy hh:mm aaa").parse(date);
+//            System.out.println(date + " ==> " + dateD);
+//
+//            date = "September 19, 2018 at 8:31 PM";
+//            dateD = new SimpleDateFormat("MMM dd, yyyy 'at' hh:mm aaa").parse(date);
+//            System.out.println(date + " ==> " + dateD);
+//
+//            Date d = DriverUtils.dateDiff(-14);
+//            if (d.after(dateD)){
+//                System.out.println("after");
+//                System.out.println(d + "\n" + dateD);
+//            } else {
+//                System.out.println("before");
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+
+//        Date d ;
+//        long DAY_IN_MS = 1000 * 60 * 60 * 24;
+////
+//        Date dateD = DriverUtils.currentDate();
+//        System.out.println(dateD);
+//        Date d = new Date(dateD.getTime() - (15 * DAY_IN_MS));
+//
+//        System.out.println(DriverUtils.currentDate());
+//
+//        String s = dateD.getMonth() + " " + dateD.getDate() + " " + dateD.getYear();
+//        System.out.println("testing : " + s);
+//
+////        //Thu Sep 20 14:37:29 PDT 2018
+////        //Fri Oct 05 00:00:00 PDT 2018
+//        s = DriverUtils.currentDateInfo("month") + " " +
+//                DriverUtils.currentDateInfo("dd") + " " +
+//                DriverUtils.currentDateInfo("yyyy");
+//        System.out.println(s);
+//
+//        try {// hh:mm aaa
+//            System.out.println( new SimpleDateFormat("MMM dd yyyy").parse(s) );
+//
+//
+//            System.out.println(DriverUtils.dateDiff( new SimpleDateFormat("MMM dd yyyy").parse(s) , -15));
+//        } catch (Exception e){
+//            log.info(e.getMessage());
+//        }
+
 
     }
 }

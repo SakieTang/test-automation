@@ -55,7 +55,7 @@ public class IOSTestInnerRunCukesClass {
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Email.feature")
             ,glue = ("ai/tact/qa/automation/steps")
-            ,tags={"@P1,@P2"}
+            ,tags={"@iOSCheckTwoWeeksEmail, @P1,@P2"}
 //            ,tags={"@gmailDraft"}
             , format = {
                 "pretty",
@@ -108,13 +108,13 @@ public class IOSTestInnerRunCukesClass {
 //                +
 //            "@SFNoteCall, "                                 //Calling Activity - @SFNoteCall, @logCallSFTask, @LocTaskCall,
 //                +
-//            "@logEmailSFTask, "                //email Activity - @LocNoteEmail, @logEmailSFTask,
+//            "@logEmailSFTask, "                //email Activity - @LocNoteEmailIOS, @LocTaskEmailIOS, @logEmailSFTaskIOS
 //                +
 //            "@Log,       @SFEvent"   //delete from SF
 ////            "@SFNote,   @Log,       @SFTask,    @SFEvent"   //delete from SF
 ////            "@LocNote,  @LocTask,   @LocEvent"            //delete from client
-            "@createContact, @SFNoteCall, @logCallSFTask, @LocTaskCall, @LocNoteEmail, " +
-                    "@logEmailSFTask, @SFNote,   @Log,       @SFTask,    @SFEvent, @LocNote,  @LocTask,   @LocEvent"
+            "@createContact, @SFNoteCall, @logCallSFTask, @LocTaskCall, @LocNoteEmailIOS, @LocTaskEmailIOS, @logEmailSFTaskIOS, " +
+            "@SFNote,   @Log,       @SFTask,    @SFEvent, @LocNote,  @LocTask,   @LocEvent"
             }
             , format = {
                 "pretty",
@@ -160,7 +160,7 @@ public class IOSTestInnerRunCukesClass {
 //                +
 //            "@LocNote,  @LocTask,   @LocEvent"                     //delete from client
 ////            "@SFNote,   @Log,       @SFTask, @SFEvent"  //delete from SF
-            "@createLead, @SFNoteCall,    @logCallSFTask, @LocTaskCall, @LocNoteEmail, @logEmailSFTask, " +
+            "@createLead, @SFNoteCall,    @logCallSFTask, @LocTaskCall, @LocNoteEmailIOS, @logEmailSFTaskIOS, " +
                     "@LocNote,  @LocTask,   @LocEvent, @SFNote,   @Log,       @SFTask, @SFEvent"
             }
             , format = {

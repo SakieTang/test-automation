@@ -464,6 +464,12 @@ public class LoginSteps implements En {
 
             tactWelcomePage.getLearnMoreButton().tap();
             DriverUtils.sleep(1);
+
+            if (Grid.driver().findElementsByXPath(tactWelcomePage.getLinkOpenWithLabel().getLocator()).size()!=0){
+                tactWelcomePage.getChromeButton().tap();
+                tactWelcomePage.getAlwaysButton().tap();
+            }
+
         });
         Then("^Login-Webview: I check the learn more page title and back to welcome page$", () -> {
             log.info("^Login-Webview: I check the learn more page title and back to welcome page$");

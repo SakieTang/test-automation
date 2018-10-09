@@ -116,7 +116,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Priority']"
     android:
-      US: "//android.widget.TextView[@text='Normal']"
+      US: "//android.widget.TextView[@text='Priority (required)']/following-sibling::android.widget.Spinner/android.widget.CheckedTextView"
   syncSFTaskPriorityOptionButton:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Normal']"
@@ -126,7 +126,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Status']"
     android:
-      US: "//android.widget.TextView[@text='Not Started']"
+      US: "//android.widget.TextView[@text='Status (required)']/following-sibling::android.widget.Spinner/android.widget.CheckedTextView"
   syncSFTaskStatusOptionButton:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Not Started']"

@@ -21,7 +21,7 @@ elements:
     ios:
         US: "//XCUIElementTypeStaticText[@name='opptyName']"
     android:
-        US: "//*[contains(@text,'opptyName')]"
+        US: "//android.widget.TextView[contains(@text,'opptyName')]"
   searchOnSalesforceButton:
     ios:
       US: "(//XCUIElementTypeStaticText[@name='Search on Salesforce'])[1]"

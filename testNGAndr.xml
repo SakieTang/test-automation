@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite thread-count="1" verbose="1" name="AppiumMobileSuite" skipfailedinvocationcounts="false" junit="false"
-       parallel="none" data-provider-thread-count="1" annotations="JDK">
+<suite thread-count="1" verbose="1" name="AppiumMobileSuite"
+       skipfailedinvocationcounts="false" junit="false"
+       parallel="false" data-provider-thread-count="1" annotations="JDK">
 
     <parameter name="mobileNodeType" value="appium"/>
     <parameter name="seleniumhost" value="0.0.0.0"/>
     <parameter name="seleniumport" value="4723"/>
     <parameter name="runLocally" value="false"/>
     <parameter name="mobileAppLanguage" value="en"/>
-    <parameter name="mobilePlatform" value="ANDROID"/>
-    <parameter name="appPath" value="Applications/TactApplication-production-release.apk"/>
-    <parameter name="mobileDevice" value="android:8.1"/>
-    <parameter name="mobileDeviceType" value="Android Emulator"/>
     <parameter name="newCommandTimeout" value="360"/>
+
+    <!--<parameter name="mobilePlatform" value="ANDROID"/>-->
+    <!--<parameter name="appPath" value="Applications/TactApplication-production-release.apk"/>-->
+    <!--<parameter name="mobileDevice" value="android:8.1"/>-->
+    <!--<parameter name="mobileDeviceType" value="Android Emulator"/>-->
+
+    <parameter name="mobilePlatform" value="${mobilePlatform}"/>
+    <parameter name="appPath" value="${appPath}"/>
+    <parameter name="mobileDevice" value="${mobileDevice}"/>
+    <parameter name="mobileDeviceType" value="${mobileDeviceType}"/>
 
     <test verbose="1" name="appium-mobile-test" annotations="JDK">
         <classes>
-            <class name="ai.tact.qa.automation.runner.AndroidProTactSanityCases"/>
+            <class name="ai.tact.qa.automation.runner.AndroidDailyBuildBasicCases"/>
         </classes>
     </test>
 </suite>

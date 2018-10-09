@@ -6,12 +6,12 @@ elements:
     ios:
       US: "//XCUIElementTypeNavigationBar[@name='Mailboxes']/XCUIElementTypeButton[1]"
     android:
-      US: ""
+      US: "Navigate up"
   pinButton:
     ios:
       US: "//XCUIElementTypeButton[@name='pin outline']"
     android:
-      US: ""
+      US: "//*[contains(@resource-id, 'multiple_actions_down')]/android.widget.ImageButton"
   newMessageTitleLabel:
     ios:
       US: "//XCUIElementTypeStaticText[2]"
@@ -21,7 +21,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[2]"
     android:
-      US: ""
+      US: "email_date_text_view"
   emailFlagButton:
     ios:
       US: "//XCUIElementTypeButton[@name='email toolbar flag']"

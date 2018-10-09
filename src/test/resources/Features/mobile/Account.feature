@@ -106,7 +106,7 @@ Feature: AccountsFeature
   @P2
   @MobileTest
   @iOS
-  @LocNoteEmail
+  @LocNoteEmailIOS
   Scenario Outline: Add local Note to an account email w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "CompanyN" from recent field and select it
@@ -196,7 +196,7 @@ Feature: AccountsFeature
   @P1
   @MobileTest
   @iOS
-  @logEmailSFTask
+  @logEmailSFTaskIOS
   Scenario Outline: Add Log to an account email, then add SFTask. Verify them in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "CompanyN" from recent field and select it
@@ -293,12 +293,12 @@ Feature: AccountsFeature
     When Tact-Pin: I click Tact pin icon and select "Event" option
     Then Tact-Pin: I create a new event with "<subjectOption>" with "<subject>" subject, "<isAllDayEvent>" all-day event with "<startDate>" starts date at "<fromTime>" from time and "<endDate>" ends date at "<toTime>" to time, "<location>" location and "<description>" description
     And Tact-Pin: I "<isSave>" save new created
-    And Contacts: I search this "event" from "Lead" page and select it
+    And Contacts: I search this "event" from "Company" page and select it
     And Contacts: I delete this Activity
     And Contacts: I click back icon after created Salesflow activities
 
     Examples:
-       | subjectOption     | subject       | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSave |
+       | subjectOption     | subject           | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSave |
        | Send Letter/Quote | company_Loc_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
 
   @P1

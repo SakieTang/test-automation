@@ -59,6 +59,7 @@ public class AddEditDeleteOpptySteps implements En {
                 tactAddNewOpptyPage.getCloseDateButton().tap();
                 IOSTime.changeDate(closeDate);        //cannot find element, need UI team support
             } else if (DriverUtils.isAndroid()) {
+                DriverUtils.hideAndroidKeyboard();
                 tactAddNewOpptyPage.getCloseDateButton().tap();
                 androidDate.changeDate(closeDate);
             }
@@ -71,11 +72,11 @@ public class AddEditDeleteOpptySteps implements En {
             // Closed Won - 100%       Closed Lost - 0%
             if (DriverUtils.isAndroid()){
                 System.out.println("before slide");
-                DriverUtils.sleep(5);
+                DriverUtils.sleep(2);
                 DriverUtils.slideDown();
-                DriverUtils.sleep(5);
+                DriverUtils.sleep(2);
                 DriverUtils.slideUP();
-                DriverUtils.sleep(5);
+                DriverUtils.sleep(2);
             }
             tactAddNewOpptyPage.getStageButton().tap();
             DriverUtils.sleep(0.5);

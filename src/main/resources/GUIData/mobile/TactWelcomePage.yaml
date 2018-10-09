@@ -42,6 +42,21 @@ elements:
       US: "(//p)[1]"
     android:
       US: "(//android.widget.Image/following-sibling::android.view.View)[2]"
+  linkOpenWithLabel:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.TextView[@text='Open with']"
+  chromeButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.TextView[@text='Chrome']"
+  alwaysButton:
+    ios:
+      US: ""
+    android:
+      US: "//android.widget.Button[@text='ALWAYS']"
 pageTitle:
   US: "page_object"
 pageValidators: [

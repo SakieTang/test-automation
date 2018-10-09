@@ -91,7 +91,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Priority']"
     android:
-      US: "//android.widget.TextView[@text='Normal']"
+      US: "//android.widget.TextView[@text='Priority (required)']/following-sibling::android.widget.Spinner/android.widget.CheckedTextView"
   logPriorityOptionButton:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Normal']"
@@ -101,7 +101,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Completed']"
     android:
-      US: "//android.widget.TextView[@text='Completed']"
+      US: "//android.widget.TextView[@text='Status (required)']/following-sibling::android.widget.Spinner/android.widget.CheckedTextView"
   logStatusOptionButton:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Completed']"

@@ -126,7 +126,7 @@ elements:
     ios:
       US: "//XCUIElementTypeCell"
     android:
-      US: ""
+      US: "//android.view.ViewGroup/android.support.v7.widget.RecyclerView/android.widget.RelativeLayout"
 pageTitle:
   US: "page_object"
 pageValidators: [

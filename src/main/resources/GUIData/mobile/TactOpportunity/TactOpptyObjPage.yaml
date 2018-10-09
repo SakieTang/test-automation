@@ -31,7 +31,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Stage']/following-sibling::XCUIElementTypeStaticText"
     android:
-      US: "//android.widget.TextView[@text='Stage (required)']/following-sibling::android.widget.Spinner/android.widget.TextView"
+      US: "//android.widget.TextView[@text='Stage (required)']/following-sibling::android.widget.Spinner/android.widget.CheckedTextView"
   probabilityLabel:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Probability']/following-sibling::XCUIElementTypeStaticText"
@@ -101,7 +101,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Delivery/Installation Status']/following-sibling::XCUIElementTypeStaticText"
     android:
-      US: "//android.widget.TextView[@text='Delivery/Installation Status']/following-sibling::android.widget.Spinner/android.widget.TextView"
+      US: "//android.widget.TextView[@text='Delivery/Installation Status']/following-sibling::android.widget.Spinner/android.widget.CheckedTextView"
   addInfoTrackingNumberLabel:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Tracking Number']/following-sibling::XCUIElementTypeStaticText"

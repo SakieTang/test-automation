@@ -92,7 +92,7 @@ Feature: EmailFeature
     Then Email: I switch to "" mailType, "Drafts" option and "w/o" create a new email
     And Email: I verify the email
 
-  @P1
+  @P3
   @swipeTheEmail
   Scenario Outline: check right swipe in email
     Given Common: I am waiting for "50" sec
@@ -102,9 +102,17 @@ Feature: EmailFeature
       | subjectName |
       | Signature   |
 
-  @P1
-  @checkTwoWeeksEmail
+  @P3
+  @android
+  @androidCheckTwoWeeksEmail
   Scenario: Check for email from Gmail and exchange sources (there should be 2 week's worth of email)
+    Given Common: I switch to "Email" page from tab bar
+    Then Email: I check the email shows in two weeks
+
+  @P3
+  @iOS
+  @iOSCheckTwoWeeksEmail
+  Scenario: Check for Inbox from exchange sources (there should be 2 week's worth of email)
     Given Common: I switch to "Email" page from tab bar
     When Email: I switch to "Exchange" mailType, "Inbox" option and "don't" create a new email
     Then Email: I check the email shows in two weeks

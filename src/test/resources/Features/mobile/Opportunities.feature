@@ -245,8 +245,8 @@ Feature: OpportunitiesFeature
     And Contacts: I click back icon after created Salesflow activities
 
     Examples:
-      | subjectOption     | subject           | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSave |
-      | Send Letter/Quote | opportunity_Loc_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
+      | subjectOption     | subject               | isAllDayEvent | startDate | fromTime | endDate      | toTime  | location                                   | description | isSave |
+      | Send Letter/Quote | opportunity_Loc_event | false         | today     | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
 
   @P1
   @SFEvent

@@ -11,8 +11,9 @@ Feature: LeadsFeature
     When Common: I am waiting for syncing done
     Then API: I check Object "Lead" is "saved" in salesforce
     And Common: I click back icon
-    When API: I delete Object "Lead" from salesforce and wait for "60" sec
-    Then Contact: I verity deleted "Lead" from search field
+    When API: I delete Object "Lead" from salesforce and wait for "5" sec
+#    When API: I delete Object "Lead" from salesforce and wait for "60" sec
+#    Then Contact: I verity deleted "Lead" from search field  bug2000(https://github.com/tactile/broken-droid/issues/2000)
 
     Examples:
       | leadName              | companyName | isSave |
@@ -106,7 +107,7 @@ Feature: LeadsFeature
   @P2
   @MobileTest
   @iOS
-  @LocNoteEmail
+  @LocNoteEmailIOS
   Scenario Outline: iOS only - Add local Note to a lead email w/ checking sync to SF from Notebook page and verify in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastNLead, FirstNLead" from recent field and select it
@@ -196,7 +197,7 @@ Feature: LeadsFeature
   @P1
   @MobileTest
   @iOS
-  @logEmailSFTask
+  @logEmailSFTaskIOS
   Scenario Outline: iOS only - Add Log to a lead email, then add SFTask. Verify them in SF(API), then delete from SF(API) w/o checking from client
     When Common: I switch to "Contacts" page from tab bar
     Then Contacts: I search one user "LastNLead, FirstNLead" from recent field and select it

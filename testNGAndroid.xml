@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite thread-count="1" verbose="1" name="AppiumMobileSuite"
        skipfailedinvocationcounts="false" junit="false"
-       parallel="none" data-provider-thread-count="1" annotations="JDK">
+       parallel="false" data-provider-thread-count="1" annotations="JDK">
 
     <parameter name="mobileNodeType" value="appium"/>
     <parameter name="seleniumhost" value="0.0.0.0"/>

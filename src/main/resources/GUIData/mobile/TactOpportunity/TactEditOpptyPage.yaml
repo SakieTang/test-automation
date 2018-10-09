@@ -31,7 +31,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Stage']/following-sibling::XCUIElementTypeStaticText"
     android:
-      US: "//android.widget.TextView[@text='Stage (required)']/following-sibling::android.widget.Spinner/android.widget.TextView"
+      US: "//android.widget.TextView[@text='Stage (required)']/following-sibling::android.widget.Spinner/android.widget.CheckedTextView"
   stageTitleLabel:
     ios:
       US: "//XCUIElementTypeOther[@name='Stage']"
@@ -61,7 +61,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Type']/following-sibling::XCUIElementTypeStaticText"
     android:
-      US: "//android.widget.TextView[@text='Type']/following-sibling::android.widget.Spinner/android.widget.TextView"
+      US: "//android.widget.TextView[@text='Type']/following-sibling::android.widget.Spinner/android.widget.CheckedTextView"
   typeTitleLabel:
     ios:
       US: "//XCUIElementTypeOther[@name='Type']"
@@ -76,7 +76,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Lead Source']"
     android:
-      US: "//android.widget.TextView[@text='Lead Source']/following-sibling::android.widget.Spinner/android.widget.TextView"
+      US: "//android.widget.TextView[@text='Lead Source']/following-sibling::android.widget.Spinner/android.widget.CheckedTextView"
   leadSourceTitleLabel:
     ios:
       US: "//XCUIElementTypeOther[@name='Lead Source']"
@@ -116,7 +116,7 @@ elements:
     ios:
       US: "//XCUIElementTypeStaticText[@name='Delivery/Installation Status']"
     android:
-      US: "//android.widget.TextView[@text='Delivery/Installation Status']/following-sibling::android.widget.Spinner/android.widget.TextView"
+      US: "//android.widget.TextView[@text='Delivery/Installation Status']/following-sibling::android.widget.Spinner/android.widget.CheckedTextView"
   deliveryInstallationStatusTitleLabel:
     ios:
       US: "//XCUIElementTypeOther[@name='Delivery/Installation Status']"

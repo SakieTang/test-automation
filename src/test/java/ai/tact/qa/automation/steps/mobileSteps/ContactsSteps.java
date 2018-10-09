@@ -119,17 +119,13 @@ public class ContactsSteps implements En {
                     (DriverUtils.isAndroid() && Grid.driver().findElementsByXPath(tactContactsMainPage.getTactContactsTitleLabel().getLocator()).size() != 0))
             {
                 if (DriverUtils.isAndroid()){
-                    //click
-                    DriverUtils.sleep(1);
-                    System.out.println("*** try the new way to click");
-                    AppiumDriver driver = (AppiumDriver) Grid.driver();
-                    driver.tap(1, 1160, 182, 30);
-                    System.out.println("*** try the new way to click done");
-                    DriverUtils.sleep(2);
+                    MobileButton androidContactsSearchIconButton = tactSearchContactsPage.getAndroidContactsTabSearchIconButton();
+                    WebDriverWaitUtils.waitUntilElementIsVisible(androidContactsSearchIconButton);
+                    androidContactsSearchIconButton.tap();
 
                     if (Grid.driver().findElementsByXPath(tactContactsMainPage.getTactContactsTitleLabel().getLocator()).size() != 0){
                         System.out.println("retry");
-                        DriverUtils.tapXY(1160, 182, 5, 0);
+                        DriverUtils.tapXY(1160, 182, 1, 4);
                         System.out.println("less time to click it");
                     }
                 }
@@ -157,9 +153,6 @@ public class ContactsSteps implements En {
                 tactSearchContactsPage.getSearchAllContactsTextField().setText(formattedName);
 
                 //get the name location, and click it
-                System.out.println("modify the text method");
-                DriverUtils.sleep(3);
-
                 DriverUtils.clickOption(tactSearchContactsPage.getNameEditButton(), "contactName", formattedName);
             } else {
                 System.out.println("already find the name from recent list");
@@ -319,7 +312,7 @@ public class ContactsSteps implements En {
                     name = AddDeleteContactSteps.contactName;
                     break;
                 case "Lead":
-                    name = AddDeleteLeadSteps.leadName;
+                    name = "FirstNLead 12331009LastNLead"; //AddDeleteLeadSteps.leadName;
                     break;
                 case "Account":
                     name = AddDeleteAccountSteps.accountName;
@@ -385,7 +378,7 @@ public class ContactsSteps implements En {
                 DriverUtils.sleep(30);
             }
         });
-        And("^Contacts: I search this \"(note|log|task|event|Call)\" from \"(Lead|Contact)\" page and select it$", (String activityOption, String pageOption) -> {
+        And("^Contacts: I search this \"(note|log|task|event|Call)\" from \"(Lead|Contact|Company)\" page and select it$", (String activityOption, String pageOption) -> {
             log.info("^Contacts: I search this " + activityOption + " from " + pageOption + " page and select it$");
             TactContactObjPage tactContactObjPage = new TactContactObjPage();
             String activityName = null;
@@ -427,7 +420,6 @@ public class ContactsSteps implements En {
 
             System.out.println("after search");
             DriverUtils.sleep(5);
-
         });
         And("^Contacts: I delete this Activity$", () -> {
             log.info("^Contacts: I delete this Activity$");
@@ -435,8 +427,13 @@ public class ContactsSteps implements En {
             TactAlertsPopUpPage tactAlertsPopUpPage = new TactAlertsPopUpPage();
 
             if (DriverUtils.isAndroid()) {
-                WebDriverWaitUtils.waitUntilElementIsVisible(tactPinPage.getActivityViewPageMoreOptionsAndroidButton());
-                tactPinPage.getActivityViewPageMoreOptionsAndroidButton().tap(tactPinPage.getActivityViewPageDeleteButton());   //0917 failed company-task
+                tactPinPage.getActivityViewPageMoreOptionsAndroidButton().tap();    //0917 failed company-task
+                if (Grid.driver().findElementsByXPath(tactPinPage.getActivityViewPageMoreOptionsAndroidButton().getLocator()).size() != 0){
+                    System.out.println("not click the more button");
+                    System.out.println("retry");
+                    DriverUtils.tapXY(1314, 182, 1, 4);
+                }
+                WebDriverWaitUtils.waitUntilElementIsVisible(tactPinPage.getActivityViewPageDeleteButton());
                 tactPinPage.getActivityViewPageDeleteButton().tap(tactAlertsPopUpPage.getAlertsOKButton());
                 tactAlertsPopUpPage.getAlertsOKButton().tap();
             } else {

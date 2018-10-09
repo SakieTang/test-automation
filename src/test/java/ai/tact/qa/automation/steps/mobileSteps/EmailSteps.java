@@ -18,6 +18,8 @@ import io.appium.java_client.TouchAction;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -274,15 +276,31 @@ public class EmailSteps implements En {
             DriverUtils.scrollToBottom();
             DriverUtils.scrollToBottom();
             int size = Grid.driver().findElementsByXPath(tactMailBoxesPage.getEmailTableElement().getLocator()).size();
-            System.out.println("size : " + size);
+            log.info("size : " + size);
             Grid.driver().findElementsByXPath(tactMailBoxesPage.getEmailTableElement().getLocator()).get(size-1).click();
             WebDriverWaitUtils.waitUntilElementIsVisible(viewEmailPage.getPinButton());
 
-            String s = viewEmailPage.getViewTimeLabel().getValue();
-            System.out.println("time : " + s);
-            viewEmailPage.getBackToMailListPageButton().tap();
-            DriverUtils.sleep(15);
+            String dateStr = viewEmailPage.getViewTimeLabel().getValue();
+            Date date = null;
 
+            if (DriverUtils.isIOS()){   //iOS  - September 19, 2018 at 8:31 PM
+                try {
+                    date=new SimpleDateFormat("MMM dd, yyyy 'at' hh:mm aaa").parse(dateStr);
+                } catch (Exception e){
+                    log.info(e.getMessage());
+                }
+            } else {                    //Android - 9/20/18 05:49 PM
+                try {
+                    date = new SimpleDateFormat("MM/dd/yy hh:mm aaa").parse(dateStr);
+                } catch (Exception e){
+                    log.info(e.getMessage());
+                }
+            }
+            System.out.println(dateStr + "=> " + date);
+
+            Assert.assertTrue(checkTheDate(date), "true msg");
+            viewEmailPage.getBackToMailListPageButton().tap();
+            DriverUtils.sleep(10);
         });
 
     }
@@ -354,5 +372,26 @@ public class EmailSteps implements En {
         String emailType = emailAddress.split("@")[1].split("\\.")[0];
         log.info("email address: " + emailAddress + ", emailType: " + emailType);
         return emailType;
+    }
+
+    public boolean checkTheDate(Date date) {
+        boolean result = false;
+
+        String today = DriverUtils.currentDateInfo("month") + " " +
+                DriverUtils.currentDateInfo("dd") + " " +
+                DriverUtils.currentDateInfo("yyyy");
+        Date todayDate = null;
+
+        try {
+            todayDate = new SimpleDateFormat("MMM dd yyyy").parse(today);
+            System.out.println(today + " => " + todayDate);
+        } catch (Exception e){
+            log.info(e.getMessage());
+        }
+        Date date16 = DriverUtils.dateDiff(todayDate, -15);
+        System.out.println("date16 => " + date16);
+        result = date16.before(date);
+
+        return result;
     }
 }

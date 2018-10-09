@@ -87,9 +87,19 @@ public class DriverUtils {
      * hide the Android keyboard
      */
     public static void hideAndroidKeyboard(){
-        AppiumDriver driver = (AppiumDriver)Grid.driver();
-        driver.hideKeyboard();
-        driver.swipe(201,290,201,264,10);
+        String command = "adb shell settings put secure show_ime_with_hard_keyboard 0";
+
+        String result = DriverUtils.getRunCommandReturn(command);
+        if (result.equalsIgnoreCase("Success")) {
+            System.out.println("Clear Chrome Data is done");
+        }
+        else {
+            System.out.println("Clear Chrome Data is false");
+        }
+
+//        AppiumDriver driver = (AppiumDriver)Grid.driver();
+//        driver.hideKeyboard();
+//        driver.swipe(201,290,201,264,10);
     }
 
     public static void workaroundHideKeyboard() {
@@ -487,6 +497,14 @@ public class DriverUtils {
         return new Date();
     }
 
+    public static Date dateDiff(Date date, int i){
+        Date d ;
+        long DAY_IN_MS = 1000 * 60 * 60 * 24;
+        d = new Date(date.getTime() + (i * DAY_IN_MS));
+
+        return d;
+    }
+
     /**
      * get current Date info (year, month/mm, date, hours, mins)
      * @param infor
@@ -517,6 +535,9 @@ public class DriverUtils {
                 break;
             case "date":
                 dateInfo = new SimpleDateFormat("dd").format(date);
+                break;
+            case "E":
+                dateInfo = new SimpleDateFormat("E").format(date);
                 break;
             case "dd":
                 dateInfo = new SimpleDateFormat("dd").format(date);

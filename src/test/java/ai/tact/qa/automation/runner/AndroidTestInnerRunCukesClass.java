@@ -82,15 +82,17 @@ public class AndroidTestInnerRunCukesClass {
             ,glue = ("ai/tact/qa/automation/steps")
 //            ,tags={"@P1"}
             , tags={
-                "@createContact,"
-                        +
-                "@SFNoteAndroid, "            //Android only - @SFNoteAndroid, @logAndroid,
-                        +
-                "@SFNoteCall,"                               //Calling Activity   -@SFNoteCall, @logCallSFTask, @LocTaskCall,
-                        +
-                "@Log,    @SFEvent"  //delete from SF
-//                "@SFNote,   @Log,       @SFTask,    @SFEvent"  //delete from SF
-//                "@LocNote,  @LocTask,   @LocEvent"    //delete from client
+//                "@createContact,"
+//                        +
+//                "@SFNoteAndroid, "            //Android only - @SFNoteAndroid, @logAndroid,
+//                        +
+//                "@SFNoteCall,"                               //Calling Activity   -@SFNoteCall, @logCallSFTask, @LocTaskCall,
+//                        +
+//                "@Log,    @SFEvent"  //delete from SF
+////                "@SFNote,   @Log,       @SFTask,    @SFEvent"  //delete from SF
+////                "@LocNote,  @LocTask,   @LocEvent"    //delete from client
+                "@createContact, @SFNoteAndroid, @logAndroid, @SFNoteCall, @logCallSFTask, @LocTaskCall," +
+                "@SFNote,   @Log,       @SFTask,    @SFEvent, @LocNote,  @LocTask,   @LocEvent"
                 }
             , format = {
             "pretty",
@@ -108,14 +110,16 @@ public class AndroidTestInnerRunCukesClass {
             features = ("src/test/resources/Features/mobile/Lead.feature")
             ,glue = ("ai.tact.qa.automation.steps")
             ,tags={"" +
-                "@createLead,"
-                    +
-                "@logAndroid,"            //Android only - @SFNoteAndroid, @logAndroid,
-                    +
-                "@logCallSFTask,"                        //Calling Activity - @SFNoteCall,    @logCallSFTask, @LocTaskCall,
-                      +
-                "@LocNote,  @LocTask,     @LocEvent"    //delete from client
-//                "@SFNote,   @Log,   @SFTask,    @SFEvent"  //delete from SF
+//                "@createLead,"
+//                    +
+//                "@logAndroid,"            //Android only - @SFNoteAndroid, @logAndroid,
+//                    +
+//                "@logCallSFTask,"                        //Calling Activity - @SFNoteCall,    @logCallSFTask, @LocTaskCall,
+//                      +
+//                "@LocNote,  @LocTask,     @LocEvent"    //delete from client
+////                "@SFNote,   @Log,   @SFTask,    @SFEvent"  //delete from SF
+                "@createLead, @SFNoteAndroid, @logAndroid, @SFNoteCall,    @logCallSFTask, @LocTaskCall," +
+                "@LocNote,  @LocTask,     @LocEvent, @SFNote,   @Log,   @SFTask,    @SFEvent"
                 }
             , format = {
             "pretty",
@@ -132,15 +136,17 @@ public class AndroidTestInnerRunCukesClass {
             features = ("src/test/resources/Features/mobile/Account.feature")
             ,glue = ("ai/tact/qa/automation/steps")
             ,tags={
-            "@createAccount,"
-                    +
-            "@SFNoteAndroid,"            //Android only - @SFNoteAndroid, @logAndroid,
-                    +
-            "@LocTaskCall, "                           //Calling Activity - @SFNoteCall,    @logCallSFTask, @LocTaskCall,
-                    +
-            "@LocNote,  @LocEvent"           //delete from client
-//            "@LocNote,  @LocTask, @LocEvent"           //delete from client
-//            "@SFNote,   @Log,     @SFTask,  @SFEvent"  //delete from SF
+//            "@createAccount,"
+//                    +
+//            "@SFNoteAndroid,"            //Android only - @SFNoteAndroid, @logAndroid,
+//                    +
+//            "@LocTaskCall, "                           //Calling Activity - @SFNoteCall,    @logCallSFTask, @LocTaskCall,
+//                    +
+//            "@LocNote,  @LocEvent"           //delete from client
+////            "@LocNote,  @LocTask, @LocEvent"           //delete from client
+////            "@SFNote,   @Log,     @SFTask,  @SFEvent"  //delete from SF
+                "@createAccount, @SFNoteAndroid, @logAndroid, @SFNoteCall,    @logCallSFTask, @LocTaskCall," +
+                "@LocNote,  @LocTask, @LocEvent, @SFNote,   @Log,     @SFTask,  @SFEvent"
     }
             , format = {
             "pretty",
@@ -158,14 +164,16 @@ public class AndroidTestInnerRunCukesClass {
             features = ("src/test/resources/Features/mobile/Opportunities.feature")
             ,glue = ("ai/tact/qa/automation/steps")
             , tags={
-                    "@createSimpleOpportunity,"
-                            +
-                    "@editExistingOppty, @deleteExistingOppty,"
-                            +
-                    "@logAndroid,"            //Android only - @SFNoteAndroid, @logAndroid,
-                            +
-                    "@SFNote,   @Log,       @SFTask,    @SFEvent"  //delete from SF
-//                    "@LocNote,  @LocTask,   @LocEvent"                     //delete from client
+//                    "@createSimpleOpportunity,"
+//                            +
+//                    "@editExistingOppty, @deleteExistingOppty,"
+//                            +
+//                    "@logAndroid,"            //Android only - @SFNoteAndroid, @logAndroid,
+//                            +
+//                    "@SFNote,   @Log,       @SFTask,    @SFEvent"  //delete from SF
+////                    "@LocNote,  @LocTask,   @LocEvent"                     //delete from client
+                    "@createSimpleOpportunity, @editExistingOppty, @deleteExistingOppty, " +
+                    "@SFNote,   @Log,       @SFTask,    @SFEvent, @LocNote,  @LocTask,   @LocEvent"
     }
             , format = {
             "pretty",
@@ -244,7 +252,7 @@ public class AndroidTestInnerRunCukesClass {
     @CucumberOptions(
             features = ("src/test/resources/Features/mobile/Email.feature")
             ,glue = ("ai/tact/qa/automation/steps")
-            ,tags={"@ViewExchangeEmail"}
+            ,tags={"@@ViewExchangeEmail"}
             , format = {
             "pretty",
             "json:target/report/android/ViewEmailFromTabFeatureRunCukesNoReset.json"}
