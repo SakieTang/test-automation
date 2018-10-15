@@ -145,8 +145,8 @@ public class EmailSteps implements En {
             newMessagePage.getToNewMessageTextField().sendKeys(toEmail + "\n");
 
             //Subject
-            String dateMonthTime = DriverUtils.currentDateInfo("mm") + "/" + DriverUtils.currentDateInfo("date") +
-                    "/" + DriverUtils.currentDateInfo("hours") + DriverUtils.currentDateInfo("mins");
+            String dateMonthTime = DriverUtils.getDateInfo(null, "mm") + "/" + DriverUtils.getDateInfo(null, "date") +
+                    "/" + DriverUtils.getDateInfo(null, "hours") + DriverUtils.getDateInfo(null, "mins");
 //            String currentUser;
 //            if(DriverUtils.isIOS()){
 //                currentUser = CustomPicoContainer.userInfor.getSalesforceIOSAccountName();
@@ -377,9 +377,9 @@ public class EmailSteps implements En {
     public boolean checkTheDate(Date date) {
         boolean result = false;
 
-        String today = DriverUtils.currentDateInfo("month") + " " +
-                DriverUtils.currentDateInfo("dd") + " " +
-                DriverUtils.currentDateInfo("yyyy");
+        String today = DriverUtils.getDateInfo(null, "month") + " " +
+                DriverUtils.getDateInfo(null, "dd") + " " +
+                DriverUtils.getDateInfo(null, "yyyy");
         Date todayDate = null;
 
         try {

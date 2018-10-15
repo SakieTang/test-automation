@@ -42,8 +42,11 @@ public class IOSTime {
         if (date.equalsIgnoreCase("today")) {
             getCurrentDayMonth();
         }
-        else {
+        else if (date.contains(",") || date.contains("/")){
             convertDayMonth(date);
+        }
+        else {
+            getExpectedDayMonthFromDateDiff(date);
         }
         convertTime(expectTime);
 
@@ -97,8 +100,11 @@ public class IOSTime {
         if (date.equalsIgnoreCase("today")) {
             getCurrentDayMonth();
         }
-        else {
+        else if (date.contains(",") || date.contains("/")){
             convertDayMonth(date);
+        }
+        else {
+            getExpectedDayMonthFromDateDiff(date);
         }
 
         List<WebElement> allElements = Grid.driver().findElementsByClassName(iOSDateTimePage.getDateTimePicker().getLocator());
@@ -178,9 +184,9 @@ public class IOSTime {
         System.out.println("display date " + date);
         if (date.equalsIgnoreCase("Today")) {
 
-            displayYear = DriverUtils.currentDateInfo("year");
-            displayDate = DriverUtils.currentDateInfo("date");
-            displayMonth = Month.of( AndroidDate.shortNameToNumber(DriverUtils.currentDateInfo("month")) );
+            displayYear = DriverUtils.getDateInfo(null, "year");
+            displayDate = DriverUtils.getDateInfo(null, "date");
+            displayMonth = Month.of( AndroidDate.shortNameToNumber(DriverUtils.getDateInfo(null, "month")) );
 
         }
         else if (date.contains(",")) {  //xx mmm dd, hh
@@ -236,6 +242,19 @@ public class IOSTime {
             month = months[num-1];
         }
         return month;
+    }
+
+    private static void getExpectedDayMonthFromDateDiff(String diff){
+        int diffDate = Integer.parseInt(diff);
+        long DAY_IN_MS = 1000 * 60 * 60 * 24;
+        Date currentDate = DriverUtils.currentDate();
+
+        Date expectDate = new Date((currentDate.getTime()) - (diffDate * DAY_IN_MS));
+        System.out.println("expectDate : " + expectDate);
+
+        expectYear = new SimpleDateFormat("yyyy").format(expectDate);
+        expectDay = new SimpleDateFormat("dd").format(expectDate);
+        expectMonth = Month.of( AndroidDate.shortNameToNumber(new SimpleDateFormat("MMM").format(expectDate)) );
     }
 
     public static void main(String[] arg){

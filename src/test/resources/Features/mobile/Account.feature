@@ -240,8 +240,8 @@ Feature: AccountsFeature
     And Contacts: I click back icon after created Salesflow activities
 
     Examples:
-       | titleText    | description | Name | relatedTo | dueDate   | isFollowUp | isReminder | reminderDate | reminderTime | isSave |
-       | company_Loc_task | description | test | w/o       | 10/2/2018 | no         | yes        | Oct 2, 2018  | 7:55 am      | yes    |
+       | titleText        | description | Name | relatedTo | dueDate | isFollowUp | isReminder | reminderDate | reminderTime | isSave |
+       | company_Loc_task | description | test | w/o       | today   | no         | yes        | today        | none         | yes    |
 
   @P1
   @SFTask
@@ -298,8 +298,8 @@ Feature: AccountsFeature
     And Contacts: I click back icon after created Salesflow activities
 
     Examples:
-       | subjectOption     | subject           | isAllDayEvent | startDate    | fromTime | endDate      | toTime  | location                                   | description | isSave |
-       | Send Letter/Quote | company_Loc_event | false         | Oct 2, 2018  | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
+       | subjectOption | subject           | isAllDayEvent | startDate | fromTime | endDate | toTime | location                                   | description | isSave |
+       | none          | company_Loc_event | false         | today     |          | today   |        | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
 
   @P1
   @SFEvent
@@ -322,5 +322,5 @@ Feature: AccountsFeature
     And Contacts: I click back icon after created Salesflow activities
 
     Examples:
-       | subjectOption     | subject          | isSyncToSF | isSave |
-       | Send Letter/Quote | company_SF_event | yes        | yes    |
+       | subjectOption | subject          | isSyncToSF | isSave |
+       | none          | company_SF_event | yes        | yes    |

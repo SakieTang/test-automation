@@ -17,9 +17,9 @@ import java.util.Locale;
 
 public class AndroidDate {
 
-    private static Month currentMonth = Month.of( shortNameToNumber(DriverUtils.currentDateInfo("month")) );
-    private static int currentDate = Integer.parseInt(DriverUtils.currentDateInfo("date"));
-    private static int currentYear = Integer.parseInt(DriverUtils.currentDateInfo("year"));
+    private static Month currentMonth = Month.of( shortNameToNumber(DriverUtils.getDateInfo(null, "month")) );
+    private static int currentDate = Integer.parseInt(DriverUtils.getDateInfo(null, "date"));
+    private static int currentYear = Integer.parseInt(DriverUtils.getDateInfo(null, "year"));
     
     private static Month displayMonth;
     private static int displayDay;
@@ -45,8 +45,11 @@ public class AndroidDate {
         if (date.equalsIgnoreCase("today")) {
             getCurrentDayMonth();
         }
-        else {
+        else if (date.contains(",") || date.contains("/")){
             splitExpectedDate(date);
+        }
+        else {
+            getExpectedDayMonthFromDateDiff(date);
         }
 
         AndroidDate androidDate = new AndroidDate();
@@ -143,6 +146,19 @@ public class AndroidDate {
         expectMonth = Month.of( AndroidDate.shortNameToNumber(new SimpleDateFormat("MMM").format(date)) );
     }
 
+    private static void getExpectedDayMonthFromDateDiff(String diff){
+        int diffDate = Integer.parseInt(diff);
+        long DAY_IN_MS = 1000 * 60 * 60 * 24;
+        Date currentDate = DriverUtils.currentDate();
+
+        Date expectDate = new Date((currentDate.getTime()) - (diffDate * DAY_IN_MS));
+        System.out.println("expectDate : " + expectDate);
+
+        expectYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(expectDate));
+        expectDay = Integer.parseInt(new SimpleDateFormat("dd").format(expectDate));
+        expectMonth = Month.of( AndroidDate.shortNameToNumber(new SimpleDateFormat("MMM").format(expectDate)) );
+    }
+
     public static boolean isDateValid(String date){
         if (date.contains("/")) {
             try {
@@ -204,7 +220,7 @@ public class AndroidDate {
         System.out.println("valid " + isDateValid("Mar 29,2018"));
         
         
-        String dateMonth = DriverUtils.currentDateInfo("mm") + "/" + DriverUtils.currentDateInfo("date");
+        String dateMonth = DriverUtils.getDateInfo(null, "mm") + "/" + DriverUtils.getDateInfo(null, "date");
         System.out.println("dateMonth ==> " + dateMonth);
         
         String currentUser;

@@ -146,11 +146,11 @@ public class GenerateReport {
         try {
             String tempReportDir = System.getProperty("user.dir") + "/src/test/java/ai/tact/qa/automation/utils/report/tempAIReport.html";
             String report = loadFileFromResources(tempReportDir);
-            String today = String.format("%s%s%s - %s:%s", DriverUtils.currentDateInfo("yyyy")
-                    , DriverUtils.currentDateInfo("mm")
-                    , DriverUtils.currentDateInfo("dd")
-                    , DriverUtils.currentDateInfo("24hh")
-                    , DriverUtils.currentDateInfo("mins"));
+            String today = String.format("%s%s%s - %s:%s", DriverUtils.getDateInfo(null, "yyyy")
+                    , DriverUtils.getDateInfo(null, "mm")
+                    , DriverUtils.getDateInfo(null, "dd")
+                    , DriverUtils.getDateInfo(null, "24hh")
+                    , DriverUtils.getDateInfo(null, "mins"));
 
             report = report.replace("{TODAY}", today);
 
@@ -214,9 +214,9 @@ public class GenerateReport {
 
             String tempReportDir = System.getProperty("user.dir") + "/src/test/java/ai/tact/qa/automation/utils/report/tempReport.html";
             String report = loadFileFromResources(tempReportDir);
-            String today = String.format("%s%s%s", DriverUtils.currentDateInfo("yyyy")
-                    , DriverUtils.currentDateInfo("mm")
-                    , DriverUtils.currentDateInfo("dd"));
+            String today = String.format("%s%s%s", DriverUtils.getDateInfo(null, "yyyy")
+                    , DriverUtils.getDateInfo(null, "mm")
+                    , DriverUtils.getDateInfo(null, "dd"));
 
             report = report.replace("{TODAY}", today);
             report = report.replace("{IOSVERSION}", iOSReport.getAppInfo());
@@ -748,9 +748,9 @@ public class GenerateReport {
 
     public static void uploadReport (String reportName, boolean isUploadNow){
         String fileDir = String.format("%s/%s", System.getProperty("user.dir"),"target");
-        String today = String.format("%s%s%s", DriverUtils.currentDateInfo("yyyy")
-                , DriverUtils.currentDateInfo("mm")
-                , DriverUtils.currentDateInfo("dd"));
+        String today = String.format("%s%s%s", DriverUtils.getDateInfo(null, "yyyy")
+                , DriverUtils.getDateInfo(null, "mm")
+                , DriverUtils.getDateInfo(null, "dd"));
 
 
         if (reportName.contains("2")){
@@ -776,10 +776,10 @@ public class GenerateReport {
 
     public static void uploadAIReport(boolean isUploadNow){
         String fileDir = String.format("%s/%s", System.getProperty("user.dir"),"target");
-        String today = String.format("%s%s%s", DriverUtils.currentDateInfo("yyyy")
-                , DriverUtils.currentDateInfo("mm")
-                , DriverUtils.currentDateInfo("dd"));
-        String hour = DriverUtils.currentDateInfo("24hh");
+        String today = String.format("%s%s%s", DriverUtils.getDateInfo(null, "yyyy")
+                , DriverUtils.getDateInfo(null, "mm")
+                , DriverUtils.getDateInfo(null, "dd"));
+        String hour = DriverUtils.getDateInfo(null, "24hh");
 
         fileDir = String.format("%s/aiReport.html", fileDir);
         log.info("fileDir : " + fileDir);
@@ -816,8 +816,8 @@ public class GenerateReport {
 //        //submit report
 //        System.out.println(Systemqs.getProperty("user.dir"));
 
-        generteHtml();
-        uploadReport("report.html", false);
+//        generteHtml();
+//        uploadReport("report.html", false);
 //        generateAIHtml();
 //        uploadReport("aiReport.html", false);
 //
@@ -895,24 +895,28 @@ public class GenerateReport {
 //            System.out.println(e.getMessage());
 //        }
 
-//        Date d ;
-//        long DAY_IN_MS = 1000 * 60 * 60 * 24;
-////
-//        Date dateD = DriverUtils.currentDate();
-//        System.out.println(dateD);
-//        Date d = new Date(dateD.getTime() - (15 * DAY_IN_MS));
+        Date d ;
+        long DAY_IN_MS = 1000 * 60 * 60 * 24;
 //
-//        System.out.println(DriverUtils.currentDate());
-//
-//        String s = dateD.getMonth() + " " + dateD.getDate() + " " + dateD.getYear();
-//        System.out.println("testing : " + s);
+        Date dateD = DriverUtils.currentDate();
+        System.out.println(dateD);
+        d = new Date(dateD.getTime() - (15 * DAY_IN_MS));
+
+        System.out.println("expect: " + d);
+        System.out.println("current: " + DriverUtils.currentDate());
+
+        String s = DriverUtils.getDateInfo(d,"month") + " " +
+                DriverUtils.getDateInfo(d,"dd") + " " +
+                DriverUtils.getDateInfo(d,"yyyy");
+        System.out.println("testing : " + s);
+
 //
 ////        //Thu Sep 20 14:37:29 PDT 2018
 ////        //Fri Oct 05 00:00:00 PDT 2018
-//        s = DriverUtils.currentDateInfo("month") + " " +
-//                DriverUtils.currentDateInfo("dd") + " " +
-//                DriverUtils.currentDateInfo("yyyy");
-//        System.out.println(s);
+        s = DriverUtils.getDateInfo(null,"month") + " " +
+                DriverUtils.getDateInfo(null,"dd") + " " +
+                DriverUtils.getDateInfo(null,"yyyy");
+        System.out.println("current: " + s);
 //
 //        try {// hh:mm aaa
 //            System.out.println( new SimpleDateFormat("MMM dd yyyy").parse(s) );

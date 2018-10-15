@@ -204,9 +204,9 @@ Feature: OpportunitiesFeature
     And Contacts: I click back icon after created Salesflow activities
 
     Examples:
-       | titleText        | description         | Name        | relatedTo | dueDate     | isFollowUp | isReminder | reminderDate | reminderTime | isSave |
-#       | w/o           | w/o                 | w/o         | w/o       | Oct 3, 2018 | w/o        | w/o        | Oct 2, 2018  | 7:55 am      | w/o    |
-       | opportunity_task | description         | test        | w/o       | 10/2/2018   | no         | yes        | Oct 2, 2018  | 7:55 am      | yes    |
+       | titleText        | description | Name | relatedTo | dueDate | isFollowUp | isReminder | reminderDate | reminderTime | isSave |
+#       | w/o             | w/o         | w/o  | w/o       | Oct 3, 2018 | w/o    | w/o        | Oct 2, 2018  | 7:55 am      | w/o    |
+       | opportunity_task | description | test | w/o       | 2       | no         | yes        | 1            | 7:55 am      | yes    |
 
   @P1
   @MobileTest
@@ -245,8 +245,8 @@ Feature: OpportunitiesFeature
     And Contacts: I click back icon after created Salesflow activities
 
     Examples:
-      | subjectOption     | subject               | isAllDayEvent | startDate | fromTime | endDate      | toTime  | location                                   | description | isSave |
-      | Send Letter/Quote | opportunity_Loc_event | false         | today     | 7:58 am  | 10/12/2019   | 3:45 pm | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
+      | subjectOption     | subject               | isAllDayEvent | startDate | fromTime | endDate | toTime | location                                   | description | isSave |
+      | Send Letter/Quote | opportunity_Loc_event | false         | today     |          | 1       |        | 2400 Broadway #210, Redwood City, CA 94063 | testing     | yes    |
 
   @P1
   @SFEvent

@@ -510,8 +510,11 @@ public class DriverUtils {
      * @param infor
      * @return
      */
-    public static String currentDateInfo(String infor) {
-        Date date = currentDate();
+    public static String getDateInfo(Date date, String infor) {
+        if (date == null){
+//            System.out.println("get the current date");
+            date = currentDate();
+        }
         String dateInfo = "";
 
 //        String mom = DriverUtils.currentDateInfo("month");
